@@ -1,0 +1,10 @@
+{
+  "name": "@newfold-labs/wp-module-wp-module-help-center",
+  "description": "HelpCenter",
+  "license": "MIT",
+  "private": true,
+  "author": {
+    "name": "Faizaan Mohammed",
+    "email": "faizaan.md@newfold.com"
+  }
+}

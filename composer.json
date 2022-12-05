@@ -1,0 +1,20 @@
+{
+  "name": "newfold-labs/wp-module-wp-module-help-center",
+  "description": "HelpCenter",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Faizaan Mohammed",
+      "email": "faizaan.md@newfold.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "NewfoldLabs\\WP\\Module\\WpModuleHelpCenter\\": "includes"
+    },
+    "files": [
+      "bootstrap.php"
+    ]
+  }
+}
