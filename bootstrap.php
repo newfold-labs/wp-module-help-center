@@ -1,5 +1,6 @@
 <?php
 
+use NewfoldLabs\WP\Module\HelpCenter\HelpCenter;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use function NewfoldLabs\WP\ModuleLoader\register;
 
@@ -11,10 +12,10 @@ if ( function_exists( 'add_action' ) ) {
 
 			register(
 				[
-					'name'     => 'wp-module-help-center',
-					'label'    => __( 'wp-module-help-center', 'newfold-wp-module-help-center-module' ),
+					'name'     => 'help-center',
+					'label'    => __( 'Help Center', 'newfold-help-center-module' ),
 					'callback' => function ( Container $container ) {
-						new WpModuleHelpCenter( $container );
+						new HelpCenter( $container );
 					},
 					'isActive' => true,
 					'isHidden' => true,

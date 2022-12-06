@@ -1,10 +1,10 @@
 <?php
 
-namespace NewfoldLabs\WP\Module\WpModuleHelpCenter;
+namespace NewfoldLabs\WP\Module\HelpCenter;
 
 use NewfoldLabs\WP\ModuleLoader\Container;
 
-class WpModuleHelpCenter {
+class HelpCenter {
 
 	/**
 	 * Dependency injection container.

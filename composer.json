@@ -1,8 +1,8 @@
 {
-  "name": "newfold-labs/wp-module-wp-module-help-center",
+  "name": "newfold-labs/wp-module-help-center",
   "description": "HelpCenter",
   "type": "library",
-  "license": "MIT",
+  "license": "GPL-2.0-or-later",
   "authors": [
     {
       "name": "Faizaan Mohammed",
@@ -11,7 +11,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "NewfoldLabs\\WP\\Module\\WpModuleHelpCenter\\": "includes"
+      "NewfoldLabs\\WP\\Module\\HelpCenter\\": "includes"
     },
     "files": [
       "bootstrap.php"

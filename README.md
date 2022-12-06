@@ -3,7 +3,7 @@
 height="42" />
 </a>
 
-# WordPress Wp-Module-Help-Center Module
+# WordPress Help Center Module
 
 Help Center
 
@@ -15,10 +15,10 @@ Help Center
  composer config repositories.newfold composer https://newfold.github.io/satis
  ```
 
-### 2. Require the `newfold-labs/wp-module-wp-module-help-center` package.
+### 2. Require the `newfold-labs/wp-module-help-center` package.
 
  ```bash
- composer require newfold-labs/wp-module-wp-module-help-center
+ composer require newfold-labs/wp-module-help-center
  ```
 
 [More on NewFold WordPress Modules](https://github.com/newfold-labs/wp-module-loader)
