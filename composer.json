@@ -11,7 +11,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "NewfoldLabs\\WP\\Module\\WpModuleHelpCenter\\": "includes"
+      "NewfoldLabs\\WP\\Module\\HelpCenter\\": "includes"
     },
     "files": [
       "bootstrap.php"
