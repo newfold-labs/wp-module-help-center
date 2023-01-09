@@ -37,7 +37,13 @@ class HelpCenter {
 				'nfd-helpcenter-dependency',
 				NFD_HELPCENTER_PLUGIN_URL . 'vendor/newfold-labs/wp-module-help-center/build/index.js',
 				array_merge( $asset['dependencies'], array() ),
-				$asset_file
+				$asset_file,
+				true
+			);
+			\wp_enqueue_style(
+				'stylesheet',
+				NFD_HELPCENTER_PLUGIN_URL . 'vendor/newfold-labs/wp-module-help-center/build/index.css',
+				null, '1', 'screen'
 			);
 		}
 	}
