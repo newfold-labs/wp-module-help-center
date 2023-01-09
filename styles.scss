@@ -1,13 +1,13 @@
-#helpCenterContainer {
+#nfd-help-center {
   float: right;
   padding: 0 40px 20px 0;
-}
 
-.help-center {
-  width: 101px;
-  height: 40px;
-  background-color: #196bde;
-  color: white;
-  border-radius: 20px;
-  border: 1px solid #196bde;
+  .help-center {
+    width: 101px;
+    height: 40px;
+    background-color: #196bde;
+    color: white;
+    border-radius: 20px;
+    border: 1px solid #196bde;
+  }
 }

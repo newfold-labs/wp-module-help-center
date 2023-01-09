@@ -178,9 +178,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let helpContainer = document.createElement("div");
-helpContainer.id = "helpCenterContainer";
+helpContainer.id = "nfd-help-center";
 document.body.appendChild(helpContainer);
-const DOM_TARGET = document.getElementById("helpCenterContainer");
+const DOM_TARGET = document.getElementById("nfd-help-center");
 (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.render)((0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_HelpCenter__WEBPACK_IMPORTED_MODULE_1__["default"], null), DOM_TARGET);
 })();
 
