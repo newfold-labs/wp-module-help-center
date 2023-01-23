@@ -1,17 +1,117 @@
 /*!************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./styles.scss ***!
   \************************************************************************************************************************************************************************************************************************************/
+.modal {
+  min-height: 270px;
+  min-width: 399px;
+  border: 1px solid #dce2ea;
+  border-radius: 20px 20px 0 20px;
+  background-color: #ffffff;
+  margin-bottom: 12px;
+}
+.modal .modal-content {
+  padding: 16px;
+}
+.modal .modal-content .modal-header .heading {
+  display: flex;
+  align-items: center;
+}
+.modal .modal-content .modal-body .article-list-container .video {
+  display: grid;
+  grid-template-columns: min-content;
+  -moz-column-gap: 8px;
+       column-gap: 8px;
+}
+.modal .modal-content .modal-body .article-list-container .video .video-icon {
+  grid-area: 1/1;
+}
+.modal .modal-content .modal-body .article-list-container .video .video-summary {
+  grid-column: 2;
+}
+.modal .modal-content .modal-body .article-list-container .video .description,
+.modal .modal-content .modal-body .article-list-container .article .description {
+  line-height: 1.2em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 8px 0;
+}
+.modal .modal-content .modal-body .article-list-container .video:hover,
+.modal .modal-content .modal-body .article-list-container .article:hover {
+  background: rgba(57, 172, 229, 0.1);
+}
+.modal .modal-content .modal-body .article-container[data-variant=video] {
+  width: 532px;
+  min-height: 280px;
+}
+.modal .modal-content .modal-body .article-container[data-variant=video] iframe {
+  width: 500px;
+  height: 280px;
+}
+.modal .modal-content .modal-body .article-container[data-variant=article] {
+  max-height: 456px;
+  overflow-y: auto;
+  width: 399px;
+}
+.modal .modal-content .modal-body .search-container {
+  display: flex;
+  justify-content: space-between;
+  width: 367px;
+  height: 32px;
+  border: 1px solid black;
+  margin: 16px 0px;
+}
+.modal .modal-content .modal-body .search-container input {
+  border: none;
+}
+.modal .modal-content .modal-body .search-container input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+.modal .modal-content .modal-body .search-container button {
+  box-shadow: none;
+  border: none;
+  background: transparent;
+}
+.modal .modal-content .modal-footer {
+  display: flex;
+  justify-content: space-between;
+}
+.modal .modal-content .modal-footer a {
+  text-decoration: none;
+  color: #3c434a;
+}
+
 #nfd-help-center {
-  float: right;
   padding: 0 40px 20px 0;
 }
-#nfd-help-center .help-center {
-  width: 101px;
-  height: 40px;
+#nfd-help-center h4,
+#nfd-help-center h3 {
+  margin: 0 0 !important;
+}
+#nfd-help-center .nfd-help-center-setup .nfd-help-center-button {
+  width: 44px;
+  height: 44px;
   background-color: #196bde;
   color: white;
-  border-radius: 20px;
+  border-radius: 50%;
   border: 1px solid #196bde;
+  float: right;
+}
+#nfd-help-center .modal-open {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin-right: 40px;
+  z-index: 1000;
+}
+
+@media (max-width: 782px) {
+  #wpbody-content {
+    padding-bottom: 0px;
+  }
 }
 
 /*# sourceMappingURL=index.css.map*/

@@ -1,0 +1,95 @@
+.modal {
+  min-height: 270px;
+  min-width: 399px;
+  border: 1px solid #dce2ea;
+  border-radius: 20px 20px 0 20px;
+  background-color: #ffffff;
+  margin-bottom: 12px;
+
+  .modal-content {
+    padding: 16px;
+
+    .modal-header {
+      .heading {
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    .modal-body {
+      .article-list-container {
+        .video {
+          display: grid;
+          grid-template-columns: min-content;
+          column-gap: 8px;
+          .video-icon {
+            grid-area: 1/1;
+          }
+          .video-summary {
+            grid-column: 2;
+          }
+        }
+        .video,
+        .article {
+          .description {
+            line-height: 1.2em;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin: 8px 0;
+          }
+          &:hover {
+            background: rgb(57, 172, 229, 0.1);
+          }
+        }
+      }
+
+      .article-container[data-variant="video"] {
+        width: 532px;
+        min-height: 280px;
+        iframe {
+          width: 500px;
+          height: 280px;
+        }
+      }
+
+      .article-container[data-variant="article"] {
+        max-height: 456px;
+        overflow-y: auto;
+        width: 399px;
+      }
+
+      .search-container {
+        display: flex;
+        justify-content: space-between;
+        width: 367px;
+        height: 32px;
+        border: 1px solid black;
+        margin: 16px 0px;
+        input {
+          border: none;
+          &:focus {
+            outline: none !important;
+            box-shadow: none !important;
+          }
+        }
+        button {
+          box-shadow: none;
+          border: none;
+          background: transparent;
+        }
+      }
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: space-between;
+      a {
+        text-decoration: none;
+        color: #3c434a;
+      }
+    }
+  }
+}

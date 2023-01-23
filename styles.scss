@@ -1,13 +1,34 @@
+@import "./modal.scss";
+
 #nfd-help-center {
-  float: right;
   padding: 0 40px 20px 0;
 
-  .help-center {
-    width: 101px;
-    height: 40px;
-    background-color: #196bde;
-    color: white;
-    border-radius: 20px;
-    border: 1px solid #196bde;
+  h4,
+  h3 {
+    margin: 0 0 !important;
+  }
+  .nfd-help-center-setup {
+    .nfd-help-center-button {
+      width: 44px;
+      height: 44px;
+      background-color: #196bde;
+      color: white;
+      border-radius: 50%;
+      border: 1px solid #196bde;
+      float: right;
+    }
+  }
+  .modal-open {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin-right: 40px;
+    z-index: 1000;
+  }
+}
+
+@media (max-width: 782px) {
+  #wpbody-content {
+    padding-bottom: 0px;
   }
 }
