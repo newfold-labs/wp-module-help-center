@@ -4189,6 +4189,9 @@ const Article = () => {
     src: post.url
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, post.content));
 };
+const Fallback = () => {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, "Oops!"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "There was a problem loading this tool."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "You can try reloading the page to see if that fixes things. Or, if this problem persists, try searching our ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", null, "Resource Center"), " directly.", " "));
+};
 const Articles = () => {
   const [articleList, setArticleList] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(data);
   const [isLoading, setIsLoading] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false);

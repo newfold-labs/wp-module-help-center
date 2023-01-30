@@ -21,9 +21,22 @@ class HelpCenter {
 	public function __construct( Container $container ) {
 
 		$this->container = $container;
+		add_action( 'rest_api_init', array( $this, 'register_settings' ) );
 		add_action( 'init' , array( $this, 'register_assets') );
 		// Module functionality goes here
+	}
 
+	public function register_settings() {
+		\register_setting(
+			'general',
+			'nfd-help-center-enabled',
+			array(
+				'show_in_rest' => true,
+				'type'         => 'boolean',
+				'default' 	   => true,
+				'description'  => __( 'NFD eCommerce Options', 'wp-module-ecommerce' ),
+			)
+		);
 	}
 
 	/**
