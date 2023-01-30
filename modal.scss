@@ -17,7 +17,7 @@
     }
 
     .modal-body {
-      .article-list-container {
+      .suggestions-container {
         .video {
           display: grid;
           grid-template-columns: min-content;
@@ -46,7 +46,7 @@
         }
       }
 
-      .article-container[data-variant="video"] {
+      .suggestion[data-variant="video"] {
         width: 532px;
         min-height: 280px;
         iframe {
@@ -55,7 +55,7 @@
         }
       }
 
-      .article-container[data-variant="article"] {
+      .suggestion[data-variant="article"] {
         max-height: 456px;
         overflow-y: auto;
         width: 399px;

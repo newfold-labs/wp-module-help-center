@@ -1,9 +1,4 @@
 import { useEffect, useState } from "@wordpress/element";
-import { ReactComponent as Loader } from "../icons/loader.svg";
-import { ReactComponent as NoResultIllustration } from "../icons/no-result.svg";
-import { ReactComponent as SearchIcon } from "../icons/search.svg";
-import { ReactComponent as VideoIcon } from "../icons/video.svg";
-import { ReactComponent as Arrow } from "../icons/back-arrow.svg";
 import {
   MemoryRouter,
   Route,
@@ -11,6 +6,11 @@ import {
   useNavigate,
   useParams,
 } from "react-router-dom";
+import { ReactComponent as Arrow } from "../icons/back-arrow.svg";
+import { ReactComponent as Loader } from "../icons/loader.svg";
+import { ReactComponent as NoResultIllustration } from "../icons/no-result.svg";
+import { ReactComponent as SearchIcon } from "../icons/search.svg";
+import { ReactComponent as VideoIcon } from "../icons/video.svg";
 
 const data = [
   {
@@ -85,12 +85,12 @@ const Search = ({ searchParam }) => {
   );
 };
 
-const Article = () => {
+const Suggestion = () => {
   let { id } = useParams();
   const navigate = useNavigate();
   const post = getArticleById(id);
   return (
-    <div className="article-container" data-variant={post.type}>
+    <div className="suggestion" data-variant={post.type}>
       <a onClick={() => navigate(-1)}>
         <Arrow style={{ verticalAlign: "middle" }} />
         Back
@@ -102,8 +102,8 @@ const Article = () => {
   );
 };
 
-const Articles = () => {
-  const [articleList, setArticleList] = useState(data);
+const Suggestions = () => {
+  const [suggestions, setSuggestions] = useState(data);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   let { searchParam } = useParams();
@@ -113,7 +113,7 @@ const Articles = () => {
     const filteredData = data.filter((article) =>
       article.title.includes(searchParam ?? "")
     );
-    setArticleList(filteredData);
+    setSuggestions(filteredData);
     setTimeout(() => {
       setIsLoading(false);
     }, 2000);
@@ -126,17 +126,17 @@ const Articles = () => {
         <SearchingLoader />
       ) : (
         <>
-          {articleList.length > 0 ? (
-            <div className="article-list-container">
+          {suggestions.length > 0 ? (
+            <div className="suggestions-container">
               <p style={{ margin: "8px 0" }}>Popular results for this page:</p>
               <h4>Videos</h4>
-              {articleList
+              {suggestions
                 .filter((x) => x.type == "video")
                 .map((video) => (
                   <div
                     className="video"
                     onClick={() => {
-                      navigate(`/article/${video.id}`);
+                      navigate(`/suggestion/${video.id}`);
                     }}
                   >
                     <VideoIcon className="video-icon"></VideoIcon>
@@ -148,13 +148,13 @@ const Articles = () => {
                 ))}
               <hr />
               <h4>Articles</h4>
-              {articleList
+              {suggestions
                 .filter((x) => x.type == "article")
                 .map((article) => (
                   <div
                     className="article"
                     onClick={() => {
-                      navigate(`/article/${article.id}`);
+                      navigate(`/suggestion/${article.id}`);
                     }}
                   >
                     <a>{article.title}</a>
@@ -168,7 +168,7 @@ const Articles = () => {
           )}
         </>
       )}
-      <Search searchParam={searchParam}/>
+      <Search searchParam={searchParam} />
       <Footer />
     </div>
   );
@@ -178,9 +178,9 @@ const HelpCenterRoutes = () => {
   return (
     <MemoryRouter>
       <Routes>
-        <Route exact path="/" element={<Articles />} />
-        <Route exact path="/article/:id" element={<Article />} />
-        <Route exact path="/:searchParam" element={<Articles />} />
+        <Route exact path="/" element={<Suggestions />} />
+        <Route exact path="/suggestion/:id" element={<Suggestion />} />
+        <Route exact path="/:searchParam" element={<Suggestions />} />
       </Routes>
     </MemoryRouter>
   );

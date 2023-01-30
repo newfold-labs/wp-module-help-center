@@ -16,20 +16,20 @@
   display: flex;
   align-items: center;
 }
-.modal .modal-content .modal-body .article-list-container .video {
+.modal .modal-content .modal-body .suggestions-container .video {
   display: grid;
   grid-template-columns: min-content;
   -moz-column-gap: 8px;
        column-gap: 8px;
 }
-.modal .modal-content .modal-body .article-list-container .video .video-icon {
+.modal .modal-content .modal-body .suggestions-container .video .video-icon {
   grid-area: 1/1;
 }
-.modal .modal-content .modal-body .article-list-container .video .video-summary {
+.modal .modal-content .modal-body .suggestions-container .video .video-summary {
   grid-column: 2;
 }
-.modal .modal-content .modal-body .article-list-container .video .description,
-.modal .modal-content .modal-body .article-list-container .article .description {
+.modal .modal-content .modal-body .suggestions-container .video .description,
+.modal .modal-content .modal-body .suggestions-container .article .description {
   line-height: 1.2em;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -38,19 +38,19 @@
   text-overflow: ellipsis;
   margin: 8px 0;
 }
-.modal .modal-content .modal-body .article-list-container .video:hover,
-.modal .modal-content .modal-body .article-list-container .article:hover {
+.modal .modal-content .modal-body .suggestions-container .video:hover,
+.modal .modal-content .modal-body .suggestions-container .article:hover {
   background: rgba(57, 172, 229, 0.1);
 }
-.modal .modal-content .modal-body .article-container[data-variant=video] {
+.modal .modal-content .modal-body .suggestion[data-variant=video] {
   width: 532px;
   min-height: 280px;
 }
-.modal .modal-content .modal-body .article-container[data-variant=video] iframe {
+.modal .modal-content .modal-body .suggestion[data-variant=video] iframe {
   width: 500px;
   height: 280px;
 }
-.modal .modal-content .modal-body .article-container[data-variant=article] {
+.modal .modal-content .modal-body .suggestion[data-variant=article] {
   max-height: 456px;
   overflow-y: auto;
   width: 399px;

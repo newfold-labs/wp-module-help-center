@@ -4113,12 +4113,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _icons_loader_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../icons/loader.svg */ "./src/icons/loader.svg");
-/* harmony import */ var _icons_no_result_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../icons/no-result.svg */ "./src/icons/no-result.svg");
-/* harmony import */ var _icons_search_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../icons/search.svg */ "./src/icons/search.svg");
-/* harmony import */ var _icons_video_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../icons/video.svg */ "./src/icons/video.svg");
-/* harmony import */ var _icons_back_arrow_svg__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../icons/back-arrow.svg */ "./src/icons/back-arrow.svg");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _icons_back_arrow_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../icons/back-arrow.svg */ "./src/icons/back-arrow.svg");
+/* harmony import */ var _icons_loader_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../icons/loader.svg */ "./src/icons/loader.svg");
+/* harmony import */ var _icons_no_result_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../icons/no-result.svg */ "./src/icons/no-result.svg");
+/* harmony import */ var _icons_search_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../icons/search.svg */ "./src/icons/search.svg");
+/* harmony import */ var _icons_video_svg__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../icons/video.svg */ "./src/icons/video.svg");
 
 
 
@@ -4146,10 +4146,10 @@ const data = [{
 }];
 const getArticleById = id => data.find(x => x.id == id);
 const NoResult = () => {
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Result based on your search:"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h4", null, "Sorry, we don't have any content for that yet."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("hr", null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_no_result_svg__WEBPACK_IMPORTED_MODULE_2__.ReactComponent, null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "This tool is being built and doesn't always have a match."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "In the meantime, try searching our ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", null, "Resource center.")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("hr", null));
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Result based on your search:"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h4", null, "Sorry, we don't have any content for that yet."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("hr", null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_no_result_svg__WEBPACK_IMPORTED_MODULE_3__.ReactComponent, null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "This tool is being built and doesn't always have a match."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "In the meantime, try searching our ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", null, "Resource center.")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("hr", null));
 };
 const SearchingLoader = () => {
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "searching..."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_loader_svg__WEBPACK_IMPORTED_MODULE_1__.ReactComponent, null));
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "searching..."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_loader_svg__WEBPACK_IMPORTED_MODULE_2__.ReactComponent, null));
 };
 const Search = _ref => {
   let {
@@ -4168,20 +4168,20 @@ const Search = _ref => {
     onClick: () => {
       navigate(`/${searchInput}`);
     }
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_search_svg__WEBPACK_IMPORTED_MODULE_3__.ReactComponent, null)));
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_search_svg__WEBPACK_IMPORTED_MODULE_4__.ReactComponent, null)));
 };
-const Article = () => {
+const Suggestion = () => {
   let {
     id
   } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useParams)();
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useNavigate)();
   const post = getArticleById(id);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "article-container",
+    className: "suggestion",
     "data-variant": post.type
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
     onClick: () => navigate(-1)
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_back_arrow_svg__WEBPACK_IMPORTED_MODULE_5__.ReactComponent, {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_back_arrow_svg__WEBPACK_IMPORTED_MODULE_1__.ReactComponent, {
     style: {
       verticalAlign: "middle"
     }
@@ -4189,11 +4189,8 @@ const Article = () => {
     src: post.url
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, post.content));
 };
-const Fallback = () => {
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, "Oops!"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "There was a problem loading this tool."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "You can try reloading the page to see if that fixes things. Or, if this problem persists, try searching our ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", null, "Resource Center"), " directly.", " "));
-};
-const Articles = () => {
-  const [articleList, setArticleList] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(data);
+const Suggestions = () => {
+  const [suggestions, setSuggestions] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(data);
   const [isLoading, setIsLoading] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useNavigate)();
   let {
@@ -4202,7 +4199,7 @@ const Articles = () => {
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     setIsLoading(true);
     const filteredData = data.filter(article => article.title.includes(searchParam !== null && searchParam !== void 0 ? searchParam : ""));
-    setArticleList(filteredData);
+    setSuggestions(filteredData);
     setTimeout(() => {
       setIsLoading(false);
     }, 2000);
@@ -4211,27 +4208,27 @@ const Articles = () => {
     style: {
       width: "399px"
     }
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Header, null), isLoading ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(SearchingLoader, null) : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, articleList.length > 0 ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "article-list-container"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Header, null), isLoading ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(SearchingLoader, null) : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, suggestions.length > 0 ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "suggestions-container"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     style: {
       margin: "8px 0"
     }
-  }, "Popular results for this page:"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h4", null, "Videos"), articleList.filter(x => x.type == "video").map(video => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, "Popular results for this page:"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h4", null, "Videos"), suggestions.filter(x => x.type == "video").map(video => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "video",
     onClick: () => {
-      navigate(`/article/${video.id}`);
+      navigate(`/suggestion/${video.id}`);
     }
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_video_svg__WEBPACK_IMPORTED_MODULE_4__.ReactComponent, {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_video_svg__WEBPACK_IMPORTED_MODULE_5__.ReactComponent, {
     className: "video-icon"
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "video-summary"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", null, video.title), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "description"
-  }, video.content)))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("hr", null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h4", null, "Articles"), articleList.filter(x => x.type == "article").map(article => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, video.content)))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("hr", null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h4", null, "Articles"), suggestions.filter(x => x.type == "article").map(article => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "article",
     onClick: () => {
-      navigate(`/article/${article.id}`);
+      navigate(`/suggestion/${article.id}`);
     }
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", null, article.title), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "description"
@@ -4243,15 +4240,15 @@ const HelpCenterRoutes = () => {
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.MemoryRouter, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Routes, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, {
     exact: true,
     path: "/",
-    element: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Articles, null)
+    element: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Suggestions, null)
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, {
     exact: true,
-    path: "/article/:id",
-    element: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Article, null)
+    path: "/suggestion/:id",
+    element: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Suggestion, null)
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, {
     exact: true,
     path: "/:searchParam",
-    element: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Articles, null)
+    element: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Suggestions, null)
   })));
 };
 const Header = () => {
