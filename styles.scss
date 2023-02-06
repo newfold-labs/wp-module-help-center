@@ -6,27 +6,30 @@
   padding: 16px;
 
   .launch-help-center {
+    text-align: center;
     .launch-description {
       margin: 24px 0;
     }
-    .launch-actions {
-      display: grid;
+    .launch-action {
+      display: flex;
       justify-content: center;
       align-items: center;
-      #launch-btn {
-        width: 146px;
-        height: 36px;
-        background-color: #196bde;
-        border: 1px solid #196bde;
-        color: #ffffff;
-        cursor: grab;
-      }
-      a {
-        margin-top: 16px;
-        display: block;
-        text-align: center;
-        cursor: grab;
-      }
+    }
+    button {
+      width: 146px;
+      height: 36px;
+      background-color: #196bde;
+      border: 1px solid #196bde;
+      color: #ffffff;
+      cursor: grab;
+    }
+    p {
+      font-size: 18px;
+    }
+    a {
+      margin-top: 16px;
+      display: block;
+      cursor: grab;
     }
   }
   .suggestions-container {

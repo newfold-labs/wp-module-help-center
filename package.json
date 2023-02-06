@@ -18,6 +18,7 @@
   "dependencies": {
     "@wordpress/api-fetch": "6.20.0",
     "@wordpress/components": "23.0.0",
+    "@wordpress/data": "8.3.0",
     "@wordpress/edit-post": "7.2.0",
     "@wordpress/element": "5.0.0",
     "@wordpress/i18n": "4.23.0",

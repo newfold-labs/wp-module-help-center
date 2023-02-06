@@ -3750,6 +3750,40 @@ var SvgBackArrow = function SvgBackArrow(props) {
 
 /***/ }),
 
+/***/ "./src/icons/help.svg":
+/*!****************************!*\
+  !*** ./src/icons/help.svg ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ReactComponent": () => (/* binding */ SvgHelp),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+var _path;
+function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+var SvgHelp = function SvgHelp(props) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("svg", _extends({
+    width: 26,
+    height: 26,
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg"
+  }, props), _path || (_path = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M13 2.167C7.017 2.167 2.166 7.017 2.166 13c0 5.983 4.85 10.833 10.834 10.833 5.983 0 10.833-4.85 10.833-10.833 0-5.983-4.85-10.833-10.833-10.833ZM11.916 19.5v-2.167h2.167V19.5h-2.167Zm2.167-3.25v-1.236a4.323 4.323 0 0 0 1.981-7.245 4.334 4.334 0 0 0-7.398 3.064h2.167c0-1.195.972-2.166 2.167-2.166 1.195 0 2.166.971 2.166 2.166A2.169 2.169 0 0 1 13 13a1.083 1.083 0 0 0-1.084 1.083v2.167h2.167Z",
+    fill: "#196BDE"
+  })));
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjYiIGhlaWdodD0iMjYiIHZpZXdCb3g9IjAgMCAyNiAyNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMi45OTk4IDIuMTY2NjNDNy4wMTY1OSAyLjE2NjYzIDIuMTY2NSA3LjAxNjcxIDIuMTY2NSAxM0MyLjE2NjUgMTguOTgzMiA3LjAxNjU5IDIzLjgzMzMgMTIuOTk5OCAyMy44MzMzQzE4Ljk4MzEgMjMuODMzMyAyMy44MzMyIDE4Ljk4MzIgMjMuODMzMiAxM0MyMy44MzMyIDcuMDE2NzEgMTguOTgzMSAyLjE2NjYzIDEyLjk5OTggMi4xNjY2M1pNMTEuOTE2NSAxOS41VjE3LjMzMzNIMTQuMDgzMlYxOS41SDExLjkxNjVaTTE0LjA4MzIgMTYuMjVWMTUuMDEzOUMxNS4wMTE3IDE0Ljc3NTkgMTUuODM0NyAxNC4yMzYxIDE2LjQyMyAxMy40NzkzQzE3LjAxMTMgMTIuNzIyNiAxNy4zMzE1IDExLjc5MTggMTcuMzMzMiAxMC44MzMzQzE3LjMzMzIgOS42ODQwMiAxNi44NzY2IDguNTgxODIgMTYuMDY0IDcuNzY5MTZDMTUuMjUxMyA2Ljk1NjUgMTQuMTQ5MSA2LjQ5OTk2IDEyLjk5OTggNi40OTk5NkMxMS44NTA2IDYuNDk5OTYgMTAuNzQ4NCA2Ljk1NjUgOS45MzU3MSA3Ljc2OTE2QzkuMTIzMDUgOC41ODE4MiA4LjY2NjUgOS42ODQwMiA4LjY2NjUgMTAuODMzM0gxMC44MzMyQzEwLjgzMzIgOS42MzgzNyAxMS44MDQ5IDguNjY2NjMgMTIuOTk5OCA4LjY2NjYzQzE0LjE5NDggOC42NjY2MyAxNS4xNjY1IDkuNjM4MzcgMTUuMTY2NSAxMC44MzMzQzE1LjE2NjUgMTIuMDI4MiAxNC4xOTQ4IDEzIDEyLjk5OTggMTNDMTIuNzEyNSAxMyAxMi40MzcgMTMuMTE0MSAxMi4yMzM4IDEzLjMxNzNDMTIuMDMwNiAxMy41MjA0IDExLjkxNjUgMTMuNzk2IDExLjkxNjUgMTQuMDgzM1YxNi4yNUgxNC4wODMyWiIgZmlsbD0iIzE5NkJERSIvPgo8L3N2Zz4K");
+
+/***/ }),
+
 /***/ "./src/icons/launch-illustration.svg":
 /*!*******************************************!*\
   !*** ./src/icons/launch-illustration.svg ***!
@@ -4205,8 +4239,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _icons_launch_illustration_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../icons/launch-illustration.svg */ "./src/icons/launch-illustration.svg");
-/* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services */ "./src/services.js");
+/* harmony import */ var _icons_help_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../icons/help.svg */ "./src/icons/help.svg");
+/* harmony import */ var _icons_launch_illustration_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../icons/launch-illustration.svg */ "./src/icons/launch-illustration.svg");
+/* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services */ "./src/services.js");
+
+
 
 
 
@@ -4214,22 +4251,30 @@ const LaunchHelpCenter = _ref => {
   let {
     refreshSettings
   } = _ref;
+  const [optedOutHelpCenter, SetoptedOutHelpCenter] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const enableHelp = async () => {
-    await (0,_services__WEBPACK_IMPORTED_MODULE_2__.updateWPSettings)({
+    await (0,_services__WEBPACK_IMPORTED_MODULE_3__.updateWPSettings)({
       nfd_help_center_enabled: true
     });
     refreshSettings();
   };
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "launch-help-center"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, "How can we help?"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_launch_illustration_svg__WEBPACK_IMPORTED_MODULE_1__.ReactComponent, null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+  }, optedOutHelpCenter ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, "No Problem!"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "If you ever need help, you can click on the", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_help_svg__WEBPACK_IMPORTED_MODULE_1__.ReactComponent, {
+    style: {
+      verticalAlign: "middle"
+    }
+  }), " icon up at the top of the screen."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    onClick: () => wp.data.dispatch("core/edit-post").closeGeneralSidebar()
+  }, "Close")) : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, "How can we help?"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_launch_illustration_svg__WEBPACK_IMPORTED_MODULE_2__.ReactComponent, null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "launch-description"
   }, "Building a website doesn't have to be hard. Levarge our vast library of videos and help articles to get moving fast."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "launch-actions"
+    className: "launch-action"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
-    onClick: enableHelp,
-    id: "launch-btn"
-  }, "Launch Help Center"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", null, "No thanks, I'll come back if I need help")));
+    onClick: enableHelp
+  }, "Launch Help Center")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+    onClick: () => SetoptedOutHelpCenter(true)
+  }, "No thanks, I'll come back if I need help")));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (LaunchHelpCenter);
 
@@ -4251,7 +4296,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const Loader = () => {
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "searching..."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_loader_svg__WEBPACK_IMPORTED_MODULE_1__.ReactComponent, null), " ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_loader_svg__WEBPACK_IMPORTED_MODULE_1__.ReactComponent, null), " ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_loader_svg__WEBPACK_IMPORTED_MODULE_1__.ReactComponent, null));
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_loader_svg__WEBPACK_IMPORTED_MODULE_1__.ReactComponent, null), " ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_loader_svg__WEBPACK_IMPORTED_MODULE_1__.ReactComponent, null), " ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_loader_svg__WEBPACK_IMPORTED_MODULE_1__.ReactComponent, null));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Loader);
 
@@ -4403,7 +4448,7 @@ const Suggestions = () => {
       setIsLoading(false);
     }, 2000);
   }, [searchParam]);
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, isLoading ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Loader__WEBPACK_IMPORTED_MODULE_3__["default"], null) : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Search__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, isLoading ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "searching..."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Loader__WEBPACK_IMPORTED_MODULE_3__["default"], null)) : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Search__WEBPACK_IMPORTED_MODULE_5__["default"], {
     searchParam: searchParam
   }), suggestions.length > 0 ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "suggestions-container"

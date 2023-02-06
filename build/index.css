@@ -8,15 +8,18 @@
 .nfd-help-center h3 {
   margin: 0 0 !important;
 }
+.nfd-help-center .launch-help-center {
+  text-align: center;
+}
 .nfd-help-center .launch-help-center .launch-description {
   margin: 24px 0;
 }
-.nfd-help-center .launch-help-center .launch-actions {
-  display: grid;
+.nfd-help-center .launch-help-center .launch-action {
+  display: flex;
   justify-content: center;
   align-items: center;
 }
-.nfd-help-center .launch-help-center .launch-actions #launch-btn {
+.nfd-help-center .launch-help-center button {
   width: 146px;
   height: 36px;
   background-color: #196bde;
@@ -24,10 +27,12 @@
   color: #ffffff;
   cursor: grab;
 }
-.nfd-help-center .launch-help-center .launch-actions a {
+.nfd-help-center .launch-help-center p {
+  font-size: 18px;
+}
+.nfd-help-center .launch-help-center a {
   margin-top: 16px;
   display: block;
-  text-align: center;
   cursor: grab;
 }
 .nfd-help-center .suggestions-container .section-header {

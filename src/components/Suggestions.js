@@ -26,7 +26,10 @@ const Suggestions = () => {
   return (
     <div>
       {isLoading ? (
-        <Loader />
+        <>
+          <p>searching...</p>
+          <Loader />
+        </>
       ) : (
         <>
           <Search searchParam={searchParam} />
