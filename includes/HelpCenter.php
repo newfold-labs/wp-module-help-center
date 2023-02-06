@@ -29,11 +29,11 @@ class HelpCenter {
 	public function register_settings() {
 		\register_setting(
 			'general',
-			'nfd-help-center-enabled',
+			'nfd_help_center_enabled',
 			array(
 				'show_in_rest' => true,
 				'type'         => 'boolean',
-				'default' 	   => true,
+				'default' 	   => false,
 				'description'  => __( 'NFD eCommerce Options', 'wp-module-ecommerce' ),
 			)
 		);

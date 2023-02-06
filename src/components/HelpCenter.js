@@ -1,21 +1,49 @@
-import { useState } from "@wordpress/element";
-import { ReactComponent as CloseIcon } from "../icons/close.svg";
-import { ReactComponent as QuestionIcon } from "../icons/question.svg";
-import Modal from "./Modal";
+import apiFetch from "@wordpress/api-fetch";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
+import useSWR, { SWRConfig } from "swr";
+import Loader from "./Loader";
+import LaunchHelpCenter from "./LaunchHelpCenter";
+import Suggestions from "./Suggestions";
+import Suggestion from "./Suggestion";
+
+const HelpCenterRoutes = () => {
+  return (
+    <MemoryRouter>
+      <Routes>
+        <Route exact path="/" element={<Suggestions />} />
+        <Route exact path="/suggestion/:id" element={<Suggestion />} />
+        <Route exact path="/:searchParam" element={<Suggestions />} />
+      </Routes>
+    </MemoryRouter>
+  );
+};
 
 const HelpCenter = () => {
-  const [showModal, setShowModal] = useState(false);
-  const Icon = showModal ? CloseIcon : QuestionIcon;
+  const fetcher = (path) => apiFetch({ path });
+  let {
+    data,
+    error,
+    mutate: refreshSettings,
+  } = useSWR("/wp/v2/settings", fetcher, {
+    revalidateOnReconnect: false,
+  });
   return (
-    <div className={`nfd-help-center-setup ${showModal ? "modal-open" : ""}`}>
-      {showModal && <Modal setShowModal={setShowModal} />}
-      <button
-        className="nfd-help-center-button"
-        onClick={() => setShowModal(!showModal)}
-      >
-        <Icon style={{ verticalAlign: "middle" }} />
-      </button>
-    </div>
+    <SWRConfig
+      value={{
+        fetcher,
+        revalidateOnReconnect: false,
+      }}
+    >
+      <div className="nfd-help-center">
+        {data === undefined ? (
+          <Loader />
+        ) : data.nfd_help_center_enabled ? (
+          <HelpCenterRoutes />
+        ) : (
+          <LaunchHelpCenter refreshSettings={refreshSettings} />
+        )}
+      </div>
+    </SWRConfig>
   );
 };
 
