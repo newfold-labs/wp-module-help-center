@@ -9,6 +9,11 @@ import Search from "./Search";
 const Suggestions = () => {
   const [suggestions, setSuggestions] = useState(data);
   const [isLoading, setIsLoading] = useState(false);
+  const videoSuggestions =
+    suggestions?.filter((suggestion) => suggestion.type == "video") ?? [];
+  const articleSuggestions =
+    suggestions?.filter((suggestion) => suggestion.type == "article") ?? [];
+
   const navigate = useNavigate();
   let { searchParam } = useParams();
 
@@ -36,40 +41,45 @@ const Suggestions = () => {
           {suggestions.length > 0 ? (
             <div className="suggestions-container">
               <p style={{ margin: "16px 0" }}>Recommended Resources</p>
-              <h4 className="section-header">Videos</h4>
-              {suggestions
-                .filter((x) => x.type == "video")
-                .map((video) => (
-                  <div
-                    className="video"
-                    onClick={() => {
-                      navigate(`/suggestion/${video.id}`);
-                    }}
-                  >
-                    <VideoIcon className="video-icon"></VideoIcon>
-                    <div className="video-summary">
-                      <a>{video.title}</a>
-                      <p className="description">{video.content}</p>
-                    </div>
-                    <hr />
-                  </div>
-                ))}
 
-              <h4 className="section-header">Articles</h4>
-              {suggestions
-                .filter((x) => x.type == "article")
-                .map((article) => (
-                  <div
-                    className="article"
-                    onClick={() => {
-                      navigate(`/suggestion/${article.id}`);
-                    }}
-                  >
-                    <a>{article.title}</a>
-                    <p className="description">{article.content}</p>
-                    <hr />
-                  </div>
-                ))}
+              {videoSuggestions.length > 0 && (
+                <>
+                  <h4 className="section-header">Videos</h4>
+                  {videoSuggestions.map((video) => (
+                    <div
+                      className="video"
+                      onClick={() => {
+                        navigate(`/suggestion/${video.id}`);
+                      }}
+                    >
+                      <VideoIcon className="video-icon"></VideoIcon>
+                      <div className="video-summary">
+                        <a>{video.title}</a>
+                        <p className="description">{video.content}</p>
+                      </div>
+                      <hr />
+                    </div>
+                  ))}
+                </>
+              )}
+
+              {articleSuggestions.length > 0 && (
+                <>
+                  <h4 className="section-header">Articles</h4>
+                  {articleSuggestions.map((article) => (
+                    <div
+                      className="article"
+                      onClick={() => {
+                        navigate(`/suggestion/${article.id}`);
+                      }}
+                    >
+                      <a>{article.title}</a>
+                      <p className="description">{article.content}</p>
+                      <hr />
+                    </div>
+                  ))}
+                </>
+              )}
             </div>
           ) : (
             <NoSuggestionsFound />

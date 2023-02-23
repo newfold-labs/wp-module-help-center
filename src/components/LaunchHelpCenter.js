@@ -1,10 +1,11 @@
+import { dispatch } from "@wordpress/data";
 import { useState } from "@wordpress/element";
 import { ReactComponent as HelpIcon } from "../icons/help.svg";
 import { ReactComponent as LaunchIllustration } from "../icons/launch-illustration.svg";
 import { updateWPSettings } from "../services";
 
-const LaunchHelpCenter = ({ refreshSettings }) => {
-  const [optedOutHelpCenter, SetoptedOutHelpCenter] = useState(false);
+const LaunchHelpCenter = ({ refreshSettings, closeHelp }) => {
+  const [optedOutHelpCenter, setOptedOutHelpCenter] = useState(false);
   const enableHelp = async () => {
     await updateWPSettings({
       nfd_help_center_enabled: true,
@@ -22,9 +23,11 @@ const LaunchHelpCenter = ({ refreshSettings }) => {
             of the screen.
           </p>
           <button
-            onClick={() =>
-              wp.data.dispatch("core/edit-post").closeGeneralSidebar()
-            }
+            onClick={() => {
+              dispatch("core/edit-post").closeGeneralSidebar();
+              closeHelp();
+              setOptedOutHelpCenter(false);
+            }}
           >
             Close
           </button>
@@ -40,7 +43,7 @@ const LaunchHelpCenter = ({ refreshSettings }) => {
           <div className="launch-action">
             <button onClick={enableHelp}>Launch Help Center</button>
           </div>
-          <a onClick={() => SetoptedOutHelpCenter(true)}>
+          <a onClick={() => setOptedOutHelpCenter(true)}>
             No thanks, I'll come back if I need help
           </a>
         </>

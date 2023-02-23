@@ -1,10 +1,11 @@
+@import "./modal.scss";
+
 .nfd-help-center {
   h4,
   h3 {
     margin: 0 0 !important;
   }
-  padding: 16px;
-
+  padding: 0 16px;
   .launch-help-center {
     text-align: center;
     .launch-description {
@@ -32,6 +33,7 @@
       cursor: grab;
     }
   }
+
   .suggestions-container {
     .section-header {
       margin-bottom: 8px !important;
@@ -78,5 +80,24 @@
       border: none;
       background: transparent;
     }
+  }
+}
+
+.help-container {
+  width: 300px;
+  height: 100vh;
+  position: fixed;
+  right: 0;
+  background: white;
+}
+
+.wpcontent-container {
+  display: flex;
+  margin-right: 300px;
+}
+
+body:is(.page, .post-php, .post-new-php) {
+  #wp-admin-bar-help-center {
+    display: none;
   }
 }

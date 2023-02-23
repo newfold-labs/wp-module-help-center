@@ -18,7 +18,7 @@ const HelpCenterRoutes = () => {
   );
 };
 
-const HelpCenter = () => {
+const HelpCenter = (props) => {
   const fetcher = (path) => apiFetch({ path });
   let {
     data,
@@ -40,7 +40,10 @@ const HelpCenter = () => {
         ) : data.nfd_help_center_enabled ? (
           <HelpCenterRoutes />
         ) : (
-          <LaunchHelpCenter refreshSettings={refreshSettings} />
+          <LaunchHelpCenter
+            refreshSettings={refreshSettings}
+            closeHelp={props.closeHelp}
+          />
         )}
       </div>
     </SWRConfig>
