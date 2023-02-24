@@ -13,7 +13,6 @@ class HelpCenter {
      */
     protected $container;
 
-    protected $a='Hi';
     /**
      * Constructor.
      *
@@ -25,7 +24,6 @@ class HelpCenter {
         add_action( 'rest_api_init', array( $this, 'register_settings' ) );
         add_action( 'init' , array( $this, 'register_assets') );
         add_action( 'admin_bar_menu', array( $this, 'newfold_help_center' ), 11);
-        // Module functionality goes here
     }
 
     public function register_settings() {
