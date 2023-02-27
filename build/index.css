@@ -101,6 +101,7 @@
   position: fixed;
   right: 0;
   background: white;
+  display: block !important;
 }
 
 .wpcontent-container {
@@ -110,6 +111,13 @@
 
 body:is(.page, .post-php, .post-new-php) #wp-admin-bar-help-center {
   display: none;
+}
+
+.mobile #wpadminbar ul#wp-admin-bar-root-default li {
+  width: 40px !important;
+}
+.mobile #wpadminbar li#wp-admin-bar-help-center {
+  display: block;
 }
 
 /*# sourceMappingURL=index.css.map*/

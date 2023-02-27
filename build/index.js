@@ -4384,6 +4384,7 @@ const Modal = _ref => {
   let {
     onClose
   } = _ref;
+  console.log("hit");
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "modal"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -4542,6 +4543,7 @@ const Suggestions = () => {
   let {
     searchParam
   } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useParams)();
+  console.log(window.location.href);
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     setIsLoading(true);
     const filteredData = _Data_js__WEBPACK_IMPORTED_MODULE_1__.data.filter(article => article.title.includes(searchParam !== null && searchParam !== void 0 ? searchParam : ""));
@@ -4549,7 +4551,7 @@ const Suggestions = () => {
     setTimeout(() => {
       setIsLoading(false);
     }, 2000);
-  }, [searchParam]);
+  }, [searchParam, window.location.href]);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, isLoading ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "searching..."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Loader__WEBPACK_IMPORTED_MODULE_3__["default"], null)) : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Search__WEBPACK_IMPORTED_MODULE_5__["default"], {
     searchParam: searchParam
   }), suggestions.length > 0 ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -7786,6 +7788,7 @@ const HelpCenterPluginSidebar = () => (0,_wordpress_element__WEBPACK_IMPORTED_MO
 window.renderEmbeddedHelp = function renderEmbeddedHelp() {
   let helpContainer = document.createElement("div");
   helpContainer.id = "nfd-help-center";
+  helpContainer.style.display = "none";
   wpContentContainer.appendChild(helpContainer);
   const DOM_TARGET = document.getElementById("nfd-help-center");
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.render)((0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Modal__WEBPACK_IMPORTED_MODULE_5__["default"], {
