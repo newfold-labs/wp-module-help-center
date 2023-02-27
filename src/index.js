@@ -38,6 +38,7 @@ registerPlugin("nfd-help-panel", {
 window.renderEmbeddedHelp = function renderEmbeddedHelp() {
   let helpContainer = document.createElement("div");
   helpContainer.id = "nfd-help-center";
+  helpContainer.style.display = "none";
   wpContentContainer.appendChild(helpContainer);
   const DOM_TARGET = document.getElementById("nfd-help-center");
   render(<Modal onClose={toggleHelp} />, DOM_TARGET);
