@@ -97,6 +97,24 @@
   margin-right: 300px;
 }
 
+.toplevel_page_bluehost {
+  @media screen and (min-width: 1814px) {
+    .wpcontent-container {
+      display: flex;
+
+      #wpbody {
+        flex: 1;
+        #bwa-app {
+          margin-left: 20px !important;
+          #bluehost-logo-wrap {
+            padding: 14px 0 0 12px;
+          }
+        }
+      }
+    }
+  }
+}
+
 body:is(.page, .post-php, .post-new-php) {
   #wp-admin-bar-help-center {
     display: none;
