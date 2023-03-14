@@ -53,7 +53,7 @@ class HelpCenter {
                 'href'   => '',
                 'meta'   => array(
                     'title' => esc_attr__( 'Help', 'wp-module-ecommerce' ),
-                    'onclick' => get_option( 'nfd_help_center_enabled') === '1' ? 'toggleNFDLaunchedEmbeddedHelp()' : 'toggleNFDUnlaunchedEmbeddedHelp()',
+                    'onclick' => get_option( 'nfd_help_center_enabled') === '1' ? 'newfoldEmbeddedHelp.toggleNFDLaunchedEmbeddedHelp()' : 'newfoldEmbeddedHelp.toggleNFDUnlaunchedEmbeddedHelp()',
                 ),
             );
             $admin_bar->add_menu( $help_center_menu );

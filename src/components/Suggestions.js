@@ -47,6 +47,7 @@ const Suggestions = () => {
                   <h4 className="section-header">Videos</h4>
                   {videoSuggestions.map((video) => (
                     <div
+                      key={video.id}
                       className="video"
                       onClick={() => {
                         navigate(`/suggestion/${video.id}`);
@@ -68,6 +69,7 @@ const Suggestions = () => {
                   <h4 className="section-header">Articles</h4>
                   {articleSuggestions.map((article) => (
                     <div
+                      key={article.id}
                       className="article"
                       onClick={() => {
                         navigate(`/suggestion/${article.id}`);

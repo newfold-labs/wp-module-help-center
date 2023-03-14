@@ -13,13 +13,13 @@ const toggleHelp = () => {
   let nfdHelpContainer = document.getElementById("nfd-help-center");
   nfdHelpContainer.classList.toggle("help-container");
 };
-
-window.toggleNFDLaunchedEmbeddedHelp = toggleHelp;
-window.toggleNFDUnlaunchedEmbeddedHelp =
+window.newfoldEmbeddedHelp = {};
+window.newfoldEmbeddedHelp.toggleNFDLaunchedEmbeddedHelp = toggleHelp;
+window.newfoldEmbeddedHelp.toggleNFDUnlaunchedEmbeddedHelp =
   function toggleNFDUnlaunchedEmbeddedHelp() {
     let helpContainer = document.getElementById("nfd-help-center");
     wpContentContainer.removeChild(helpContainer);
-    renderEmbeddedHelp();
+    newfoldEmbeddedHelp.renderEmbeddedHelp();
     toggleHelp();
   };
 
@@ -35,7 +35,7 @@ registerPlugin("nfd-help-panel", {
 });
 
 //For rendering embedded help in Admin Pages
-window.renderEmbeddedHelp = function renderEmbeddedHelp() {
+window.newfoldEmbeddedHelp.renderEmbeddedHelp = function renderEmbeddedHelp() {
   let helpContainer = document.createElement("div");
   helpContainer.id = "nfd-help-center";
   helpContainer.style.display = "none";
@@ -44,4 +44,4 @@ window.renderEmbeddedHelp = function renderEmbeddedHelp() {
   render(<Modal onClose={toggleHelp} />, DOM_TARGET);
 };
 
-renderEmbeddedHelp();
+newfoldEmbeddedHelp.renderEmbeddedHelp();
