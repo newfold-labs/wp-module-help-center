@@ -23,7 +23,6 @@ const HelpCenter = (props) => {
   let {
     data,
     error,
-    mutate: refreshSettings,
   } = useSWR("/wp/v2/settings", fetcher, {
     revalidateOnReconnect: false,
   });
@@ -41,7 +40,6 @@ const HelpCenter = (props) => {
           <HelpCenterRoutes />
         ) : (
           <LaunchHelpCenter
-            refreshSettings={refreshSettings}
             closeHelp={props.closeHelp}
           />
         )}

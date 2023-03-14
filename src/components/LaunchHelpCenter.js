@@ -1,17 +1,22 @@
+import apiFetch from "@wordpress/api-fetch";
 import { dispatch } from "@wordpress/data";
 import { useState } from "@wordpress/element";
+import useSWRMutation from "swr/mutation";
 import { ReactComponent as HelpIcon } from "../icons/help.svg";
 import { ReactComponent as LaunchIllustration } from "../icons/launch-illustration.svg";
-import { updateWPSettings } from "../services";
 
-const LaunchHelpCenter = ({ refreshSettings, closeHelp }) => {
+const fetcher = (path, { arg: data }) =>
+  apiFetch({ path, method: "POST", data });
+
+const LaunchHelpCenter = ({ closeHelp }) => {
+  const updateWPSettings = useSWRMutation("/wp/v2/settings", fetcher, {
+    revalidateOnReconnect: false,
+  });
   const [optedOutHelpCenter, setOptedOutHelpCenter] = useState(false);
   const enableHelp = async () => {
-    await updateWPSettings({
-      nfd_help_center_enabled: true,
-    });
-    refreshSettings();
+    await updateWPSettings.trigger({ nfd_help_center_enabled: true });
   };
+
   return (
     <div className="launch-help-center">
       {optedOutHelpCenter ? (
