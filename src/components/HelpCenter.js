@@ -1,31 +1,22 @@
 import apiFetch from "@wordpress/api-fetch";
-import { MemoryRouter, Route, Routes } from "react-router-dom";
 import useSWR, { SWRConfig } from "swr";
 import Loader from "./Loader";
 import LaunchHelpCenter from "./LaunchHelpCenter";
-import Suggestions from "./Suggestions";
-import Suggestion from "./Suggestion";
-
-const HelpCenterRoutes = () => {
-  return (
-    <MemoryRouter>
-      <Routes>
-        <Route exact path="/" element={<Suggestions />} />
-        <Route exact path="/suggestion/:id" element={<Suggestion />} />
-        <Route exact path="/:searchParam" element={<Suggestions />} />
-      </Routes>
-    </MemoryRouter>
-  );
-};
+import SearchResults from "./SearchResults";
+import algoliasearch from "algoliasearch";
+import { InstantSearch } from "react-instantsearch-hooks-web";
 
 const HelpCenter = (props) => {
   const fetcher = (path) => apiFetch({ path });
-  let {
-    data,
-    error,
-  } = useSWR("/wp/v2/settings", fetcher, {
+  let { data, error } = useSWR("/wp/v2/settings", fetcher, {
     revalidateOnReconnect: false,
   });
+  // Set up the instant search results
+  const searchClient = algoliasearch(
+    "AVE0JWZU92",
+    "eef54890add97ea2583ff1e417ff86ea"
+  );
+
   return (
     <SWRConfig
       value={{
@@ -37,11 +28,14 @@ const HelpCenter = (props) => {
         {data === undefined ? (
           <Loader />
         ) : data.nfd_help_center_enabled ? (
-          <HelpCenterRoutes />
+          <InstantSearch
+            searchClient={searchClient}
+            indexName="nfd_help_searchable_posts"
+          >
+            <SearchResults />
+          </InstantSearch>
         ) : (
-          <LaunchHelpCenter
-            closeHelp={props.closeHelp}
-          />
+          <LaunchHelpCenter closeHelp={props.closeHelp} />
         )}
       </div>
     </SWRConfig>

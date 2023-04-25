@@ -64,12 +64,15 @@
 
   .search-container {
     display: flex;
-    justify-content: space-between;
-    height: 32px;
-    border: 1px solid black;
-    margin: 16px 0px;
+    height: 42px;
+    border-radius: 8px;
+    padding-right: 5px;
+    background-color: #F0F3F5;
+    margin: 16px 0px 0px;
     input {
       border: none;
+      background-color: #F0F3F5;
+      padding-left: 0px ;
       &:focus {
         outline: none !important;
         box-shadow: none !important;
@@ -77,8 +80,41 @@
     }
     button {
       box-shadow: none;
+      padding-top: 3px;
+      background-color: #F0F3F5;
       border: none;
       background: transparent;
+      cursor: pointer;
+    }
+  }
+
+  .attribute {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0px;
+    padding-left: 2px;
+    padding-right: 2px;
+    color: #39415099;
+  }
+
+  .algoliaResult {
+    border-radius: 24px;
+    display: flex;
+    margin-bottom: 10px;
+    padding: 12px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    border: 1px solid #DDDFE0;
+    justify-content: space-between;
+    color: #394150;
+    button {
+      box-shadow: none;
+      padding-top: 3px;
+      background-color: #F0F3F5;
+      border: none;
+      color: #394150;
+      background: transparent;
+      cursor: pointer;
     }
   }
 }
@@ -132,4 +168,8 @@ body:is(.page, .post-php, .post-new-php) {
       display: block;
     }
   }
+}
+
+.icon-button {
+  cursor: pointer;  
 }

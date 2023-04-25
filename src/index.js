@@ -25,7 +25,7 @@ window.newfoldEmbeddedHelp.toggleNFDUnlaunchedEmbeddedHelp =
 
 //For rendering embedded help in Add, edit and View Pages
 const HelpCenterPluginSidebar = () => (
-  <PluginSidebar name="nfd-help-sidebar" title="Help Center" icon=<Help />>
+  <PluginSidebar name="nfd-help-sidebar" title="Help Center" icon={<Help />}>
     <HelpCenter />
   </PluginSidebar>
 );
