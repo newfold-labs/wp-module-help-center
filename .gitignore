@@ -22,5 +22,3 @@ cypress.env.json
 *.log
 *.sql
 *.zip
-
-build/
