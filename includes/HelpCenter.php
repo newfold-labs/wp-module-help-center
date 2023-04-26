@@ -37,10 +37,20 @@ class HelpCenter {
                 'description'  => __( 'NFD eCommerce Options', 'wp-module-ecommerce' ),
             )
         );
+
+        $controllers = array(
+			'NewfoldLabs\\WP\\Module\\HelpCenter\\UserInteractionController',
+		);
+
+		foreach ( $controllers as $controller ) {
+			$instance = new $controller();
+			$instance->register_routes();
+		}
     }
 
     public function newfold_help_center( \WP_Admin_Bar $admin_bar ) {
         if ( current_user_can( 'manage_options' ) ) {
+            // new RestApi();
             $help_icon           = 
 			 '<svg style="vertical-align:middle" width="26" height="26" viewBox="0 0 26 26" cursor="pointer" fill="none" xmlns="http://www.w3.org/2000/svg">
 			 <rect width="26" height="26" rx="13" fill="white"/>
@@ -60,7 +70,7 @@ class HelpCenter {
             $menu_name = $this->container->plugin()->id . '-help-center';
             $admin_bar->remove_menu( $menu_name ); 
         } 
-    }   
+    }
 
     /**
      * Load WP dependencies into the page.

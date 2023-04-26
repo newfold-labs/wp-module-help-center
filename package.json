@@ -16,6 +16,7 @@
     "test:e2e": "echo \"No tests implemented\""
   },
   "dependencies": {
+    "@newfold-labs/wp-module-ai": "file:../wp-module-ai",
     "@wordpress/api-fetch": "6.20.0",
     "@wordpress/components": "23.0.0",
     "@wordpress/data": "8.3.0",

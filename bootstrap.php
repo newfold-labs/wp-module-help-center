@@ -9,22 +9,25 @@ if ( function_exists( 'add_action' ) ) {
 	add_action(
 		'plugins_loaded',
 		function () {
+				if ( ! defined( 'USER_INTERACTION_SERVICE_BASE' ) ) {
+					define( 'USER_INTERACTION_SERVICE_BASE', 'https://hiive.cloud/workers/ai-proxy/' );
+				}
 
-			register(
-				[
-					'name'     => 'help-center',
-					'label'    => __( 'Help Center', 'newfold-help-center-module' ),
-					'callback' => function ( Container $container ) {
-						define( 'NFD_HELPCENTER_BUILD_DIR', __DIR__ . '/build/' );
-						define( 'NFD_HELPCENTER_PLUGIN_URL', $container->plugin()->url );
-						new HelpCenter( $container );
-					},
-					'isActive' => true,
-					'isHidden' => true,
-				]
-			);
+				register(
+					[
+						'name'     => 'help-center',
+						'label'    => __( 'Help Center', 'newfold-help-center-module' ),
+						'callback' => function ( Container $container ) {
+							define( 'NFD_HELPCENTER_BUILD_DIR', __DIR__ . '/build/' );
+							define( 'NFD_HELPCENTER_PLUGIN_URL', $container->plugin()->url );
+							new HelpCenter( $container );
+						},
+						'isActive' => true,
+						'isHidden' => true,
+					]
+				);
 
-		}
-	);
+			}
+		);
 
 }

@@ -1,6 +1,6 @@
 import { ReactComponent as NoResultIllustration } from "../icons/no-result.svg";
 
-const NoSuggestionsFound = () => {
+const NoResults = () => {
   return (
     <div>
       <p>Result based on your search:</p>
@@ -16,4 +16,4 @@ const NoSuggestionsFound = () => {
   );
 };
 
-export default NoSuggestionsFound;
+export default NoResults;

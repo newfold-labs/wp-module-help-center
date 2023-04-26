@@ -1,9 +1,17 @@
-export const AlgoliaResult = ({ searchTitle }) => {
+import { ReactComponent as Go } from "../icons/go.svg";
+
+export const AlgoliaResult = ({ searchTitle, onGo }) => {
   return (
     <>
       <div className="algoliaResult">
         <p>{searchTitle}</p>
-        <button>Ask</button>
+        <button
+          onClick={() => {
+            onGo();
+          }}
+        >
+          <Go />
+        </button>
       </div>
     </>
   );
