@@ -1,8 +1,17 @@
+import { useEffect } from "@wordpress/element";
 import { ReactComponent as CloseIcon } from "../icons/close.svg";
 import { ReactComponent as Help } from "../icons/help.svg";
 import HelpCenter from "./HelpCenter";
 
+import { toggleHelp } from "..";
+import { LocalStorageUtils } from "../utils";
+
 const Modal = ({ onClose }) => {
+  useEffect(() => {
+    const helpVisible = LocalStorageUtils.getHelpVisible();
+    toggleHelp(helpVisible);
+  }, []);
+
   return (
     <div className="modal">
       <div className="modal-header">

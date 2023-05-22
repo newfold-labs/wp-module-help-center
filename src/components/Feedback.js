@@ -1,11 +1,11 @@
-import { useEffect, useState } from "@wordpress/element";
+import { useEffect, useState, useRef } from "@wordpress/element";
 //
-import { ReactComponent as ThumbsUp } from "../icons/thumbs-up.svg";
-import { ReactComponent as ThumbsDown } from "../icons/thumbs-down.svg";
 import { InteractionAPIs } from "../utils";
 
 const Feedback = ({ postId }) => {
   const [status, setStatus] = useState("");
+  const yesButtonRef = useRef(null);
+  const noButtonRef = useRef(null);
 
   const postFeedback = async () => {
     if (status === "helpful" || status === "notHelpful") {
@@ -15,10 +15,20 @@ const Feedback = ({ postId }) => {
 
   useEffect(() => {
     setStatus("");
+    noButtonRef.current.className = "feedback-button no";
+    yesButtonRef.current.className = "feedback-button yes";
   }, [postId]);
 
   useEffect(() => {
     postFeedback();
+    if (status === "helpful") {
+      yesButtonRef.current.className = "feedback-button yes selected-yes";
+      noButtonRef.current.className = "feedback-button no";
+    }
+    if (status === "notHelpful") {
+      noButtonRef.current.className = "feedback-button no selected-no";
+      yesButtonRef.current.className = "feedback-button yes";
+    }
   }, [status]);
 
   return (
@@ -28,21 +38,25 @@ const Feedback = ({ postId }) => {
           <b>Did this result help you ?</b>
         </p>
       </div>
-      <div className="icon">
-        <ThumbsUp
+      <div class="icon">
+        <button
+          ref={yesButtonRef}
           onClick={() => {
             setStatus("helpful");
           }}
-          fill={status === "helpful" && "blue"}
-        />
-      </div>
-      <div className="icon">
-        <ThumbsDown
-          fill={status === "notHelpful" && "blue"}
+          class="feedback-button yes"
+        >
+          {status === "helpful" && <>&#129395;</>} Yes
+        </button>
+        <button
           onClick={() => {
             setStatus("notHelpful");
           }}
-        />
+          ref={noButtonRef}
+          class="feedback-button no"
+        >
+          {status === "notHelpful" && <>&#128557;</>} No
+        </button>
       </div>
     </div>
   );

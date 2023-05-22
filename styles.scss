@@ -72,6 +72,8 @@
     input {
       border: none;
       background-color: #F0F3F5;
+      font-size: 15px;
+      color: #1D1D1F;
       padding-left: 0px ;
       &:focus {
         outline: none !important;
@@ -84,63 +86,127 @@
       background-color: #F0F3F5;
       border: none;
       background: transparent;
-      cursor: pointer;
+      cursor: text;
     }
   }
 
   .attribute {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     margin-top: 0px;
     padding-left: 2px;
     padding-right: 2px;
     color: #39415099;
+    span {
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 14px;
+      text-align: right;
+      color: #394150;
+    }
   }
 
   .algoliaResult {
     border-radius: 24px;
     display: flex;
-    margin-bottom: 6px;
-    padding: 12px;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    border: 1px solid #DDDFE0;
+    margin-bottom: 8px;
+    padding: 12px 16px;
+    box-shadow: 0 0 0 1px #DDDFE0;
+    transition: box-shadow .2s ease;
+    box-sizing: border-box;
+    cursor: pointer;
+    position: relative;
     justify-content: space-between;
     color: #394150;
-    button {
-      box-shadow: none;
-      padding-top: 3px;
-      background-color: #F0F3F5;
-      border: none;
-      color: #394150;
-      background: transparent;
-      cursor: pointer;
+    p {
+      margin: 0 !important;
+    }
+    .svg {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: right .2s ease;
+    }
+    &:hover {
+      box-shadow: 0 0 0 2px #3575d3;
+      .svg {
+        right: 14px;
+      }
     }
   }
 
   .feedback-container {
     display: flex;
     justify-content: space-between;
+    background-color: #F0F3F5;
+    padding-left: 4%;
+    padding-right: 4%;
+    border-radius: 4px;
+    margin-top: 6%;
+    margin-bottom: 8%;
+    button {
+      border-radius: 20px;
+      border-color: #B2BCC2;
+      border-width: 1px;
+      padding-top: 5%;
+      padding-bottom: 5%;
+      cursor: pointer;
+      box-shadow: none;
+    }
+    .feedback-button {
+      padding-left: 13px;
+      padding-right: 13px;
+      padding-bottom: 6px;
+      padding-top: 6px;
+    }
+    .button-icon {
+      height: 20px;
+      width: 20px;
+      margin-right: 4px;
+    }
+    .yes {
+      border-bottom-right-radius: 0px;
+      border-top-right-radius: 0px;
+      border-right-width: 0px;
+    }
+    .no {
+      border-bottom-left-radius: 0px;
+      border-top-left-radius: 0px;
+    }
+    .selected-yes {
+      background: linear-gradient(0deg, #E6FFF4, #E6FFF4), #FFFFFF;
+      padding-bottom: 4.4px;
+      padding-top: 5.8px;
+    }
+    .selected-no {
+      background-color: #FFDCDC;
+      padding-bottom: 4.4px;
+      padding-top: 5.8px;
+    }
     .icon {
-      margin-top: 12px;
+      margin-top: 8px;
       cursor: pointer
     }
   }
 }
 
 .help-container {
-  width: 300px;
+  width: 350px;
   height: 100vh;
   overflow: auto;
   position: fixed;
   right: 0;
   background: white;
   display: block !important;
+  border: 1px solid #DCDCDC;
+  box-shadow: -5px 0px 36px rgba(0, 0, 0, 0.25);
 }
 
 .wpcontent-container {
   display: flex;
-  margin-right: 300px;
+  // display: flex;
+  // margin-right: 300px;
 }
 
 .toplevel_page_bluehost {

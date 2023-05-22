@@ -3,15 +3,16 @@ import { ReactComponent as Go } from "../icons/go.svg";
 export const AlgoliaResult = ({ searchTitle, onGo }) => {
   return (
     <>
-      <div className="algoliaResult">
+      <div
+        className="algoliaResult"
+        onClick={() => {
+          onGo();
+        }}
+      >
         <p>{searchTitle}</p>
-        <button
-          onClick={() => {
-            onGo();
-          }}
-        >
+        <div className="svg">
           <Go />
-        </button>
+        </div>
       </div>
     </>
   );

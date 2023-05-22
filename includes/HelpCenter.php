@@ -21,23 +21,12 @@ class HelpCenter {
     public function __construct( Container $container ) {
 
         $this->container = $container;
-        add_action( 'rest_api_init', array( $this, 'register_settings' ) );
+        add_action( 'rest_api_init', array( $this, 'initialize_rest' ) );
         add_action( 'init' , array( $this, 'register_assets') );
         add_action( 'admin_bar_menu', array( $this, 'newfold_help_center' ), 11);
     }
 
-    public function register_settings() {
-        \register_setting(
-            'general',
-            'nfd_help_center_enabled',
-            array(
-                'show_in_rest' => true,
-                'type'         => 'boolean',
-                'default'      => false,
-                'description'  => __( 'NFD eCommerce Options', 'wp-module-ecommerce' ),
-            )
-        );
-
+    public function initialize_rest() {
         $controllers = array(
 			'NewfoldLabs\\WP\\Module\\HelpCenter\\UserInteractionController',
 		);
@@ -50,20 +39,20 @@ class HelpCenter {
 
     public function newfold_help_center( \WP_Admin_Bar $admin_bar ) {
         if ( current_user_can( 'manage_options' ) ) {
-            // new RestApi();
             $help_icon           = 
-			 '<svg style="vertical-align:middle" width="26" height="26" viewBox="0 0 26 26" cursor="pointer" fill="none" xmlns="http://www.w3.org/2000/svg">
-			 <rect width="26" height="26" rx="13" fill="white"/>
-			 <path fill-rule="evenodd" clip-rule="evenodd" d="M13.0003 2.1665C7.01708 2.1665 2.16699 7.01659 2.16699 12.9998C2.16699 18.9831 7.01708 23.8332 13.0003 23.8332C18.9836 23.8332 23.8337 18.9831 23.8337 12.9998C23.8337 7.01659 18.9836 2.1665 13.0003 2.1665ZM11.917 19.4998V17.3332H14.0837V19.4998H11.917ZM14.0837 16.2498V15.0138C15.0122 14.7757 15.8352 14.2359 16.4235 13.4792C17.0118 12.7225 17.332 11.7917 17.3337 10.8332C17.3337 9.6839 16.8771 8.5817 16.0645 7.76904C15.2518 6.95638 14.1496 6.49984 13.0003 6.49984C11.8511 6.49984 10.7489 6.95638 9.93619 7.76904C9.12354 8.5817 8.66699 9.6839 8.66699 10.8332H10.8337C10.8337 9.63825 11.8054 8.6665 13.0003 8.6665C14.1952 8.6665 15.167 9.63825 15.167 10.8332C15.167 12.0281 14.1952 12.9998 13.0003 12.9998C12.713 12.9998 12.4375 13.114 12.2343 13.3171C12.0311 13.5203 11.917 13.7959 11.917 14.0832V16.2498H14.0837Z" fill="#196BDE"/>
-			 </svg>';
+			'<svg style="vertical-align: middle; cursor: pointer" width="22" height="22" viewBox="0 1 36 37" fill="#000" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M18 0.901855C8.05888 0.901855 0 8.96073 0 18.9019C0 28.843 8.05888 36.9019 18 36.9019H33.3659C34.8207 36.9019 36 35.7225 36 34.2677V18.9019C36 8.96073 27.9411 0.901855 18 0.901855ZM17.087 18.7795C16.751 19.3675 16.583 20.0647 16.583 20.8711V21.7027H19.9094V21.2995C19.9094 20.7115 20.0102 20.2243 20.2118 19.8379C20.4302 19.4515 20.825 18.9895 21.3962 18.4519C22.1186 17.7631 22.6646 17.1079 23.0342 16.4863C23.4038 15.8647 23.5886 15.1171 23.5886 14.2435C23.5886 13.3531 23.3534 12.5467 22.883 11.8243C22.4294 11.0851 21.791 10.5055 20.9678 10.0855C20.1446 9.66548 19.2038 9.45548 18.1454 9.45548C16.7342 9.45548 15.5582 9.85028 14.6174 10.6399C13.6934 11.4127 13.0718 12.3367 12.7526 13.4119L15.6506 14.6215C15.8354 14.0335 16.1378 13.5463 16.5578 13.1599C16.9946 12.7567 17.549 12.5551 18.221 12.5551C18.8594 12.5551 19.3718 12.7399 19.7582 13.1095C20.1446 13.4623 20.3378 13.8991 20.3378 14.4199C20.3378 14.8567 20.2202 15.2431 19.985 15.5791C19.7666 15.9151 19.4054 16.3099 18.9014 16.7635C18.0446 17.5195 17.4398 18.1915 17.087 18.7795ZM16.6586 27.4231C17.0954 27.8431 17.6162 28.0531 18.221 28.0531C18.8258 28.0531 19.3382 27.8431 19.7582 27.4231C20.1782 26.9863 20.3882 26.4655 20.3882 25.8607C20.3882 25.2559 20.1782 24.7435 19.7582 24.3235C19.3382 23.9035 18.8258 23.6935 18.221 23.6935C17.6162 23.6935 17.0954 23.9035 16.6586 24.3235C16.2386 24.7435 16.0286 25.2559 16.0286 25.8607C16.0286 26.4655 16.2386 26.9863 16.6586 27.4231Z"
+                fill="#fff" />
+            </svg>';
             $help_center_menu = array(
                 'id'     => 'help-center',
                 'parent' => 'top-secondary',
                 'title'  => $help_icon,
                 'href'   => '',
                 'meta'   => array(
-                    'title' => esc_attr__( 'Help', 'wp-module-ecommerce' ),
-                    'onclick' => get_option( 'nfd_help_center_enabled') === '1' ? 'newfoldEmbeddedHelp.toggleNFDLaunchedEmbeddedHelp()' : 'newfoldEmbeddedHelp.toggleNFDUnlaunchedEmbeddedHelp()',
+                    'title' => esc_attr__( 'Help', 'wp-module-help' ),
+                    'onclick' => 'newfoldEmbeddedHelp.toggleNFDLaunchedEmbeddedHelp()',
                 ),
             );
             $admin_bar->add_menu( $help_center_menu );
@@ -75,7 +64,6 @@ class HelpCenter {
     /**
      * Load WP dependencies into the page.
      */
-
     public function register_assets() {
         $asset_file = NFD_HELPCENTER_BUILD_DIR . 'index.asset.php';
         if ( file_exists($asset_file) ) {
@@ -95,4 +83,3 @@ class HelpCenter {
         }
     }
 }
-

@@ -4,28 +4,64 @@ import { useInstantSearch, useSearchBox } from "react-instantsearch-hooks-web";
 import moduleAI from "@newfold-labs/wp-module-ai";
 //
 import { ReactComponent as SearchIcon } from "../icons/search.svg";
-import { ReactComponent as OpenAIIcon } from "../icons/openai.svg";
 //
 import { AlgoliaResult } from "./AlgoliaResult";
-import Loader from "./Loader";
 import { ResultContent } from "./ResultContent";
+import { LocalStorageUtils } from "../utils";
+import Loader from "./Loader";
 
 const SearchResults = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [noResult, setNoResult] = useState(false);
   const [searchInput, setSearchInput] = useState("");
-  const [searchButtonVisible, setSearchButtonVisible] = useState(false);
   const [resultContent, setResultContent] = useState("");
   const [postId, setPostId] = useState();
   const { query, refine, clear } = useSearchBox();
   const { results } = useInstantSearch();
 
+  const populateSearchResult = (resultContent, postId, searchInput) => {
+    const resultContentFormatted = resultContent.replace(/\n/g, "<br /><br />");
+    setResultContent(resultContentFormatted);
+    setPostId(postId);
+    LocalStorageUtils.persistResult(resultContentFormatted, postId);
+    LocalStorageUtils.persistSearchInput(searchInput);
+  };
+
+  useEffect(() => {
+    // Populate the results from local storage if they exist
+    const {
+      content: currentResultContent, postId: currentResultPostId
+    } = LocalStorageUtils.getResultInfo();
+    if (currentResultContent) {
+      setResultContent(currentResultContent);
+    }
+    if (currentResultPostId) {
+      setPostId(currentResultPostId);
+    }
+
+    const input = LocalStorageUtils.getSearchInput();
+    if (input) {
+      setSearchInput(input);
+      refine(input);
+    }
+  }, []);
+
+  const getResultMatches = (proximity, words) => {
+    return (proximity / words) >= 0.75;
+  }
+
   const getAIResult = async () => {
     setIsLoading(true);
     try {
+      // Check if the algolia results are close enough
+      const hits = results.hits;
+      const resultMatches = hits.length > 0 ? getResultMatches(hits[0]._rankingInfo.proximityDistance, hits[0]._rankingInfo.words) : false;
+      if (resultMatches) {
+        populateSearchResult(hits[0].content, hits[0].post_id, searchInput);
+        return;
+      }
       const result = await moduleAI.search.getSearchResult(query, "helpcenter");
-      setResultContent(result["result"].replace(/\n/g, "<br />"));
-      setPostId(result["post_id"]);
+      populateSearchResult(result["result"], result["post_id"], searchInput);
     } catch (exception) {
       console.log(exception);
       setNoResult(true);
@@ -33,14 +69,6 @@ const SearchResults = () => {
       setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    if (searchInput && searchInput.length > 0) {
-      setSearchButtonVisible(true);
-      return;
-    }
-    setSearchButtonVisible(false);
-  }, [searchInput]);
 
   const debouncedResults = useMemo(() => {
     return debounce(function (query) {
@@ -68,11 +96,16 @@ const SearchResults = () => {
   return (
     <>
       <div className="search-container">
-        <button>
+        <button
+          onClick={() => {
+            document.getElementById("search-input-box").focus();
+          }}
+        >
           <SearchIcon />
         </button>
         <input
           type="text"
+          id="search-input-box"
           style={{
             flexGrow: 2,
           }}
@@ -81,27 +114,18 @@ const SearchResults = () => {
           placeholder="Ask me anything..."
           onChange={(e) => {
             setSearchInput(e.target.value);
-            setResultContent("");
-            debouncedResults(searchInput);
+            populateSearchResult("", undefined, e.target.value);
+            setNoResult(false);
+            debouncedResults(e.target.value);
+          }}
+          onKeyDown={async (e) => {
+            if (e.key === "Enter") {
+              await getAIResult();
+            }
           }}
         />
-        <button
-          style={{
-            ...(!searchButtonVisible && {
-              display: "none",
-            }),
-          }}
-          onClick={async () => {
-            await getAIResult();
-          }}
-        >
-          Ask
-        </button>
       </div>
       <div className="attribute">
-        <p>
-          Powered by <OpenAIIcon /> OpenAI
-        </p>
         <p>
           <span>{searchInput ? searchInput.length : 0}/144</span>
         </p>
@@ -121,15 +145,14 @@ const SearchResults = () => {
           </b>
         </p>
       )}
-      {results.hits.slice(0, 3).map((result) => {
+      {results.hits.map((result) => {
         return (
           <>
             <AlgoliaResult
               searchTitle={result.post_title}
               onGo={() => {
-                setResultContent(result.content.replace(/\n/g, "<br />"));
-                setPostId(result.post_id);
-                setSearchInput(query);
+                setSearchInput(result.post_title);
+                populateSearchResult(result.content, result.post_id, result.post_title);
               }}
             />
           </>
