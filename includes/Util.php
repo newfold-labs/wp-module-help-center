@@ -10,11 +10,11 @@ class Util {
 	/**
 	 * The function to proxy to the AI service and get a response
 	 *
-	 * @param integer $post_id the Post Id
-	 * @param string  $status  the status
+	 * @param integer $post_id  the Post Id
+	 * @param string  $feedback the feedback
 	 */
-	public static function post_status (
-		$post_id, $status
+	public static function post_feedback (
+		$post_id, $feedback
 	) {
 		if ( ! function_exists( 'wp_json_encode' ) ) {
 			require_once ABSPATH . 'wp-includes/functions.php';
@@ -28,7 +28,7 @@ class Util {
 			'timeout' => 60,
 			'body'    => wp_json_encode( array(
 				'postId' => $post_id,
-                'meta'   => $status === 'helpful' ? 'likes' : 'dislikes'
+                'meta'   => $feedback === 'helpful' ? 'likes' : 'dislikes'
 			) )
 		) );
 		if ( wp_remote_retrieve_response_code( $response ) !== 200 ) {

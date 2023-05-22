@@ -60,7 +60,7 @@ class UserInteractionController extends \WP_REST_Controller {
 		$post_id = $request['post_id'];
 		$status  = $request['status'];
 
-		$response = Util::post_status( $post_id, $status );
+		$response = Util::post_feedback( $post_id, $status );
 
 		if ( ! $response ) {
 			return new \WP_Error( 'ServerError', $response['error'] );
