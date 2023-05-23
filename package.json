@@ -16,7 +16,7 @@
     "test:e2e": "echo \"No tests implemented\""
   },
   "dependencies": {
-    "@newfold-labs/wp-module-ai": "file:../wp-module-ai",
+    "@newfold/js-utility-ai": "git://github.com/newfold-labs/js-utility-ai",
     "@wordpress/api-fetch": "6.20.0",
     "@wordpress/components": "23.0.0",
     "@wordpress/data": "8.3.0",
@@ -27,8 +27,7 @@
     "algoliasearch": "4.17.0",
     "lodash.debounce": "4.0.8",
     "react-instantsearch-hooks-web": "6.43.0",
-    "react-router-dom": "6.6.2",
-    "swr": "2.0.0"
+    "react-router-dom": "6.6.2"
   },
   "devDependencies": {
     "@wordpress/scripts": "25.0.0"
