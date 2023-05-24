@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "@wordpress/element";
+import { __ } from "@wordpress/i18n";
 //
 import { InteractionAPIs } from "../utils";
 
@@ -35,7 +36,7 @@ const Feedback = ({ postId }) => {
     <div className="feedback-container">
       <div>
         <p>
-          <b>Did this result help you ?</b>
+          <b>{__('Did this result help you ?', 'wp-module-help-center')}</b>
         </p>
       </div>
       <div class="icon">

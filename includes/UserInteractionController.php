@@ -75,6 +75,13 @@ class UserInteractionController extends \WP_REST_Controller {
 	 * @return \WP_Error
 	 */
 	public function check_permission() {
+		if ( ! current_user_can('read') ) {
+			return new \WP_Error(
+				'rest_forbidden',
+				__( 'You must be authenticated to make this call' ),
+				array( 'status' => 401 )
+			);
+		}
 		return true;
 	}
 }

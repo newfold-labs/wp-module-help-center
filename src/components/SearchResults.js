@@ -87,7 +87,6 @@ const SearchResults = () => {
   if (isLoading) {
     return (
       <>
-        <p>searching...</p>
         <Loader />
       </>
     );
