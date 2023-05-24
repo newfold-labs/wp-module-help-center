@@ -13,7 +13,7 @@ class UserInteractionController extends \WP_REST_Controller {
 	 *
 	 * @var string
 	 */
-	protected $namespace = 'nfd-help/v1';
+	protected $namespace = 'nfd-help-center/v1';
 
 	/**
 	 * The base of this controller's route

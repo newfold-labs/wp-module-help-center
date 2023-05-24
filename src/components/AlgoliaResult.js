@@ -5,9 +5,7 @@ export const AlgoliaResult = ({ searchTitle, onGo }) => {
     <>
       <div
         className="algoliaResult"
-        onClick={() => {
-          onGo();
-        }}
+        onClick={onGo}
       >
         <p>{searchTitle}</p>
         <div className="svg">

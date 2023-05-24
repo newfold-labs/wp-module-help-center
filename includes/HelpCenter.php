@@ -3,7 +3,11 @@
 namespace NewfoldLabs\WP\Module\HelpCenter;
 
 use NewfoldLabs\WP\ModuleLoader\Container;
+use NewfoldLabs\WP\Module\Data\SiteCapabilities;
 
+/**
+ * The class to initialize and load the module.
+ */
 class HelpCenter {
 
     /**
@@ -19,10 +23,9 @@ class HelpCenter {
      * @param Container $container
      */
     public function __construct( Container $container ) {
-
         $this->container = $container;
         add_action( 'rest_api_init', array( $this, 'initialize_rest' ) );
-        add_action( 'init' , array( $this, 'register_assets') );
+        add_action( 'init', array( $this, 'register_assets') );
         add_action( 'admin_bar_menu', array( $this, 'newfold_help_center' ), 11);
     }
 
@@ -55,10 +58,14 @@ class HelpCenter {
                     'onclick' => 'newfoldEmbeddedHelp.toggleNFDLaunchedEmbeddedHelp()',
                 ),
             );
-            $admin_bar->add_menu( $help_center_menu );
-            $menu_name = $this->container->plugin()->id . '-help-center';
-            $admin_bar->remove_menu( $menu_name ); 
-        } 
+            $capability   = new SiteCapabilities();
+            $help_enabled = $capability->get( 'canAccessHelpCenter' );
+            if ( $help_enabled ) {
+                $admin_bar->add_menu( $help_center_menu );
+                $menu_name = $this->container->plugin()->id . '-help-center';
+                $admin_bar->remove_menu( $menu_name );
+            }
+        }
     }
 
     /**
