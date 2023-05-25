@@ -58,8 +58,7 @@ class HelpCenter {
                     'onclick' => 'newfoldEmbeddedHelp.toggleNFDLaunchedEmbeddedHelp()',
                 ),
             );
-            $capability   = new SiteCapabilities();
-            $help_enabled = $capability->get( 'canAccessHelpCenter' );
+            $help_enabled = $this->container->get('capabilities')->get( 'canAccessHelpCenter' );
             if ( $help_enabled ) {
                 $admin_bar->add_menu( $help_center_menu );
                 $menu_name = $this->container->plugin()->id . '-help-center';
