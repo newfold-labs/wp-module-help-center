@@ -9,6 +9,22 @@
       "email": "faizaan.md@newfold.com"
     }
   ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://newfold-labs.github.io/satis/",
+      "only": [
+        "newfold-labs/*"
+      ]
+    }
+  ],
+  "require-dev": {
+    "newfold-labs/wp-php-standards": "@stable"
+  },
+  "require": {
+    "newfold-labs/wp-module-data": "^2.3.4",
+    "newfold-labs/wp-module-ai": "^1.0.0"
+  },
   "autoload": {
     "psr-4": {
       "NewfoldLabs\\WP\\Module\\HelpCenter\\": "includes"
@@ -16,5 +32,10 @@
     "files": [
       "bootstrap.php"
     ]
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   }
 }
