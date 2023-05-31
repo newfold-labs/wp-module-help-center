@@ -59,11 +59,11 @@ class HelpCenter {
                 ),
             );
             $help_enabled = $this->container->get('capabilities')->get( 'canAccessHelpCenter' );
-            // if ( $help_enabled ) {
+            if ( $help_enabled ) {
                 $admin_bar->add_menu( $help_center_menu );
                 $menu_name = $this->container->plugin()->id . '-help-center';
                 $admin_bar->remove_menu( $menu_name );
-            // }
+            }
         }
     }
 
