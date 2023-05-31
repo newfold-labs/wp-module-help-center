@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
 //
-import { InteractionAPIs } from "../utils";
+import { Analytics, InteractionAPIs } from "../utils";
 
 const Feedback = ({ postId }) => {
   const [status, setStatus] = useState("");
@@ -11,6 +11,7 @@ const Feedback = ({ postId }) => {
   const postFeedback = async () => {
     if (status === "helpful" || status === "notHelpful") {
       InteractionAPIs.postFeedback(postId, status);
+      Analytics.sendEvent('feedback', 'status');
     }
   };
 

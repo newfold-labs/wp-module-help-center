@@ -59,11 +59,11 @@ class HelpCenter {
                 ),
             );
             $help_enabled = $this->container->get('capabilities')->get( 'canAccessHelpCenter' );
-            if ( $help_enabled ) {
+            // if ( $help_enabled ) {
                 $admin_bar->add_menu( $help_center_menu );
                 $menu_name = $this->container->plugin()->id . '-help-center';
                 $admin_bar->remove_menu( $menu_name );
-            }
+            // }
         }
     }
 
@@ -85,6 +85,12 @@ class HelpCenter {
                 'stylesheet',
                 NFD_HELPCENTER_PLUGIN_URL . 'vendor/newfold-labs/wp-module-help-center/build/index.css',
                 null, '1', 'screen'
+            );
+
+            \wp_add_inline_script(
+                'nfd-helpcenter-dependency',
+                'var nfdHelpCenter =' . wp_json_encode( array( 'restUrl' => \get_home_url() . '/index.php?rest_route=', ) ) . ';',
+                'before'
             );
         }
     }
