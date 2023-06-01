@@ -7,7 +7,7 @@ import { ReactComponent as SearchIcon } from "../icons/search.svg";
 //
 import { AlgoliaResult } from "./AlgoliaResult";
 import { ResultContent } from "./ResultContent";
-import { LocalStorageUtils } from "../utils";
+import { Analytics, LocalStorageUtils } from "../utils";
 import Loader from "./Loader";
 
 const SearchResults = () => {
@@ -25,6 +25,7 @@ const SearchResults = () => {
     setPostId(postId);
     LocalStorageUtils.persistResult(resultContentFormatted, postId);
     LocalStorageUtils.persistSearchInput(searchInput);
+    Analytics.sendEvent('search', postId);
   };
 
   useEffect(() => {

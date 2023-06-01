@@ -1,6 +1,7 @@
+import { HiiveAnalytics, HiiveEvent } from "@newfold-labs/js-utility-ui-analytics";
 import apiFetch from "@wordpress/api-fetch";
 
-const base = "nfd-help/v1";
+const base = "nfd-help-center/v1";
 
 export const InteractionAPIs = {
   postFeedback: (postId, status) =>
@@ -37,5 +38,12 @@ export const LocalStorageUtils = {
   },
   getSearchInput: () => {
     return localStorage.getItem("searchInput");
+  }
+}
+
+export const Analytics = {
+  sendEvent: (event, data) => {
+    const hiiveEvent = new HiiveEvent('nfd-help-center', event, { value: data, time: new Date() });
+    HiiveAnalytics.send(hiiveEvent);
   }
 }

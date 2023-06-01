@@ -86,6 +86,12 @@ class HelpCenter {
                 NFD_HELPCENTER_PLUGIN_URL . 'vendor/newfold-labs/wp-module-help-center/build/index.css',
                 null, '1', 'screen'
             );
+
+            \wp_add_inline_script(
+                'nfd-helpcenter-dependency',
+                'var nfdHelpCenter =' . wp_json_encode( array( 'restUrl' => \get_home_url() . '/index.php?rest_route=', ) ) . ';',
+                'before'
+            );
         }
     }
 }

@@ -1,14 +1,20 @@
 import { PluginSidebar } from "@wordpress/edit-post";
 import React, { render } from "@wordpress/element";
 import { registerPlugin } from "@wordpress/plugins";
+import { HiiveAnalytics, HiiveEvent } from "@newfold-labs/js-utility-ui-analytics";
 import "../styles.scss";
 import HelpCenter from "./components/HelpCenter";
 import Modal from "./components/Modal";
 import { ReactComponent as Help } from "./icons/help.svg";
-import { LocalStorageUtils } from "./utils";
+import { Analytics, LocalStorageUtils } from "./utils";
+
+HiiveAnalytics.initialize({
+  urls: {
+    single: window.nfdHelpCenter.restUrl + "/newfold-data/v1/events",
+  },
+});
 
 const wpContentContainer = document.getElementById("wpcontent");
-
 
 export const toggleHelp = (visible) => {
   wpContentContainer.classList.toggle("wpcontent-container", visible);
@@ -22,9 +28,11 @@ window.newfoldEmbeddedHelp.toggleNFDLaunchedEmbeddedHelp = () => {
   const helpVisible = LocalStorageUtils.getHelpVisible();
   if (Object.is(helpVisible, undefined)) {
     toggleHelp(true);
+    Analytics.sendEvent("page", "opened");
     return;
   }
   toggleHelp(!helpVisible);
+  Analytics.sendEvent("page", "closed");
 };
 
 window.newfoldEmbeddedHelp.toggleNFDUnlaunchedEmbeddedHelp =
