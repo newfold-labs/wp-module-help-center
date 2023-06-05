@@ -35,7 +35,7 @@ const Feedback = ({ postId }) => {
 
   return (
     <div className="feedback-container">
-      <div>
+      <div className="feedback-question">
         <p>
           <b>{__('Did this result help you ?', 'wp-module-help-center')}</b>
         </p>
