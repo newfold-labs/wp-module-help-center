@@ -1,11 +1,12 @@
 import { PluginSidebar } from "@wordpress/edit-post";
 import React, { render } from "@wordpress/element";
 import { registerPlugin } from "@wordpress/plugins";
-import { HiiveAnalytics, HiiveEvent } from "@newfold-labs/js-utility-ui-analytics";
+import { HiiveAnalytics } from "@newfold-labs/js-utility-ui-analytics";
+import { __ } from "@wordpress/i18n";
 import "../styles.scss";
 import HelpCenter from "./components/HelpCenter";
 import Modal from "./components/Modal";
-import { ReactComponent as Help } from "./icons/help.svg";
+import { ReactComponent as Help } from "./icons/help-plugin-sidebar-icon.svg";
 import { Analytics, LocalStorageUtils } from "./utils";
 
 HiiveAnalytics.initialize({
@@ -45,7 +46,12 @@ window.newfoldEmbeddedHelp.toggleNFDUnlaunchedEmbeddedHelp =
 //For rendering embedded help in Add, edit and View Pages
 const HelpCenterPluginSidebar = () => {
   return (
-    <PluginSidebar name="nfd-help-sidebar" title="Help Center" icon={<Help />}>
+    <PluginSidebar
+      name="nfd-help-sidebar"
+      className="nfd-plugin-sidebar"
+      title="Help Center"
+      icon={<Help />}
+    >
       <HelpCenter />
     </PluginSidebar>
   );
