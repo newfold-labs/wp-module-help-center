@@ -25,7 +25,7 @@ class HelpCenter {
     public function __construct( Container $container ) {
         $this->container = $container;
         add_action( 'rest_api_init', array( $this, 'initialize_rest' ) );
-        add_action( 'init', array( $this, 'register_assets') );
+        add_action( 'admin_init', array( $this, 'register_assets') );
         add_action( 'admin_bar_menu', array( $this, 'newfold_help_center' ), 11);
     }
 
