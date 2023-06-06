@@ -9,11 +9,13 @@ import Modal from "./components/Modal";
 import { ReactComponent as Help } from "./icons/help-plugin-sidebar-icon.svg";
 import { Analytics, LocalStorageUtils } from "./utils";
 
-HiiveAnalytics.initialize({
-  urls: {
-    single: window.nfdHelpCenter.restUrl + "/newfold-data/v1/events",
-  },
-});
+if ( window?.nfdHelpCenter?.restUrl ) {
+  HiiveAnalytics.initialize({
+    urls: {
+      single: window.nfdHelpCenter.restUrl + "/newfold-data/v1/events",
+    },
+  });
+}
 
 const wpContentContainer = document.getElementById("wpcontent");
 
