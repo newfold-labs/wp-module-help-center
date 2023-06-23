@@ -9,7 +9,7 @@ import Modal from "./components/Modal";
 import { ReactComponent as Help } from "./icons/help-plugin-sidebar-icon.svg";
 import { Analytics, LocalStorageUtils } from "./utils";
 
-if ( window?.nfdHelpCenter?.restUrl ) {
+if (window?.nfdHelpCenter?.restUrl) {
   HiiveAnalytics.initialize({
     urls: {
       single: window.nfdHelpCenter.restUrl + "/newfold-data/v1/events",
@@ -70,10 +70,12 @@ window.newfoldEmbeddedHelp.renderEmbeddedHelp = function renderEmbeddedHelp() {
   helpContainer.style.display = "none";
   wpContentContainer.appendChild(helpContainer);
   const DOM_TARGET = document.getElementById("nfd-help-center");
+
   render(
     <Modal
       onClose={() => {
         toggleHelp(false);
+        LocalStorageUtils.clear();
       }}
     />,
     DOM_TARGET

@@ -10,7 +10,7 @@ import { ResultContent } from "./ResultContent";
 import { Analytics, LocalStorageUtils } from "../utils";
 import Loader from "./Loader";
 
-const SearchResults = () => {
+const SearchResults = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [noResult, setNoResult] = useState(false);
   const [searchInput, setSearchInput] = useState("");
@@ -25,14 +25,19 @@ const SearchResults = () => {
     setPostId(postId);
     LocalStorageUtils.persistResult(resultContentFormatted, postId);
     LocalStorageUtils.persistSearchInput(searchInput);
-    Analytics.sendEvent('search', postId);
+    Analytics.sendEvent("search", postId);
   };
 
   useEffect(() => {
+    setSearchInput("");
+    setResultContent("");
+    refine("");
+  }, [props.refresh]);
+
+  useEffect(() => {
     // Populate the results from local storage if they exist
-    const {
-      content: currentResultContent, postId: currentResultPostId
-    } = LocalStorageUtils.getResultInfo();
+    const { content: currentResultContent, postId: currentResultPostId } =
+      LocalStorageUtils.getResultInfo();
     if (currentResultContent) {
       setResultContent(currentResultContent);
     }
@@ -48,15 +53,21 @@ const SearchResults = () => {
   }, []);
 
   const getResultMatches = (proximity, words) => {
-    return (proximity / words) >= 0.75;
-  }
+    return proximity / words >= 0.75;
+  };
 
   const getAIResult = async () => {
     setIsLoading(true);
     try {
       // Check if the algolia results are close enough
       const hits = results.hits;
-      const resultMatches = hits.length > 0 ? getResultMatches(hits[0]._rankingInfo.proximityDistance, hits[0]._rankingInfo.words) : false;
+      const resultMatches =
+        hits.length > 0
+          ? getResultMatches(
+              hits[0]._rankingInfo.proximityDistance,
+              hits[0]._rankingInfo.words
+            )
+          : false;
       if (resultMatches) {
         populateSearchResult(hits[0].content, hits[0].post_id, searchInput);
         return;
@@ -152,7 +163,11 @@ const SearchResults = () => {
               searchTitle={result.post_title}
               onGo={() => {
                 setSearchInput(result.post_title);
-                populateSearchResult(result.content, result.post_id, result.post_title);
+                populateSearchResult(
+                  result.content,
+                  result.post_id,
+                  result.post_title
+                );
               }}
             />
           </>
