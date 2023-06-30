@@ -1,4 +1,7 @@
-import { HiiveAnalytics, HiiveEvent } from "@newfold-labs/js-utility-ui-analytics";
+import {
+  HiiveAnalytics,
+  HiiveEvent,
+} from "@newfold-labs/js-utility-ui-analytics";
 import apiFetch from "@wordpress/api-fetch";
 
 const base = "nfd-help-center/v1";
@@ -12,6 +15,14 @@ export const InteractionAPIs = {
         post_id: postId,
         status: status,
       },
+    }),
+};
+
+export const CapabilityAPI = {
+  getHelpCenterCapability: () =>
+    apiFetch({
+      path: base + "/capability",
+      method: "GET",
     }),
 };
 
@@ -33,17 +44,20 @@ export const LocalStorageUtils = {
   getResultInfo: () => {
     return {
       content: localStorage.getItem("helpResultContent"),
-      postId: localStorage.getItem("helpPostId")
+      postId: localStorage.getItem("helpPostId"),
     };
   },
   getSearchInput: () => {
     return localStorage.getItem("searchInput");
-  }
-}
+  },
+};
 
 export const Analytics = {
   sendEvent: (event, data) => {
-    const hiiveEvent = new HiiveEvent('nfd-help-center', event, { value: data, time: new Date() });
+    const hiiveEvent = new HiiveEvent("nfd-help-center", event, {
+      value: data,
+      time: new Date(),
+    });
     HiiveAnalytics.send(hiiveEvent);
-  }
-}
+  },
+};
