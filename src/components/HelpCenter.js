@@ -2,7 +2,7 @@ import { useEffect, useState } from "@wordpress/element";
 import algoliasearch from "algoliasearch";
 import { Configure, Index, InstantSearch } from "react-instantsearch-hooks-web";
 import SearchResults from "./SearchResults";
-import { CapabilityAPI } from "../utils";
+import { CapabilityAPI, LocalStorageUtils } from "../utils";
 
 const HelpCenter = (props) => {
   // Set up the instant search results
@@ -11,6 +11,7 @@ const HelpCenter = (props) => {
     "eef54890add97ea2583ff1e417ff86ea"
   );
 
+  const visible = LocalStorageUtils.getHelpVisible();
   const [helpEnabled, setHelpEnabled] = useState(false);
   const getHelpStatus = async () => {
     try {
@@ -24,7 +25,7 @@ const HelpCenter = (props) => {
     getHelpStatus();
   }, []);
 
-  if (!helpEnabled) {
+  if (!helpEnabled || !visible) {
     return <></>;
   }
 
