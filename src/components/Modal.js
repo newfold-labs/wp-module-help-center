@@ -29,7 +29,6 @@ const Modal = ({ onClose }) => {
           className="close-button"
           onClick={() => {
             onClose();
-            console.log("Setting to refresh");
             setRefresh(!refresh);
           }}
         >
