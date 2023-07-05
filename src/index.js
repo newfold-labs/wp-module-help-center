@@ -1,6 +1,7 @@
 import { PluginSidebar } from "@wordpress/edit-post";
-import React, { render } from "@wordpress/element";
+import React, { render, useState, useEffect } from "@wordpress/element";
 import { registerPlugin } from "@wordpress/plugins";
+import domReady from "@wordpress/dom-ready";
 import { HiiveAnalytics } from "@newfold-labs/js-utility-ui-analytics";
 import { __ } from "@wordpress/i18n";
 import "../styles.scss";
@@ -9,13 +10,17 @@ import Modal from "./components/Modal";
 import { ReactComponent as Help } from "./icons/help-plugin-sidebar-icon.svg";
 import { Analytics, LocalStorageUtils } from "./utils";
 
-if (window?.nfdHelpCenter?.restUrl) {
-  HiiveAnalytics.initialize({
-    urls: {
-      single: window.nfdHelpCenter.restUrl + "/newfold-data/v1/events",
-    },
-  });
-}
+domReady(() => {
+  // Run only once DOM is ready, else this won't work.
+  if (window?.nfdHelpCenter?.restUrl) {
+    HiiveAnalytics.initialize({
+      namespace: "nfd-help-center",
+      urls: {
+        single: window.nfdHelpCenter.restUrl + "/newfold-data/v1/events",
+      },
+    });
+  }
+});
 
 const wpContentContainer = document.getElementById("wpcontent");
 
@@ -47,6 +52,23 @@ window.newfoldEmbeddedHelp.toggleNFDUnlaunchedEmbeddedHelp =
 
 //For rendering embedded help in Add, edit and View Pages
 const HelpCenterPluginSidebar = () => {
+  const [helpEnabled, setHelpEnabled] = useState(false);
+  const getHelpStatus = async () => {
+    try {
+      const response = await CapabilityAPI.getHelpCenterCapability();
+      setHelpEnabled(response);
+    } catch (exception) {
+      setHelpEnabled(false);
+    }
+  };
+  useEffect(() => {
+    getHelpStatus();
+  }, []);
+
+  if (!helpEnabled) {
+    return <></>;
+  }
+
   return (
     <PluginSidebar
       name="nfd-help-sidebar"

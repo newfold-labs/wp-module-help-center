@@ -3,7 +3,6 @@
 namespace NewfoldLabs\WP\Module\HelpCenter;
 
 use NewfoldLabs\WP\ModuleLoader\Container;
-use NewfoldLabs\WP\Module\Data\SiteCapabilities;
 
 /**
  * The class to initialize and load the module.
@@ -32,6 +31,7 @@ class HelpCenter {
     public function initialize_rest() {
         $controllers = array(
 			'NewfoldLabs\\WP\\Module\\HelpCenter\\UserInteractionController',
+            'NewfoldLabs\\WP\\Module\\HelpCenter\\CapabilityController',
 		);
 
 		foreach ( $controllers as $controller ) {

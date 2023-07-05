@@ -18,6 +18,14 @@ export const InteractionAPIs = {
     }),
 };
 
+export const CapabilityAPI = {
+  getHelpCenterCapability: () =>
+    apiFetch({
+      path: base + "/capability",
+      method: "GET",
+    }),
+};
+
 // A wrapper to get and set things more easily
 export const LocalStorageUtils = {
   updateHelpVisible: (visible) => {

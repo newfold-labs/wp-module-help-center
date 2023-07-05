@@ -16,7 +16,7 @@
     "test:e2e": "echo \"No tests implemented\""
   },
   "dependencies": {
-    "@newfold-labs/js-utility-ui-analytics": "1.0.0",
+    "@newfold-labs/js-utility-ui-analytics": "1.2.0",
     "@newfold-labs/wp-module-ai": "github:newfold-labs/js-utility-ai#1.0.0",
     "@wordpress/api-fetch": "6.20.0",
     "@wordpress/components": "23.0.0",
