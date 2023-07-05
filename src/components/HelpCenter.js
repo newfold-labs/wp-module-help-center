@@ -37,7 +37,7 @@ const HelpCenter = (props) => {
       >
         <Index indexName="nfd_help_searchable_posts">
           <Configure hitsPerPage={3} getRankingInfo={true} />
-          <SearchResults />
+          <SearchResults refresh={props.refresh} />
         </Index>
       </InstantSearch>
     </div>

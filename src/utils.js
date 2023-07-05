@@ -41,6 +41,11 @@ export const LocalStorageUtils = {
   persistSearchInput: (searchInput) => {
     localStorage.setItem("searchInput", searchInput);
   },
+  clear: () => {
+    localStorage.removeItem("helpResultContent");
+    localStorage.removeItem("helpPostId");
+    localStorage.removeItem("searchInput");
+  },
   getResultInfo: () => {
     return {
       content: localStorage.getItem("helpResultContent"),

@@ -1,4 +1,4 @@
-import { useEffect } from "@wordpress/element";
+import { useEffect, useState } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
 //
 import { ReactComponent as CloseIcon } from "../icons/close.svg";
@@ -14,6 +14,8 @@ const Modal = ({ onClose }) => {
     toggleHelp(helpVisible);
   }, []);
 
+  const [refresh, setRefresh] = useState(false);
+
   return (
     <div className="modal">
       <div className="modal-header">
@@ -21,15 +23,28 @@ const Modal = ({ onClose }) => {
           <span className="icon">
             <Help />
           </span>
-          {__('Help Center', 'wp-module-help-center')}
+          {__("Help Center", "wp-module-help-center")}
         </h3>
-        <button className="close-button" onClick={onClose}>
+        <button
+          className="close-button"
+          onClick={() => {
+            onClose();
+            setRefresh(!refresh);
+          }}
+        >
           <div className="icon-button">
             <CloseIcon />
           </div>
         </button>
       </div>
-      <HelpCenter closeHelp={onClose} />
+      <HelpCenter
+        closeHelp={() => {
+          onClose();
+          console.log("Setting to refresh");
+          setRefresh(!refresh);
+        }}
+        refresh={refresh}
+      />
     </div>
   );
 };
