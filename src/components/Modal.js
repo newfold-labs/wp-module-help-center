@@ -40,7 +40,6 @@ const Modal = ({ onClose }) => {
       <HelpCenter
         closeHelp={() => {
           onClose();
-          console.log("Setting to refresh");
           setRefresh(!refresh);
         }}
         refresh={refresh}
