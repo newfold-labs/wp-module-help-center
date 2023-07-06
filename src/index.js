@@ -1,14 +1,17 @@
+import React, { render, useState } from "@wordpress/element";
+import { __ } from "@wordpress/i18n";
+//
 import { PluginSidebar } from "@wordpress/edit-post";
-import React, { render, useState, useEffect } from "@wordpress/element";
 import { registerPlugin } from "@wordpress/plugins";
+//
 import domReady from "@wordpress/dom-ready";
 import { HiiveAnalytics } from "@newfold-labs/js-utility-ui-analytics";
-import { __ } from "@wordpress/i18n";
+//
 import "../styles.scss";
-import HelpCenter from "./components/HelpCenter";
 import Modal from "./components/Modal";
 import { ReactComponent as Help } from "./icons/help-plugin-sidebar-icon.svg";
-import { Analytics, LocalStorageUtils } from "./utils";
+import { Analytics, LocalStorageUtils, CapabilityAPI } from "./utils";
+import HelpCenterSidebar from "./components/HelpCenterSidebar";
 
 domReady(() => {
   // Run only once DOM is ready, else this won't work.
@@ -29,10 +32,10 @@ export const toggleHelp = (visible) => {
   let nfdHelpContainer = document.getElementById("nfd-help-center");
   nfdHelpContainer.classList.toggle("help-container", visible);
   LocalStorageUtils.updateHelpVisible(visible);
+  window.dispatchEvent(new Event("storage"));
 };
 
-window.newfoldEmbeddedHelp = {};
-window.newfoldEmbeddedHelp.toggleNFDLaunchedEmbeddedHelp = () => {
+const toggleHelpViaLocalStorage = () => {
   const helpVisible = LocalStorageUtils.getHelpVisible();
   if (Object.is(helpVisible, undefined)) {
     toggleHelp(true);
@@ -43,41 +46,30 @@ window.newfoldEmbeddedHelp.toggleNFDLaunchedEmbeddedHelp = () => {
   Analytics.sendEvent("page", "closed");
 };
 
-window.newfoldEmbeddedHelp.toggleNFDUnlaunchedEmbeddedHelp =
-  function toggleNFDUnlaunchedEmbeddedHelp() {
-    let helpContainer = document.getElementById("nfd-help-center");
-    wpContentContainer.removeChild(helpContainer);
-    newfoldEmbeddedHelp.renderEmbeddedHelp();
-  };
+window.newfoldEmbeddedHelp = {};
+window.newfoldEmbeddedHelp.toggleNFDLaunchedEmbeddedHelp = () => {
+  toggleHelpViaLocalStorage();
+};
 
 //For rendering embedded help in Add, edit and View Pages
 const HelpCenterPluginSidebar = () => {
   const [helpEnabled, setHelpEnabled] = useState(false);
-  const getHelpStatus = async () => {
-    try {
-      const response = await CapabilityAPI.getHelpCenterCapability();
-      setHelpEnabled(response);
-    } catch (exception) {
-      setHelpEnabled(false);
-    }
-  };
-  useEffect(() => {
-    getHelpStatus();
-  }, []);
-
-  if (!helpEnabled) {
-    return <></>;
-  }
+  CapabilityAPI.getHelpCenterCapability().then((response) => {
+    setHelpEnabled(response);
+  });
 
   return (
-    <PluginSidebar
-      name="nfd-help-sidebar"
-      className="nfd-plugin-sidebar"
-      title="Help Center"
-      icon={<Help />}
-    >
-      <HelpCenter />
-    </PluginSidebar>
+    <>
+      <PluginSidebar
+        name="nfd-help-sidebar"
+        className="nfd-plugin-sidebar"
+        title="Help Center"
+        icon={<Help />}
+        isPinnable={helpEnabled}
+      >
+        <HelpCenterSidebar />
+      </PluginSidebar>
+    </>
   );
 };
 

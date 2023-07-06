@@ -4,14 +4,13 @@ import { Configure, Index, InstantSearch } from "react-instantsearch-hooks-web";
 import SearchResults from "./SearchResults";
 import { CapabilityAPI, LocalStorageUtils } from "../utils";
 
-const HelpCenter = (props) => {
+const HelpCenterSidebar = (props) => {
   // Set up the instant search results
   const searchClient = algoliasearch(
     "AVE0JWZU92",
     "eef54890add97ea2583ff1e417ff86ea"
   );
 
-  const [visible, setVisible] = useState(false);
   const [helpEnabled, setHelpEnabled] = useState(false);
   const getHelpStatus = async () => {
     try {
@@ -25,21 +24,7 @@ const HelpCenter = (props) => {
     getHelpStatus();
   }, []);
 
-  useEffect(() => {
-    const updateVisibility = () => {
-      setVisible(LocalStorageUtils.getHelpVisible());
-    };
-
-    // Add the event listener on component mount
-    window.addEventListener("storage", updateVisibility);
-
-    // Remove the event listener when the component unmounts
-    return () => {
-      window.removeEventListener("storage", updateVisibility);
-    };
-  }, []);
-
-  if (!helpEnabled || !visible) {
+  if (!helpEnabled) {
     return <></>;
   }
 
@@ -58,4 +43,4 @@ const HelpCenter = (props) => {
   );
 };
 
-export default HelpCenter;
+export default HelpCenterSidebar;

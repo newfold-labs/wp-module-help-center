@@ -156,10 +156,11 @@ const SearchResults = (props) => {
           </b>
         </p>
       )}
-      {results.hits.map((result) => {
+      {results.hits.map((result, index) => {
         return (
           <>
             <AlgoliaResult
+              key={index}
               searchTitle={result.post_title}
               onGo={() => {
                 setSearchInput(result.post_title);
