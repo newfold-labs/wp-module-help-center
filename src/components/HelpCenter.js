@@ -11,7 +11,7 @@ const HelpCenter = (props) => {
     "eef54890add97ea2583ff1e417ff86ea"
   );
 
-  const visible = LocalStorageUtils.getHelpVisible();
+  const [visible, setVisible] = useState(false);
   const [helpEnabled, setHelpEnabled] = useState(false);
   const getHelpStatus = async () => {
     try {
@@ -23,6 +23,20 @@ const HelpCenter = (props) => {
   };
   useEffect(() => {
     getHelpStatus();
+  }, []);
+
+  useEffect(() => {
+    const updateVisibility = () => {
+      setVisible(LocalStorageUtils.getHelpVisible());
+    };
+
+    // Add the event listener on component mount
+    window.addEventListener("storage", updateVisibility);
+
+    // Remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("storage", checkUserData);
+    };
   }, []);
 
   if (!helpEnabled || !visible) {

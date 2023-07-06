@@ -29,6 +29,7 @@ export const toggleHelp = (visible) => {
   let nfdHelpContainer = document.getElementById("nfd-help-center");
   nfdHelpContainer.classList.toggle("help-container", visible);
   LocalStorageUtils.updateHelpVisible(visible);
+  window.dispatchEvent(new Event("storage"));
 };
 
 window.newfoldEmbeddedHelp = {};
