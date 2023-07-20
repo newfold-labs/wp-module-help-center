@@ -20,7 +20,7 @@ const SearchResults = (props) => {
   const { results } = useInstantSearch();
 
   const populateSearchResult = (resultContent, postId, searchInput) => {
-    const resultContentFormatted = resultContent.replace(/\n/g, "<br /><br />");
+    const resultContentFormatted = resultContent.replace(/\n/g, "<br />");
     setResultContent(resultContentFormatted);
     setPostId(postId);
     LocalStorageUtils.persistResult(resultContentFormatted, postId);
