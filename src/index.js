@@ -1,4 +1,4 @@
-import React, { render, useState } from "@wordpress/element";
+import React, { createRoot, useState } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
 //
 import { PluginSidebar } from "@wordpress/edit-post";
@@ -85,14 +85,13 @@ window.newfoldEmbeddedHelp.renderEmbeddedHelp = function renderEmbeddedHelp() {
   wpContentContainer.appendChild(helpContainer);
   const DOM_TARGET = document.getElementById("nfd-help-center");
 
-  render(
-    <Modal
-      onClose={() => {
-        toggleHelp(false);
-        LocalStorageUtils.clear();
-      }}
-    />,
-    DOM_TARGET
+  createRoot(DOM_TARGET).render(
+      <Modal
+          onClose={() => {
+            toggleHelp(false);
+            LocalStorageUtils.clear();
+          }}
+      />
   );
 };
 
