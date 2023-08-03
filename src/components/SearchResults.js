@@ -16,6 +16,7 @@ const SearchResults = (props) => {
   const [searchInput, setSearchInput] = useState("");
   const [resultContent, setResultContent] = useState("");
   const [postId, setPostId] = useState();
+  const [source, setSource] = useState("kb");
   const { query, refine, clear } = useSearchBox();
   const { results } = useInstantSearch();
 
@@ -25,7 +26,13 @@ const SearchResults = (props) => {
     setPostId(postId);
     LocalStorageUtils.persistResult(resultContentFormatted, postId);
     LocalStorageUtils.persistSearchInput(searchInput);
-    Analytics.sendEvent("search", postId);
+    if (postId) {
+      Analytics.sendEvent("help_search", {
+        label_key: "term",
+        term: searchInput,
+        page: window.location.href.toString(),
+      });
+    }
   };
 
   useEffect(() => {
@@ -72,10 +79,10 @@ const SearchResults = (props) => {
         populateSearchResult(hits[0].content, hits[0].post_id, searchInput);
         return;
       }
+      setSource("ai");
       const result = await moduleAI.search.getSearchResult(query, "helpcenter");
       populateSearchResult(result["result"], result["post_id"], searchInput);
     } catch (exception) {
-      console.log(exception);
       setNoResult(true);
     } finally {
       setIsLoading(false);
@@ -145,6 +152,7 @@ const SearchResults = (props) => {
         content={resultContent}
         noResult={noResult}
         postId={postId}
+        source={source}
       />
 
       {results.hits.length > 0 && (

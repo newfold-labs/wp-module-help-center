@@ -17,7 +17,7 @@ domReady(() => {
   // Run only once DOM is ready, else this won't work.
   if (window?.nfdHelpCenter?.restUrl) {
     HiiveAnalytics.initialize({
-      namespace: "nfd-help-center",
+      namespace: "wonder_help",
       urls: {
         single: window.nfdHelpCenter.restUrl + "/newfold-data/v1/events",
       },
@@ -39,11 +39,12 @@ const toggleHelpViaLocalStorage = () => {
   const helpVisible = LocalStorageUtils.getHelpVisible();
   if (Object.is(helpVisible, undefined)) {
     toggleHelp(true);
-    Analytics.sendEvent("page", "opened");
+    Analytics.sendEvent("help_sidebar_opened", {
+      page: window.location.href.toString(),
+    });
     return;
   }
   toggleHelp(!helpVisible);
-  Analytics.sendEvent("page", "closed");
 };
 
 window.newfoldEmbeddedHelp = {};
@@ -85,14 +86,29 @@ window.newfoldEmbeddedHelp.renderEmbeddedHelp = function renderEmbeddedHelp() {
   wpContentContainer.appendChild(helpContainer);
   const DOM_TARGET = document.getElementById("nfd-help-center");
 
-  createRoot(DOM_TARGET).render(
-      <Modal
+  if (null !== DOM_TARGET) {
+    if ("undefined" !== createRoot) {
+      // WP 6.2+ only
+      createRoot(DOM_TARGET).render(
+        <Modal
           onClose={() => {
             toggleHelp(false);
             LocalStorageUtils.clear();
           }}
-      />
-  );
+        />
+      );
+    } else if ("undefined" !== render) {
+      render(
+        <Modal
+          onClose={() => {
+            toggleHelp(false);
+            LocalStorageUtils.clear();
+          }}
+        />,
+        DOM_TARGET
+      );
+    }
+  }
 };
 
 newfoldEmbeddedHelp.renderEmbeddedHelp();
