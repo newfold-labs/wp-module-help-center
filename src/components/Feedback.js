@@ -3,7 +3,7 @@ import { __ } from "@wordpress/i18n";
 //
 import { Analytics, InteractionAPIs } from "../utils";
 
-const Feedback = ({ postId }) => {
+const Feedback = ({ postId, source }) => {
   const [status, setStatus] = useState("");
   const yesButtonRef = useRef(null);
   const noButtonRef = useRef(null);
@@ -11,7 +11,13 @@ const Feedback = ({ postId }) => {
   const postFeedback = async () => {
     if (status === "helpful" || status === "notHelpful") {
       InteractionAPIs.postFeedback(postId, status);
-      Analytics.sendEvent('feedback', 'status');
+      Analytics.sendEvent("help_feedback_submitted", {
+        label_key: "type",
+        type: status === "helpful" ? "positive" : "negative",
+        source: source,
+        post_id: postId,
+        page: window.location.href.toString(),
+      });
     }
   };
 
@@ -37,7 +43,7 @@ const Feedback = ({ postId }) => {
     <div className="feedback-container">
       <div className="feedback-question">
         <p>
-          <b>{__('Did this result help you ?', 'wp-module-help-center')}</b>
+          <b>{__("Did this result help you ?", "wp-module-help-center")}</b>
         </p>
       </div>
       <div class="icon">
