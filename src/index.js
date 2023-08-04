@@ -17,7 +17,7 @@ domReady(() => {
   // Run only once DOM is ready, else this won't work.
   if (window?.nfdHelpCenter?.restUrl) {
     HiiveAnalytics.initialize({
-      namespace: "wonder_help",
+      namespace: "nfd-module-help-center",
       urls: {
         single: window.nfdHelpCenter.restUrl + "/newfold-data/v1/events",
       },
