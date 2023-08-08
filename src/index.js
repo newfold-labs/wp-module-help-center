@@ -10,8 +10,19 @@ import { HiiveAnalytics } from "@newfold-labs/js-utility-ui-analytics";
 import "../styles.scss";
 import Modal from "./components/Modal";
 import { ReactComponent as Help } from "./icons/help-plugin-sidebar-icon.svg";
-import { Analytics, LocalStorageUtils, CapabilityAPI } from "./utils";
+import { Analytics, LocalStorageUtils, CapabilityAPI, OnboardingAPIs } from "./utils";
 import HelpCenterSidebar from "./components/HelpCenterSidebar";
+
+const OpenHelpCenterForNovice = async () => {
+  const queryParams = (new URL(document.location)).searchParams;
+  if (queryParams.get('referrer').toString() === 'nfd-onboarding') {
+    // Check for the user's wordpress capability
+    const flowData = await OnboardingAPIs.getFlowData();
+    if (flowData.data.wpComfortLevel === '1') {
+      toggleHelp(true);
+    }
+  }
+}
 
 domReady(() => {
   // Run only once DOM is ready, else this won't work.
@@ -23,6 +34,7 @@ domReady(() => {
       },
     });
   }
+  OpenHelpCenterForNovice();
 });
 
 const wpContentContainer = document.getElementById("wpcontent");
