@@ -1,15 +1,61 @@
 import { useEffect, useState } from "@wordpress/element";
 import algoliasearch from "algoliasearch";
 import { Configure, Index, InstantSearch } from "react-instantsearch-hooks-web";
+import moduleAI from "@newfold-labs/wp-module-ai";
 import SearchResults from "./SearchResults";
 import { CapabilityAPI, LocalStorageUtils } from "../utils";
 
 const HelpCenter = (props) => {
   // Set up the instant search results
-  const searchClient = algoliasearch(
+  const algoliaClient = algoliasearch(
     "AVE0JWZU92",
     "eef54890add97ea2583ff1e417ff86ea"
   );
+
+  const searchClient = {
+    ...algoliaClient,
+    search(requests) {
+      const emptyResponse = requests.map(() => ({
+        hits: [],
+        nbHits: 0,
+        nbPages: 0,
+        page: 0,
+        processingTimeMS: 0,
+        hitsPerPage: 0,
+        exhaustiveNbHits: false,
+        query: "",
+        params: "",
+      }));
+      if (requests.every(({ params }) => !params.query)) {
+        return new Promise((resolve, reject) => {
+          const defaultResponseFromService =
+            moduleAI.search.getDefaultSearchResult();
+          defaultResponseFromService
+            .then((response) => {
+              let el = document.createElement("span");
+              const posts = response["posts"].map((post) => {
+                el.innerHTML = post.post_title;
+                return {
+                  ...post,
+                  post_title: el.textContent || el.innerText,
+                };
+              });
+              resolve({
+                results: requests.map(() => ({
+                  hits: posts,
+                  nbHits: response["posts"].length,
+                })),
+              });
+            })
+            .catch((error) => {
+              resolve({ results: emptyResponse });
+            });
+        });
+      } else {
+        return algoliaClient.search(requests);
+      }
+    },
+  };
 
   const [visible, setVisible] = useState(false);
   const [helpEnabled, setHelpEnabled] = useState(false);
