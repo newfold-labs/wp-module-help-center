@@ -15,7 +15,11 @@ import HelpCenterSidebar from "./components/HelpCenterSidebar";
 
 const OpenHelpCenterForNovice = async () => {
   const queryParams = (new URL(document.location)).searchParams;
-  if (queryParams.get('referrer').toString() === 'nfd-onboarding') {
+  const referrer = queryParams.get('referrer');
+  if (!referrer) {
+    return;
+  }
+  if (referrer.toString() === 'nfd-onboarding') {
     // Check for the user's wordpress capability
     const flowData = await OnboardingAPIs.getFlowData();
     if (flowData.data.wpComfortLevel === '1') {
