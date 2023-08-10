@@ -5,6 +5,7 @@ import {
 import apiFetch from "@wordpress/api-fetch";
 
 const base = "nfd-help-center/v1";
+const onboardingBase = "newfold-onboarding/v1";
 
 export const InteractionAPIs = {
   postFeedback: (postId, status) =>
@@ -17,6 +18,13 @@ export const InteractionAPIs = {
       },
     }),
 };
+
+export const OnboardingAPIs = {
+  getFlowData: () => apiFetch({
+    path: onboardingBase + "/flow",
+    method: "GET",
+  })
+}
 
 export const CapabilityAPI = {
   getHelpCenterCapability: () =>
