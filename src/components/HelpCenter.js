@@ -32,17 +32,9 @@ const HelpCenter = (props) => {
             moduleAI.search.getDefaultSearchResult();
           defaultResponseFromService
             .then((response) => {
-              let el = document.createElement("span");
-              const posts = response["posts"].map((post) => {
-                el.innerHTML = post.post_title;
-                return {
-                  ...post,
-                  post_title: el.textContent || el.innerText,
-                };
-              });
               resolve({
                 results: requests.map(() => ({
-                  hits: posts,
+                  hits: response["posts"],
                   nbHits: response["posts"].length,
                 })),
               });

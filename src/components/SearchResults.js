@@ -81,7 +81,7 @@ const SearchResults = (props) => {
       }
       setSource("ai");
       const result = await moduleAI.search.getSearchResult(query, "helpcenter");
-      populateSearchResult(result["result"], result["post_id"], searchInput);
+      populateSearchResult(result["result"][0]['text'], result["post_id"], searchInput);
     } catch (exception) {
       setNoResult(true);
     } finally {
@@ -165,17 +165,22 @@ const SearchResults = (props) => {
         </p>
       )}
       {results.hits.map((result, index) => {
+        let el = document.createElement("span");
+        el.setAttribute("display", "none");
+        el.innerHTML = result.post_title;
+        const postTitle = el.textContent || el.innerText;
+
         return (
           <>
             <AlgoliaResult
               key={index}
-              searchTitle={result.post_title}
+              searchTitle={postTitle}
               onGo={() => {
-                setSearchInput(result.post_title);
+                setSearchInput(postTitle);
                 populateSearchResult(
                   result.content,
                   result.post_id,
-                  result.post_title
+                  postTitle
                 );
               }}
             />
