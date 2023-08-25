@@ -9,22 +9,9 @@ const HelpCenterSidebar = (props) => {
   const searchClient = algoliasearch(
     "AVE0JWZU92",
     "eef54890add97ea2583ff1e417ff86ea"
-  );
-
-  const [helpEnabled, setHelpEnabled] = useState(false);
-  const getHelpStatus = async () => {
-    try {
-      const response = await CapabilityAPI.getHelpCenterCapability();
-      setHelpEnabled(response);
-    } catch (exception) {
-      setHelpEnabled(false);
-    }
-  };
-  useEffect(() => {
-    getHelpStatus();
-  }, []);
-
-  if (!helpEnabled) {
+    );
+    
+  if (!props.helpEnabled) {
     return <></>;
   }
 

@@ -1,4 +1,4 @@
-import React, { createRoot, useState } from "@wordpress/element";
+import React, { createRoot, useState, useEffect } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
 //
 import { PluginSidebar } from "@wordpress/edit-post";
@@ -71,9 +71,18 @@ window.newfoldEmbeddedHelp.toggleNFDLaunchedEmbeddedHelp = () => {
 //For rendering embedded help in Add, edit and View Pages
 const HelpCenterPluginSidebar = () => {
   const [helpEnabled, setHelpEnabled] = useState(false);
-  CapabilityAPI.getHelpCenterCapability().then((response) => {
-    setHelpEnabled(response);
-  });
+  const getHelpStatus = async () => {
+    try {
+      const response = await CapabilityAPI.getHelpCenterCapability();
+      setHelpEnabled(response);
+    } catch (exception) {
+      setHelpEnabled(false);
+    }
+  };
+
+  useEffect(() => {
+    getHelpStatus();
+  }, []);
 
   return (
     <>
@@ -84,7 +93,7 @@ const HelpCenterPluginSidebar = () => {
         icon={<Help />}
         isPinnable={helpEnabled}
       >
-        <HelpCenterSidebar />
+        <HelpCenterSidebar helpEnabled={helpEnabled} />
       </PluginSidebar>
     </>
   );

@@ -40,7 +40,7 @@ $gray-text: #394150;
   }
   h4,
   h3 {
-    margin: 0 0 !important;
+    margin: 0;
   }
   z-index: 10;
   padding: 0 16px;
@@ -157,19 +157,22 @@ $gray-text: #394150;
     justify-content: space-between;
     color: $gray-text;
     p {
-      margin: 0 !important;
+      margin: 0;
     }
     .svg {
-      position: absolute;
-      right: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      transition: right .2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: translateX(0px);
+      transition: transform 0.2s ease;
+      svg{
+        max-width: 100%;
+      }
     }
     &:hover {
       box-shadow: 0 0 0 2px $box-shadow-hover;
       .svg {
-        right: 14px;
+        transform: translateX(2px);
       }
     }
   }
