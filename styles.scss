@@ -16,16 +16,16 @@ $box-shadow-dark: rgba(0, 0, 0, 0.25);
 $gray-text: #394150;
 
 .nfd-plugin-sidebar {
-  .feedback-button {
-    padding-left: 6px !important;
-    padding-right: 6px !important;
-  }
-  .icon {
-    flex: 1
-  }
-  .feedback-question {
-    flex: 1.7;
-    padding-top: 8px;
+  .nfd-help-center{
+    .feedback-container{
+      .feedback-button {
+        padding-left: 6px;
+        padding-right: 6px;
+      }
+      .feedback-question {
+        padding-top: 8px;
+      }
+    }
   }
 }
 
@@ -163,11 +163,8 @@ $gray-text: #394150;
       display: flex;
       align-items: center;
       justify-content: center;
-      transform: translateX(0px);
+      transform: translateX(0);
       transition: transform 0.2s ease;
-      svg{
-        max-width: 100%;
-      }
     }
     &:hover {
       box-shadow: 0 0 0 2px $box-shadow-hover;
@@ -200,6 +197,8 @@ $gray-text: #394150;
       padding-right: 13px;
       padding-bottom: 6px;
       padding-top: 6px;
+      flex-shrink: 0;
+      white-space: nowrap;
     }
     .button-icon {
       height: 20px;
@@ -226,8 +225,9 @@ $gray-text: #394150;
       padding-top: 5.8px;
     }
     .icon {
-      margin-top: 8px;
-      cursor: pointer
+      cursor: pointer;
+      display: flex;
+      align-items: center;
     }
   }
 }
