@@ -114,8 +114,8 @@ $gray-text: #394150;
       color:$dark-gray;
       padding-left: 0px ;
       &:focus {
-        outline: none !important;
-        box-shadow: none !important;
+        outline: none;
+        box-shadow: none;
       }
     }
     button {
