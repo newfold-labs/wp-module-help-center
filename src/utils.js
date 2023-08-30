@@ -67,7 +67,7 @@ export const LocalStorageUtils = {
 
 export const Analytics = {
   sendEvent: (action, data) => {
-    const hiiveEvent = new HiiveEvent("wonder_help", action, data);
+    const hiiveEvent = new HiiveEvent("wonder_help", action, data, "wonder_help");
     HiiveAnalytics.send(hiiveEvent);
   },
 };

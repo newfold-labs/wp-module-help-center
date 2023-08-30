@@ -60,6 +60,11 @@ const toggleHelpViaLocalStorage = () => {
     });
     return;
   }
+  if (!helpVisible) {
+    Analytics.sendEvent("help_sidebar_opened", {
+      page: window.location.href.toString(),
+    });
+  }
   toggleHelp(!helpVisible);
 };
 
