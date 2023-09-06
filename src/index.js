@@ -133,3 +133,44 @@ window.newfoldEmbeddedHelp.renderEmbeddedHelp = function renderEmbeddedHelp() {
 };
 
 newfoldEmbeddedHelp.renderEmbeddedHelp();
+
+
+window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery = function (selectedText, launchByElement) {
+  const helpVisible = LocalStorageUtils.getHelpVisible();
+  if (helpVisible !== "true" && launchByElement)
+    toggleHelp(true);
+
+  const isElementVisible = (element) => {
+    const style = window.getComputedStyle(element);
+    return style.display !== 'none' && style.visibility !== 'hidden';
+  }
+
+  const targetElement = document.getElementById('nfd-help-center');
+  const maxAttempts = 5;
+  let attempts = 0;
+  const searchInterval = setInterval(() => {
+    attempts++;
+    console.log("🚀 ~ file: index.js:159 ~ searchInterval ~ attempts:", attempts);
+    if (targetElement && isElementVisible(targetElement)) {
+      const searchInput = document.getElementById('search-input-box');
+      searchInput.value = selectedText;
+      searchInput.focus();
+      localStorage.removeItem('selectedText');
+      clearInterval(searchInterval);
+    } else if (attempts >= maxAttempts) {
+      clearInterval(searchInterval);
+    }
+  }, 300);
+}
+
+
+  /* Detect click event on the calling element and  checking if the clicked element has a specific class name and Extract the inner text of the clicked element */
+  document.addEventListener('click', function (event) {
+    const clickedElement = event.target;    
+    if (clickedElement.classList.contains('look-up-help')) {
+      const selectedText = clickedElement.innerText;
+      if(selectedText){
+        window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery(selectedText, true);
+      }
+    }
+  });
