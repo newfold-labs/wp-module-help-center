@@ -155,7 +155,6 @@ window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery = function (selectedText, 
       const searchInput = document.getElementById('search-input-box');
       searchInput.value = selectedText;
       searchInput.focus();
-      localStorage.removeItem('selectedText');
       clearInterval(searchInterval);
     } else if (attempts >= maxAttempts) {
       clearInterval(searchInterval);
@@ -174,3 +173,57 @@ window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery = function (selectedText, 
       }
     }
   });
+
+/* Trigger via Localstorage */
+
+function dispatchHelpCenterQueryChangeEvent(oldValue, newValue) {
+  const customEvent = new CustomEvent('helpCenterQueryChange', {
+      detail: {
+          oldValue: oldValue,
+          newValue: newValue
+      }
+  });
+  window.dispatchEvent(customEvent);
+}
+
+// Function to handle storage events
+window.addEventListener('storage', (event) => {
+  if (event.key === 'helpCenterQuery') {
+    const newValue = event.newValue;
+    const oldValue = event.oldValue;
+
+    console.log(`helpCenterQuery changed from "${oldValue}" to "${newValue}" in another tab.`);
+    
+    if (oldValue !== newValue) {
+      window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery(newValue, true);
+    }
+
+    // Dispatch the custom event for handling the change in the same tab
+    dispatchHelpCenterQueryChangeEvent(oldValue, newValue);
+  }
+});
+
+// Listen for the custom event and access old and new values
+window.addEventListener('helpCenterQueryChange', (event) => {
+  const { oldValue, newValue } = event.detail;
+  console.log(`helpCenterQuery changed from "${oldValue}" to "${newValue}" in the same tab.`);
+
+  // Compare old and new values
+  if (oldValue !== newValue) {
+    window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery(newValue, true);
+  }
+});
+
+window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpViaLS  = function (dataInput) {
+  // Get the old value before updating
+  const oldValue = localStorage.getItem('helpCenterQuery');
+  const currentDateInMilliseconds = new Date().getTime();
+  const newData = dataInput + currentDateInMilliseconds;
+  localStorage.setItem('helpCenterQuery', newData);
+
+  // Dispatch the custom event to notify changes along with the old and new values
+  dispatchHelpCenterQueryChangeEvent(oldValue, newData);
+
+  console.log(`Data "${newData}" saved to localStorage in the same tab.`);
+}
+
