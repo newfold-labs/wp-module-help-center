@@ -1,8 +1,9 @@
-import React, { createRoot, useState } from "@wordpress/element";
+import React, { createRoot, useState, render } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
 //
 import { PluginSidebar } from "@wordpress/edit-post";
 import { registerPlugin } from "@wordpress/plugins";
+import { subscribe } from '@wordpress/data';
 //
 import domReady from "@wordpress/dom-ready";
 import { HiiveAnalytics } from "@newfold-labs/js-utility-ui-analytics";
@@ -74,7 +75,7 @@ window.newfoldEmbeddedHelp.toggleNFDLaunchedEmbeddedHelp = () => {
 };
 
 //For rendering embedded help in Add, edit and View Pages
-const HelpCenterPluginSidebar = () => {
+/* const HelpCenterPluginSidebar = () => {
   const [helpEnabled, setHelpEnabled] = useState(false);
   CapabilityAPI.getHelpCenterCapability().then((response) => {
     setHelpEnabled(response);
@@ -97,7 +98,7 @@ const HelpCenterPluginSidebar = () => {
 
 registerPlugin("nfd-help-panel", {
   render: HelpCenterPluginSidebar,
-});
+}); */
 
 //For rendering embedded help in Admin Pages
 window.newfoldEmbeddedHelp.renderEmbeddedHelp = function renderEmbeddedHelp() {
@@ -134,7 +135,7 @@ window.newfoldEmbeddedHelp.renderEmbeddedHelp = function renderEmbeddedHelp() {
 
 newfoldEmbeddedHelp.renderEmbeddedHelp();
 
-
+/* The method added to the window object can be used to open the help center pop and enter the text clicked */
 window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery = function (selectedText, launchByElement) {
   const helpVisible = LocalStorageUtils.getHelpVisible();
   if (helpVisible !== "true" && launchByElement)
@@ -163,7 +164,7 @@ window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery = function (selectedText, 
 }
 
 
-  /* Detect click event on the calling element and  checking if the clicked element has a specific class name and Extract the inner text of the clicked element */
+  /* Detect click event on the calling element and  checking if the clicked element has a specific class name (look-up-help in the case below) and Extract the inner text of the clicked element */
   document.addEventListener('click', function (event) {
     const clickedElement = event.target;    
     if (clickedElement.classList.contains('look-up-help')) {
@@ -174,56 +175,46 @@ window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery = function (selectedText, 
     }
   });
 
-/* Trigger via Localstorage */
+  /* Using the subscribe from the store to keep the UI persistent */
+  const unsubscribe = subscribe(() => {
+    const wrapper = document.getElementById('help-menu-button-wrapper');
 
-function dispatchHelpCenterQueryChangeEvent(oldValue, newValue) {
-  const customEvent = new CustomEvent('helpCenterQueryChange', {
-      detail: {
-          oldValue: oldValue,
-          newValue: newValue
-      }
-  });
-  window.dispatchEvent(customEvent);
-}
-
-// Function to handle storage events
-window.addEventListener('storage', (event) => {
-  if (event.key === 'helpCenterQuery') {
-    const newValue = event.newValue;
-    const oldValue = event.oldValue;
-
-    console.log(`helpCenterQuery changed from "${oldValue}" to "${newValue}" in another tab.`);
-    
-    if (oldValue !== newValue) {
-      window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery(newValue, true);
+    if (wrapper) {
+      unsubscribe(); // Unsubscribe from the state changes
+      return;
     }
 
-    // Dispatch the custom event for handling the change in the same tab
-    dispatchHelpCenterQueryChangeEvent(oldValue, newValue);
-  }
-});
+    domReady(() => {
+      const editorToolbarSettings = document.querySelector('.edit-post-header__settings');
 
-// Listen for the custom event and access old and new values
-window.addEventListener('helpCenterQueryChange', (event) => {
-  const { oldValue, newValue } = event.detail;
-  console.log(`helpCenterQuery changed from "${oldValue}" to "${newValue}" in the same tab.`);
+      if (!editorToolbarSettings) {
+        return;
+      }
 
-  // Compare old and new values
-  if (oldValue !== newValue) {
-    window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery(newValue, true);
-  }
-});
+      // Create wrapper to fill with the button
+      const buttonWrapper = document.createElement('div');
 
-window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpViaLS  = function (dataInput) {
-  // Get the old value before updating
-  const oldValue = localStorage.getItem('helpCenterQuery');
-  const currentDateInMilliseconds = new Date().getTime();
-  const newData = dataInput + currentDateInMilliseconds;
-  localStorage.setItem('helpCenterQuery', newData);
+      buttonWrapper.id = 'help-menu-button-wrapper';
+      buttonWrapper.classList.add('help-menu-button-wrapper');
+      const moreMenuDropdown = editorToolbarSettings.querySelector('.components-dropdown-menu.interface-more-menu-dropdown');
 
-  // Dispatch the custom event to notify changes along with the old and new values
-  dispatchHelpCenterQueryChangeEvent(oldValue, newData);
+      if (moreMenuDropdown) {
+        editorToolbarSettings.insertBefore(buttonWrapper, moreMenuDropdown);
+      } else {
+        editorToolbarSettings.appendChild(buttonWrapper);
+      }
 
-  console.log(`Data "${newData}" saved to localStorage in the same tab.`);
-}
+      const helpMenuButton = (
+        <button
+          className="components-button has-icon"
+          onClick={() => {
+            window.newfoldEmbeddedHelp.toggleNFDLaunchedEmbeddedHelp();
+          }}
+        >
+          <Help />
+        </button>
+      );
 
+      render(helpMenuButton, document.getElementById('help-menu-button-wrapper'));
+    });
+  });
