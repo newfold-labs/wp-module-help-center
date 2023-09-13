@@ -1,18 +1,15 @@
-import React, { createRoot, useState, render } from "@wordpress/element";
+import React, { createRoot, render } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
-//
-import { PluginSidebar } from "@wordpress/edit-post";
-import { registerPlugin } from "@wordpress/plugins";
+
 import { subscribe } from "@wordpress/data";
 //
 import domReady from "@wordpress/dom-ready";
 import { HiiveAnalytics } from "@newfold-labs/js-utility-ui-analytics";
 //
-import "../styles.scss";
 import Modal from "./components/Modal";
 import { ReactComponent as Help } from "./icons/help-plugin-sidebar-icon.svg";
-import { Analytics, LocalStorageUtils, CapabilityAPI, OnboardingAPIs } from "./utils";
-import HelpCenterSidebar from "./components/HelpCenterSidebar";
+import { Analytics, LocalStorageUtils, OnboardingAPIs } from "./utils";
+import "../styles.scss";
 
 const OpenHelpCenterForNovice = async () => {
   const queryParams = (new URL(document.location)).searchParams;
@@ -75,34 +72,9 @@ window.newfoldEmbeddedHelp.toggleNFDLaunchedEmbeddedHelp = () => {
 };
 
 //For rendering embedded help in Add, edit and View Pages
-/* const HelpCenterPluginSidebar = () => {
-  const [helpEnabled, setHelpEnabled] = useState(false);
-  CapabilityAPI.getHelpCenterCapability().then((response) => {
-    setHelpEnabled(response);
-  });
-
-  return (
-    <>
-      <PluginSidebar
-        name="nfd-help-sidebar"
-        className="nfd-plugin-sidebar"
-        title="Help Center"
-        icon={<Help />}
-        isPinnable={helpEnabled}
-      >
-        <HelpCenterSidebar />
-      </PluginSidebar>
-    </>
-  );
-};
-
-registerPlugin("nfd-help-panel", {
-  render: HelpCenterPluginSidebar,
-}); */
-
 /* Using the subscribe from the store to keep the UI persistent */
   const unsubscribe = subscribe(() => {
-    const wrapper = document.getElementById('help-menu-button-wrapper');
+    const wrapper = document.getElementById('nfd-help-menu-button-wrapper');
 
     if (wrapper) {
       unsubscribe(); // Unsubscribe from the state changes
@@ -119,8 +91,8 @@ registerPlugin("nfd-help-panel", {
       // Create wrapper to fill with the button
       const buttonWrapper = document.createElement('div');
 
-      buttonWrapper.id = 'help-menu-button-wrapper';
-      buttonWrapper.classList.add('help-menu-button-wrapper');
+      buttonWrapper.id = 'nfd-help-menu-button-wrapper';
+      buttonWrapper.classList.add('nfd-help-menu-button-wrapper');
       const moreMenuDropdown = editorToolbarSettings.querySelector('.components-dropdown-menu.interface-more-menu-dropdown');
 
       if (moreMenuDropdown) {
@@ -140,7 +112,7 @@ registerPlugin("nfd-help-panel", {
         </button>
       );
 
-      render(helpMenuButton, document.getElementById('help-menu-button-wrapper'));
+      render(helpMenuButton, document.getElementById('nfd-help-menu-button-wrapper'));
     });
   });
 

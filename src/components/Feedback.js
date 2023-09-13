@@ -46,13 +46,13 @@ const Feedback = ({ postId, source }) => {
           <b>{__("Did this result help you ?", "wp-module-help-center")}</b>
         </p>
       </div>
-      <div class="icon">
+      <div className="icon">
         <button
           ref={yesButtonRef}
           onClick={() => {
             setStatus("helpful");
           }}
-          class="feedback-button yes"
+          className="feedback-button yes"
         >
           {status === "helpful" && <>&#129395;</>} Yes
         </button>
@@ -61,7 +61,7 @@ const Feedback = ({ postId, source }) => {
             setStatus("notHelpful");
           }}
           ref={noButtonRef}
-          class="feedback-button no"
+          className="feedback-button no"
         >
           {status === "notHelpful" && <>&#128557;</>} No
         </button>
