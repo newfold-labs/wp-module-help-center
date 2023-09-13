@@ -1,8 +1,9 @@
-import React, { createRoot, useState } from "@wordpress/element";
+import React, { createRoot, useState, render } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
 //
 import { PluginSidebar } from "@wordpress/edit-post";
 import { registerPlugin } from "@wordpress/plugins";
+import { subscribe } from "@wordpress/data";
 //
 import domReady from "@wordpress/dom-ready";
 import { HiiveAnalytics } from "@newfold-labs/js-utility-ui-analytics";
@@ -74,7 +75,7 @@ window.newfoldEmbeddedHelp.toggleNFDLaunchedEmbeddedHelp = () => {
 };
 
 //For rendering embedded help in Add, edit and View Pages
-const HelpCenterPluginSidebar = () => {
+/* const HelpCenterPluginSidebar = () => {
   const [helpEnabled, setHelpEnabled] = useState(false);
   CapabilityAPI.getHelpCenterCapability().then((response) => {
     setHelpEnabled(response);
@@ -97,7 +98,51 @@ const HelpCenterPluginSidebar = () => {
 
 registerPlugin("nfd-help-panel", {
   render: HelpCenterPluginSidebar,
-});
+}); */
+
+/* Using the subscribe from the store to keep the UI persistent */
+  const unsubscribe = subscribe(() => {
+    const wrapper = document.getElementById('help-menu-button-wrapper');
+
+    if (wrapper) {
+      unsubscribe(); // Unsubscribe from the state changes
+      return;
+    }
+
+    domReady(() => {
+      const editorToolbarSettings = document.querySelector('.edit-post-header__settings');
+
+      if (!editorToolbarSettings) {
+        return;
+      }
+
+      // Create wrapper to fill with the button
+      const buttonWrapper = document.createElement('div');
+
+      buttonWrapper.id = 'help-menu-button-wrapper';
+      buttonWrapper.classList.add('help-menu-button-wrapper');
+      const moreMenuDropdown = editorToolbarSettings.querySelector('.components-dropdown-menu.interface-more-menu-dropdown');
+
+      if (moreMenuDropdown) {
+        editorToolbarSettings.insertBefore(buttonWrapper, moreMenuDropdown);
+      } else {
+        editorToolbarSettings.appendChild(buttonWrapper);
+      }
+
+      const helpMenuButton = (
+        <button
+          className="components-button has-icon"
+          onClick={() => {
+            window.newfoldEmbeddedHelp.toggleNFDLaunchedEmbeddedHelp();
+          }}
+        >
+          <Help />
+        </button>
+      );
+
+      render(helpMenuButton, document.getElementById('help-menu-button-wrapper'));
+    });
+  });
 
 //For rendering embedded help in Admin Pages
 window.newfoldEmbeddedHelp.renderEmbeddedHelp = function renderEmbeddedHelp() {
