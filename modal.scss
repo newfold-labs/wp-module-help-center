@@ -1,10 +1,12 @@
+$gray-text: #394150;
+
 #nfd-help-center {
   .modal {
     padding-bottom: 32px;
 
     h4,
     h3 {
-      margin: 0 0 !important;
+      margin: 0;
     }
 
     .modal-header {
@@ -17,7 +19,7 @@
         font-size: 20px;
         line-height: 24px;
         font-weight: normal;
-        color: #394150;
+        color: $gray-text;
         .icon {
           margin-right: 10px;
           padding-top: 3px;
