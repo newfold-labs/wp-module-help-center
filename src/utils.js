@@ -29,15 +29,11 @@ export const OnboardingAPIs = {
 };
 
 export const CapabilityAPI = {
-	getHelpCenterCapability: () => {
-		// apiFetch( {
-		// 	path: base + '/capability',
-		// 	method: 'GET',
-		// } ),
-		return new Promise( ( resolve ) => {
-			resolve( true );
-		} );
-	},
+	getHelpCenterCapability: () =>
+		apiFetch( {
+			path: base + '/capability',
+			method: 'GET',
+		} ),
 };
 
 // A wrapper to get and set things more easily
