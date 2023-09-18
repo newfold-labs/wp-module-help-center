@@ -1,36 +1,38 @@
 {
-  "name": "@newfold-labs/wp-module-help-center",
-  "description": "HelpCenter",
-  "license": "MIT",
-  "private": true,
-  "author": {
-    "name": "Faizaan Mohammed",
-    "email": "faizaan.md@newfold.com"
-  },
-  "scripts": {
-    "prepare": "npm run build",
-    "build": "wp-scripts build ./src/index.js",
-    "lint": "wp-scripts lint-js ./src/index.js",
-    "start": "wp-scripts start ./src/index.js",
-    "test:unit": "echo \"No tests implemented\"",
-    "test:e2e": "echo \"No tests implemented\""
-  },
-  "dependencies": {
-    "@newfold-labs/js-utility-ui-analytics": "1.2.0",
-    "@newfold-labs/wp-module-ai": "github:newfold-labs/js-utility-ai#1.0.1",
-    "@wordpress/api-fetch": "6.20.0",
-    "@wordpress/components": "23.0.0",
-    "@wordpress/data": "8.3.0",
-    "@wordpress/edit-post": "7.2.0",
-    "@wordpress/element": "5.0.0",
-    "@wordpress/i18n": "4.23.0",
-    "@wordpress/plugins": "5.2.0",
-    "algoliasearch": "4.17.0",
-    "lodash.debounce": "4.0.8",
-    "react-instantsearch-hooks-web": "6.43.0",
-    "react-router-dom": "6.6.2"
-  },
-  "devDependencies": {
-    "@wordpress/scripts": "25.0.0"
-  }
+	"name": "@newfold-labs/wp-module-help-center",
+	"description": "HelpCenter",
+	"license": "MIT",
+	"private": true,
+	"author": {
+		"name": "Faizaan Mohammed",
+		"email": "faizaan.md@newfold.com"
+	},
+	"scripts": {
+		"prepare": "npm run build",
+		"build": "wp-scripts build ./src/index.js",
+		"lint": "wp-scripts lint-js ./src/index.js",
+		"start": "wp-scripts start ./src/index.js",
+		"test:unit": "echo \"No tests implemented\"",
+		"test:e2e": "echo \"No tests implemented\""
+	},
+	"dependencies": {
+		"@newfold-labs/js-utility-ui-analytics": "1.2.0",
+		"@newfold-labs/wp-module-ai": "github:newfold-labs/js-utility-ai#1.0.1",
+		"@wordpress/api-fetch": "^6.37.0",
+		"@wordpress/components": "^25.7.0",
+		"@wordpress/data": "^9.11.0",
+		"@wordpress/element": "^5.18.0",
+		"@wordpress/i18n": "^4.41.0",
+		"@wordpress/plugins": "6.9.0",
+		"algoliasearch": "4.20.0",
+		"lodash.debounce": "4.0.8",
+		"react-instantsearch-hooks-web": "6.43.0",
+		"react-router-dom": "6.6.2",
+		"typesense-instantsearch-adapter": "2.7.1"
+	},
+	"devDependencies": {
+		"@wordpress/eslint-plugin": "^15.0.0",
+		"@wordpress/prettier-config": "^2.23.0",
+		"@wordpress/scripts": "25.0.0"
+	}
 }
