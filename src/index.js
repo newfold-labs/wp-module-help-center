@@ -6,6 +6,9 @@ import domReady from '@wordpress/dom-ready';
 import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 //
 import Modal from './components/Modal';
+import HelpCenter from './components/HelpCenter';
+import Sidebar from './components/SuggestionsGenerator';
+import { ReactComponent as HelpIcon } from './icons/help.svg';
 import { ReactComponent as Help } from './icons/help-plugin-sidebar-icon.svg';
 import { Analytics, LocalStorageUtils, OnboardingAPIs } from './utils';
 import '../styles.scss';
@@ -66,6 +69,11 @@ const toggleHelpViaLocalStorage = () => {
 	toggleHelp( ! helpVisible );
 };
 
+const handleClose = () => {
+	toggleHelp( false );
+	LocalStorageUtils.clear();
+}
+
 window.newfoldEmbeddedHelp = {
 	toggleNFDLaunchedEmbeddedHelp: () => {
 		toggleHelpViaLocalStorage();
@@ -77,11 +85,41 @@ window.newfoldEmbeddedHelp = {
 		wpContentContainer.appendChild( helpContainer );
 		const DOM_TARGET = document.getElementById( 'nfd-help-center' );
 
+
 		if ( null !== DOM_TARGET ) {
 			if ( 'undefined' !== createRoot ) {
 				// WP 6.2+ only
 				createRoot( DOM_TARGET ).render(
 					<Modal
+						onClose={ handleClose }
+						contentComponent={(props) => <HelpCenter {...props} />}
+        				iconComponent={<HelpIcon />}
+					/>
+				);
+			} else if ( 'undefined' !== render ) {
+				render(
+					<Modal
+						onClose={ handleClose }
+						contentComponent={(props) => <HelpCenter {...props} />}
+        				iconComponent={<HelpIcon />}
+					/>,
+					DOM_TARGET
+				);
+			}
+		}
+	},
+	renderSuggestionsSidebar: () => {
+		const helpContainer = document.createElement( 'div' );
+		helpContainer.id = 'nfd-help-center';
+		helpContainer.style.display = 'none';
+		wpContentContainer.appendChild( helpContainer );
+		const DOM_TARGET = document.getElementById( 'nfd-help-center' );
+
+		if ( null !== DOM_TARGET ) {
+			if ( 'undefined' !== createRoot ) {
+				// WP 6.2+ only
+				createRoot( DOM_TARGET ).render(
+					<Sidebar
 						onClose={ () => {
 							toggleHelp( false );
 							LocalStorageUtils.clear();
@@ -90,7 +128,7 @@ window.newfoldEmbeddedHelp = {
 				);
 			} else if ( 'undefined' !== render ) {
 				render(
-					<Modal
+					<Sidebar
 						onClose={ () => {
 							toggleHelp( false );
 							LocalStorageUtils.clear();
@@ -114,6 +152,7 @@ const unsubscribe = subscribe( () => {
 	}
 
 	domReady( () => {
+		console.log("🚀 ~ file: index.js:150 ~ domReady ~ unsubscribe:");
 		const editorToolbarSettings = document.querySelector(
 			'.edit-post-header__settings'
 		);
@@ -158,4 +197,24 @@ const unsubscribe = subscribe( () => {
 	} );
 } );
 
+// window.newfoldEmbeddedHelp.renderSuggestionsSidebar();
 window.newfoldEmbeddedHelp.renderEmbeddedHelp();
+
+domReady( () => {
+	// Run only once DOM is ready, else this won't work.
+
+	var taglineInputField = document.querySelector("#blogdescription");
+	var triggerButton = document.createElement("button");
+		triggerButton.textContent = "AI";
+
+		// Attach a click event listener to the button
+		triggerButton.addEventListener("click", function () {
+			 toggleHelp(true);
+			//window.newfoldEmbeddedHelp.renderSuggestionsSidebar();
+		});
+
+
+	if (taglineInputField) {
+		taglineInputField.parentNode.insertBefore(triggerButton, taglineInputField.nextSibling);
+	} 
+} );
