@@ -1,0 +1,50 @@
+.nfd-suggestions-center {
+  padding: 0 15px;
+
+  h4.nfd-suggestion-heading {
+    margin-bottom: 15px;
+  }
+
+  .nfd-suggestions-list {
+    padding: 15px 0;
+
+    .nfd-suggestion {
+      border: 1px solid lightgray;
+      border-radius: 25px;
+      padding: 15px;
+      margin-bottom: 8px;
+
+      .suggestion-text {
+        margin-bottom: 15px;
+      }
+
+      .suggestion-copy-button {
+        cursor: pointer;
+      }
+
+      .suggestion-btn-wrapper {
+        display: flex;
+        justify-content: space-between;
+
+        .components-tooltip{
+          background-color: black;
+          color: white;
+          padding:5px;
+          border-radius: 1px;
+        }
+
+        .suggestion-apply-button {
+          font-weight: 600;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .nfd-regenerate-button {
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+  }
+
+}

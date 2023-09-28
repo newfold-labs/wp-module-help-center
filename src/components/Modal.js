@@ -4,7 +4,7 @@ import { LocalStorageUtils } from './../utils';
 import { toggleHelp } from '..';
 import { ReactComponent as CloseIcon } from '../icons/close.svg';
 
-const Modal = ({ onClose, contentComponent, iconComponent }) => {
+const Modal = ({ onClose, contentComponent, iconComponent, sidebarHeading, sidebarHeadingId }) => {
   useEffect(() => {
     const helpVisible = LocalStorageUtils.getHelpVisible();
     toggleHelp( helpVisible );
@@ -17,7 +17,7 @@ const Modal = ({ onClose, contentComponent, iconComponent }) => {
       <div className="modal-header">
         <h3 className="heading">
           <span className="icon">{iconComponent}</span>
-          {__('Help Center', 'wp-module-help-center')}
+          {__(sidebarHeading, sidebarHeadingId)}
         </h3>
         <button
           className="close-button"
