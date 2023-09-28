@@ -55,8 +55,8 @@ export const toggleHelp = ( visible ) => {
 
 export const toggleSuggestionGenerator = ( visible ) => {
 	wpContentContainer.classList.toggle( 'wpcontent-container', visible );
-	const nfdHelpContainer = document.getElementById( 'nfd-suggestion-center' );
-	nfdHelpContainer.classList.toggle( 'help-container', visible );
+	const nfdSuggestionContainer = document.getElementById( 'nfd-suggestion-center' );
+	nfdSuggestionContainer.classList.toggle( 'help-container', visible );
 };
 
 const toggleHelpViaLocalStorage = () => {
@@ -81,77 +81,35 @@ const handleClose = () => {
 	LocalStorageUtils.clear();
 }
 
+const createSidebarContent = (containerId, contentComponent, iconComponent, sidebarHeading) => {
+	const container = document.getElementById(containerId);
+	if (!container) return;
+  
+	const sidebarProps = {
+	  onClose: handleClose,
+	  contentComponent: contentComponent,
+	  iconComponent: iconComponent,
+	  sidebarHeading: sidebarHeading,
+	  sidebarHeadingId: `wp-module-${containerId}`,
+	};
+  
+	if ('undefined' !== createRoot) {
+	  createRoot(container).render(<Modal {...modalProps} />);
+	} else if ('undefined' !== render) {
+	  render(<Modal {...sidebarProps} />, container);
+	}
+  };
+
 window.newfoldEmbeddedHelp = {
 	toggleNFDLaunchedEmbeddedHelp: () => {
 		toggleHelpViaLocalStorage();
 	},
 	renderEmbeddedHelp: () => {
-		const helpContainer = document.createElement( 'div' );
-		helpContainer.id = 'nfd-help-center';
-		helpContainer.style.display = 'none';
-		wpContentContainer.appendChild( helpContainer );
-		const DOM_TARGET = document.getElementById( 'nfd-help-center' );
-
-
-		if ( null !== DOM_TARGET ) {
-			if ( 'undefined' !== createRoot ) {
-				// WP 6.2+ only
-				createRoot( DOM_TARGET ).render(
-					<Modal
-						onClose={ handleClose }
-						contentComponent={(props) => <HelpCenter {...props} />}
-        				iconComponent={<HelpIcon />}
-						sidebarHeading={`Help Center`}
-						sidebarHeadingId={`wp-module-help-center`}
-					/>
-				);
-			} else if ( 'undefined' !== render ) {
-				render(
-					<Modal
-						onClose={ handleClose }
-						contentComponent={(props) => <HelpCenter {...props} />}
-        				iconComponent={<HelpIcon />}
-						sidebarHeading={`Help Center`}
-						sidebarHeadingId={`wp-module-help-center`}
-					/>,
-					DOM_TARGET
-				);
-			}
-		}
+		createSidebarContent('nfd-help-center', (props) => <HelpCenter {...props} />, <HelpIcon />, 'Help Center');
 	},
 	renderSuggestionsSidebar: () => {
-		const suggestionContainer = document.createElement( 'div' );
-		suggestionContainer.id = 'nfd-suggestion-center';
-		suggestionContainer.style.display = 'none';
-		wpContentContainer.appendChild( suggestionContainer );
-		const DOM_TARGET = document.getElementById( 'nfd-suggestion-center' );
-
-		if ( null !== DOM_TARGET ) {
-			if ( 'undefined' !== createRoot ) {
-				// WP 6.2+ only
-				createRoot( DOM_TARGET ).render(
-					<Modal
-						onClose={ handleClose }
-						contentComponent={(props) => <SuggestionsGenerator {...props} />}
-        				iconComponent={<AiIcon />}
-						sidebarHeading={`Suggestions Generator`}
-						sidebarHeadingId={`wp-module-content-generator`}
-					/>
-				);
-			} else if ( 'undefined' !== render ) {
-				render(
-					<Modal
-						onClose={ handleClose }
-						contentComponent={(props) => <SuggestionsGenerator {...props} />}
-        				iconComponent={<AiIcon />}
-						sidebarHeading={`Suggestions Generator`}
-						sidebarHeadingId={`wp-module-content-generator`}
-					/>,
-					DOM_TARGET
-				);
-			}
-		}
-	},
+		createSidebarContent('nfd-suggestion-center', (props) => <SuggestionsGenerator {...props} />, <AiIcon />, 'Suggestions Generator');
+	}
 };
 
 //For rendering embedded help in Add, edit and View Pages
