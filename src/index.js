@@ -7,8 +7,9 @@ import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 //
 import Modal from './components/Modal';
 import HelpCenter from './components/HelpCenter';
-import Sidebar from './components/SuggestionsGenerator';
+import SuggestionsGenerator from './components/SuggestionsGenerator'
 import { ReactComponent as HelpIcon } from './icons/help.svg';
+import { ReactComponent as AiIcon } from './icons/ai-icon.svg';
 import { ReactComponent as Help } from './icons/help-plugin-sidebar-icon.svg';
 import { Analytics, LocalStorageUtils, OnboardingAPIs } from './utils';
 import '../styles.scss';
@@ -50,6 +51,12 @@ export const toggleHelp = ( visible ) => {
 	nfdHelpContainer.classList.toggle( 'help-container', visible );
 	LocalStorageUtils.updateHelpVisible( visible );
 	window.dispatchEvent( new Event( 'storage' ) );
+};
+
+export const toggleSuggestionGenerator = ( visible ) => {
+	wpContentContainer.classList.toggle( 'wpcontent-container', visible );
+	const nfdHelpContainer = document.getElementById( 'nfd-suggestion-center' );
+	nfdHelpContainer.classList.toggle( 'help-container', visible );
 };
 
 const toggleHelpViaLocalStorage = () => {
@@ -94,6 +101,8 @@ window.newfoldEmbeddedHelp = {
 						onClose={ handleClose }
 						contentComponent={(props) => <HelpCenter {...props} />}
         				iconComponent={<HelpIcon />}
+						sidebarHeading={`Help Center`}
+						sidebarHeadingId={`wp-module-help-center`}
 					/>
 				);
 			} else if ( 'undefined' !== render ) {
@@ -102,6 +111,8 @@ window.newfoldEmbeddedHelp = {
 						onClose={ handleClose }
 						contentComponent={(props) => <HelpCenter {...props} />}
         				iconComponent={<HelpIcon />}
+						sidebarHeading={`Help Center`}
+						sidebarHeadingId={`wp-module-help-center`}
 					/>,
 					DOM_TARGET
 				);
@@ -109,30 +120,32 @@ window.newfoldEmbeddedHelp = {
 		}
 	},
 	renderSuggestionsSidebar: () => {
-		const helpContainer = document.createElement( 'div' );
-		helpContainer.id = 'nfd-help-center';
-		helpContainer.style.display = 'none';
-		wpContentContainer.appendChild( helpContainer );
-		const DOM_TARGET = document.getElementById( 'nfd-help-center' );
+		const suggestionContainer = document.createElement( 'div' );
+		suggestionContainer.id = 'nfd-suggestion-center';
+		suggestionContainer.style.display = 'none';
+		wpContentContainer.appendChild( suggestionContainer );
+		const DOM_TARGET = document.getElementById( 'nfd-suggestion-center' );
 
 		if ( null !== DOM_TARGET ) {
 			if ( 'undefined' !== createRoot ) {
 				// WP 6.2+ only
 				createRoot( DOM_TARGET ).render(
-					<Sidebar
-						onClose={ () => {
-							toggleHelp( false );
-							LocalStorageUtils.clear();
-						} }
+					<Modal
+						onClose={ handleClose }
+						contentComponent={(props) => <SuggestionsGenerator {...props} />}
+        				iconComponent={<AiIcon />}
+						sidebarHeading={`Suggestions Generator`}
+						sidebarHeadingId={`wp-module-content-generator`}
 					/>
 				);
 			} else if ( 'undefined' !== render ) {
 				render(
-					<Sidebar
-						onClose={ () => {
-							toggleHelp( false );
-							LocalStorageUtils.clear();
-						} }
+					<Modal
+						onClose={ handleClose }
+						contentComponent={(props) => <SuggestionsGenerator {...props} />}
+        				iconComponent={<AiIcon />}
+						sidebarHeading={`Suggestions Generator`}
+						sidebarHeadingId={`wp-module-content-generator`}
 					/>,
 					DOM_TARGET
 				);
@@ -197,7 +210,7 @@ const unsubscribe = subscribe( () => {
 	} );
 } );
 
-// window.newfoldEmbeddedHelp.renderSuggestionsSidebar();
+window.newfoldEmbeddedHelp.renderSuggestionsSidebar();
 window.newfoldEmbeddedHelp.renderEmbeddedHelp();
 
 domReady( () => {
@@ -208,9 +221,10 @@ domReady( () => {
 		triggerButton.textContent = "AI";
 
 		// Attach a click event listener to the button
-		triggerButton.addEventListener("click", function () {
-			 toggleHelp(true);
+		triggerButton.addEventListener("click", function (event) {
+			toggleSuggestionGenerator(true);
 			//window.newfoldEmbeddedHelp.renderSuggestionsSidebar();
+			event.preventDefault();
 		});
 
 
