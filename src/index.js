@@ -81,35 +81,77 @@ const handleClose = () => {
 	LocalStorageUtils.clear();
 }
 
-const createSidebarContent = (containerId, contentComponent, iconComponent, sidebarHeading) => {
-	const container = document.getElementById(containerId);
-	if (!container) return;
-  
-	const sidebarProps = {
-	  onClose: handleClose,
-	  contentComponent: contentComponent,
-	  iconComponent: iconComponent,
-	  sidebarHeading: sidebarHeading,
-	  sidebarHeadingId: `wp-module-${containerId}`,
-	};
-  
-	if ('undefined' !== createRoot) {
-	  createRoot(container).render(<Modal {...modalProps} />);
-	} else if ('undefined' !== render) {
-	  render(<Modal {...sidebarProps} />, container);
-	}
-  };
-
 window.newfoldEmbeddedHelp = {
 	toggleNFDLaunchedEmbeddedHelp: () => {
 		toggleHelpViaLocalStorage();
 	},
 	renderEmbeddedHelp: () => {
-		createSidebarContent('nfd-help-center', (props) => <HelpCenter {...props} />, <HelpIcon />, 'Help Center');
+		const helpContainer = document.createElement( 'div' );
+		helpContainer.id = 'nfd-help-center';
+		helpContainer.style.display = 'none';
+		wpContentContainer.appendChild( helpContainer );
+		const DOM_TARGET = document.getElementById( 'nfd-help-center' );
+
+
+		if ( null !== DOM_TARGET ) {
+			if ( 'undefined' !== createRoot ) {
+				// WP 6.2+ only
+				createRoot( DOM_TARGET ).render(
+					<Modal
+						onClose={ handleClose }
+						contentComponent={(props) => <HelpCenter {...props} />}
+        				iconComponent={<HelpIcon />}
+						sidebarHeading={`Help Center`}
+						sidebarHeadingId={`wp-module-help-center`}
+					/>
+				);
+			} else if ( 'undefined' !== render ) {
+				render(
+					<Modal
+						onClose={ handleClose }
+						contentComponent={(props) => <HelpCenter {...props} />}
+        				iconComponent={<HelpIcon />}
+						sidebarHeading={`Help Center`}
+						sidebarHeadingId={`wp-module-help-center`}
+					/>,
+					DOM_TARGET
+				);
+			}
+		}
 	},
 	renderSuggestionsSidebar: () => {
-		createSidebarContent('nfd-suggestion-center', (props) => <SuggestionsGenerator {...props} />, <AiIcon />, 'Suggestions Generator');
-	}
+		const suggestionContainer = document.createElement( 'div' );
+		suggestionContainer.id = 'nfd-suggestion-center';
+		suggestionContainer.style.display = 'none';
+		wpContentContainer.appendChild( suggestionContainer );
+		const DOM_TARGET = document.getElementById( 'nfd-suggestion-center' );
+
+		if ( null !== DOM_TARGET ) {
+			if ( 'undefined' !== createRoot ) {
+				// WP 6.2+ only
+				createRoot( DOM_TARGET ).render(
+					<Modal
+						onClose={ handleClose }
+						contentComponent={(props) => <SuggestionsGenerator {...props} />}
+        				iconComponent={<AiIcon />}
+						sidebarHeading={`Suggestions Generator`}
+						sidebarHeadingId={`wp-module-content-generator`}
+					/>
+				);
+			} else if ( 'undefined' !== render ) {
+				render(
+					<Modal
+						onClose={ handleClose }
+						contentComponent={(props) => <SuggestionsGenerator {...props} />}
+        				iconComponent={<AiIcon />}
+						sidebarHeading={`Suggestions Generator`}
+						sidebarHeadingId={`wp-module-content-generator`}
+					/>,
+					DOM_TARGET
+				);
+			}
+		}
+	},
 };
 
 //For rendering embedded help in Add, edit and View Pages
@@ -171,22 +213,22 @@ const unsubscribe = subscribe( () => {
 window.newfoldEmbeddedHelp.renderSuggestionsSidebar();
 window.newfoldEmbeddedHelp.renderEmbeddedHelp();
 
-domReady( () => {
+domReady(() => {
 	// Run only once DOM is ready, else this won't work.
 
 	var taglineInputField = document.querySelector("#blogdescription");
 	var triggerButton = document.createElement("button");
-		triggerButton.textContent = "AI";
+	triggerButton.textContent = "AI";
 
-		// Attach a click event listener to the button
-		triggerButton.addEventListener("click", function (event) {
-			toggleSuggestionGenerator(true);
-			//window.newfoldEmbeddedHelp.renderSuggestionsSidebar();
-			event.preventDefault();
-		});
+	// Attach a click event listener to the button
+	triggerButton.addEventListener("click", function (event) {
+		toggleSuggestionGenerator(true);
+		//window.newfoldEmbeddedHelp.renderSuggestionsSidebar();
+		event.preventDefault();
+	});
 
 
 	if (taglineInputField) {
 		taglineInputField.parentNode.insertBefore(triggerButton, taglineInputField.nextSibling);
-	} 
-} );
+	}
+});
