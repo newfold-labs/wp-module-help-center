@@ -25,7 +25,12 @@
       .suggestion-btn-wrapper {
         display: flex;
         justify-content: space-between;
-
+        &.hide-tooltip {
+          .components-tooltip{
+            display: none;
+          }
+        }
+        
         .components-tooltip{
           background-color: black;
           color: white;

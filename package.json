@@ -26,6 +26,7 @@
 		"@wordpress/plugins": "6.9.0",
 		"algoliasearch": "4.20.0",
 		"lodash.debounce": "4.0.8",
+		"react-copy-to-clipboard": "5.1.0",
 		"react-instantsearch-hooks-web": "6.43.0",
 		"react-router-dom": "6.6.2",
 		"typesense-instantsearch-adapter": "2.7.1"

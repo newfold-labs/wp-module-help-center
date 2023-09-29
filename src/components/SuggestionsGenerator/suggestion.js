@@ -1,30 +1,46 @@
 
+import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { Tooltip } from '@wordpress/components';
+import CopyToClipboard from 'react-copy-to-clipboard';
 import { ReactComponent as CopyIcon } from '../../icons/copy-icon.svg';
 
-function Suggestion({suggestionText, index}) {
-console.log("index", index);
-  return (
-    <div className="nfd-suggestion">
-      <div className="suggestion-text">
-          {suggestionText}
-        </div>
-      <div className="suggestion-btn-wrapper">
-      <Tooltip text="Copy to clipboard" delay={100}>
-        <div className="suggestion-copy-button" id={`suggestionCopyButton${index}`}>
-            <CopyIcon />
-        </div>
-        </Tooltip>
-        <div className="suggestion-apply-button" id={`suggestionApplyButton${index}`}>
-          { __(
-							'Apply',
-							'wp-suggestions-generator'
-						) }
-        </div>
-      </div>
-    </div>
-  )
+
+function Suggestion({ suggestionText, index }) {
+
+	const [copied, setCopied] = useState(false);
+
+	const handleCopy = () => {
+		setCopied(true);
+	};
+
+	console.log("index", index);
+	return (
+		<div className="nfd-suggestion">
+			<div className="suggestion-text">
+				{suggestionText}
+			</div>
+			<div className={`suggestion-btn-wrapper ${copied && `hide-tooltip`}`}>
+				<Tooltip text={!copied ? "Copy to clipboard" : ""} delay={100}>
+					<div className="suggestions-copy-wrapper">
+						<CopyToClipboard text={suggestionText} onCopy={handleCopy}>
+							<div className="suggestion-copy-button" id={`suggestionCopyButton${index}`}>
+								{copied ?
+									<span>Copied!</span> :
+									<span><CopyIcon /></span>}
+							</div>
+						</CopyToClipboard>
+					</div>
+				</Tooltip>
+				<div className="suggestion-apply-button" id={`suggestionApplyButton${index}`}>
+					{__(
+						'Apply',
+						'wp-suggestions-generator'
+					)}
+				</div>
+			</div>
+		</div>
+	)
 }
 
 export default Suggestion
