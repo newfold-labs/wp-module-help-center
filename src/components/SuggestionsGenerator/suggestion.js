@@ -6,7 +6,7 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 import { ReactComponent as CopyIcon } from '../../icons/copy-icon.svg';
 
 
-function Suggestion({ suggestionText, index }) {
+function Suggestion({ suggestionText, index , targetElement}) {
 
 	const [copied, setCopied] = useState(false);
 
@@ -14,7 +14,12 @@ function Suggestion({ suggestionText, index }) {
 		setCopied(true);
 	};
 
-	console.log("index", index);
+	const applySuggestion = (suggestion) => {
+		if(targetElement){ 
+		  targetElement.value = suggestion;
+		}
+	  }
+
 	return (
 		<div className="nfd-suggestion">
 			<div className="suggestion-text">
@@ -32,7 +37,7 @@ function Suggestion({ suggestionText, index }) {
 						</CopyToClipboard>
 					</div>
 				</Tooltip>
-				<div className="suggestion-apply-button" id={`suggestionApplyButton${index}`}>
+				<div className="suggestion-apply-button" id={`suggestionApplyButton${index}`} onClick={() => applySuggestion(suggestionText)}>
 					{__(
 						'Apply',
 						'wp-suggestions-generator'

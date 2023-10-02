@@ -1,11 +1,12 @@
 import Suggestion from './suggestion';
 import './suggestion-generator.scss';
 
-function SuggestionsList({results}) {
+function SuggestionsList({results, targetElement}) {
+
   return (
     <div className='nfd-suggestions-list'>   
       {results.map((suggestionText, index) => (
-        <Suggestion key={index} suggestionText={suggestionText.text} /> 
+        <Suggestion suggestionText={suggestionText.text} index={index} targetElement={targetElement}/> 
       ))}
     </div>
   )

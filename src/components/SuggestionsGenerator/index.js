@@ -9,6 +9,9 @@ const SuggestionsGenerator = (props) => {
   const [targetHasValue, setTargetHasValue] = useState(false);
   const siteDescInput = document.getElementById("blogdescription").value;
 
+  const targetElement = document.getElementById("blogdescription");
+  
+
   const getAIResult = async (siteTitle, siteUrl, siteDesc) => {
     const siteDescrition = siteDescInput ? siteDescInput : siteDesc;
   
@@ -47,7 +50,7 @@ const SuggestionsGenerator = (props) => {
   return (
     <div className="nfd-suggestions-center">
       <h4 className="nfd-suggestion-heading">Suggestion for "Tagline"</h4>
-      <SuggestionsList results={aiResults}/>
+      <SuggestionsList results={aiResults} targetElement={targetElement}/>
       <div className="nfd-regenerate-button">
         Regenerate
       </div>
