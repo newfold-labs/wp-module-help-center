@@ -1,6 +1,7 @@
 $gray-text: #394150;
 
-#nfd-help-center, #nfd-suggestion-center {
+#nfd-help-center,
+#nfd-suggestion-center {
   .modal {
     padding-bottom: 32px;
 
@@ -13,6 +14,7 @@ $gray-text: #394150;
       padding: 16px;
       display: flex;
       justify-content: space-between;
+
       .heading {
         display: flex;
         align-items: center;
@@ -20,6 +22,8 @@ $gray-text: #394150;
         line-height: 24px;
         font-weight: normal;
         color: $gray-text;
+        padding:11px 0  ;
+
         .icon {
           margin-right: 10px;
           padding-top: 3px;

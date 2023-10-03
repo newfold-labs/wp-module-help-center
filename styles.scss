@@ -16,12 +16,13 @@ $box-shadow-dark: rgba(0, 0, 0, 0.25);
 $gray-text: #394150;
 
 .nfd-plugin-sidebar {
-  .nfd-help-center{
-    .feedback-container{
+  .nfd-help-center {
+    .feedback-container {
       .feedback-button {
         padding-left: 6px;
         padding-right: 6px;
       }
+
       .feedback-question {
         padding-top: 8px;
       }
@@ -30,30 +31,38 @@ $gray-text: #394150;
 }
 
 .nfd-help-center {
-  p{
+  p {
     font-size: 14px;
-    br{
+
+    br {
       content: "";
       display: block;
-      margin-bottom: 5px;  /* Adjust this value as per your requirements */
+      margin-bottom: 5px;
+      /* Adjust this value as per your requirements */
     }
   }
+
   h4,
   h3 {
     margin: 0;
   }
+
   z-index: 10;
   padding: 0 16px;
+
   .launch-help-center {
     text-align: center;
+
     .launch-description {
       margin: 24px 0;
     }
+
     .launch-action {
       display: flex;
       justify-content: center;
       align-items: center;
     }
+
     button {
       width: 146px;
       height: 36px;
@@ -62,9 +71,11 @@ $gray-text: #394150;
       color: $white;
       cursor: grab;
     }
+
     p {
       font-size: 18px;
     }
+
     a {
       margin-top: 16px;
       display: block;
@@ -76,6 +87,7 @@ $gray-text: #394150;
     .section-header {
       margin-bottom: 8px !important;
     }
+
     .video,
     .article {
       .description {
@@ -87,6 +99,7 @@ $gray-text: #394150;
         text-overflow: ellipsis;
         margin: 8px 0;
       }
+
       &:hover {
         background: $hover-blue;
       }
@@ -107,17 +120,20 @@ $gray-text: #394150;
     padding-right: 5px;
     background-color: $light-gray;
     margin: 16px 0px 0px;
+
     input {
       border: none;
       background-color: $light-gray;
       font-size: 15px;
-      color:$dark-gray;
-      padding-left: 0px ;
+      color: $dark-gray;
+      padding-left: 0px;
+
       &:focus {
         outline: none;
         box-shadow: none;
       }
     }
+
     button {
       box-shadow: none;
       padding-top: 3px;
@@ -135,6 +151,7 @@ $gray-text: #394150;
     padding-left: 2px;
     padding-right: 2px;
     color: $gray-text;
+
     span {
       font-weight: 500;
       font-size: 12px;
@@ -156,9 +173,11 @@ $gray-text: #394150;
     position: relative;
     justify-content: space-between;
     color: $gray-text;
+
     p {
       margin: 0;
     }
+
     .svg {
       display: flex;
       align-items: center;
@@ -166,8 +185,10 @@ $gray-text: #394150;
       transform: translateX(0);
       transition: transform 0.2s ease;
     }
+
     &:hover {
       box-shadow: 0 0 0 2px $box-shadow-hover;
+
       .svg {
         transform: translateX(2px);
       }
@@ -183,6 +204,7 @@ $gray-text: #394150;
     border-radius: 4px;
     margin-top: 6%;
     margin-bottom: 8%;
+
     button {
       border-radius: 20px;
       border-color: $border-color-button;
@@ -192,6 +214,7 @@ $gray-text: #394150;
       cursor: pointer;
       box-shadow: none;
     }
+
     .feedback-button {
       padding-left: 13px;
       padding-right: 13px;
@@ -200,30 +223,36 @@ $gray-text: #394150;
       flex-shrink: 0;
       white-space: nowrap;
     }
+
     .button-icon {
       height: 20px;
       width: 20px;
       margin-right: 4px;
     }
+
     .yes {
       border-bottom-right-radius: 0px;
       border-top-right-radius: 0px;
       border-right-width: 0px;
     }
+
     .no {
       border-bottom-left-radius: 0px;
       border-top-left-radius: 0px;
     }
+
     .selected-yes {
       background: $feedback-bg;
       padding-bottom: 4.4px;
       padding-top: 5.8px;
     }
+
     .selected-no {
       background-color: $feedback-negative;
       padding-bottom: 4.4px;
       padding-top: 5.8px;
     }
+
     .icon {
       cursor: pointer;
       display: flex;
@@ -258,8 +287,10 @@ $gray-text: #394150;
 
       #wpbody {
         flex: 1;
+
         #bwa-app {
           margin-left: 20px !important;
+
           #bluehost-logo-wrap {
             padding: 14px 0 0 12px;
           }
@@ -282,6 +313,7 @@ body:is(.page, .post-php, .post-new-php) {
         width: 40px !important;
       }
     }
+
     li#wp-admin-bar-help-center {
       display: block;
     }
@@ -289,10 +321,10 @@ body:is(.page, .post-php, .post-new-php) {
 }
 
 .icon-button {
-  cursor: pointer;  
+  cursor: pointer;
 }
 
-.ai-suggestions-button{
+.ai-suggestions-button {
   width: 24px;
   height: 24px;
   border: 1px solid;
@@ -307,8 +339,8 @@ body:is(.page, .post-php, .post-new-php) {
   line-height: 24px;
   cursor: pointer;
 
-  &:hover{
+  &:hover {
     color: white;
-    background-color: #196bde;
+    background-color: $blue;
   }
 }
