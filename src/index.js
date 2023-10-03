@@ -217,7 +217,9 @@ domReady(() => {
 	// Run only once DOM is ready, else this won't work.
 
 	var taglineInputField = document.querySelector("#blogdescription");
-	var triggerButton = document.createElement("button");
+	taglineInputField.style.paddingRight = "30px";
+	var triggerButton = document.createElement("div");
+	triggerButton.classList.add("ai-suggestions-button");
 	triggerButton.textContent = "AI";
 
 	// Attach a click event listener to the button

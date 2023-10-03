@@ -291,3 +291,24 @@ body:is(.page, .post-php, .post-new-php) {
 .icon-button {
   cursor: pointer;  
 }
+
+.ai-suggestions-button{
+  width: 24px;
+  height: 24px;
+  border: 1px solid;
+  border-radius: 4px;
+  background: transparent;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  margin-top: -2px;
+  margin-left: -29px;
+  font-weight: 600;
+  line-height: 24px;
+  cursor: pointer;
+
+  &:hover{
+    color: white;
+    background-color: #196bde;
+  }
+}
