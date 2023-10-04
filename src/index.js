@@ -134,7 +134,7 @@ window.newfoldEmbeddedHelp = {
 						onClose={ handleClose }
 						contentComponent={(props) => <SuggestionsGenerator {...props} />}
         				iconComponent={<AiIcon />}
-						sidebarHeading={`Suggestions Generator`}
+						sidebarHeading={`Content Generator`}
 						sidebarHeadingId={`wp-module-content-generator`}
 					/>
 				);
@@ -144,7 +144,7 @@ window.newfoldEmbeddedHelp = {
 						onClose={ handleClose }
 						contentComponent={(props) => <SuggestionsGenerator {...props} />}
         				iconComponent={<AiIcon />}
-						sidebarHeading={`Suggestions Generator`}
+						sidebarHeading={`Content Generator`}
 						sidebarHeadingId={`wp-module-content-generator`}
 					/>,
 					DOM_TARGET

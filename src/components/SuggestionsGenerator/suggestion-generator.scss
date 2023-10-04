@@ -50,6 +50,12 @@
     font-weight: 600;
     text-align: center;
     cursor: pointer;
+    vertical-align: middle;
+
+    span{
+      vertical-align: top;
+      margin: 0 5px;
+    }
   }
 
 }

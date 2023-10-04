@@ -1,6 +1,7 @@
 import { useEffect, useState } from '@wordpress/element';
 import moduleAI from '@newfold-labs/wp-module-ai';
 import apiFetch from '@wordpress/api-fetch';
+import { ReactComponent as RegenerateIcon } from '../../icons/regenerate-icon.svg';
 
 import SuggestionsList from './suggestionList';
 const SuggestionsGenerator = (props) => {
@@ -33,26 +34,28 @@ const SuggestionsGenerator = (props) => {
     }
   };
 
-
-  useEffect(() => {
+  const fetchSettings = () => {
     apiFetch({ path: '/wp/v2/settings' }).then((settings) => {
       const { title, url, description } = settings;
       if (title && url) {
         getAIResult(title, url, description);
       }
     });
+  }
 
-    return () => {
 
-    }
+  useEffect(() => {
+    fetchSettings();
+
+    return () => {}
   }, []); 
 
   return (
     <div className="nfd-suggestions-center">
       <h4 className="nfd-suggestion-heading">Suggestion for "Tagline"</h4>
       <SuggestionsList results={aiResults} targetElement={targetElement}/>
-      <div className="nfd-regenerate-button">
-        Regenerate
+      <div className="nfd-regenerate-button" onClick={() => fetchSettings()}>
+        <span><RegenerateIcon /></span><span>Regenerate</span>
       </div>
     </div>
   );
