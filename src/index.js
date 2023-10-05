@@ -178,8 +178,10 @@ window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery = function (selectedText, 
     attempts++;
     if (targetElement && isElementVisible(targetElement)) {
       const searchInput = document.getElementById('search-input-box');
-      searchInput.value = selectedText;
-      searchInput.focus();
+	  setTimeout(() => {
+		searchInput.value = selectedText;
+		searchInput.focus();
+	  }, 500);
       clearInterval(searchInterval);
     } else if (attempts >= maxAttempts) {
       clearInterval(searchInterval);
@@ -191,7 +193,7 @@ window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery = function (selectedText, 
   /* Detect click event on the calling element and  checking if the clicked element has a specific class name (look-up-help in the case below) and Extract the inner text of the clicked element */
   document.addEventListener('click', function (event) {
     const clickedElement = event.target;    
-    if (clickedElement.classList.contains('look-up-help')) {
+    if (clickedElement.classList.contains('nfd-lookup-help')) {
       const selectedText = clickedElement.innerText;
       if(selectedText){
         window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery(selectedText, true);
