@@ -1,10 +1,13 @@
 import { createRoot, render } from '@wordpress/element';
 
-import { subscribe } from '@wordpress/data';
+import { subscribe, select  } from '@wordpress/data';
 //
 import domReady from '@wordpress/dom-ready';
+import { registerPlugin } from '@wordpress/plugins';
+import {PluginDocumentSettingPanel} from '@wordpress/edit-post'
 import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 //
+
 import Modal from './components/Modal';
 import HelpCenter from './components/HelpCenter';
 import SuggestionsGenerator from './components/SuggestionsGenerator'
@@ -14,6 +17,21 @@ import { ReactComponent as Help } from './icons/help-plugin-sidebar-icon.svg';
 import { Analytics, LocalStorageUtils, OnboardingAPIs } from './utils';
 import '../styles.scss';
 
+/* const MyExcerptButtonComponent = () => (
+    <PluginDocumentSettingPanel 
+        name="my-custom-excerpt-button"
+        title="Hellooooo" // This will make it visually look like it's part of the Excerpt
+        className="my-custom-excerpt-panel"
+    >
+        <h1>My Excerpt Button</h1>
+    </PluginDocumentSettingPanel>
+);
+
+registerPlugin( 'my-excerpt-button', { render: MyExcerptButtonComponent } );
+
+
+
+ */
 const OpenHelpCenterForNovice = async () => {
 	const queryParams = new URL( document.location ).searchParams;
 	const referrer = queryParams.get( 'referrer' );
@@ -156,16 +174,16 @@ window.newfoldEmbeddedHelp = {
 
 //For rendering embedded help in Add, edit and View Pages
 /* Using the subscribe from the store to keep the UI persistent */
+const { Button } = wp.components;
 const unsubscribe = subscribe( () => {
+	
+	console.log("🚀 ~ file: index.js:180 ~ unsubscribe ~ change:", );
 	const wrapper = document.getElementById( 'nfd-help-menu-button-wrapper' );
-
 	if ( wrapper ) {
 		unsubscribe(); // Unsubscribe from the state changes
 		return;
 	}
-
 	domReady( () => {
-		console.log("🚀 ~ file: index.js:150 ~ domReady ~ unsubscribe:");
 		const editorToolbarSettings = document.querySelector(
 			'.edit-post-header__settings'
 		);
@@ -203,20 +221,33 @@ const unsubscribe = subscribe( () => {
 			</button>
 		);
 
+		insertCustomButton();
+		
 		render(
 			helpMenuButton,
 			document.getElementById( 'nfd-help-menu-button-wrapper' )
 		);
+
 	} );
 } );
 
 window.newfoldEmbeddedHelp.renderSuggestionsSidebar();
 window.newfoldEmbeddedHelp.renderEmbeddedHelp();
 
+const insertCustomButton = () => {
+    const excerptPanel = document.querySelector('.editor-post-excerpt');
+    if (excerptPanel && !document.querySelector('.my-custom-button')) { // Check to avoid duplicate insertions
+        const buttonContainer = document.createElement('div');
+        excerptPanel.appendChild(buttonContainer);
+        wp.element.render(<Button className="my-custom-button">My Custom Button</Button>, buttonContainer);
+    }
+};
+
+
 domReady(() => {
 	// Run only once DOM is ready, else this won't work.
 
-	var taglineInputField = document.querySelector("#blogdescription");
+	/* var taglineInputField = document.querySelector("#blogdescription");
 	taglineInputField.style.paddingRight = "30px";
 	var triggerButton = document.createElement("div");
 	triggerButton.classList.add("ai-suggestions-button");
@@ -228,9 +259,12 @@ domReady(() => {
 		//window.newfoldEmbeddedHelp.renderSuggestionsSidebar();
 		event.preventDefault();
 	});
-
-
+	
 	if (taglineInputField) {
 		taglineInputField.parentNode.insertBefore(triggerButton, taglineInputField.nextSibling);
-	}
+	}	 */
+	
+	 setTimeout(() => {
+		insertCustomButton(); 
+	}, 500); 
 });

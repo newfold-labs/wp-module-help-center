@@ -8,9 +8,9 @@ const SuggestionsGenerator = (props) => {
 
   const [aiResults, setAIResults] = useState([]);
   const [targetHasValue, setTargetHasValue] = useState(false);
-  const siteDescInput = document.getElementById("blogdescription").value;
+  const siteDescInput = document.getElementById("blogdescription") ? document.getElementById("blogdescription").value : null;
 
-  const targetElement = document.getElementById("blogdescription");
+  const targetElement = document.getElementById("blogdescription") ? document.getElementById("blogdescription") : null;
   
 
   const getAIResult = async (siteTitle, siteUrl, siteDesc) => {
