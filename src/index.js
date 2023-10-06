@@ -161,42 +161,71 @@ const unsubscribe = subscribe( () => {
 window.newfoldEmbeddedHelp.renderEmbeddedHelp();
 
 /* The method added to the window object can be used to open the help center pop and enter the text clicked */
-window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery = function (selectedText, launchByElement) {
-  const helpVisible = LocalStorageUtils.getHelpVisible();
-  if (helpVisible !== "true" && launchByElement)
-    toggleHelp(true);
+if (LocalStorageUtils.getFeatureFlag('featureFlag_newfoldLaunchHelpCenter') === 'enabled') {
+	window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery = function (
+		selectedText,
+		launchByElement
+	) {
+		const helpVisible = LocalStorageUtils.getHelpVisible();
+		if (helpVisible !== 'true' && launchByElement) toggleHelp(true);
 
-  const isElementVisible = (element) => {
-    const style = window.getComputedStyle(element);
-    return style.display !== 'none' && style.visibility !== 'hidden';
-  }
+		const isElementVisible = (element) => {
+			const style = window.getComputedStyle(element);
+			return style.display !== 'none' && style.visibility !== 'hidden';
+		};
 
-  const targetElement = document.getElementById('nfd-help-center');
-  const maxAttempts = 5;
-  let attempts = 0;
-  const searchInterval = setInterval(() => {
-    attempts++;
-    if (targetElement && isElementVisible(targetElement)) {
-      const searchInput = document.getElementById('search-input-box');
-	  setTimeout(() => {
-		searchInput.value = selectedText;
-		searchInput.focus();
-	  }, 500);
-      clearInterval(searchInterval);
-    } else if (attempts >= maxAttempts) {
-      clearInterval(searchInterval);
+		const targetElement = document.getElementById('nfd-help-center');
+		const maxAttempts = 5;
+		let attempts = 0;
+		const searchInterval = setInterval(() => {
+			attempts++;
+			if (targetElement && isElementVisible(targetElement)) {
+				const searchInput = document.getElementById('search-input-box');
+				setTimeout(() => {
+					searchInput.value = selectedText;
+					searchInput.focus();
+				}, 500);
+				clearInterval(searchInterval);
+			} else if (attempts >= maxAttempts) {
+				clearInterval(searchInterval);
+			}
+		}, 300);
+	};
+
+
+
+
+function getElementsInnerText(element) {
+    // If the element itself has text, return it
+    if (element.innerText.trim()) {
+        return element.innerText;
     }
-  }, 300);
+
+    // to check if the child element has text
+    for (let child of element.childNodes) {
+        if (child.nodeType === Node.ELEMENT_NODE) {
+            let childText = getElementsInnerText(child);
+            if (childText) {
+                return childText;
+            }
+        }
+    }
+
+    // If no text was found in the element or its children, return null
+    return null;
 }
 
-
-  /* Detect click event on the calling element and  checking if the clicked element has a specific class name (look-up-help in the case below) and Extract the inner text of the clicked element */
-  document.addEventListener('click', function (event) {
-    const clickedElement = event.target;    
-    if (clickedElement.classList.contains('nfd-lookup-help')) {
-      const selectedText = clickedElement.innerText;
-      if(selectedText){
-        window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery(selectedText, true);
-      }
-    }
-  });
+	/* Detect click event on the calling element and  checking if the clicked element has a specific class name (look-up-help in the case below) and Extract the inner text of the clicked element */
+	document.addEventListener('click', function (event) {
+		const clickedElement = event.target;
+		if (clickedElement.hasAttribute('data-openNfdHelpCenter')) {
+			let selectedText = getElementsInnerText(clickedElement);
+			if (selectedText) {
+				window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery(
+					selectedText,
+					true
+				);
+			}
+		}
+	});
+}
