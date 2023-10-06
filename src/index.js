@@ -216,15 +216,13 @@ function getElementsInnerText(element) {
 }
 
 	/* Detect click event on the calling element and  checking if the clicked element has a specific class name (look-up-help in the case below) and Extract the inner text of the clicked element */
-	document.addEventListener('click', function (event) {
-		const clickedElement = event.target;
-		if (clickedElement.hasAttribute('data-openNfdHelpCenter')) {
-			let selectedText = getElementsInnerText(clickedElement);
+	document.addEventListener('click', (event) => {
+		const clickedElement = event.target.closest('[data-openNfdHelpCenter]');
+
+		if (clickedElement) {
+			const selectedText = getElementsInnerText(clickedElement);
 			if (selectedText) {
-				window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery(
-					selectedText,
-					true
-				);
+				window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery(selectedText, true);
 			}
 		}
 	});
