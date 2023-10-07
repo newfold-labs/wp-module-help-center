@@ -10,6 +10,7 @@ import { SearchResult } from './SearchResult';
 import { ResultContent } from './ResultContent';
 import { Analytics, LocalStorageUtils } from '../utils';
 import Loader from './Loader';
+import { __ } from '@wordpress/i18n';
 
 const SearchResults = ( props ) => {
 	const [ isLoading, setIsLoading ] = useState( false );
@@ -147,7 +148,7 @@ const SearchResults = ( props ) => {
 					} }
 					value={ searchInput }
 					maxLength="144"
-					placeholder="Ask me anything..."
+					placeholder= { __( "Ask me anything...", 'wp-module-help-center') }
 					onChange={ ( e ) => {
 						setSearchInput( e.target.value );
 						populateSearchResult( '', undefined, e.target.value );
@@ -177,8 +178,8 @@ const SearchResults = ( props ) => {
 				<p>
 					<b>
 						{ resultContent.length > 0
-							? 'Other Resources'
-							: 'Search Suggestions' }
+							? __( 'Other Resources', 'wp-module-help-center' )
+							: __( 'Search Suggestions', 'wp-module-help-center' ) }
 					</b>
 				</p>
 			) }

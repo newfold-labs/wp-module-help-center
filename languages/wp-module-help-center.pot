@@ -1,0 +1,67 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://github.com/wp-module-help-center/issues\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.8.1\n"
+"X-Domain: wp-module-help-center\n"
+
+#: bootstrap.php:19
+#: build/index.js:1
+msgid "Help Center"
+msgstr ""
+
+#: includes/CapabilityController.php:63
+#: includes/UserInteractionController.php:81
+msgid "You must be authenticated to make this call"
+msgstr ""
+
+#: includes/HelpCenter.php:78
+msgid "Help"
+msgstr ""
+
+#: build/index.js:1
+msgid "Did this result help you ?"
+msgstr ""
+
+#: build/index.js:1
+msgid "Result based on your search:"
+msgstr ""
+
+#: build/index.js:1
+msgid "Sorry, we don't have any content for that yet."
+msgstr ""
+
+#: build/index.js:1
+msgid "This tool is being built and doesn't always have a match."
+msgstr ""
+
+#: build/index.js:1
+msgid "In the meantime, try searching our"
+msgstr ""
+
+#: build/index.js:1
+msgid "Resource center."
+msgstr ""
+
+#: build/index.js:1
+msgid "Follow these steps:"
+msgstr ""
+
+#: build/index.js:1
+msgid "Ask me anything..."
+msgstr ""
+
+#: build/index.js:1
+msgid "Other Resources"
+msgstr ""
+
+#: build/index.js:1
+msgid "Search Suggestions"
+msgstr ""

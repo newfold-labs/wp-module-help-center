@@ -54,7 +54,7 @@ class UserInteractionController extends \WP_REST_Controller {
 	 *
 	 * @param \WP_REST_Request $request Request object
 	 *
-	 * @returns \WP_REST_Response|\WP_Error
+	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function post_feedback( \WP_REST_Request $request ) {
 		$post_id = $request['post_id'];
@@ -72,13 +72,13 @@ class UserInteractionController extends \WP_REST_Controller {
 	/**
 	 * Check permissions for routes.
 	 *
-	 * @return \WP_Error
+	 * @return \WP_Error|boolean
 	 */
 	public function check_permission() {
 		if ( ! current_user_can('read') ) {
 			return new \WP_Error(
 				'rest_forbidden',
-				__( 'You must be authenticated to make this call' ),
+				__( 'You must be authenticated to make this call', 'wp-module-help-center' ),
 				array( 'status' => 401 )
 			);
 		}
