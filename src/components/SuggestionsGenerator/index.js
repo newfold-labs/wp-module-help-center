@@ -9,6 +9,7 @@ const SuggestionsGenerator = (props) => {
   const [aiResults, setAIResults] = useState([]);
   const [targetHasValue, setTargetHasValue] = useState(false);
   const siteDescInput = document.querySelector(props.targetSelector) ? document.querySelector(props.targetSelector).value : null;
+  console.log("prop", props.onClose);
  //  console.log("suggestionTargetElement", props.targetSelector);
   // const targetElement = document.getElementById("blogdescription") ? document.getElementById("blogdescription") : null;
   
@@ -53,7 +54,7 @@ const SuggestionsGenerator = (props) => {
   return (
     <div className="nfd-suggestions-center">
       <h4 className="nfd-suggestion-heading">Suggestion for "Tagline"</h4>
-      <SuggestionsList results={aiResults} targetElement={props.targetSelector}/>
+      <SuggestionsList results={aiResults} targetElement={props.targetSelector} handleClose={props.onClose }/>
       <div className="nfd-regenerate-button" onClick={() => fetchSettings()}>
         <span><RegenerateIcon /></span><span>Regenerate</span>
       </div>

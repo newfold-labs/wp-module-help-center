@@ -255,7 +255,7 @@ const insertAiButtonForExceprt = () => {
     const callback = function(mutationsList, observer) {
         for (const mutation of mutationsList) {
             if (document.querySelector('.editor-post-excerpt') && !document.querySelector('.editor-post-excerpt .my-custom-button')) {
-                insertAiButton(".editor-post-excerpt", toggleSuggestionGenerator.bind(null, true, ".editor-post-excerpt"));
+                insertAiButton(".editor-post-excerpt", toggleSuggestionGenerator.bind(null, true, ".editor-post-excerpt textarea"));
             }
         }
     };
@@ -271,8 +271,9 @@ domReady(() => {
 
     const onboardingNode = document.getElementById("nfd-onboarding");
     if (onboardingNode) {
+		const onboardingTargetElement = '.basic-info-form__left .nfd-input:nth-child(2) textarea.nfd-input__field';
         setTimeout(() => {
-            insertAiButton('.basic-info-form__left textarea.nfd-input__field', toggleSuggestionGenerator.bind(null, true, '.basic-info-form__left textarea.nfd-input__field'));
+            insertAiButton(onboardingTargetElement, toggleSuggestionGenerator.bind(null, true, onboardingTargetElement));
         }, 1000);
     }
 });

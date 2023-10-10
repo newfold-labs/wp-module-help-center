@@ -6,7 +6,7 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 import { ReactComponent as CopyIcon } from '../../icons/copy-icon.svg';
 
 
-function Suggestion({ suggestionText, index , targetElement}) {
+function Suggestion({ suggestionText, index , targetElement, handleClose}) {
 
 	const [copied, setCopied] = useState(false);
 
@@ -15,10 +15,14 @@ function Suggestion({ suggestionText, index , targetElement}) {
 	};
 
 	const applySuggestion = (suggestion) => {
-		if(targetElement){ 
-		  document.querySelector(targetElement).value = suggestion;
+		if (targetElement) {
+			document.querySelector(targetElement).value = suggestion;
+			if (document.querySelector('.block-editor')) {
+				handleClose();
+			}
+
 		}
-	  }
+	}
 
 	return (
 		<div className="nfd-suggestion">
