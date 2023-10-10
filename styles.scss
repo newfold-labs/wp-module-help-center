@@ -343,4 +343,12 @@ body:is(.page, .post-php, .post-new-php) {
     color: white;
     background-color: $blue;
   }
+
+  &.ai-excerpt-button{
+    position: relative;
+    top:-80px; 
+    left:24px;
+  }
+
+
 }

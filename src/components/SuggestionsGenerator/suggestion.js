@@ -16,7 +16,7 @@ function Suggestion({ suggestionText, index , targetElement}) {
 
 	const applySuggestion = (suggestion) => {
 		if(targetElement){ 
-		  targetElement.value = suggestion;
+		  document.querySelector(targetElement).value = suggestion;
 		}
 	  }
 

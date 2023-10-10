@@ -17,21 +17,6 @@ import { ReactComponent as Help } from './icons/help-plugin-sidebar-icon.svg';
 import { Analytics, LocalStorageUtils, OnboardingAPIs } from './utils';
 import '../styles.scss';
 
-/* const MyExcerptButtonComponent = () => (
-    <PluginDocumentSettingPanel 
-        name="my-custom-excerpt-button"
-        title="Hellooooo" // This will make it visually look like it's part of the Excerpt
-        className="my-custom-excerpt-panel"
-    >
-        <h1>My Excerpt Button</h1>
-    </PluginDocumentSettingPanel>
-);
-
-registerPlugin( 'my-excerpt-button', { render: MyExcerptButtonComponent } );
-
-
-
- */
 const OpenHelpCenterForNovice = async () => {
 	const queryParams = new URL( document.location ).searchParams;
 	const referrer = queryParams.get( 'referrer' );
@@ -71,10 +56,21 @@ export const toggleHelp = ( visible ) => {
 	window.dispatchEvent( new Event( 'storage' ) );
 };
 
-export const toggleSuggestionGenerator = ( visible ) => {
-	wpContentContainer.classList.toggle( 'wpcontent-container', visible );
-	const nfdSuggestionContainer = document.getElementById( 'nfd-suggestion-center' );
-	nfdSuggestionContainer.classList.toggle( 'help-container', visible );
+export const toggleSuggestionGenerator = (visible, targetSelector, event) => {
+    const nfdSuggestionContainer = document.getElementById('nfd-suggestion-center');
+    
+    // If the nfd-suggestion-center doesn't exist, call the renderSuggestionsSidebar function
+    if (!nfdSuggestionContainer) {
+        window.newfoldEmbeddedHelp.renderSuggestionsSidebar(targetSelector);
+    }
+
+    wpContentContainer.classList.toggle('wpcontent-container', visible);
+
+    // Make sure to re-query the nfdSuggestionContainer in case it was just added to the DOM
+    const updatedNfdSuggestionContainer = document.getElementById('nfd-suggestion-center');
+    if (updatedNfdSuggestionContainer) {
+        updatedNfdSuggestionContainer.classList.toggle('help-container', visible);
+    }
 };
 
 const toggleHelpViaLocalStorage = () => {
@@ -96,6 +92,7 @@ const toggleHelpViaLocalStorage = () => {
 
 const handleClose = () => {
 	toggleHelp( false );
+	toggleSuggestionGenerator(false);
 	LocalStorageUtils.clear();
 }
 
@@ -137,10 +134,11 @@ window.newfoldEmbeddedHelp = {
 			}
 		}
 	},
-	renderSuggestionsSidebar: () => {
+	renderSuggestionsSidebar: (targetSelector) => {
+		console.log("target selector", targetSelector);
 		const suggestionContainer = document.createElement( 'div' );
 		suggestionContainer.id = 'nfd-suggestion-center';
-		suggestionContainer.style.display = 'none';
+		suggestionContainer.style.display = 'block';
 		wpContentContainer.appendChild( suggestionContainer );
 		const DOM_TARGET = document.getElementById( 'nfd-suggestion-center' );
 
@@ -150,7 +148,7 @@ window.newfoldEmbeddedHelp = {
 				createRoot( DOM_TARGET ).render(
 					<Modal
 						onClose={ handleClose }
-						contentComponent={(props) => <SuggestionsGenerator {...props} />}
+						contentComponent={(props) => <SuggestionsGenerator targetSelector={targetSelector} {...props} />}
         				iconComponent={<AiIcon />}
 						sidebarHeading={`Content Generator`}
 						sidebarHeadingId={`wp-module-content-generator`}
@@ -160,7 +158,7 @@ window.newfoldEmbeddedHelp = {
 				render(
 					<Modal
 						onClose={ handleClose }
-						contentComponent={(props) => <SuggestionsGenerator {...props} />}
+						contentComponent={(props) => <SuggestionsGenerator targetSelector={targetSelector} {...props} />}
         				iconComponent={<AiIcon />}
 						sidebarHeading={`Content Generator`}
 						sidebarHeadingId={`wp-module-content-generator`}
@@ -221,7 +219,6 @@ const unsubscribe = subscribe( () => {
 			</button>
 		);
 
-		insertCustomButton();
 		
 		render(
 			helpMenuButton,
@@ -231,23 +228,63 @@ const unsubscribe = subscribe( () => {
 	} );
 } );
 
-window.newfoldEmbeddedHelp.renderSuggestionsSidebar();
+// window.newfoldEmbeddedHelp.renderSuggestionsSidebar();
 window.newfoldEmbeddedHelp.renderEmbeddedHelp();
 
-const insertCustomButton = () => {
-    const excerptPanel = document.querySelector('.editor-post-excerpt');
-    if (excerptPanel && !document.querySelector('.my-custom-button')) { // Check to avoid duplicate insertions
-        const buttonContainer = document.createElement('div');
-        excerptPanel.appendChild(buttonContainer);
-        wp.element.render(<Button className="my-custom-button">My Custom Button</Button>, buttonContainer);
+function insertAiButton(targetSelector, onClick) {
+    const targetField = document.querySelector(targetSelector);
+    if (targetField && !targetField.parentNode.querySelector('.ai-suggestions-button')) {
+        var triggerButton = document.createElement("div");
+        triggerButton.classList.add("ai-suggestions-button");
+        triggerButton.textContent = "AI";
+        triggerButton.addEventListener("click", function (event) {
+            onClick(event, targetSelector);  // Pass targetSelector to the onClick handler
+            event.preventDefault();
+        });
+        targetField.parentNode.insertBefore(triggerButton, targetField.nextSibling);
     }
-};
+}
 
+const insertAiButtonForExceprt = () => {
+    const parentNode = document.querySelector('#editor');
+    if (!parentNode) return;
+    const observerConfig = {
+        childList: true,
+        subtree: true,
+    };
+    const callback = function(mutationsList, observer) {
+        for (const mutation of mutationsList) {
+            if (document.querySelector('.editor-post-excerpt') && !document.querySelector('.editor-post-excerpt .my-custom-button')) {
+                insertAiButton(".editor-post-excerpt", toggleSuggestionGenerator.bind(null, true, ".editor-post-excerpt"));
+            }
+        }
+    };
+    const observer = new MutationObserver(callback);
+    observer.observe(parentNode, observerConfig);
+}
 
 domReady(() => {
+	insertAiButton("#blogdescription", toggleSuggestionGenerator.bind(null, true, '#blogdescription'));
+    setTimeout(() => {
+        insertAiButtonForExceprt();
+    }, 1000);
+
+    const onboardingNode = document.getElementById("nfd-onboarding");
+    if (onboardingNode) {
+        setTimeout(() => {
+            insertAiButton('.basic-info-form__left textarea.nfd-input__field', toggleSuggestionGenerator.bind(null, true, '.basic-info-form__left textarea.nfd-input__field'));
+        }, 1000);
+    }
+});
+
+/* domReady(() => {
 	// Run only once DOM is ready, else this won't work.
 
-	/* var taglineInputField = document.querySelector("#blogdescription");
+	setTimeout(() => {
+		insertAiButtonForExceprt();
+	}, 1000);
+
+var taglineInputField = document.querySelector("#blogdescription");
 	taglineInputField.style.paddingRight = "30px";
 	var triggerButton = document.createElement("div");
 	triggerButton.classList.add("ai-suggestions-button");
@@ -262,9 +299,28 @@ domReady(() => {
 	
 	if (taglineInputField) {
 		taglineInputField.parentNode.insertBefore(triggerButton, taglineInputField.nextSibling);
-	}	 */
-	
-	 setTimeout(() => {
-		insertCustomButton(); 
-	}, 500); 
-});
+	}	
+ 
+
+	const onboardingNode = document.getElementById("nfd-onboarding");
+	// debugger;
+	if (onboardingNode) {
+		setTimeout(() => {
+			const elementNode = document.querySelector('.basic-info-form__left textarea.nfd-input__field');
+		if (elementNode) {
+			var triggerButton = document.createElement("div");
+			triggerButton.classList.add("ai-suggestions-button");
+			triggerButton.textContent = "AI";
+
+			// Attach a click event listener to the button
+			triggerButton.addEventListener("click", function (event) {
+				toggleSuggestionGenerator(true);
+				//window.newfoldEmbeddedHelp.renderSuggestionsSidebar();
+				event.preventDefault();
+			});
+
+			elementNode.parentNode.insertBefore(triggerButton, elementNode.nextSibling);
+		}
+		}, 1000);
+	}
+}); */
