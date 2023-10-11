@@ -1,5 +1,13 @@
 $gray-text: #394150;
 
+#nfd-suggestion-center {
+  top: 30px;
+}
+.block-editor-page {
+  #nfd-suggestion-center {
+    top: 0;
+  }
+}
 #nfd-help-center,
 #nfd-suggestion-center {
   .modal {

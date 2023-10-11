@@ -338,17 +338,29 @@ body:is(.page, .post-php, .post-new-php) {
   font-weight: 600;
   line-height: 24px;
   cursor: pointer;
+  background-color: white;
 
   &:hover {
     color: white;
     background-color: $blue;
   }
 
-  &.ai-excerpt-button{
+  &.ai-suggestions-btn-excerpt{
+    margin:0;
     position: relative;
-    top:-80px; 
-    left:24px;
+    top: -74px;
+    left: 220px;
   }
 
+  &.ai-suggestions-btn-onboarding{
+    position: relative;
+    top: -104px;
+    left: calc(100% - 30px);
+    margin: 0;
+  }
 
+}
+
+#blogdescription{
+  padding-right: 33px;
 }

@@ -58,14 +58,11 @@ export const toggleHelp = ( visible ) => {
 
 export const toggleSuggestionGenerator = (visible, targetSelector, event) => {
     const nfdSuggestionContainer = document.getElementById('nfd-suggestion-center');
-    
     // If the nfd-suggestion-center doesn't exist, call the renderSuggestionsSidebar function
     if (!nfdSuggestionContainer) {
         window.newfoldEmbeddedHelp.renderSuggestionsSidebar(targetSelector);
     }
-
-    wpContentContainer.classList.toggle('wpcontent-container', visible);
-
+	
     // Make sure to re-query the nfdSuggestionContainer in case it was just added to the DOM
     const updatedNfdSuggestionContainer = document.getElementById('nfd-suggestion-center');
     if (updatedNfdSuggestionContainer) {
@@ -135,7 +132,6 @@ window.newfoldEmbeddedHelp = {
 		}
 	},
 	renderSuggestionsSidebar: (targetSelector) => {
-		console.log("target selector", targetSelector);
 		const suggestionContainer = document.createElement( 'div' );
 		suggestionContainer.id = 'nfd-suggestion-center';
 		suggestionContainer.style.display = 'block';
@@ -174,8 +170,6 @@ window.newfoldEmbeddedHelp = {
 /* Using the subscribe from the store to keep the UI persistent */
 const { Button } = wp.components;
 const unsubscribe = subscribe( () => {
-	
-	console.log("🚀 ~ file: index.js:180 ~ unsubscribe ~ change:", );
 	const wrapper = document.getElementById( 'nfd-help-menu-button-wrapper' );
 	if ( wrapper ) {
 		unsubscribe(); // Unsubscribe from the state changes
@@ -228,7 +222,7 @@ const unsubscribe = subscribe( () => {
 	} );
 } );
 
-// window.newfoldEmbeddedHelp.renderSuggestionsSidebar();
+// window.newfoldEmbeddedHelp.renderSuggestionsSidebar("#blogdescription");
 window.newfoldEmbeddedHelp.renderEmbeddedHelp();
 
 function insertAiButton(targetSelector, onClick) {
@@ -254,8 +248,9 @@ const insertAiButtonForExceprt = () => {
     };
     const callback = function(mutationsList, observer) {
         for (const mutation of mutationsList) {
-            if (document.querySelector('.editor-post-excerpt') && !document.querySelector('.editor-post-excerpt .my-custom-button')) {
-                insertAiButton(".editor-post-excerpt", toggleSuggestionGenerator.bind(null, true, ".editor-post-excerpt textarea"));
+            if (document.querySelector('.editor-post-excerpt') && !document.querySelector('.editor-post-excerpt .ai-suggestions-button')) {
+                insertAiButton(".editor-post-excerpt textarea", toggleSuggestionGenerator.bind(null, true, ".editor-post-excerpt textarea"));
+				document.querySelector('.editor-post-excerpt .ai-suggestions-button').classList.add('ai-suggestions-btn-excerpt');
             }
         }
     };
@@ -265,7 +260,7 @@ const insertAiButtonForExceprt = () => {
 
 domReady(() => {
 	insertAiButton("#blogdescription", toggleSuggestionGenerator.bind(null, true, '#blogdescription'));
-    setTimeout(() => {
+	setTimeout(() => {
         insertAiButtonForExceprt();
     }, 1000);
 
@@ -274,54 +269,7 @@ domReady(() => {
 		const onboardingTargetElement = '.basic-info-form__left .nfd-input:nth-child(2) textarea.nfd-input__field';
         setTimeout(() => {
             insertAiButton(onboardingTargetElement, toggleSuggestionGenerator.bind(null, true, onboardingTargetElement));
+			document.querySelector(".basic-info-form__left .nfd-input:nth-child(2) .ai-suggestions-button").classList.add('ai-suggestions-btn-onboarding')
         }, 1000);
     }
 });
-
-/* domReady(() => {
-	// Run only once DOM is ready, else this won't work.
-
-	setTimeout(() => {
-		insertAiButtonForExceprt();
-	}, 1000);
-
-var taglineInputField = document.querySelector("#blogdescription");
-	taglineInputField.style.paddingRight = "30px";
-	var triggerButton = document.createElement("div");
-	triggerButton.classList.add("ai-suggestions-button");
-	triggerButton.textContent = "AI";
-
-	// Attach a click event listener to the button
-	triggerButton.addEventListener("click", function (event) {
-		toggleSuggestionGenerator(true);
-		//window.newfoldEmbeddedHelp.renderSuggestionsSidebar();
-		event.preventDefault();
-	});
-	
-	if (taglineInputField) {
-		taglineInputField.parentNode.insertBefore(triggerButton, taglineInputField.nextSibling);
-	}	
- 
-
-	const onboardingNode = document.getElementById("nfd-onboarding");
-	// debugger;
-	if (onboardingNode) {
-		setTimeout(() => {
-			const elementNode = document.querySelector('.basic-info-form__left textarea.nfd-input__field');
-		if (elementNode) {
-			var triggerButton = document.createElement("div");
-			triggerButton.classList.add("ai-suggestions-button");
-			triggerButton.textContent = "AI";
-
-			// Attach a click event listener to the button
-			triggerButton.addEventListener("click", function (event) {
-				toggleSuggestionGenerator(true);
-				//window.newfoldEmbeddedHelp.renderSuggestionsSidebar();
-				event.preventDefault();
-			});
-
-			elementNode.parentNode.insertBefore(triggerButton, elementNode.nextSibling);
-		}
-		}, 1000);
-	}
-}); */
