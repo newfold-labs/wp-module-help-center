@@ -46,7 +46,7 @@ const Feedback = ( { postId, source } ) => {
 				<p>
 					<b>
 						{ __(
-							'Did this result help you ?',
+							'Did this result help you?',
 							'wp-module-help-center'
 						) }
 					</b>
@@ -60,7 +60,7 @@ const Feedback = ( { postId, source } ) => {
 					} }
 					className="feedback-button yes"
 				>
-					{ status === 'helpful' && <>&#129395;</> } Yes
+					{ status === 'helpful' && <>&#129395;</> } { __( 'Yes' , 'wp-module-help-center' ) }
 				</button>
 				<button
 					onClick={ () => {
@@ -69,7 +69,7 @@ const Feedback = ( { postId, source } ) => {
 					ref={ noButtonRef }
 					className="feedback-button no"
 				>
-					{ status === 'notHelpful' && <>&#128557;</> } No
+					{ status === 'notHelpful' && <>&#128557;</> } { __( 'No' , 'wp-module-help-center' ) }
 				</button>
 			</div>
 		</div>
