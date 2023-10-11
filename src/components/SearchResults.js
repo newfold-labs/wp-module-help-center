@@ -75,7 +75,7 @@ const SearchResults = ( props ) => {
 			const resultMatches =
 				hits.length > 0
 					? getResultMatches(
-							query,
+							searchInput,
 							hits[ 0 ].text_match_info.tokens_matched,
 							hits[ 0 ].text_match_info.fields_matched
 					  )
@@ -90,7 +90,7 @@ const SearchResults = ( props ) => {
 			}
 			setSource( 'ai' );
 			const result = await moduleAI.search.getSearchResult(
-				query,
+				searchInput,
 				'helpcenter'
 			);
 			populateSearchResult(
