@@ -10,6 +10,7 @@ import { SearchResult } from './SearchResult';
 import { ResultContent } from './ResultContent';
 import { Analytics, LocalStorageUtils } from '../utils';
 import Loader from './Loader';
+import { __ } from '@wordpress/i18n';
 
 const SearchResults = ( props ) => {
 	const [ isLoading, setIsLoading ] = useState( false );
@@ -63,8 +64,8 @@ const SearchResults = ( props ) => {
 	}, [] );
 
 	const getResultMatches = ( query, tokensMatched, fieldsMatched ) => {
-		const tokensPerQuery = query.split( /\s+/ ).length / tokensMatched;
-		return fieldsMatched >= 1 && tokensPerQuery >= 0.75;
+		const tokensPerQuery = tokensMatched / query.split( /\s+/ ).length;
+		return fieldsMatched >= 1 && tokensPerQuery >= 0.90;
 	};
 
 	const getAIResult = async () => {
@@ -75,7 +76,7 @@ const SearchResults = ( props ) => {
 			const resultMatches =
 				hits.length > 0
 					? getResultMatches(
-							query,
+							searchInput,
 							hits[ 0 ].text_match_info.tokens_matched,
 							hits[ 0 ].text_match_info.fields_matched
 					  )
@@ -90,7 +91,7 @@ const SearchResults = ( props ) => {
 			}
 			setSource( 'ai' );
 			const result = await moduleAI.search.getSearchResult(
-				query,
+				searchInput,
 				'helpcenter'
 			);
 			populateSearchResult(
@@ -147,7 +148,7 @@ const SearchResults = ( props ) => {
 					} }
 					value={ searchInput }
 					maxLength="144"
-					placeholder="Ask me anything..."
+					placeholder= { __( "Ask me anything...", 'wp-module-help-center') }
 					onChange={ ( e ) => {
 						setSearchInput( e.target.value );
 						populateSearchResult( '', undefined, e.target.value );
@@ -177,8 +178,8 @@ const SearchResults = ( props ) => {
 				<p>
 					<b>
 						{ resultContent.length > 0
-							? 'Other Resources'
-							: 'Search Suggestions' }
+							? __( 'Other Resources', 'wp-module-help-center' )
+							: __( 'Search Suggestions', 'wp-module-help-center' ) }
 					</b>
 				</p>
 			) }

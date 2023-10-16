@@ -2,6 +2,7 @@
 
 namespace NewfoldLabs\WP\Module\HelpCenter;
 
+use NewfoldLabs\WP\Module\HelpCenter\I18nLoader;
 use NewfoldLabs\WP\ModuleLoader\Container;
 
 /**
@@ -17,16 +18,36 @@ class HelpCenter {
     protected $container;
 
     /**
+	 * Identifier for page and assets.
+	 *
+	 * @var string
+	 */
+	public static $slug = 'nfd-help-center';
+
+    /**
      * Constructor.
      *
      * @param Container $container
      */
     public function __construct( Container $container ) {
         $this->container = $container;
+        add_action( 'init', array( $this, 'load_php_textdomain' ) );
         add_action( 'rest_api_init', array( $this, 'initialize_rest' ) );
         add_action( 'admin_init', array( $this, 'register_assets') );
         add_action( 'admin_bar_menu', array( $this, 'newfold_help_center' ), 11);
     }
+
+    /**
+	 * Loads the textdomain for the module. This applies only to PHP strings.
+	 *
+	 * @return boolean
+	 */
+	public static function load_php_textdomain() {
+		return I18nLoader::load_php_translations(
+			'wp-module-help-center',
+			NFD_HELPCENTER_PLUGIN_DIRNAME . '/vendor/newfold-labs/wp-module-help-center/languages'
+		);
+	}
 
     public function initialize_rest() {
         $controllers = array(
@@ -54,7 +75,7 @@ class HelpCenter {
                 'title'  => $help_icon,
                 'href'   => '',
                 'meta'   => array(
-                    'title' => esc_attr__( 'Help', 'wp-module-help' ),
+                    'title' => esc_attr__( 'Help', 'wp-module-help-center' ),
                     'onclick' => 'newfoldEmbeddedHelp.toggleNFDLaunchedEmbeddedHelp()',
                 ),
             );
@@ -75,13 +96,22 @@ class HelpCenter {
         $help_enabled = $this->container->get('capabilities')->get( 'canAccessHelpCenter' );
         if ( file_exists($asset_file) && $help_enabled ) {
             $asset = require_once $asset_file;
-            \wp_enqueue_script(
-                'nfd-helpcenter-dependency',
+            \wp_register_script(
+				self::$slug,
                 NFD_HELPCENTER_PLUGIN_URL . 'vendor/newfold-labs/wp-module-help-center/build/index.js',
-                array_merge( $asset['dependencies'], array() ),
-                $asset_file,
-                true
-            );
+				array_merge( $asset['dependencies'], array() ),
+				$asset['version'],
+				true
+			);
+
+            I18nLoader::load_js_translations(
+				'wp-module-help-center',
+				self::$slug,
+				NFD_HELPCENTER_DIR . '/languages'
+			);
+
+            \wp_enqueue_script( self::$slug );
+
             \wp_enqueue_style(
                 'stylesheet',
                 NFD_HELPCENTER_PLUGIN_URL . 'vendor/newfold-labs/wp-module-help-center/build/index.css',
@@ -89,7 +119,7 @@ class HelpCenter {
             );
 
             \wp_add_inline_script(
-                'nfd-helpcenter-dependency',
+                self::$slug,
                 'var nfdHelpCenter =' . wp_json_encode( array( 'restUrl' => \get_home_url() . '/index.php?rest_route=', ) ) . ';',
                 'before'
             );

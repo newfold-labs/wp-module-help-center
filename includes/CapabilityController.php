@@ -41,7 +41,7 @@ class CapabilityController extends \WP_REST_Controller {
 	/**
 	 * Get the capability from module data
 	 *
-	 * @returns \WP_REST_Response|\WP_Error
+	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function get_capability() {
         $capability   = new SiteCapabilities();
@@ -53,13 +53,13 @@ class CapabilityController extends \WP_REST_Controller {
 	/**
 	 * Check permissions for routes.
 	 *
-	 * @return \WP_Error
+	 * @return \WP_Error|boolean
 	 */
 	public function check_permission() {
 		if ( ! current_user_can('read') ) {
 			return new \WP_Error(
 				'rest_forbidden',
-				__( 'You must be authenticated to make this call' ),
+				__( 'You must be authenticated to make this call', 'wp-module-help-center' ),
 				array( 'status' => 401 )
 			);
 		}

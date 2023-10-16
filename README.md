@@ -22,3 +22,13 @@ Help Center
  ```
 
 [More on NewFold WordPress Modules](https://github.com/newfold-labs/wp-module-loader)
+
+## Launching the Help Center from the anywhere in the plugin
+
+To launch the help center with a click on a text or an element containing text:
+
+Simply add `data-openNfdHelpCenter` or `data-openNfdHelpCenter=true` attribute to your HTML/JSX element. For example:
+   ```html
+   <div data-openNfdHelpCenter>Click me to open help center.</div> OR for JSX
+   <span data-openNfdHelpCenter={true}>Click me to open help center in JSX.</span>
+   ```
