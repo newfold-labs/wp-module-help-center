@@ -222,7 +222,6 @@ const unsubscribe = subscribe( () => {
 	} );
 } );
 
-// window.newfoldEmbeddedHelp.renderSuggestionsSidebar("#blogdescription");
 window.newfoldEmbeddedHelp.renderEmbeddedHelp();
 
 function insertAiButton(targetSelector, onClick) {
@@ -240,36 +239,92 @@ function insertAiButton(targetSelector, onClick) {
 }
 
 const insertAiButtonForExceprt = () => {
-    const parentNode = document.querySelector('#editor');
-    if (!parentNode) return;
-    const observerConfig = {
-        childList: true,
-        subtree: true,
-    };
-    const callback = function(mutationsList, observer) {
-        for (const mutation of mutationsList) {
-            if (document.querySelector('.editor-post-excerpt') && !document.querySelector('.editor-post-excerpt .ai-suggestions-button')) {
-                insertAiButton(".editor-post-excerpt textarea", toggleSuggestionGenerator.bind(null, true, ".editor-post-excerpt textarea"));
-				document.querySelector('.editor-post-excerpt .ai-suggestions-button').classList.add('ai-suggestions-btn-excerpt');
+    try {
+        const parentNode = document.querySelector('#editor');
+        if (!parentNode) return;
+
+        const observerConfig = {
+            childList: true,
+            subtree: true,
+        };
+
+        const callback = function(mutationsList, observer) {
+            for (const mutation of mutationsList) {
+                try {
+                    if (mutation.target && mutation.target.querySelector('.editor-post-excerpt') && !mutation.target.querySelector('.editor-post-excerpt .ai-suggestions-button')) {
+                        const excerptTextarea = mutation.target.querySelector(".editor-post-excerpt textarea");
+                        if (excerptTextarea) {
+                            insertAiButton(".editor-post-excerpt textarea", toggleSuggestionGenerator.bind(null, true, ".editor-post-excerpt textarea"));
+                            const aiSuggestionsButton = mutation.target.querySelector('.editor-post-excerpt .ai-suggestions-button');
+                            if (aiSuggestionsButton) {
+                                aiSuggestionsButton.classList.add('ai-suggestions-btn-excerpt');
+                            }
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error in mutation callback:', error);
+                }
             }
-        }
-    };
-    const observer = new MutationObserver(callback);
-    observer.observe(parentNode, observerConfig);
+        };
+
+        const observer = new MutationObserver(callback);
+        observer.observe(parentNode, observerConfig);
+    } catch (error) {
+        console.error('Error in insertAiButtonForExceprt:', error);
+    }
+}
+
+const insertAiButtonForOnboarding = () => {
+	// Check for onboardingNode
+	const onboardingNode = document.getElementById("nfd-onboarding");
+	if (onboardingNode) {
+		const targetSelector = '[data-target-ai="true"]';
+		const onboardingTargetElements = document.querySelectorAll(targetSelector);
+
+		onboardingTargetElements.forEach(targetElement => {
+			try {
+				// Pass the CSS selector string to the insertAiButton function
+				insertAiButton(targetSelector, toggleSuggestionGenerator.bind(null, true, targetSelector));
+
+				const parentElement = targetElement.parentNode;
+
+				// Use querySelector on the parent element
+				const aiSuggestionsButton = parentElement.querySelector('.ai-suggestions-button');
+
+				// Add the class to the found .ai-suggestions-button element
+				if (aiSuggestionsButton) {
+					aiSuggestionsButton.classList.add('ai-suggestions-btn-onboarding');
+				}
+			} catch (error) {
+				console.error('Error in onboardingTargetElements forEach loop:', error);
+			}
+		});
+	}
+}
+
+function hasQueryParamWithValue(paramName, paramValue) {
+	debugger;
+    const searchParams = new URLSearchParams(window.location.search);
+    return searchParams.has(paramName) && searchParams.get(paramName) === paramValue;
 }
 
 domReady(() => {
-	insertAiButton("#blogdescription", toggleSuggestionGenerator.bind(null, true, '#blogdescription'));
-	setTimeout(() => {
-        insertAiButtonForExceprt();
-    }, 1000);
+	if(hasQueryParamWithValue("enable_suggestions", "1")){
+		try {
+			// Insert AI button for blog description
+			const blogDescriptionField = document.querySelector("#blogdescription");
+			if (blogDescriptionField) {
+				insertAiButton("#blogdescription", toggleSuggestionGenerator.bind(null, true, '#blogdescription'));
+			}
 
-    const onboardingNode = document.getElementById("nfd-onboarding");
-    if (onboardingNode) {
-		const onboardingTargetElement = '.basic-info-form__left .nfd-input:nth-child(2) textarea.nfd-input__field';
-        setTimeout(() => {
-            insertAiButton(onboardingTargetElement, toggleSuggestionGenerator.bind(null, true, onboardingTargetElement));
-			document.querySelector(".basic-info-form__left .nfd-input:nth-child(2) .ai-suggestions-button").classList.add('ai-suggestions-btn-onboarding')
-        }, 1000);
-    }
+			setTimeout(() => {
+				insertAiButtonForOnboarding();
+				// Call insertAiButtonForExceprt after the first set of operations
+				insertAiButtonForExceprt();
+			}, 1000);
+
+		} catch (error) {
+			console.error('Error in domReady callback:', error);
+		}
+	}
 });

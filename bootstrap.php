@@ -20,6 +20,11 @@ if ( function_exists( 'add_action' ) ) {
 						'callback' => function ( Container $container ) {
 							define( 'NFD_HELPCENTER_BUILD_DIR', __DIR__ . '/build/' );
 							define( 'NFD_HELPCENTER_PLUGIN_URL', $container->plugin()->url );
+							// Check if the 'enable_helpcenter' query parameter is present in the URL
+							if ( isset( $_GET['enable_suggestions'] ) && sanitize_text_field( $_GET['enable_suggestions'] ) === '1' ) {
+							   // The query parameter is present and has a value of '1', so let's load the Help Center
+							   new HelpCenter( $container );
+						   }
 							/*
 							 Do not load Help Center when in Onboarding (Onboarding has no admin bar to toggle this).
 							[TODO] Find a cleaner way to handle this.
