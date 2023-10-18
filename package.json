@@ -9,7 +9,7 @@
 	},
 	"scripts": {
 		"prepare": "npm run build",
-		"build": "wp-scripts build ./src",
+		"build": "wp-scripts build ./src/index.js",
 		"lint": "wp-scripts lint-js src",
 		"format": "wp-scripts format src",
 		"start": "wp-scripts start ./src/index.js",
