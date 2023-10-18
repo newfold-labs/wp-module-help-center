@@ -36,6 +36,18 @@ class CapabilityController extends \WP_REST_Controller {
 				),
 			)
 		);
+
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base . '/brand',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_brand' ),
+					'permission_callback' => array( $this, 'check_permission' ),
+				),
+			)
+		);
 	}
 
 	/**
@@ -48,6 +60,24 @@ class CapabilityController extends \WP_REST_Controller {
 		$help_enabled = $capability->get( 'canAccessHelpCenter' );
 
 		return new \WP_REST_Response( $help_enabled, 200 );
+	}
+
+	/**
+	 * Get the current brand from module data
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function get_brand() {
+		$brand = get_option( 'mm_brand', 'false' );
+		if ( ! $brand ) {
+			return new \WP_Error(
+				'rest_not_found',
+				__( 'We could not find the brand', 'wp-module-help-center' ),
+				array( 'status' => 401 )
+			);
+		}
+
+		return new \WP_REST_Response( $brand, 200 );
 	}
 
 	/**

@@ -12,64 +12,64 @@ import { Analytics, LocalStorageUtils } from '../utils';
 import Loader from './Loader';
 import { __ } from '@wordpress/i18n';
 
-const SearchResults = ( props ) => {
-	const [ isLoading, setIsLoading ] = useState( false );
-	const [ noResult, setNoResult ] = useState( false );
-	const [ searchInput, setSearchInput ] = useState( '' );
-	const [ resultContent, setResultContent ] = useState( '' );
-	const [ postId, setPostId ] = useState();
-	const [ source, setSource ] = useState( 'kb' );
-	const { query, refine, clear } = useSearchBox();
+const SearchResults = (props) => {
+	const [isLoading, setIsLoading] = useState(false);
+	const [noResult, setNoResult] = useState(false);
+	const [searchInput, setSearchInput] = useState('');
+	const [resultContent, setResultContent] = useState('');
+	const [postId, setPostId] = useState();
+	const [source, setSource] = useState('kb');
+	const { refine, clear } = useSearchBox();
 	const { results } = useInstantSearch();
 
-	const populateSearchResult = ( resultContent, postId, searchInput ) => {
-		const resultContentFormatted = resultContent.replace( /\n/g, '<br />' );
-		setResultContent( resultContentFormatted );
-		setPostId( postId );
-		LocalStorageUtils.persistResult( resultContentFormatted, postId );
-		LocalStorageUtils.persistSearchInput( searchInput );
-		if ( postId ) {
-			Analytics.sendEvent( 'help_search', {
+	const populateSearchResult = (resultContent, postId, searchInput) => {
+		const resultContentFormatted = resultContent.replace(/\n/g, '<br />');
+		setResultContent(resultContentFormatted);
+		setPostId(postId);
+		LocalStorageUtils.persistResult(resultContentFormatted, postId);
+		LocalStorageUtils.persistSearchInput(searchInput);
+		if (postId) {
+			Analytics.sendEvent('help_search', {
 				label_key: 'term',
 				term: searchInput,
 				page: window.location.href.toString(),
-			} );
+			});
 		}
 	};
 
-	useEffect( () => {
-		setSearchInput( '' );
-		setResultContent( '' );
-		refine( '' );
+	useEffect(() => {
+		setSearchInput('');
+		setResultContent('');
+		refine('');
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [ props.refresh ] );
+	}, [props.refresh]);
 
-	useEffect( () => {
+	useEffect(() => {
 		// Populate the results from local storage if they exist
 		const { content: currentResultContent, postId: currentResultPostId } =
 			LocalStorageUtils.getResultInfo();
-		if ( currentResultContent ) {
-			setResultContent( currentResultContent );
+		if (currentResultContent) {
+			setResultContent(currentResultContent);
 		}
-		if ( currentResultPostId ) {
-			setPostId( currentResultPostId );
+		if (currentResultPostId) {
+			setPostId(currentResultPostId);
 		}
 
 		const input = LocalStorageUtils.getSearchInput();
-		if ( input ) {
-			setSearchInput( input );
-			refine( input );
+		if (input) {
+			setSearchInput(input);
+			refine(input);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [] );
+	}, []);
 
-	const getResultMatches = ( query, tokensMatched, fieldsMatched ) => {
-		const tokensPerQuery = tokensMatched / query.split( /\s+/ ).length;
-		return fieldsMatched >= 1 && tokensPerQuery >= 0.90;
+	const getResultMatches = (query, tokensMatched, fieldsMatched) => {
+		const tokensPerQuery = tokensMatched / query.split(/\s+/).length;
+		return fieldsMatched >= 1 && tokensPerQuery >= 0.9;
 	};
 
 	const getAIResult = async () => {
-		setIsLoading( true );
+		setIsLoading(true);
 		try {
 			// Check if the algolia results are close enough
 			const hits = results.hits;
@@ -77,52 +77,52 @@ const SearchResults = ( props ) => {
 				hits.length > 0
 					? getResultMatches(
 							searchInput,
-							hits[ 0 ].text_match_info.tokens_matched,
-							hits[ 0 ].text_match_info.fields_matched
+							hits[0].text_match_info.tokens_matched,
+							hits[0].text_match_info.fields_matched
 					  )
 					: false;
-			if ( resultMatches ) {
+			if (resultMatches) {
 				populateSearchResult(
-					hits[ 0 ].post_content,
-					hits[ 0 ].post_id,
+					hits[0].post_content,
+					hits[0].post_id,
 					searchInput
 				);
 				return;
 			}
-			setSource( 'ai' );
+			setSource('ai');
 			const result = await moduleAI.search.getSearchResult(
 				searchInput,
 				'helpcenter'
 			);
 			populateSearchResult(
-				result.result[ 0 ].text,
+				result.result[0].text,
 				result.post_id,
 				searchInput
 			);
-		} catch ( exception ) {
-			setNoResult( true );
+		} catch (exception) {
+			setNoResult(true);
 		} finally {
-			setIsLoading( false );
+			setIsLoading(false);
 		}
 	};
 
-	const debouncedResults = useMemo( () => {
-		return debounce( function ( query ) {
-			if ( query && query.length === 0 ) {
+	const debouncedResults = useMemo(() => {
+		return debounce(function (query) {
+			if (query && query.length === 0) {
 				clear();
 			}
-			refine( query );
-		}, 300 );
+			refine(query);
+		}, 300);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [] );
+	}, []);
 
 	// Clear any debounce problems
-	useEffect( () => {
+	useEffect(() => {
 		debouncedResults.cancel();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [] );
+	}, []);
 
-	if ( isLoading ) {
+	if (isLoading) {
 		return (
 			<>
 				<Loader />
@@ -134,78 +134,81 @@ const SearchResults = ( props ) => {
 		<>
 			<div className="search-container">
 				<button
-					onClick={ () => {
-						document.getElementById( 'search-input-box' ).focus();
-					} }
+					onClick={() => {
+						document.getElementById('search-input-box').focus();
+					}}
 				>
 					<SearchIcon />
 				</button>
 				<input
 					type="text"
 					id="search-input-box"
-					style={ {
+					style={{
 						flexGrow: 2,
-					} }
-					value={ searchInput }
+					}}
+					value={searchInput}
 					maxLength="144"
-					placeholder= { __( "Ask me anything...", 'wp-module-help-center') }
-					onChange={ ( e ) => {
-						setSearchInput( e.target.value );
-						populateSearchResult( '', undefined, e.target.value );
-						setNoResult( false );
-						debouncedResults( e.target.value );
-					} }
-					onKeyDown={ async ( e ) => {
-						if ( e.key === 'Enter' ) {
+					placeholder={__(
+						'Ask me anything…',
+						'wp-module-help-center'
+					)}
+					onChange={(e) => {
+						setSearchInput(e.target.value);
+						populateSearchResult('', undefined, e.target.value);
+						setNoResult(false);
+						debouncedResults(e.target.value);
+					}}
+					onKeyDown={async (e) => {
+						if (e.key === 'Enter') {
 							await getAIResult();
 						}
-					} }
+					}}
 				/>
 			</div>
 			<div className="attribute">
 				<p>
-					<span>{ searchInput ? searchInput.length : 0 }/144</span>
+					<span>{searchInput ? searchInput.length : 0}/144</span>
 				</p>
 			</div>
 			<ResultContent
-				content={ resultContent }
-				noResult={ noResult }
-				postId={ postId }
-				source={ source }
+				content={resultContent}
+				noResult={noResult}
+				postId={postId}
+				source={source}
 			/>
 
-			{ results.hits.length > 0 && (
+			{results.hits.length > 0 && (
 				<p>
 					<b>
-						{ resultContent.length > 0
-							? __( 'Other Resources', 'wp-module-help-center' )
-							: __( 'Search Suggestions', 'wp-module-help-center' ) }
+						{resultContent.length > 0
+							? __('Other Resources', 'wp-module-help-center')
+							: __('Search Suggestions', 'wp-module-help-center')}
 					</b>
 				</p>
-			) }
-			{ results.hits.map( ( result, index ) => {
-				const el = document.createElement( 'span' );
-				el.setAttribute( 'display', 'none' );
+			)}
+			{results.hits.map((result, index) => {
+				const el = document.createElement('span');
+				el.setAttribute('display', 'none');
 				el.innerHTML = result.post_title;
 				const postTitle = el.textContent || el.innerText;
 
 				return (
 					<>
 						<SearchResult
-							key={ index }
-							searchTitle={ postTitle }
-							onGo={ () => {
-								setSearchInput( postTitle );
+							key={index}
+							searchTitle={postTitle}
+							onGo={() => {
+								setSearchInput(postTitle);
 								populateSearchResult(
 									result.post_content,
 									result.post_id,
 									postTitle
 								);
-							} }
+							}}
 						/>
 					</>
 				);
-			} ) }
+			})}
 		</>
 	);
 };

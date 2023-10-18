@@ -9,29 +9,34 @@ const base = 'nfd-help-center/v1';
 const onboardingBase = 'newfold-onboarding/v1';
 
 export const InteractionAPIs = {
-	postFeedback: ( postId, status ) =>
-		apiFetch( {
+	postFeedback: (postId, status) =>
+		apiFetch({
 			path: base + '/feedback',
 			method: 'POST',
 			data: {
 				post_id: postId,
 				status,
 			},
-		} ),
+		}),
 };
 
 export const OnboardingAPIs = {
 	getFlowData: () =>
-		apiFetch( {
+		apiFetch({
 			path: onboardingBase + '/flow',
 			method: 'GET',
-		} ),
+		}),
 };
 
 export const CapabilityAPI = {
 	getHelpCenterCapability: () =>
 		apiFetch({
 			path: base + '/capability',
+			method: 'GET',
+		}),
+	getBrand: () =>
+		apiFetch({
+			path: base + '/capability/brand',
 			method: 'GET',
 		}),
 };
@@ -65,22 +70,22 @@ export const LocalStorageUtils = {
 	getSearchInput: () => {
 		return localStorage.getItem('searchInput');
 	},
-	getFeatureFlag: function (flagName) {
+	getFeatureFlag(flagName) {
 		return localStorage.getItem(flagName);
 	},
-	setFeatureFlag: function (flagName, value) {
+	setFeatureFlag(flagName, value) {
 		localStorage.setItem(flagName, value);
-	}
+	},
 };
 
 export const Analytics = {
-	sendEvent: ( action, data ) => {
+	sendEvent: (action, data) => {
 		const hiiveEvent = new HiiveEvent(
 			'wonder_help',
 			action,
 			data,
 			'wonder_help'
 		);
-		HiiveAnalytics.send( hiiveEvent );
+		HiiveAnalytics.send(hiiveEvent);
 	},
 };

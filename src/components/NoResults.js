@@ -4,33 +4,28 @@ import { ReactComponent as NoResultIllustration } from '../icons/no-result.svg';
 const NoResults = () => {
 	return (
 		<div>
-			<p>
-				{ __(
-					'Result based on your search:',
-					'wp-module-help-center'
-				) }
-			</p>
+			<p>{__('Result based on your search:', 'wp-module-help-center')}</p>
 			<h4>
-				{ __(
+				{__(
 					"Sorry, we don't have any content for that yet.",
 					'wp-module-help-center'
-				) }
+				)}
 			</h4>
 			<hr />
 			<NoResultIllustration />
 			<p>
-				{ __(
+				{__(
 					"This tool is being built and doesn't always have a match.",
 					'wp-module-help-center'
-				) }
+				)}
 			</p>
 			<p>
-				{ __(
+				{__(
 					'In the meantime, try searching our',
 					'wp-module-help-center'
-				) }{ ' ' }
+				)}{' '}
 				<a href="https://www.bluehost.com/help">
-					{ __( 'Resource center.', 'wp-module-help-center' ) }
+					{__('Resource center.', 'wp-module-help-center')}
 				</a>
 			</p>
 			<hr />

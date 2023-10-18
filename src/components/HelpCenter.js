@@ -1,13 +1,12 @@
 import { useEffect, useState } from '@wordpress/element';
-import { Configure, Index, InstantSearch } from 'react-instantsearch-hooks-web';
+import { InstantSearch } from 'react-instantsearch-hooks-web';
 import TypesenseInstantsearchAdapter from 'typesense-instantsearch-adapter';
-import moduleAI from '@newfold-labs/wp-module-ai';
 import SearchResults from './SearchResults';
 import { CapabilityAPI, LocalStorageUtils } from '../utils';
 
-const HelpCenter = ( props ) => {
+const HelpCenter = (props) => {
 	// Set up the typesense adapter
-	const typesenseAdapter = new TypesenseInstantsearchAdapter( {
+	const typesenseAdapter = new TypesenseInstantsearchAdapter({
 		server: {
 			apiKey: 'B9wvYIokTPPgXEM3isTqsxbDOva21igT',
 			nodes: [
@@ -24,52 +23,53 @@ const HelpCenter = ( props ) => {
 		additionalSearchParameters: {
 			query_by: 'post_title,post_content',
 			sort_by: 'post_likes:desc',
+			filter_by: `post_category:=${props.brand}`,
 			limit_hits: 3,
 			per_page: 3,
 		},
-	} );
+	});
 
 	const searchClient = typesenseAdapter.searchClient;
 
-	const [ visible, setVisible ] = useState( false );
-	const [ helpEnabled, setHelpEnabled ] = useState( false );
+	const [visible, setVisible] = useState(false);
+	const [helpEnabled, setHelpEnabled] = useState(false);
 	const getHelpStatus = async () => {
 		try {
 			const response = await CapabilityAPI.getHelpCenterCapability();
-			setHelpEnabled( response );
-		} catch ( exception ) {
-			setHelpEnabled( false );
+			setHelpEnabled(response);
+		} catch (exception) {
+			setHelpEnabled(false);
 		}
 	};
-	useEffect( () => {
+	useEffect(() => {
 		getHelpStatus();
-	}, [] );
+	}, []);
 
-	useEffect( () => {
+	useEffect(() => {
 		const updateVisibility = () => {
-			setVisible( LocalStorageUtils.getHelpVisible() );
+			setVisible(LocalStorageUtils.getHelpVisible());
 		};
 
 		// Add the event listener on component mount
-		window.addEventListener( 'storage', updateVisibility );
+		window.addEventListener('storage', updateVisibility);
 
 		// Remove the event listener when the component unmounts
 		return () => {
-			window.removeEventListener( 'storage', updateVisibility );
+			window.removeEventListener('storage', updateVisibility);
 		};
-	}, [] );
+	}, []);
 
-	if ( ! helpEnabled || ! visible ) {
+	if (!helpEnabled || !visible) {
 		return <></>;
 	}
 
 	return (
 		<div className="nfd-help-center">
 			<InstantSearch
-				searchClient={ searchClient }
+				searchClient={searchClient}
 				indexName="nfd_help_articles"
 			>
-				<SearchResults refresh={ props.refresh } />
+				<SearchResults refresh={props.refresh} />
 			</InstantSearch>
 		</div>
 	);
