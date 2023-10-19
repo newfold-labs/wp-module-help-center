@@ -175,6 +175,9 @@ const SearchResults = ( props ) => {
 				noResult={ noResult }
 				postId={ postId }
 				source={ source }
+				showFeedbackSection={
+					! resultContent.includes( 'do note possess the answer' )
+				}
 			/>
 
 			{ results.hits.length > 0 && (
