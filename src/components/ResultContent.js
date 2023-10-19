@@ -3,7 +3,13 @@ import { __ } from '@wordpress/i18n';
 import Feedback from './Feedback';
 import NoResults from './NoResults';
 
-export const ResultContent = ( { content, noResult, postId, source, showFeedbackSection } ) => {
+export const ResultContent = ( {
+	content,
+	noResult,
+	postId,
+	source,
+	showFeedbackSection,
+} ) => {
 	if ( noResult ) {
 		return <NoResults />;
 	}

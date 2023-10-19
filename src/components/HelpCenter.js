@@ -1,7 +1,6 @@
 import { useEffect, useState } from '@wordpress/element';
-import { Configure, Index, InstantSearch } from 'react-instantsearch-hooks-web';
+import { InstantSearch } from 'react-instantsearch-hooks-web';
 import TypesenseInstantsearchAdapter from 'typesense-instantsearch-adapter';
-import moduleAI from '@newfold-labs/wp-module-ai';
 import SearchResults from './SearchResults';
 import { CapabilityAPI, LocalStorageUtils } from '../utils';
 
@@ -24,6 +23,7 @@ const HelpCenter = ( props ) => {
 		additionalSearchParameters: {
 			query_by: 'post_title,post_content',
 			sort_by: 'post_likes:desc',
+			filter_by: `post_category:=${ props.brand }`,
 			limit_hits: 3,
 			per_page: 3,
 		},

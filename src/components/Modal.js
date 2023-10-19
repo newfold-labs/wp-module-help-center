@@ -6,12 +6,20 @@ import { ReactComponent as Help } from '../icons/help.svg';
 import HelpCenter from './HelpCenter';
 
 import { toggleHelp } from '..';
-import { LocalStorageUtils } from '../utils';
+import { CapabilityAPI, LocalStorageUtils } from '../utils';
 
 const Modal = ( { onClose } ) => {
+	const [ brand, setBrand ] = useState( '' );
+
+	const getBrand = async () => {
+		const brandRetrieved = await CapabilityAPI.getBrand();
+		setBrand( brandRetrieved.toLowerCase() );
+	};
+
 	useEffect( () => {
 		const helpVisible = LocalStorageUtils.getHelpVisible();
 		toggleHelp( helpVisible );
+		getBrand();
 	}, [] );
 
 	const [ refresh, setRefresh ] = useState( false );
@@ -43,6 +51,7 @@ const Modal = ( { onClose } ) => {
 					setRefresh( ! refresh );
 				} }
 				refresh={ refresh }
+				brand={ brand }
 			/>
 		</div>
 	);
