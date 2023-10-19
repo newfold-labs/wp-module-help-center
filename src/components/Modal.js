@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { __ } from '@wordpress/i18n';
-import { LocalStorageUtils } from './../utils';
 import { toggleHelp } from '..';
 import { ReactComponent as CloseIcon } from '../icons/close.svg';
+import { CapabilityAPI, LocalStorageUtils } from '../utils';
 
 const Modal = ({ onClose, contentComponent, iconComponent, sidebarHeading, sidebarHeadingId }) => {
-  useEffect(() => {
-    const helpVisible = LocalStorageUtils.getHelpVisible();
-    toggleHelp( helpVisible );
-  }, []);
+	const [ brand, setBrand ] = useState( '' );
+
+	const getBrand = async () => {
+		const brandRetrieved = await CapabilityAPI.getBrand();
+		setBrand( brandRetrieved.toLowerCase() );
+	};
+
+	useEffect( () => {
+		const helpVisible = LocalStorageUtils.getHelpVisible();
+		toggleHelp( helpVisible );
+		getBrand();
+	}, [] );
 
   const [refresh, setRefresh] = useState(false);
 
@@ -31,7 +39,7 @@ const Modal = ({ onClose, contentComponent, iconComponent, sidebarHeading, sideb
           </div>
         </button>
       </div>
-      {contentComponent && contentComponent({ onClose, refresh, setRefresh })}
+      {contentComponent && contentComponent({ onClose, refresh, setRefresh, brand })}
     </div>
   );
 };

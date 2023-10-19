@@ -19,7 +19,7 @@ const SearchResults = ( props ) => {
 	const [ resultContent, setResultContent ] = useState( '' );
 	const [ postId, setPostId ] = useState();
 	const [ source, setSource ] = useState( 'kb' );
-	const { query, refine, clear } = useSearchBox();
+	const { refine, clear } = useSearchBox();
 	const { results } = useInstantSearch();
 
 	const populateSearchResult = ( resultContent, postId, searchInput ) => {
@@ -65,7 +65,7 @@ const SearchResults = ( props ) => {
 
 	const getResultMatches = ( query, tokensMatched, fieldsMatched ) => {
 		const tokensPerQuery = tokensMatched / query.split( /\s+/ ).length;
-		return fieldsMatched >= 1 && tokensPerQuery >= 0.90;
+		return fieldsMatched >= 1 && tokensPerQuery >= 0.9;
 	};
 
 	const getAIResult = async () => {
@@ -148,7 +148,10 @@ const SearchResults = ( props ) => {
 					} }
 					value={ searchInput }
 					maxLength="144"
-					placeholder= { __( "Ask me anything...", 'wp-module-help-center') }
+					placeholder={ __(
+						'Ask me anything…',
+						'wp-module-help-center'
+					) }
 					onChange={ ( e ) => {
 						setSearchInput( e.target.value );
 						populateSearchResult( '', undefined, e.target.value );
@@ -172,6 +175,9 @@ const SearchResults = ( props ) => {
 				noResult={ noResult }
 				postId={ postId }
 				source={ source }
+				showFeedbackSection={
+					! resultContent.includes( 'do not possess the answer' )
+				}
 			/>
 
 			{ results.hits.length > 0 && (
@@ -179,7 +185,10 @@ const SearchResults = ( props ) => {
 					<b>
 						{ resultContent.length > 0
 							? __( 'Other Resources', 'wp-module-help-center' )
-							: __( 'Search Suggestions', 'wp-module-help-center' ) }
+							: __(
+									'Search Suggestions',
+									'wp-module-help-center'
+							  ) }
 					</b>
 				</p>
 			) }

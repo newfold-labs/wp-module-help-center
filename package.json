@@ -10,7 +10,8 @@
 	"scripts": {
 		"prepare": "npm run build",
 		"build": "wp-scripts build ./src/index.js",
-		"lint": "wp-scripts lint-js ./src/index.js",
+		"lint": "wp-scripts lint-js src",
+		"format": "wp-scripts format src",
 		"start": "wp-scripts start ./src/index.js",
 		"test:unit": "echo \"No tests implemented\"",
 		"test:e2e": "echo \"No tests implemented\""
@@ -26,6 +27,7 @@
 		"@wordpress/i18n": "^4.41.0",
 		"@wordpress/plugins": "6.9.0",
 		"algoliasearch": "4.20.0",
+		"lodash": "4.17.21",
 		"lodash.debounce": "4.0.8",
 		"react-copy-to-clipboard": "5.1.0",
 		"react-instantsearch-hooks-web": "6.43.0",
@@ -35,6 +37,8 @@
 	"devDependencies": {
 		"@wordpress/eslint-plugin": "^15.0.0",
 		"@wordpress/prettier-config": "^2.23.0",
-		"@wordpress/scripts": "25.0.0"
+		"@wordpress/scripts": "25.0.0",
+		"eslint-plugin-prettier": "5.0.0",
+		"prettier": "npm:wp-prettier@3.0.3"
 	}
 }
