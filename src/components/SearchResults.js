@@ -176,7 +176,7 @@ const SearchResults = ( props ) => {
 				postId={ postId }
 				source={ source }
 				showFeedbackSection={
-					! resultContent.includes( 'do note possess the answer' )
+					! resultContent.includes( 'do not possess the answer' )
 				}
 			/>
 
