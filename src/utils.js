@@ -9,83 +9,83 @@ const base = 'nfd-help-center/v1';
 const onboardingBase = 'newfold-onboarding/v1';
 
 export const InteractionAPIs = {
-	postFeedback: (postId, status) =>
-		apiFetch({
+	postFeedback: ( postId, status ) =>
+		apiFetch( {
 			path: base + '/feedback',
 			method: 'POST',
 			data: {
 				post_id: postId,
 				status,
 			},
-		}),
+		} ),
 };
 
 export const OnboardingAPIs = {
 	getFlowData: () =>
-		apiFetch({
+		apiFetch( {
 			path: onboardingBase + '/flow',
 			method: 'GET',
-		}),
+		} ),
 };
 
 export const CapabilityAPI = {
 	getHelpCenterCapability: () =>
-		apiFetch({
+		apiFetch( {
 			path: base + '/capability',
 			method: 'GET',
-		}),
+		} ),
 	getBrand: () =>
-		apiFetch({
+		apiFetch( {
 			path: base + '/capability/brand',
 			method: 'GET',
-		}),
+		} ),
 };
 
 // A wrapper to get and set things more easily
 export const LocalStorageUtils = {
-	updateHelpVisible: (visible) => {
-		localStorage.setItem('helpVisible', visible ? 'true' : 'false');
+	updateHelpVisible: ( visible ) => {
+		localStorage.setItem( 'helpVisible', visible ? 'true' : 'false' );
 	},
 	getHelpVisible: () => {
-		return localStorage.getItem('helpVisible') === 'true';
+		return localStorage.getItem( 'helpVisible' ) === 'true';
 	},
-	persistResult: (resultContent, postId) => {
-		localStorage.setItem('helpResultContent', resultContent);
-		localStorage.setItem('helpPostId', postId);
+	persistResult: ( resultContent, postId ) => {
+		localStorage.setItem( 'helpResultContent', resultContent );
+		localStorage.setItem( 'helpPostId', postId );
 	},
-	persistSearchInput: (searchInput) => {
-		localStorage.setItem('searchInput', searchInput);
+	persistSearchInput: ( searchInput ) => {
+		localStorage.setItem( 'searchInput', searchInput );
 	},
 	clear: () => {
-		localStorage.removeItem('helpResultContent');
-		localStorage.removeItem('helpPostId');
-		localStorage.removeItem('searchInput');
+		localStorage.removeItem( 'helpResultContent' );
+		localStorage.removeItem( 'helpPostId' );
+		localStorage.removeItem( 'searchInput' );
 	},
 	getResultInfo: () => {
 		return {
-			content: localStorage.getItem('helpResultContent'),
-			postId: localStorage.getItem('helpPostId'),
+			content: localStorage.getItem( 'helpResultContent' ),
+			postId: localStorage.getItem( 'helpPostId' ),
 		};
 	},
 	getSearchInput: () => {
-		return localStorage.getItem('searchInput');
+		return localStorage.getItem( 'searchInput' );
 	},
-	getFeatureFlag(flagName) {
-		return localStorage.getItem(flagName);
+	getFeatureFlag( flagName ) {
+		return localStorage.getItem( flagName );
 	},
-	setFeatureFlag(flagName, value) {
-		localStorage.setItem(flagName, value);
+	setFeatureFlag( flagName, value ) {
+		localStorage.setItem( flagName, value );
 	},
 };
 
 export const Analytics = {
-	sendEvent: (action, data) => {
+	sendEvent: ( action, data ) => {
 		const hiiveEvent = new HiiveEvent(
 			'wonder_help',
 			action,
 			data,
 			'wonder_help'
 		);
-		HiiveAnalytics.send(hiiveEvent);
+		HiiveAnalytics.send( hiiveEvent );
 	},
 };

@@ -3,75 +3,75 @@ import { __ } from '@wordpress/i18n';
 //
 import { Analytics, InteractionAPIs } from '../utils';
 
-const Feedback = ({ postId, source }) => {
-	const [status, setStatus] = useState('');
-	const yesButtonRef = useRef(null);
-	const noButtonRef = useRef(null);
+const Feedback = ( { postId, source } ) => {
+	const [ status, setStatus ] = useState( '' );
+	const yesButtonRef = useRef( null );
+	const noButtonRef = useRef( null );
 
 	const postFeedback = async () => {
-		if (status === 'helpful' || status === 'notHelpful') {
-			InteractionAPIs.postFeedback(postId, status);
-			Analytics.sendEvent('help_feedback_submitted', {
+		if ( status === 'helpful' || status === 'notHelpful' ) {
+			InteractionAPIs.postFeedback( postId, status );
+			Analytics.sendEvent( 'help_feedback_submitted', {
 				label_key: 'type',
 				type: status === 'helpful' ? 'positive' : 'negative',
 				source,
 				post_id: postId,
 				page: window.location.href.toString(),
-			});
+			} );
 		}
 	};
 
-	useEffect(() => {
-		setStatus('');
+	useEffect( () => {
+		setStatus( '' );
 		noButtonRef.current.className = 'feedback-button no';
 		yesButtonRef.current.className = 'feedback-button yes';
-	}, [postId]);
+	}, [ postId ] );
 
-	useEffect(() => {
+	useEffect( () => {
 		postFeedback();
-		if (status === 'helpful') {
+		if ( status === 'helpful' ) {
 			yesButtonRef.current.className = 'feedback-button yes selected-yes';
 			noButtonRef.current.className = 'feedback-button no';
 		}
-		if (status === 'notHelpful') {
+		if ( status === 'notHelpful' ) {
 			noButtonRef.current.className = 'feedback-button no selected-no';
 			yesButtonRef.current.className = 'feedback-button yes';
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [status]);
+	}, [ status ] );
 
 	return (
 		<div className="feedback-container">
 			<div className="feedback-question">
 				<p>
 					<b>
-						{__(
+						{ __(
 							'Did this result help you?',
 							'wp-module-help-center'
-						)}
+						) }
 					</b>
 				</p>
 			</div>
 			<div className="icon">
 				<button
-					ref={yesButtonRef}
-					onClick={() => {
-						setStatus('helpful');
-					}}
+					ref={ yesButtonRef }
+					onClick={ () => {
+						setStatus( 'helpful' );
+					} }
 					className="feedback-button yes"
 				>
-					{status === 'helpful' && <>&#129395;</>}{' '}
-					{__('Yes', 'wp-module-help-center')}
+					{ status === 'helpful' && <>&#129395;</> }{ ' ' }
+					{ __( 'Yes', 'wp-module-help-center' ) }
 				</button>
 				<button
-					onClick={() => {
-						setStatus('notHelpful');
-					}}
-					ref={noButtonRef}
+					onClick={ () => {
+						setStatus( 'notHelpful' );
+					} }
+					ref={ noButtonRef }
 					className="feedback-button no"
 				>
-					{status === 'notHelpful' && <>&#128557;</>}{' '}
-					{__('No', 'wp-module-help-center')}
+					{ status === 'notHelpful' && <>&#128557;</> }{ ' ' }
+					{ __( 'No', 'wp-module-help-center' ) }
 				</button>
 			</div>
 		</div>
