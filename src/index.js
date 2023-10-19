@@ -168,7 +168,6 @@ window.newfoldEmbeddedHelp = {
 
 //For rendering embedded help in Add, edit and View Pages
 /* Using the subscribe from the store to keep the UI persistent */
-const { Button } = wp.components;
 const unsubscribe = subscribe( () => {
 	const wrapper = document.getElementById( 'nfd-help-menu-button-wrapper' );
 	if ( wrapper ) {
@@ -303,13 +302,17 @@ const insertAiButtonForOnboarding = () => {
 }
 
 function hasQueryParamWithValue(paramName, paramValue) {
-	debugger;
     const searchParams = new URLSearchParams(window.location.search);
     return searchParams.has(paramName) && searchParams.get(paramName) === paramValue;
 }
 
 domReady(() => {
-	if(hasQueryParamWithValue("enable_suggestions", "1")){
+	if (hasQueryParamWithValue("enable_suggestions", "1")) {
+		setTimeout(() => {
+			insertAiButtonForOnboarding();
+		}, 1000);
+	}
+	if (LocalStorageUtils.getFeatureFlag('featureFlag_newfoldContentGenerator') === 'enabled') {
 		try {
 			// Insert AI button for blog description
 			const blogDescriptionField = document.querySelector("#blogdescription");
@@ -318,7 +321,6 @@ domReady(() => {
 			}
 
 			setTimeout(() => {
-				insertAiButtonForOnboarding();
 				// Call insertAiButtonForExceprt after the first set of operations
 				insertAiButtonForExceprt();
 			}, 1000);
