@@ -3,11 +3,13 @@ $gray-text: #394150;
 #nfd-suggestion-center {
   top: 30px;
 }
+
 .block-editor-page {
   #nfd-suggestion-center {
     top: 0;
   }
 }
+
 #nfd-help-center,
 #nfd-suggestion-center {
   .modal {
@@ -30,7 +32,7 @@ $gray-text: #394150;
         line-height: 24px;
         font-weight: normal;
         color: $gray-text;
-        padding:11px 0  ;
+        padding: 11px 0;
 
         .icon {
           margin-right: 10px;

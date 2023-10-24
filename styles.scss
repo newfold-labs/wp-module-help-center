@@ -345,14 +345,14 @@ body:is(.page, .post-php, .post-new-php) {
     background-color: $blue;
   }
 
-  &.ai-suggestions-btn-excerpt{
-    margin:0;
+  &.ai-suggestions-btn-excerpt {
+    margin: 0;
     position: relative;
     top: -74px;
     left: 220px;
   }
 
-  &.ai-suggestions-btn-onboarding{
+  &.ai-suggestions-btn-onboarding {
     position: relative;
     top: -104px;
     left: calc(100% - 30px);
@@ -361,6 +361,6 @@ body:is(.page, .post-php, .post-new-php) {
 
 }
 
-#blogdescription{
+#blogdescription {
   padding-right: 33px;
 }

@@ -1,16 +1,14 @@
 import { createRoot, render } from '@wordpress/element';
 
-import { subscribe, select  } from '@wordpress/data';
+import { subscribe } from '@wordpress/data';
 //
 import domReady from '@wordpress/dom-ready';
-import { registerPlugin } from '@wordpress/plugins';
-import {PluginDocumentSettingPanel} from '@wordpress/edit-post'
 import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 //
 
 import Modal from './components/Modal';
 import HelpCenter from './components/HelpCenter';
-import SuggestionsGenerator from './components/SuggestionsGenerator'
+import SuggestionsGenerator from './components/SuggestionsGenerator';
 import { ReactComponent as HelpIcon } from './icons/help.svg';
 import { ReactComponent as AiIcon } from './icons/ai-icon.svg';
 import { ReactComponent as Help } from './icons/help-plugin-sidebar-icon.svg';
@@ -56,18 +54,25 @@ export const toggleHelp = ( visible ) => {
 	window.dispatchEvent( new Event( 'storage' ) );
 };
 
-export const toggleSuggestionGenerator = (visible, targetSelector, event) => {
-    const nfdSuggestionContainer = document.getElementById('nfd-suggestion-center');
-    // If the nfd-suggestion-center doesn't exist, call the renderSuggestionsSidebar function
-    if (!nfdSuggestionContainer) {
-        window.newfoldEmbeddedHelp.renderSuggestionsSidebar(targetSelector);
-    }
-	
-    // Make sure to re-query the nfdSuggestionContainer in case it was just added to the DOM
-    const updatedNfdSuggestionContainer = document.getElementById('nfd-suggestion-center');
-    if (updatedNfdSuggestionContainer) {
-        updatedNfdSuggestionContainer.classList.toggle('help-container', visible);
-    }
+export const toggleSuggestionGenerator = ( visible, targetSelector ) => {
+	const nfdSuggestionContainer = document.getElementById(
+		'nfd-suggestion-center'
+	);
+	// If the nfd-suggestion-center doesn't exist, call the renderSuggestionsSidebar function
+	if ( ! nfdSuggestionContainer ) {
+		window.newfoldEmbeddedHelp.renderSuggestionsSidebar( targetSelector );
+	}
+
+	// Make sure to re-query the nfdSuggestionContainer in case it was just added to the DOM
+	const updatedNfdSuggestionContainer = document.getElementById(
+		'nfd-suggestion-center'
+	);
+	if ( updatedNfdSuggestionContainer ) {
+		updatedNfdSuggestionContainer.classList.toggle(
+			'help-container',
+			visible
+		);
+	}
 };
 
 const toggleHelpViaLocalStorage = () => {
@@ -89,9 +94,9 @@ const toggleHelpViaLocalStorage = () => {
 
 const handleClose = () => {
 	toggleHelp( false );
-	toggleSuggestionGenerator(false);
+	toggleSuggestionGenerator( false );
 	LocalStorageUtils.clear();
-}
+};
 
 window.newfoldEmbeddedHelp = {
 	toggleNFDLaunchedEmbeddedHelp: () => {
@@ -104,34 +109,37 @@ window.newfoldEmbeddedHelp = {
 		wpContentContainer.appendChild( helpContainer );
 		const DOM_TARGET = document.getElementById( 'nfd-help-center' );
 
-
 		if ( null !== DOM_TARGET ) {
 			if ( 'undefined' !== createRoot ) {
 				// WP 6.2+ only
 				createRoot( DOM_TARGET ).render(
 					<Modal
 						onClose={ handleClose }
-						contentComponent={(props) => <HelpCenter {...props} />}
-        				iconComponent={<HelpIcon />}
-						sidebarHeading={`Help Center`}
-						sidebarHeadingId={`wp-module-help-center`}
+						contentComponent={ ( props ) => (
+							<HelpCenter { ...props } />
+						) }
+						iconComponent={ <HelpIcon /> }
+						sidebarHeading={ `Help Center` }
+						sidebarHeadingId={ `wp-module-help-center` }
 					/>
 				);
 			} else if ( 'undefined' !== render ) {
 				render(
 					<Modal
 						onClose={ handleClose }
-						contentComponent={(props) => <HelpCenter {...props} />}
-        				iconComponent={<HelpIcon />}
-						sidebarHeading={`Help Center`}
-						sidebarHeadingId={`wp-module-help-center`}
+						contentComponent={ ( props ) => (
+							<HelpCenter { ...props } />
+						) }
+						iconComponent={ <HelpIcon /> }
+						sidebarHeading={ `Help Center` }
+						sidebarHeadingId={ `wp-module-help-center` }
 					/>,
 					DOM_TARGET
 				);
 			}
 		}
 	},
-	renderSuggestionsSidebar: (targetSelector) => {
+	renderSuggestionsSidebar: ( targetSelector ) => {
 		const suggestionContainer = document.createElement( 'div' );
 		suggestionContainer.id = 'nfd-suggestion-center';
 		suggestionContainer.style.display = 'block';
@@ -144,20 +152,30 @@ window.newfoldEmbeddedHelp = {
 				createRoot( DOM_TARGET ).render(
 					<Modal
 						onClose={ handleClose }
-						contentComponent={(props) => <SuggestionsGenerator targetSelector={targetSelector} {...props} />}
-        				iconComponent={<AiIcon />}
-						sidebarHeading={`Content Generator`}
-						sidebarHeadingId={`wp-module-content-generator`}
+						contentComponent={ ( props ) => (
+							<SuggestionsGenerator
+								targetSelector={ targetSelector }
+								{ ...props }
+							/>
+						) }
+						iconComponent={ <AiIcon /> }
+						sidebarHeading={ `Content Generator` }
+						sidebarHeadingId={ `wp-module-content-generator` }
 					/>
 				);
 			} else if ( 'undefined' !== render ) {
 				render(
 					<Modal
 						onClose={ handleClose }
-						contentComponent={(props) => <SuggestionsGenerator targetSelector={targetSelector} {...props} />}
-        				iconComponent={<AiIcon />}
-						sidebarHeading={`Content Generator`}
-						sidebarHeadingId={`wp-module-content-generator`}
+						contentComponent={ ( props ) => (
+							<SuggestionsGenerator
+								targetSelector={ targetSelector }
+								{ ...props }
+							/>
+						) }
+						iconComponent={ <AiIcon /> }
+						sidebarHeading={ `Content Generator` }
+						sidebarHeadingId={ `wp-module-content-generator` }
 					/>,
 					DOM_TARGET
 				);
@@ -212,125 +230,181 @@ const unsubscribe = subscribe( () => {
 			</button>
 		);
 
-		
 		render(
 			helpMenuButton,
 			document.getElementById( 'nfd-help-menu-button-wrapper' )
 		);
-
 	} );
 } );
 
 window.newfoldEmbeddedHelp.renderEmbeddedHelp();
 
-function insertAiButton(targetSelector, onClick) {
-    const targetField = document.querySelector(targetSelector);
-    if (targetField && !targetField.parentNode.querySelector('.ai-suggestions-button')) {
-        var triggerButton = document.createElement("div");
-        triggerButton.classList.add("ai-suggestions-button");
-        triggerButton.textContent = "AI";
-        triggerButton.addEventListener("click", function (event) {
-            onClick(event, targetSelector);  // Pass targetSelector to the onClick handler
-            event.preventDefault();
-        });
-        targetField.parentNode.insertBefore(triggerButton, targetField.nextSibling);
-    }
+function insertAiButton( targetSelector, onClick ) {
+	const targetField = document.querySelector( targetSelector );
+	if (
+		targetField &&
+		! targetField.parentNode.querySelector( '.ai-suggestions-button' )
+	) {
+		const triggerButton = document.createElement( 'div' );
+		triggerButton.classList.add( 'ai-suggestions-button' );
+		triggerButton.textContent = 'AI';
+		triggerButton.addEventListener( 'click', function ( event ) {
+			onClick( event, targetSelector ); // Pass targetSelector to the onClick handler
+			event.preventDefault();
+		} );
+		targetField.parentNode.insertBefore(
+			triggerButton,
+			targetField.nextSibling
+		);
+	}
 }
 
 const insertAiButtonForExceprt = () => {
-    try {
-        const parentNode = document.querySelector('#editor');
-        if (!parentNode) return;
+	try {
+		const parentNode = document.querySelector( '#editor' );
+		if ( ! parentNode ) return;
 
-        const observerConfig = {
-            childList: true,
-            subtree: true,
-        };
+		const observerConfig = {
+			childList: true,
+			subtree: true,
+		};
 
-        const callback = function(mutationsList, observer) {
-            for (const mutation of mutationsList) {
-                try {
-                    if (mutation.target && mutation.target.querySelector('.editor-post-excerpt') && !mutation.target.querySelector('.editor-post-excerpt .ai-suggestions-button')) {
-                        const excerptTextarea = mutation.target.querySelector(".editor-post-excerpt textarea");
-                        if (excerptTextarea) {
-                            insertAiButton(".editor-post-excerpt textarea", toggleSuggestionGenerator.bind(null, true, ".editor-post-excerpt textarea"));
-                            const aiSuggestionsButton = mutation.target.querySelector('.editor-post-excerpt .ai-suggestions-button');
-                            if (aiSuggestionsButton) {
-                                aiSuggestionsButton.classList.add('ai-suggestions-btn-excerpt');
-                            }
-                        }
-                    }
-                } catch (error) {
-                    console.error('Error in mutation callback:', error);
-                }
-            }
-        };
+		// eslint-disable-next-line no-unused-vars
+		const callback = function ( mutationsList, observer ) {
+			for ( const mutation of mutationsList ) {
+				try {
+					if (
+						mutation.target &&
+						mutation.target.querySelector(
+							'.editor-post-excerpt'
+						) &&
+						! mutation.target.querySelector(
+							'.editor-post-excerpt .ai-suggestions-button'
+						)
+					) {
+						const excerptTextarea = mutation.target.querySelector(
+							'.editor-post-excerpt textarea'
+						);
+						if ( excerptTextarea ) {
+							insertAiButton(
+								'.editor-post-excerpt textarea',
+								toggleSuggestionGenerator.bind(
+									null,
+									true,
+									'.editor-post-excerpt textarea'
+								)
+							);
+							const aiSuggestionsButton =
+								mutation.target.querySelector(
+									'.editor-post-excerpt .ai-suggestions-button'
+								);
+							if ( aiSuggestionsButton ) {
+								aiSuggestionsButton.classList.add(
+									'ai-suggestions-btn-excerpt'
+								);
+							}
+						}
+					}
+				} catch ( error ) {
+					// eslint-disable-next-line no-console
+					console.error( 'Error in mutation callback:', error );
+				}
+			}
+		};
 
-        const observer = new MutationObserver(callback);
-        observer.observe(parentNode, observerConfig);
-    } catch (error) {
-        console.error('Error in insertAiButtonForExceprt:', error);
-    }
-}
+		// eslint-disable-next-line no-undef
+		const observer = new MutationObserver( callback );
+		observer.observe( parentNode, observerConfig );
+	} catch ( error ) {
+		// eslint-disable-next-line no-console
+		console.error( 'Error in insertAiButtonForExceprt:', error );
+	}
+};
 
 const insertAiButtonForOnboarding = () => {
 	// Check for onboardingNode
-	const onboardingNode = document.getElementById("nfd-onboarding");
-	if (onboardingNode) {
+	const onboardingNode = document.getElementById( 'nfd-onboarding' );
+	if ( onboardingNode ) {
 		const targetSelector = '[data-target-ai="true"]';
-		const onboardingTargetElements = document.querySelectorAll(targetSelector);
+		const onboardingTargetElements =
+			document.querySelectorAll( targetSelector );
 
-		onboardingTargetElements.forEach(targetElement => {
+		onboardingTargetElements.forEach( ( targetElement ) => {
 			try {
 				// Pass the CSS selector string to the insertAiButton function
-				insertAiButton(targetSelector, toggleSuggestionGenerator.bind(null, true, targetSelector));
+				insertAiButton(
+					targetSelector,
+					toggleSuggestionGenerator.bind( null, true, targetSelector )
+				);
 
 				const parentElement = targetElement.parentNode;
 
 				// Use querySelector on the parent element
-				const aiSuggestionsButton = parentElement.querySelector('.ai-suggestions-button');
+				const aiSuggestionsButton = parentElement.querySelector(
+					'.ai-suggestions-button'
+				);
 
 				// Add the class to the found .ai-suggestions-button element
-				if (aiSuggestionsButton) {
-					aiSuggestionsButton.classList.add('ai-suggestions-btn-onboarding');
+				if ( aiSuggestionsButton ) {
+					aiSuggestionsButton.classList.add(
+						'ai-suggestions-btn-onboarding'
+					);
 				}
-			} catch (error) {
-				console.error('Error in onboardingTargetElements forEach loop:', error);
+			} catch ( error ) {
+				// eslint-disable-next-line no-console
+				console.error(
+					'Error in onboardingTargetElements forEach loop:',
+					error
+				);
 			}
-		});
+		} );
 	}
+};
+
+function hasQueryParamWithValue( paramName, paramValue ) {
+	const searchParams = new URLSearchParams( window.location.search );
+	return (
+		searchParams.has( paramName ) &&
+		searchParams.get( paramName ) === paramValue
+	);
 }
 
-function hasQueryParamWithValue(paramName, paramValue) {
-    const searchParams = new URLSearchParams(window.location.search);
-    return searchParams.has(paramName) && searchParams.get(paramName) === paramValue;
-}
-
-domReady(() => {
-	if (hasQueryParamWithValue("enable_suggestions", "1")) {
-		setTimeout(() => {
+domReady( () => {
+	if ( hasQueryParamWithValue( 'enable_suggestions', '1' ) ) {
+		setTimeout( () => {
 			insertAiButtonForOnboarding();
-		}, 1000);
+		}, 1000 );
 	}
-	if (LocalStorageUtils.getFeatureFlag('featureFlag_newfoldContentGenerator') === 'enabled') {
+	if (
+		LocalStorageUtils.getFeatureFlag(
+			'featureFlag_newfoldContentGenerator'
+		) === 'enabled'
+	) {
 		try {
 			// Insert AI button for blog description
-			const blogDescriptionField = document.querySelector("#blogdescription");
-			if (blogDescriptionField) {
-				insertAiButton("#blogdescription", toggleSuggestionGenerator.bind(null, true, '#blogdescription'));
+			const blogDescriptionField =
+				document.querySelector( '#blogdescription' );
+			if ( blogDescriptionField ) {
+				insertAiButton(
+					'#blogdescription',
+					toggleSuggestionGenerator.bind(
+						null,
+						true,
+						'#blogdescription'
+					)
+				);
 			}
 
-			setTimeout(() => {
+			setTimeout( () => {
 				// Call insertAiButtonForExceprt after the first set of operations
 				insertAiButtonForExceprt();
-			}, 1000);
-
-		} catch (error) {
-			console.error('Error in domReady callback:', error);
+			}, 1000 );
+		} catch ( error ) {
+			// eslint-disable-next-line no-console
+			console.error( 'Error in domReady callback:', error );
 		}
 	}
-});
-
+} );
 
 /* The method added to the window object can be used to open the help center pop and enter the text clicked */
 if (

@@ -25,16 +25,17 @@
       .suggestion-btn-wrapper {
         display: flex;
         justify-content: space-between;
+
         &.hide-tooltip {
-          .components-tooltip{
+          .components-tooltip {
             display: none;
           }
         }
-        
-        .components-tooltip{
+
+        .components-tooltip {
           background-color: black;
           color: white;
-          padding:5px;
+          padding: 5px;
           border-radius: 1px;
         }
 
@@ -52,7 +53,7 @@
     cursor: pointer;
     vertical-align: middle;
 
-    span{
+    span {
       vertical-align: top;
       margin: 0 5px;
     }
