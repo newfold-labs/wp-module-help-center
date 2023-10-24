@@ -65,7 +65,7 @@ const SearchResults = ( props ) => {
 
 	const getResultMatches = ( query, tokensMatched, fieldsMatched ) => {
 		const tokensPerQuery = tokensMatched / query.split( /\s+/ ).length;
-		return fieldsMatched >= 1 && tokensPerQuery >= 0.9;
+		return fieldsMatched >= 1 && tokensPerQuery >= 0.99;
 	};
 
 	const getAIResult = async () => {
