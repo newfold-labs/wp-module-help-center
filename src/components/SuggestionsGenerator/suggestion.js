@@ -43,7 +43,13 @@ function Suggestion( { suggestionText, index, targetElement, handleClose } ) {
 								id={ `suggestionCopyButton${ index }` }
 							>
 								{ copied ? (
-									<span>Copied!</span>
+									<span>
+										{ __(
+											'Copied!',
+											'wp-module-help-center'
+										) }
+										!
+									</span>
 								) : (
 									<span>
 										<CopyIcon />
@@ -60,7 +66,7 @@ function Suggestion( { suggestionText, index, targetElement, handleClose } ) {
 					role="button"
 					tabIndex="-1"
 				>
-					{ __( 'Apply', 'wp-suggestions-generator' ) }
+					{ __( 'Apply', 'wp-module-help-center' ) }
 				</div>
 			</div>
 		</div>
