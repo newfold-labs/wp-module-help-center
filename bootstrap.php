@@ -2,6 +2,7 @@
 
 use NewfoldLabs\WP\Module\HelpCenter\HelpCenter;
 use NewfoldLabs\WP\ModuleLoader\Container;
+use NewfoldLabs\WP\Module\HelpCenter\Data\Brands;
 use function NewfoldLabs\WP\ModuleLoader\register;
 
 if ( function_exists( 'add_action' ) ) {
@@ -31,6 +32,9 @@ if ( function_exists( 'add_action' ) ) {
 							}
 
 							new HelpCenter( $container );
+
+							// Define the brand
+							Brands::set_current_brand( $container );
 						},
 						'isActive' => true,
 						'isHidden' => true,
