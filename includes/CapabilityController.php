@@ -68,7 +68,7 @@ class CapabilityController extends \WP_REST_Controller {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function get_brand() {
-		$brand = get_option( 'mm_brand', 'false' );
+		$brand = NFD_HELPCENTER_PLUGIN_BRAND;
 		if ( ! $brand ) {
 			return new \WP_Error(
 				'rest_not_found',

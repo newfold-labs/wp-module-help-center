@@ -31,6 +31,11 @@ if ( function_exists( 'add_action' ) ) {
 							}
 
 							new HelpCenter( $container );
+
+							// Define the brand
+							if ( ! defined( 'NFD_HELPCENTER_PLUGIN_BRAND' ) ) {
+								define( 'NFD_HELPCENTER_PLUGIN_BRAND', $container->plugin()->brand );
+							}
 						},
 						'isActive' => true,
 						'isHidden' => true,
