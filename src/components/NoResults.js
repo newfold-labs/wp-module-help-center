@@ -1,5 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { ReactComponent as NoResultIllustration } from '../icons/no-result.svg';
+import ResourceLink from './ResourceLink';
 
 const NoResults = () => {
 	return (
@@ -24,15 +25,7 @@ const NoResults = () => {
 					'wp-module-help-center'
 				) }
 			</p>
-			<p>
-				{ __(
-					'In the meantime, try searching our',
-					'wp-module-help-center'
-				) }{ ' ' }
-				<a href="https://www.bluehost.com/help">
-					{ __( 'Resource center.', 'wp-module-help-center' ) }
-				</a>
-			</p>
+			<ResourceLink />
 			<hr />
 		</div>
 	);

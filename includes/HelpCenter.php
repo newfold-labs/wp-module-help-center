@@ -4,6 +4,7 @@ namespace NewfoldLabs\WP\Module\HelpCenter;
 
 use NewfoldLabs\WP\Module\HelpCenter\I18nLoader;
 use NewfoldLabs\WP\ModuleLoader\Container;
+use NewfoldLabs\WP\Module\HelpCenter\Data\Brands;
 
 /**
  * The class to initialize and load the module.
@@ -115,12 +116,17 @@ class HelpCenter {
             \wp_enqueue_style(
                 'stylesheet',
                 NFD_HELPCENTER_PLUGIN_URL . 'vendor/newfold-labs/wp-module-help-center/build/index.css',
-                null, '1', 'screen'
+                array(), '1', 'screen'
             );
 
             \wp_add_inline_script(
                 self::$slug,
-                'var nfdHelpCenter =' . wp_json_encode( array( 'restUrl' => \get_home_url() . '/index.php?rest_route=', ) ) . ';',
+                'var nfdHelpCenter =' . wp_json_encode(
+                    array(
+                        'restUrl'       => \get_home_url() . '/index.php?rest_route=',
+                        'resourceLink'  => Brands::get_resource_link_for_brand( NFD_HELPCENTER_PLUGIN_BRAND )
+                    )
+                ) . ';',
                 'before'
             );
         }
