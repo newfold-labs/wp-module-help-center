@@ -11,7 +11,8 @@ import { Analytics, LocalStorageUtils, OnboardingAPIs } from './utils';
 import '../styles.scss';
 
 const OpenHelpCenterForNovice = async () => {
-	const queryParams = new URL( document.location ).searchParams;
+	const url = new URL( document.location );
+	const queryParams = url.searchParams;
 	const referrer = queryParams.get( 'referrer' );
 	if ( ! referrer ) {
 		return;
@@ -20,7 +21,9 @@ const OpenHelpCenterForNovice = async () => {
 		// Check for the user's wordpress capability
 		const flowData = await OnboardingAPIs.getFlowData();
 		if ( flowData.data.wpComfortLevel === '1' ) {
+			url.searchParams.delete( 'referrer' );
 			toggleHelp( true );
+			window.history.replaceState( {}, document.title, url.href );
 		}
 	}
 };
