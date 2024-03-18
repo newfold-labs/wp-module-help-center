@@ -63,7 +63,7 @@ class HelpCenter {
     }
 
     public function newfold_help_center( \WP_Admin_Bar $admin_bar ) {
-        if ( current_user_can( 'manage_options' ) ) {
+        if ( current_user_can( 'manage_options' ) && is_admin() ) {
             $help_icon           = 
 			'<svg style="vertical-align: middle; cursor: pointer" width="22" height="22" viewBox="0 1 36 37" fill="#000" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd"
