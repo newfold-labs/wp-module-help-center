@@ -4,27 +4,27 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f4dafcc29d164eddc89319dcaf2d153c",
+    "content-hash": "b31284778b865e92cbdeee50c370bf09",
     "packages": [
         {
             "name": "newfold-labs/wp-module-ai",
-            "version": "1.0.3",
+            "version": "1.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/newfold-labs/wp-module-ai.git",
-                "reference": "728d5dd89f31d4cfe50d26914b6cbf3b6efbd739"
+                "reference": "2d1ea36f2a17c79934f3c41b02316d8d12fd299d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/newfold-labs/wp-module-ai/zipball/728d5dd89f31d4cfe50d26914b6cbf3b6efbd739",
-                "reference": "728d5dd89f31d4cfe50d26914b6cbf3b6efbd739",
+                "url": "https://api.github.com/repos/newfold-labs/wp-module-ai/zipball/2d1ea36f2a17c79934f3c41b02316d8d12fd299d",
+                "reference": "2d1ea36f2a17c79934f3c41b02316d8d12fd299d",
                 "shasum": ""
             },
             "require": {
                 "newfold-labs/wp-module-data": "^2.3.1"
             },
             "require-dev": {
-                "newfold-labs/wp-php-standards": "@stable"
+                "newfold-labs/wp-php-standards": "^1.2"
             },
             "type": "library",
             "autoload": {
@@ -46,10 +46,10 @@
             ],
             "description": "A module for providing artificial intelligence capabilities.",
             "support": {
-                "source": "https://github.com/newfold-labs/wp-module-ai/tree/1.0.3",
+                "source": "https://github.com/newfold-labs/wp-module-ai/tree/1.1.7",
                 "issues": "https://github.com/newfold-labs/wp-module-ai/issues"
             },
-            "time": "2023-08-09T20:19:40+00:00"
+            "time": "2024-03-18T11:49:32+00:00"
         },
         {
             "name": "newfold-labs/wp-module-data",
@@ -780,5 +780,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
