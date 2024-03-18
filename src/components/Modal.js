@@ -1,14 +1,18 @@
+/* eslint-disable @wordpress/i18n-text-domain */
+/* eslint-disable @wordpress/i18n-no-variables */
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-//
-import { ReactComponent as CloseIcon } from '../icons/close.svg';
-import { ReactComponent as Help } from '../icons/help.svg';
-import HelpCenter from './HelpCenter';
-
 import { toggleHelp } from '..';
+import { ReactComponent as CloseIcon } from '../icons/close.svg';
 import { CapabilityAPI, LocalStorageUtils } from '../utils';
 
-const Modal = ( { onClose } ) => {
+const Modal = ( {
+	onClose,
+	contentComponent,
+	iconComponent,
+	sidebarHeading,
+	sidebarHeadingId,
+} ) => {
 	const [ brand, setBrand ] = useState( '' );
 
 	const getBrand = async () => {
@@ -28,10 +32,8 @@ const Modal = ( { onClose } ) => {
 		<div className="modal">
 			<div className="modal-header">
 				<h3 className="heading">
-					<span className="icon">
-						<Help />
-					</span>
-					{ __( 'Help Center', 'wp-module-help-center' ) }
+					<span className="icon">{ iconComponent }</span>
+					{ __( sidebarHeading, sidebarHeadingId ) }
 				</h3>
 				<button
 					className="close-button"
@@ -45,14 +47,8 @@ const Modal = ( { onClose } ) => {
 					</div>
 				</button>
 			</div>
-			<HelpCenter
-				closeHelp={ () => {
-					onClose();
-					setRefresh( ! refresh );
-				} }
-				refresh={ refresh }
-				brand={ brand }
-			/>
+			{ contentComponent &&
+				contentComponent( { onClose, refresh, setRefresh, brand } ) }
 		</div>
 	);
 };
