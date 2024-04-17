@@ -7,26 +7,8 @@ import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 //
 import Modal from './components/Modal';
 import { ReactComponent as Help } from './icons/help-plugin-sidebar-icon.svg';
-import { Analytics, LocalStorageUtils, OnboardingAPIs } from './utils';
+import { Analytics, LocalStorageUtils } from './utils';
 import '../styles.scss';
-
-const OpenHelpCenterForNovice = async () => {
-	const url = new URL( document.location );
-	const queryParams = url.searchParams;
-	const referrer = queryParams.get( 'referrer' );
-	if ( ! referrer ) {
-		return;
-	}
-	if ( referrer.toString() === 'nfd-onboarding' ) {
-		// Check for the user's wordpress capability
-		const flowData = await OnboardingAPIs.getFlowData();
-		if ( flowData.data.wpComfortLevel === '1' ) {
-			url.searchParams.delete( 'referrer' );
-			toggleHelp( true );
-			window.history.replaceState( {}, document.title, url.href );
-		}
-	}
-};
 
 domReady( () => {
 	// Run only once DOM is ready, else this won't work.
@@ -39,7 +21,6 @@ domReady( () => {
 			},
 		} );
 	}
-	OpenHelpCenterForNovice();
 } );
 
 const wpContentContainer = document.getElementById( 'wpcontent' );
