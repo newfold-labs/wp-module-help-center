@@ -168,7 +168,6 @@ window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery = function (
 	selectedText,
 	launchByElement
 ) {
-	window.newfoldEmbeddedHelp.selectedText = selectedText;
 	const helpVisible = LocalStorageUtils.getHelpVisible();
 	LocalStorageUtils.persistSearchInput( selectedText );
 	if ( helpVisible !== 'true' && launchByElement ) {
