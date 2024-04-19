@@ -164,77 +164,97 @@ const unsubscribe = subscribe( () => {
 window.newfoldEmbeddedHelp.renderEmbeddedHelp();
 
 /* The method added to the window object can be used to open the help center pop and enter the text clicked */
-if (
-	LocalStorageUtils.getFeatureFlag(
-		'featureFlag_newfoldLaunchHelpCenter'
-	) === 'enabled'
+
+window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery = function (
+	selectedText,
+	launchByElement
 ) {
-	window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery = function (
-		selectedText,
-		launchByElement
-	) {
-		const helpVisible = LocalStorageUtils.getHelpVisible();
-		if ( helpVisible !== 'true' && launchByElement ) toggleHelp( true );
+	const helpVisible = LocalStorageUtils.getHelpVisible();
+	if ( helpVisible !== 'true' && launchByElement ) toggleHelp( true );
 
-		const isElementVisible = ( element ) => {
-			const style = window.getComputedStyle( element );
-			return style.display !== 'none' && style.visibility !== 'hidden';
-		};
-
-		const targetElement = document.getElementById( 'nfd-help-center' );
-		const maxAttempts = 5;
-		let attempts = 0;
-		const searchInterval = setInterval( () => {
-			attempts++;
-			if ( targetElement && isElementVisible( targetElement ) ) {
-				const searchInput =
-					document.getElementById( 'search-input-box' );
-				setTimeout( () => {
-					searchInput.value = selectedText;
-					searchInput.focus();
-				}, 500 );
-				clearInterval( searchInterval );
-			} else if ( attempts >= maxAttempts ) {
-				clearInterval( searchInterval );
-			}
-		}, 300 );
+	const isElementVisible = ( element ) => {
+		const style = window.getComputedStyle( element );
+		return style.display !== 'none' && style.visibility !== 'hidden';
 	};
 
-	function getElementsInnerText( element ) {
-		// If the element itself has text, return it
-		if ( element.innerText.trim() ) {
-			return element.innerText;
-		}
+	// Create the Enter key event in advance
+	// eslint-disable-next-line no-undef
+	const enterKey = new KeyboardEvent( 'keydown', {
+		bubbles: true, // Allow the event to bubble up
+		cancelable: true, // Allow the event to be cancellable
+		key: 'Enter', // Specify which key is pressed
+		code: 'Enter', // Physical key code
+		keyCode: 13, // Deprecated but included for compatibility
+	} );
 
-		// to check if the child element has text
-		for ( const child of element.childNodes ) {
-			// eslint-disable-next-line no-undef
-			if ( child.nodeType === Node.ELEMENT_NODE ) {
-				const childText = getElementsInnerText( child );
-				if ( childText ) {
-					return childText;
-				}
-			}
-		}
+	const targetElement = document.getElementById( 'nfd-help-center' );
+	const maxAttempts = 5;
+	let attempts = 0;
+	const searchInterval = setInterval( () => {
+		attempts++;
+		if ( targetElement && isElementVisible( targetElement ) ) {
+			const searchInput = document.getElementById( 'search-input-box' );
 
-		// If no text was found in the element or its children, return null
-		return null;
+			searchInput.value = selectedText;
+			searchInput.focus();
+			searchInput.setSelectionRange(
+				searchInput.value.length,
+				searchInput.value.length
+			);
+			searchInput.dispatchEvent( enterKey );
+			// Dispatch the pre-created Enter key event to the input
+
+			/* setTimeout( () => {
+				
+			}, 500 ); */
+			clearInterval( searchInterval );
+		} else if ( attempts >= maxAttempts ) {
+			clearInterval( searchInterval );
+		}
+	}, 500 );
+};
+
+function getElementsInnerText( element ) {
+	// If the element itself has text, return it
+	if ( element.innerText.trim() ) {
+		return element.innerText;
 	}
 
-	/* Detect click event on the calling element and  checking if the clicked element has a specific class name (look-up-help in the case below) and Extract the inner text of the clicked element */
-	document.addEventListener( 'click', ( event ) => {
-		const clickedElement = event.target.closest(
-			'[data-openNfdHelpCenter]'
-		);
-
-		if ( clickedElement ) {
-			const selectedText = getElementsInnerText( clickedElement );
-			if ( selectedText ) {
-				window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery(
-					selectedText,
-					true
-				);
+	// to check if the child element has text
+	for ( const child of element.childNodes ) {
+		// eslint-disable-next-line no-undef
+		if ( child.nodeType === Node.ELEMENT_NODE ) {
+			const childText = getElementsInnerText( child );
+			if ( childText ) {
+				return childText;
 			}
 		}
-	} );
+	}
+
+	// If no text was found in the element or its children, return null
+	return null;
 }
+
+/* Detect click event on the calling element and  checking if the clicked element has a specific class name (look-up-help in the case below) and Extract the inner text of the clicked element */
+/* document.addEventListener( 'click', ( event ) => {
+	const clickedElement = event.target.closest( '[data-openNfdHelpCenter]' );
+
+	if ( clickedElement ) {
+		const selectedText = getElementsInnerText( clickedElement );
+		if ( selectedText ) {
+			window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery(
+				selectedText,
+				true
+			);
+		}
+	}
+} ); */
+
+document.addEventListener( 'click', ( event ) => {
+	if ( event.target.dataset.helpcenterquery ) {
+		window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery(
+			event.target.dataset.helpcenterquery,
+			true
+		);
+	}
+} );
