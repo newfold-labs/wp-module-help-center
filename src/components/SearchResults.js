@@ -77,8 +77,8 @@ const SearchResults = ( props ) => {
 				hits.length > 0
 					? getResultMatches(
 							searchInput,
-							hits[ 0 ].text_match_info.tokens_matched,
-							hits[ 0 ].text_match_info.fields_matched
+							hits[ 0 ].text_match_info?.tokens_matched,
+							hits[ 0 ].text_match_info?.fields_matched
 					  )
 					: false;
 			if ( resultMatches ) {

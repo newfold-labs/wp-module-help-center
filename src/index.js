@@ -60,7 +60,6 @@ window.newfoldEmbeddedHelp = {
 		helpContainer.style.display = 'none';
 		wpContentContainer.appendChild( helpContainer );
 		const DOM_TARGET = document.getElementById( 'nfd-help-center' );
-
 		if ( null !== DOM_TARGET ) {
 			if ( 'undefined' !== createRoot ) {
 				// WP 6.2+ only
@@ -144,78 +143,70 @@ const unsubscribe = subscribe( () => {
 
 window.newfoldEmbeddedHelp.renderEmbeddedHelp();
 
-/* The method added to the window object can be used to open the help center pop and enter the text clicked */
-if (
-	LocalStorageUtils.getFeatureFlag(
-		'featureFlag_newfoldLaunchHelpCenter'
-	) === 'enabled'
+/* The method added to the window object can be used to open the help center pop and enter the text/query clicked */
+
+window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery = function (
+	selectedText,
+	launchByElement
 ) {
-	window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery = function (
-		selectedText,
-		launchByElement
-	) {
-		const helpVisible = LocalStorageUtils.getHelpVisible();
-		if ( helpVisible !== 'true' && launchByElement ) toggleHelp( true );
-
-		const isElementVisible = ( element ) => {
-			const style = window.getComputedStyle( element );
-			return style.display !== 'none' && style.visibility !== 'hidden';
-		};
-
-		const targetElement = document.getElementById( 'nfd-help-center' );
-		const maxAttempts = 5;
-		let attempts = 0;
-		const searchInterval = setInterval( () => {
-			attempts++;
-			if ( targetElement && isElementVisible( targetElement ) ) {
-				const searchInput =
-					document.getElementById( 'search-input-box' );
-				setTimeout( () => {
-					searchInput.value = selectedText;
-					searchInput.focus();
-				}, 500 );
-				clearInterval( searchInterval );
-			} else if ( attempts >= maxAttempts ) {
-				clearInterval( searchInterval );
-			}
-		}, 300 );
+	const helpVisible = LocalStorageUtils.getHelpVisible();
+	LocalStorageUtils.persistSearchInput( selectedText );
+	if ( helpVisible !== 'true' && launchByElement ) {
+		window.newfoldEmbeddedHelp.renderEmbeddedHelp(); // Ensure this is called to update the UI
+		toggleHelp( true );
+	}
+	const isElementVisible = ( element ) => {
+		const style = window.getComputedStyle( element );
+		return style.display !== 'none' && style.visibility !== 'hidden';
 	};
 
-	function getElementsInnerText( element ) {
-		// If the element itself has text, return it
-		if ( element.innerText.trim() ) {
-			return element.innerText;
-		}
-
-		// to check if the child element has text
-		for ( const child of element.childNodes ) {
-			// eslint-disable-next-line no-undef
-			if ( child.nodeType === Node.ELEMENT_NODE ) {
-				const childText = getElementsInnerText( child );
-				if ( childText ) {
-					return childText;
-				}
-			}
-		}
-
-		// If no text was found in the element or its children, return null
-		return null;
-	}
-
-	/* Detect click event on the calling element and  checking if the clicked element has a specific class name (look-up-help in the case below) and Extract the inner text of the clicked element */
-	document.addEventListener( 'click', ( event ) => {
-		const clickedElement = event.target.closest(
-			'[data-openNfdHelpCenter]'
-		);
-
-		if ( clickedElement ) {
-			const selectedText = getElementsInnerText( clickedElement );
-			if ( selectedText ) {
-				window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery(
-					selectedText,
-					true
-				);
-			}
-		}
+	// Create the Enter key event in advance
+	// eslint-disable-next-line no-undef
+	const enterKey = new KeyboardEvent( 'keydown', {
+		bubbles: true, // Allow the event to bubble up
+		cancelable: true, // Allow the event to be cancellable
+		key: 'Enter', // Specify which key is pressed
+		code: 'Enter', // Physical key code
+		keyCode: 13, // Deprecated but included for compatibility
 	} );
-}
+
+	const targetElement = document.getElementById( 'nfd-help-center' );
+	const maxAttempts = 5;
+	let attempts = 0;
+	const searchInterval = setInterval( () => {
+		attempts++;
+		if ( targetElement && isElementVisible( targetElement ) ) {
+			const searchInput = document.getElementById( 'search-input-box' );
+
+			searchInput.value = selectedText;
+			searchInput.focus();
+			searchInput.setSelectionRange(
+				searchInput.value.length,
+				searchInput.value.length
+			);
+			// Dispatch the pre-created Enter key event to the input
+			searchInput.dispatchEvent( enterKey );
+			clearInterval( searchInterval );
+		} else if ( attempts >= maxAttempts ) {
+			clearInterval( searchInterval );
+		}
+	}, 500 );
+};
+
+/* Detect click event on the calling element and  checking if the clicked element has a specific data attribute name nfdhelpcenterquery */
+document.addEventListener( 'click', ( event ) => {
+	try {
+		if (
+			event.target?.dataset?.nfdhelpcenterquery &&
+			event.target.dataset.nfdhelpcenterquery.trim() !== ''
+		) {
+			window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery(
+				event.target.dataset.nfdhelpcenterquery,
+				true
+			);
+		}
+	} catch ( error ) {
+		// eslint-disable-next-line no-console
+		console.error( 'Error launching help center via query:', error );
+	}
+} );
