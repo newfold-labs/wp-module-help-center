@@ -21,9 +21,13 @@ const HelpCenter = ( props ) => {
 		//  So you can pass any parameters supported by the search endpoint below.
 		//  queryBy is required.
 		additionalSearchParameters: {
+			facet_by: 'post_title',
+			group_by: 'post_title',
+			group_limit: 1,
 			query_by: 'post_title,post_content',
-			sort_by: 'post_likes:desc',
+			sort_by: '_text_match:desc,post_likes:desc',
 			filter_by: `post_category:=${ props.brand }`,
+			prioritize_token_position: true,
 			limit_hits: 3,
 			per_page: 3,
 		},
