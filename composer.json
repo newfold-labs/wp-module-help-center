@@ -23,13 +23,15 @@
   },
   "require": {
     "newfold-labs/wp-module-data": "^2.3.4",
-    "newfold-labs/wp-module-ai": "^1.1.7"
+    "newfold-labs/wp-module-ai": "^1.1.7",
+    "newfold-labs/wp-module-features": "^1.1"
   },
   "autoload": {
     "psr-4": {
       "NewfoldLabs\\WP\\Module\\HelpCenter\\": "includes"
     },
     "files": [
+      "includes/HelpCenterFeature.php",
       "bootstrap.php"
     ]
   },
