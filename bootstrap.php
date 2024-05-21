@@ -6,7 +6,13 @@ use NewfoldLabs\WP\Module\HelpCenter\HelpCenter;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\HelpCenter\Data\Brands;
 
-require_once __DIR__ . "/includes/HelpCenterFeature.php";
-require_once __DIR__ . "/includes/HelpCenterFeatureHooks.php";
+if ( function_exists( 'add_filter' ) ) {
+	add_filter(
+		'newfold/features/filter/register',
+		function ( $features ) {
+			return array_merge( $features, array( HelpCenterFeature::class ) );
+		}
+	);
+}
 
 new HelpCenterFeatureHooks();
