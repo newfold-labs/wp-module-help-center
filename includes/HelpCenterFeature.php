@@ -41,8 +41,6 @@ class HelpCenterFeature extends \NewfoldLabs\WP\Module\Features\Feature {
 				function () {
 					$container = getContainer();
 					define( 'NFD_HELPCENTER_PLUGIN_DIRNAME', dirname( $container->plugin()->basename ) );
-					define( 'NFD_HELPCENTER_DIR', __DIR__ );
-					define( 'NFD_HELPCENTER_BUILD_DIR', __DIR__ . '/build/' );
 					define( 'NFD_HELPCENTER_PLUGIN_URL', $container->plugin()->url );
 					new HelpCenter( $container );
 					// Define the brand
