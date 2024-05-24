@@ -4,6 +4,7 @@ namespace NewfoldLabs\WP\Module\HelpCenter;
 
 use NewfoldLabs\WP\Module\HelpCenter\HelpCenter;
 use NewfoldLabs\WP\Module\HelpCenter\Data\Brands;
+use NewfoldLabs\WP\Module\Data\SiteCapabilities;
 
 use function NewfoldLabs\WP\ModuleLoader\container as getContainer;
 
@@ -49,5 +50,17 @@ class HelpCenterFeature extends \NewfoldLabs\WP\Module\Features\Feature {
 				}
 			);
 		}
+	}
+
+	/**
+	 * Checks for capability and if user has permissions to toggle.
+	 *
+	 * @return bool True if the feature toggle is allowed, false otherwise.
+	 */
+	public function canToggle() {
+		$capability   = new SiteCapabilities();
+		$hasCapability = $capability->get( 'canAccessHelpCenter' );
+		$canManageOptions = current_user_can( 'manage_options' );
+		return (bool) $hasCapability && $canManageOptions;
 	}
 }

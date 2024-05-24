@@ -1,8 +1,9 @@
 <?php
 namespace NewfoldLabs\WP\Module\HelpCenter;
 
-use function NewfoldLabs\WP\Module\Features\disable as disableFeature;
 use NewfoldLabs\WP\Module\Data\SiteCapabilities;
+
+use function NewfoldLabs\WP\Module\Features\disable as disableFeature;
 
 /**
  * This class adds helpCenter feature hooks.
@@ -13,6 +14,11 @@ class HelpCenterFeatureHooks {
 	 * Constructor.
 	 */
 	public function __construct() {
+		// set constant
+		if ( ! defined( 'USER_INTERACTION_SERVICE_BASE' ) ) {
+			define( 'USER_INTERACTION_SERVICE_BASE', 'https://hiive.cloud/workers/ai-proxy/' );
+		}
+
 		if ( function_exists( 'add_action' ) ) {
 			add_action( 'plugins_loaded', array( $this, 'hooks' ) );
 		}
@@ -22,16 +28,12 @@ class HelpCenterFeatureHooks {
 	 * Add hooks.
 	 */
 	public function hooks() {
-		// set constant
-		if ( ! defined( 'USER_INTERACTION_SERVICE_BASE' ) ) {
-			define( 'USER_INTERACTION_SERVICE_BASE', 'https://hiive.cloud/workers/ai-proxy/' );
-		}
 		// add filter so we don't show/load help during onboarding
 		add_filter( 'newfold/features/filter/isEnabled:helpCenter', array( $this, 'filterValue' ) );
 	}
 
 	/**
-	 * Feature filter based on context.
+	 * Feature filter based on capabilities.
 	 *
 	 * @param boolean $value the value
 	 * @return boolean the filtered value
@@ -54,12 +56,14 @@ class HelpCenterFeatureHooks {
 		if ( $isOnboarding ){
 			return true;
 		}
-		// Do not load if `canAccessHelpCenter` capability is not set
+
+		// Do not load if `canAccessHelpCenter` capability is not true
         $capability   = new SiteCapabilities();
 		$hasCapability = $capability->get( 'canAccessHelpCenter' );
 		if ( ! $hasCapability ) {
 			return true;
 		}
+		
 		return false;
 	}
 }
