@@ -58,7 +58,7 @@ class HelpCenterFeatureHooks {
 		}
 
 		// Do not load if `canAccessHelpCenter` capability is not true
-        $capability   = new SiteCapabilities();
+		$capability   = new SiteCapabilities();
 		$hasCapability = $capability->get( 'canAccessHelpCenter' );
 		if ( ! $hasCapability ) {
 			return true;
