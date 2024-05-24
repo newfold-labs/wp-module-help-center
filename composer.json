@@ -31,7 +31,6 @@
       "NewfoldLabs\\WP\\Module\\HelpCenter\\": "includes"
     },
     "files": [
-      "includes/HelpCenterFeature.php",
       "bootstrap.php"
     ]
   },
