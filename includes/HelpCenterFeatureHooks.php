@@ -51,17 +51,15 @@ class HelpCenterFeatureHooks {
 	public function shouldDisable() {
 		// Do not load Help Center when in Onboarding (Onboarding has no admin bar to toggle this).
 		$isOnboarding = isset( $_GET['page'] ) && 'nfd-onboarding' === sanitize_text_field( $_GET['page'] );
-		if ( $isOnboarding ){
+		if ( $isOnboarding ) {
 			return true;
 		}
-
 		// Do not load if `canAccessHelpCenter` capability is not true
-		$capability   = new SiteCapabilities();
-		$hasCapability = $capability->get( 'canAccessHelpCenter' );
+		$capabilities  = new SiteCapabilities();
+		$hasCapability = $capabilities->get( 'canAccessHelpCenter' );
 		if ( ! $hasCapability ) {
 			return true;
 		}
-		
 		return false;
 	}
 }

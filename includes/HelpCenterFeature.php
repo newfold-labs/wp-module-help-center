@@ -20,7 +20,7 @@ class HelpCenterFeature extends \NewfoldLabs\WP\Module\Features\Feature {
 	 *
 	 * @var string
 	 */
-	protected $name  = 'helpCenter';
+	protected $name = 'helpCenter';
 
 	/**
 	 * The feature value. Defaults to on.
@@ -56,8 +56,8 @@ class HelpCenterFeature extends \NewfoldLabs\WP\Module\Features\Feature {
 	 * @return bool True if the feature toggle is allowed, false otherwise.
 	 */
 	public function canToggle() {
-		$capability   = new SiteCapabilities();
-		$hasCapability = $capability->get( 'canAccessHelpCenter' );
+		$capabilies       = new SiteCapabilities();
+		$hasCapability    = $capabilies->get( 'canAccessHelpCenter' );
 		$canManageOptions = current_user_can( 'manage_options' );
 		return (bool) $hasCapability && $canManageOptions;
 	}
