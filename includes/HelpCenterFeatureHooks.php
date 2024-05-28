@@ -3,8 +3,6 @@ namespace NewfoldLabs\WP\Module\HelpCenter;
 
 use NewfoldLabs\WP\Module\Data\SiteCapabilities;
 
-use function NewfoldLabs\WP\Module\Features\disable as disableFeature;
-
 /**
  * This class adds helpCenter feature hooks.
  **/
