@@ -17,6 +17,7 @@
         <exclude name="Generic.CodeAnalysis.EmptyStatement.DetectedCatch" />
         <!-- Comment punctuation doesn't matter -->
         <exclude name="Squiz.Commenting.FunctionComment.ParamCommentFullStop" />
+        <exclude name="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid"/>
         <exclude name="WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase"/>
     </rule>
 </ruleset>
