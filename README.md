@@ -21,7 +21,16 @@ Help Center
  composer require newfold-labs/wp-module-help-center
  ```
 
+### 3. Instantiate the Features singleton to load all features.
+
+```
+Features::getInstance();
+```
+
 [More on NewFold WordPress Modules](https://github.com/newfold-labs/wp-module-loader)
+
+[More on the NewFold Features Modules](https://github.com/newfold-labs/wp-module-features)
+
 
 ## Launching the Help Center from the anywhere in the plugin
 
