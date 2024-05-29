@@ -22,8 +22,9 @@
     "newfold-labs/wp-php-standards": "@stable"
   },
   "require": {
-    "newfold-labs/wp-module-data": "^2.3.4",
-    "newfold-labs/wp-module-ai": "^1.1.9"
+    "newfold-labs/wp-module-ai": "^1.1.9",
+    "newfold-labs/wp-module-data": "^2.5.0",
+    "newfold-labs/wp-module-features": "^1.4.1"
   },
   "autoload": {
     "psr-4": {
