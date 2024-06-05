@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-//
 import { Analytics, InteractionAPIs } from '../utils';
 
 const Feedback = ( { postId, source } ) => {
@@ -23,17 +22,27 @@ const Feedback = ( { postId, source } ) => {
 
 	useEffect( () => {
 		setStatus( '' );
-		noButtonRef.current.className = 'feedback-button no';
-		yesButtonRef.current.className = 'feedback-button yes';
+		if ( noButtonRef.current && yesButtonRef.current ) {
+			noButtonRef.current.className = 'feedback-button no';
+			yesButtonRef.current.className = 'feedback-button yes';
+		}
 	}, [ postId ] );
 
 	useEffect( () => {
 		postFeedback();
-		if ( status === 'helpful' ) {
+		if (
+			status === 'helpful' &&
+			yesButtonRef.current &&
+			noButtonRef.current
+		) {
 			yesButtonRef.current.className = 'feedback-button yes selected-yes';
 			noButtonRef.current.className = 'feedback-button no';
 		}
-		if ( status === 'notHelpful' ) {
+		if (
+			status === 'notHelpful' &&
+			yesButtonRef.current &&
+			noButtonRef.current
+		) {
 			noButtonRef.current.className = 'feedback-button no selected-no';
 			yesButtonRef.current.className = 'feedback-button yes';
 		}
