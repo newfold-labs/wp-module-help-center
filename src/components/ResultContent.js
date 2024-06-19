@@ -14,12 +14,19 @@ export const ResultContent = ( {
 		return <NoResults />;
 	}
 
+	const showFollowText = () => {
+		const contentParagraphs = content.split( '</p>' );
+		return ! contentParagraphs[ 0 ]?.toLowerCase().includes( 'follow' );
+	};
+
 	if ( content && content.length > 0 ) {
 		return (
 			<>
-				{ !content.toLowerCase().includes('follow') && (<h4>
-					{ __( 'Follow these steps:', 'wp-module-help-center' ) }
-				</h4>)}
+				{ showFollowText() && (
+					<h4>
+						{ __( 'Follow these steps:', 'wp-module-help-center' ) }
+					</h4>
+				) }
 				<p dangerouslySetInnerHTML={ { __html: content } } />
 				{ showFeedbackSection && content && content.length > 0 && (
 					<Feedback postId={ postId } source={ source } />
