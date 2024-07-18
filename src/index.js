@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import 'regenerator-runtime/runtime';
 import { createRoot, render } from '@wordpress/element';
 
 import { subscribe } from '@wordpress/data';
