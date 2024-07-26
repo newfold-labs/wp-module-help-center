@@ -80,11 +80,12 @@ const SearchResults = ( props ) => {
 				
 				if ( input ) {
 					setSearchInput( input );
-					refine( input );
+					// refine( input );
 					const brand = await CapabilityAPI.getBrand();
 					//console.log("brand");
-					const multiSearchResults = await fetchMultiSearchResults( query, brand );
-					setMultiResults(multiSearchResults);
+					const multiSearchResults = await fetchMultiSearchResults( input, brand );
+					// setMultiResults(multiSearchResults);
+					setMultiResults({...multiSearchResults, hits: multiSearchResults?.results?.[0]?.grouped_hits});
 					//console.log(multiSearchResults);
 				}
 			} catch (error) {
@@ -146,12 +147,12 @@ const SearchResults = ( props ) => {
 				setMultiResults({});
 				return;
 			}
-			refine( query );
+			// refine( query );
 			try {
 				const brand = await CapabilityAPI.getBrand();
 				const multiSearchResults = await fetchMultiSearchResults( query, brand );
-				if(multiSearchResults) {
-					setMultiResults(multiSearchResults);
+				if(multiSearchResults?.results?.[0]?.grouped_hits) {
+					setMultiResults({...multiSearchResults, hits: multiSearchResults?.results?.[0]?.grouped_hits});
 					//console.log(multiSearchResults);
 				}
 				
@@ -176,7 +177,7 @@ const SearchResults = ( props ) => {
 			</>
 		);
 	}
-console.log(results);
+console.log(results, multiResults);
 	return (
 		<>
 			<div className="search-container">
@@ -239,10 +240,11 @@ console.log(results);
 					</b>
 				</p>
 			) }
-			{ results?.hits?.map( ( result, index ) => {
+			{ multiResults?.hits?.map( ( result, index ) => {
 				const el = document.createElement( 'span' );
 				el.setAttribute( 'display', 'none' );
-				el.innerHTML = result.post_title;
+				el.innerHTML = result?.group_key;
+				console.log(result);
 				const postTitle = el.textContent || el.innerText;
 
 				return (
