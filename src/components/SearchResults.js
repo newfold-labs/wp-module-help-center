@@ -19,8 +19,8 @@ const SearchResults = ( props ) => {
 	const [ resultContent, setResultContent ] = useState( '' );
 	const [ postId, setPostId ] = useState();
 	const [ source, setSource ] = useState( 'kb' );
-	const { refine, clear } = useSearchBox();
-	const { results } = useInstantSearch();
+	//const { refine, clear } = useSearchBox();
+	//const { results } = useInstantSearch();
 	const [ multiResults, setMultiResults] = useState({});
 
 	const populateSearchResult = ( resultContent, postId, searchInput ) => {
@@ -177,7 +177,7 @@ const SearchResults = ( props ) => {
 			</>
 		);
 	}
-console.log(results, multiResults);
+
 	return (
 		<>
 			<div className="search-container">
@@ -228,7 +228,7 @@ console.log(results, multiResults);
 				}
 			/>
 
-			{ results?.hits?.length > 0 && (
+			{ multiResults?.hits?.length > 0 && (
 				<p>
 					<b>
 						{ resultContent?.length > 0
