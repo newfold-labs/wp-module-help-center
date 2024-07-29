@@ -98,7 +98,7 @@ const SearchResults = ( props ) => {
 		setIsLoading( true );
 		try {
 			// Check if the algolia results are close enough
-			const hits = results.hits;
+			const hits = multiResults.hits;
 			const resultMatches =
 				hits.length > 0
 					? getResultMatches(
