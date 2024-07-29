@@ -61,11 +61,9 @@ const Feedback = ( { postId, source } ) => {
 					className="feedback-button yes"
 				>
 					{ status === 'helpful' && (
-						<span>
-							<span role="img" aria-label="helpful">
-								🥳
-							</span>
-							<span aria-hidden="true">&nbsp;</span>
+						<span role="img" aria-label="helpful">
+							{ ' ' }
+							&#129395;{ ' ' }
 						</span>
 					) }
 					{ __( 'Yes', 'wp-module-help-center' ) }
@@ -78,11 +76,9 @@ const Feedback = ( { postId, source } ) => {
 					className="feedback-button no"
 				>
 					{ status === 'notHelpful' && (
-						<span>
-							<span role="img" aria-label="not helpful">
-								😢
-							</span>
-							<span aria-hidden="true">&nbsp;</span>
+						<span role="img" aria-label="not helpful">
+							{ ' ' }
+							&#128557;{ ' ' }
 						</span>
 					) }
 					{ __( 'No', 'wp-module-help-center' ) }
