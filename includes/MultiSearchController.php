@@ -45,7 +45,6 @@ class MultiSearchController extends \WP_REST_Controller {
     }
 
     public function get_multi_search_result( \WP_REST_Request $request ) {
-
 		$brand = sanitize_text_field( $request->get_param( 'brand' ) );
 		$query = sanitize_text_field( $request->get_param( 'query' ) );
 		$apiKey = 'B9wvYIokTPPgXEM3isTqsxbDOva21igT';
@@ -79,9 +78,8 @@ class MultiSearchController extends \WP_REST_Controller {
 		];
 	
 		$response = wp_remote_post( $endpoint, $args );
-	
 		if ( is_wp_error( $response ) ) {
-			return [];
+			return new WP_Error( 'request_failed', 'The request failed', array( 'status' => 500 ) );
 		}
 	
 		$body = wp_remote_retrieve_body( $response );
@@ -93,22 +91,19 @@ class MultiSearchController extends \WP_REST_Controller {
 		return rest_ensure_response( $data );
     }
 
-
     /**
 	 * Check permissions for routes.
 	 *
 	 * @return \WP_Error
 	 */
 	public function check_permission() {
-		// if ( ! current_user_can( 'read' ) ) {
-		// 	return new \WP_Error(
-		// 		'rest_forbidden',
-		// 		__( 'You must be authenticated to make this call' ),
-		// 		array( 'status' => 401 )
-		// 	);
-		// }
-		 return true;
-		//return current_user_can('read');
+		if ( ! current_user_can( 'read' ) ) {
+			return new \WP_Error(
+				'rest_forbidden',
+				__( 'You must be authenticated to make this call' ),
+				array( 'status' => 401 )
+			);
+		}
 	}
 
 }

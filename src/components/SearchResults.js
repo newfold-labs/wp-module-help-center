@@ -1,7 +1,6 @@
 /* eslint-disable no-shadow */
 import { debounce } from 'lodash';
 import { useEffect, useState, useMemo } from '@wordpress/element';
-import { useInstantSearch, useSearchBox } from 'react-instantsearch-hooks-web';
 import moduleAI from '@newfold-labs/wp-module-ai';
 //
 import { ReactComponent as SearchIcon } from '../icons/search.svg';
@@ -19,8 +18,6 @@ const SearchResults = ( props ) => {
 	const [ resultContent, setResultContent ] = useState( '' );
 	const [ postId, setPostId ] = useState();
 	const [ source, setSource ] = useState( 'kb' );
-	//const { refine, clear } = useSearchBox();
-	//const { results } = useInstantSearch();
 	const [ multiResults, setMultiResults] = useState({});
 
 	const populateSearchResult = ( resultContent, postId, searchInput ) => {
@@ -60,7 +57,6 @@ const SearchResults = ( props ) => {
 	useEffect( () => {
 		setSearchInput( '' );
 		setResultContent( '' );
-		//refine( '' );
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ props.refresh ] );
 
@@ -80,13 +76,9 @@ const SearchResults = ( props ) => {
 				
 				if ( input ) {
 					setSearchInput( input );
-					// refine( input );
 					const brand = await CapabilityAPI.getBrand();
-					//console.log("brand");
 					const multiSearchResults = await fetchMultiSearchResults( input, brand );
-					// setMultiResults(multiSearchResults);
 					setMultiResults({...multiSearchResults, hits: multiSearchResults?.results?.[0]?.grouped_hits});
-					//console.log(multiSearchResults);
 				}
 			} catch (error) {
 				console.error('Error fetching initial data:', error);
@@ -143,20 +135,16 @@ const SearchResults = ( props ) => {
 	const debouncedResults = useMemo( () => {
 		return debounce( async ( query ) => {
 			if ( !query || query.length === 0 ) {
-				//clear();
 				setMultiResults({});
 				return;
 			}
-			// refine( query );
 			try {
 				const brand = await CapabilityAPI.getBrand();
 				const multiSearchResults = await fetchMultiSearchResults( query, brand );
 				if(multiSearchResults?.results?.[0]?.grouped_hits) {
 					setMultiResults({...multiSearchResults, hits: multiSearchResults?.results?.[0]?.grouped_hits});
-					//console.log(multiSearchResults);
 				}
 				
-				//console.log(multiResults);
 			} catch (error) {
 				console.error('Error fetching debounced results:', error);
 			}
@@ -244,7 +232,6 @@ const SearchResults = ( props ) => {
 				const el = document.createElement( 'span' );
 				el.setAttribute( 'display', 'none' );
 				el.innerHTML = result?.group_key;
-				console.log(result);
 				const postTitle = el.textContent || el.innerText;
 
 				return (
