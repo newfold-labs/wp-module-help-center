@@ -61,9 +61,12 @@ const Feedback = ( { postId, source } ) => {
 					className="feedback-button yes"
 				>
 					{ status === 'helpful' && (
-						<span role="img" aria-label="helpful">
-							{ ' ' }
-							&#129395;{ ' ' }
+						<span
+							className="feedback-button-emoji"
+							role="img"
+							aria-label="helpful"
+						>
+							&#129395;
 						</span>
 					) }
 					{ __( 'Yes', 'wp-module-help-center' ) }
@@ -76,9 +79,12 @@ const Feedback = ( { postId, source } ) => {
 					className="feedback-button no"
 				>
 					{ status === 'notHelpful' && (
-						<span role="img" aria-label="not helpful">
-							{ ' ' }
-							&#128557;{ ' ' }
+						<span
+							className="feedback-button-emoji"
+							role="img"
+							aria-label="not helpful"
+						>
+							&#128557;
 						</span>
 					) }
 					{ __( 'No', 'wp-module-help-center' ) }

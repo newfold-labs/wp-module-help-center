@@ -199,6 +199,10 @@ $gray-text: #394150;
       padding-top: 6px;
       flex-shrink: 0;
       white-space: nowrap;
+
+      .feedback-button-emoji {
+        margin-right: 5px;
+      }
     }
     .button-icon {
       height: 20px;
