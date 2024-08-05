@@ -21,6 +21,28 @@ class MultiSearchController extends \WP_REST_Controller {
 	 */
 	protected $rest_base = 'multi_search';
 
+	/**
+     * The API key for the multi-search service
+     *
+     * @var string
+     */
+    protected $apiKey;
+
+    /**
+     * The endpoint for the multi-search service
+     *
+     * @var string
+     */
+    protected $endpoint;
+
+	/**
+     * Constructor to initialize the API key and endpoint
+     */
+    public function __construct() {
+        $this->apiKey = 'B9wvYIokTPPgXEM3isTqsxbDOva21igT';
+        $this->endpoint = 'https://search.hiive.cloud/multi_search?x-typesense-api-key=' . $this->apiKey;
+    }
+
     /**
 	 * Register the routes for this objects of the controller
 	 */
@@ -47,8 +69,6 @@ class MultiSearchController extends \WP_REST_Controller {
     public function get_multi_search_result( \WP_REST_Request $request ) {
 		$brand = sanitize_text_field( $request->get_param( 'brand' ) );
 		$query = sanitize_text_field( $request->get_param( 'query' ) );
-		$apiKey = 'B9wvYIokTPPgXEM3isTqsxbDOva21igT';
-		$endpoint = 'https://search.hiive.cloud/multi_search?x-typesense-api-key='.$apiKey;
 	
 		$params = [
 			'searches' => [
@@ -97,13 +117,14 @@ class MultiSearchController extends \WP_REST_Controller {
 	 * @return \WP_Error
 	 */
 	public function check_permission() {
-		if ( ! current_user_can( 'read' ) ) {
+		if ( ! current_user_can( 'manage_option' ) ) {
 			return new \WP_Error(
 				'rest_forbidden',
 				__( 'You must be authenticated to make this call' ),
 				array( 'status' => 401 )
 			);
 		}
+		return true;
 	}
 
 }
