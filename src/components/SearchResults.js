@@ -9,6 +9,7 @@ import { SearchResult } from './SearchResult';
 import { ResultContent } from './ResultContent';
 import { Analytics, LocalStorageUtils, CapabilityAPI } from '../utils';
 import Loader from './Loader';
+import { ClipLoader } from 'react-spinners';
 import { __ } from '@wordpress/i18n';
 
 const SearchResults = ( props ) => {
@@ -19,6 +20,7 @@ const SearchResults = ( props ) => {
 	const [ postId, setPostId ] = useState();
 	const [ source, setSource ] = useState( 'kb' );
 	const [ multiResults, setMultiResults] = useState({});
+	const [loading, setLoading] = useState(false);
 
 	const populateSearchResult = ( resultContent, postId, searchInput ) => {
 		const resultContentFormatted = resultContent.replace( /\n/g, '<br />' );
@@ -138,15 +140,18 @@ const SearchResults = ( props ) => {
 				setMultiResults({});
 				return;
 			}
+			setLoading(true);
 			try {
 				const brand = await CapabilityAPI.getBrand();
 				const multiSearchResults = await fetchMultiSearchResults( query, brand );
 				if(multiSearchResults?.results?.[0]?.grouped_hits) {
 					setMultiResults({...multiSearchResults, hits: multiSearchResults?.results?.[0]?.grouped_hits});
 				}
-				
 			} catch (error) {
 				console.error('Error fetching debounced results:', error);
+			}
+			finally {
+				setLoading(false);
 			}
 		}, 300 );
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -206,16 +211,17 @@ const SearchResults = ( props ) => {
 					<span>{ searchInput ? searchInput.length : 0 }/144</span>
 				</p>
 			</div>
-			<ResultContent
-				content={ resultContent }
-				noResult={ noResult }
-				postId={ postId }
-				source={ source }
-				showFeedbackSection={
-					! resultContent.includes( 'do not possess the answer' )
-				}
-			/>
-
+			{loading ? (
+				<ClipLoader /> // show loader when loading is true
+			) : (
+				<ResultContent
+					content={ resultContent }
+					noResult={ noResult }
+					postId={ postId }
+					source={ source }
+					showFeedbackSection={! resultContent.includes( 'do not possess the answer' ) }
+				/>
+			)}
 			{ multiResults?.hits?.length > 0 && (
 				<p>
 					<b>
