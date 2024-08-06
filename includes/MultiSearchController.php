@@ -93,11 +93,11 @@ class MultiSearchController extends \WP_REST_Controller {
 			'body' => json_encode( $params ),
 			'headers' => [
 				'Content-Type' => 'application/json',
-				'X-TYPESENSE-API-KEY' => $apiKey,
+				'X-TYPESENSE-API-KEY' => $this->apiKey,
 			],
 		];
 	
-		$response = wp_remote_post( $endpoint, $args );
+		$response = wp_remote_post( $this->endpoint, $args );
 		if ( is_wp_error( $response ) ) {
 			return new WP_Error( 'request_failed', 'The request failed', array( 'status' => 500 ) );
 		}
