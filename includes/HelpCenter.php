@@ -54,6 +54,7 @@ class HelpCenter {
         $controllers = array(
 			'NewfoldLabs\\WP\\Module\\HelpCenter\\UserInteractionController',
             'NewfoldLabs\\WP\\Module\\HelpCenter\\CapabilityController',
+            'NewfoldLabs\\WP\\Module\\HelpCenter\\MultiSearchController',
 		);
 
 		foreach ( $controllers as $controller ) {
