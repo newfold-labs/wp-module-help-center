@@ -47,7 +47,7 @@ const SearchResults = ( props ) => {
 				body: JSON.stringify({ query, brand }),
 			});
 			
-			return response; // apiFetch automatically parses JSON responses
+			return response; 
 		} catch ( error ) {
 			console.error( 'Error fetching multi-search results:', error );
 			return {};
