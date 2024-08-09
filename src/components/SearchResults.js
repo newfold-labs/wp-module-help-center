@@ -10,6 +10,7 @@ import { ResultContent } from './ResultContent';
 import { Analytics, LocalStorageUtils, CapabilityAPI } from '../utils';
 import Loader from './Loader';
 import { __ } from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
 
 const SearchResults = ( props ) => {
 	const [ isLoading, setIsLoading ] = useState( false );
@@ -37,20 +38,16 @@ const SearchResults = ( props ) => {
 
 	const fetchMultiSearchResults = async ( query, brand ) => {
 		try {
-			const response = await fetch(
-				'/wp-json/newfold-multi-search/v1/multi_search',
-				{
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify( { query, brand } ),
-				}
-			);
-			if ( ! response.ok ) {
-				throw new Error( 'Network response was not ok' );
-			}
-			return await response.json();
+			const response = await apiFetch({
+				path: '/newfold-multi-search/v1/multi_search',
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ query, brand }),
+			});
+			
+			return response; // apiFetch automatically parses JSON responses
 		} catch ( error ) {
 			console.error( 'Error fetching multi-search results:', error );
 			return {};
@@ -262,8 +259,8 @@ const SearchResults = ( props ) => {
 							onGo={ () => {
 								setSearchInput( postTitle );
 								populateSearchResult(
-									result.post_content,
-									result.post_id,
+									result?.hits[0]?.document?.post_content,
+									result?.hits[0]?.document?.id,
 									postTitle
 								);
 							} }
