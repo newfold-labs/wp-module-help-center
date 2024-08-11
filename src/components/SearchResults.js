@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 import { debounce } from 'lodash';
-import { useEffect, useState, useMemo } from '@wordpress/element';
+import { useEffect, useState, useMemo, useRef } from '@wordpress/element';
 import moduleAI from '@newfold-labs/wp-module-ai';
 //
 import { ReactComponent as SearchIcon } from '../icons/search.svg';
@@ -20,6 +20,7 @@ const SearchResults = ( props ) => {
 	const [ postId, setPostId ] = useState();
 	const [ source, setSource ] = useState( 'kb' );
 	const [ multiResults, setMultiResults ] = useState( {} );
+	const searchInputRef = useRef(null);
 
 	const populateSearchResult = ( resultContent, postId, searchInput ) => {
 		const resultContentFormatted = resultContent.replace( /\n/g, '<br />' );
@@ -172,6 +173,12 @@ const SearchResults = ( props ) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [] );
 
+	useEffect(() => {
+		if (!isLoading && searchInputRef.current) {
+			searchInputRef.current.focus();
+		}
+	}, [isLoading]);
+
 	if ( isLoading ) {
 		return (
 			<>
@@ -193,6 +200,7 @@ const SearchResults = ( props ) => {
 				<input
 					type="text"
 					id="search-input-box"
+					ref={searchInputRef}
 					style={ {
 						flexGrow: 2,
 					} }
