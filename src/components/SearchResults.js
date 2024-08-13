@@ -11,6 +11,7 @@ import { Analytics, LocalStorageUtils, CapabilityAPI } from '../utils';
 import Loader from './Loader';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
+import { ThreeDots } from 'react-loader-spinner';
 
 const SearchResults = ( props ) => {
 	const [ isLoading, setIsLoading ] = useState( false );
@@ -20,7 +21,7 @@ const SearchResults = ( props ) => {
 	const [ postId, setPostId ] = useState();
 	const [ source, setSource ] = useState( 'kb' );
 	const [ multiResults, setMultiResults ] = useState( {} );
-	const searchInputRef = useRef(null);
+	const [ loading, setLoading ] = useState( false );
 
 	const populateSearchResult = ( resultContent, postId, searchInput ) => {
 		const resultContentFormatted = resultContent.replace( /\n/g, '<br />' );
@@ -145,7 +146,7 @@ const SearchResults = ( props ) => {
 				setMultiResults( {} );
 				return;
 			}
-			setIsLoading( true );
+			setLoading( true );
 			try {
 				const brand = await CapabilityAPI.getBrand();
 				const multiSearchResults = await fetchMultiSearchResults(
@@ -161,7 +162,7 @@ const SearchResults = ( props ) => {
 			} catch ( error ) {
 				console.error( 'Error fetching debounced results:', error );
 			} finally {
-				setIsLoading( false );
+				setLoading( false );
 			}
 		}, 300 );
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -172,12 +173,6 @@ const SearchResults = ( props ) => {
 		debouncedResults.cancel();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [] );
-
-	useEffect(() => {
-		if (!isLoading && searchInputRef.current) {
-			searchInputRef.current.focus();
-		}
-	}, [isLoading]);
 
 	if ( isLoading ) {
 		return (
@@ -200,7 +195,6 @@ const SearchResults = ( props ) => {
 				<input
 					type="text"
 					id="search-input-box"
-					ref={searchInputRef}
 					style={ {
 						flexGrow: 2,
 					} }
@@ -228,8 +222,16 @@ const SearchResults = ( props ) => {
 					<span>{ searchInput ? searchInput.length : 0 }/144</span>
 				</p>
 			</div>
-			{ isLoading ? (
-				<Loader /> // show loader when loading is true
+			{ loading ? (
+				<ThreeDots 
+					height="40" 
+					width="40" 
+					radius="4"
+					color="#196BDE" 
+					ariaLabel="three-dots-loading"
+					wrapperStyle={{}}
+					visible={true}
+				/> // show loader when loading is true
 			) : (
 				<ResultContent
 					content={ resultContent }
