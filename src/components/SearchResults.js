@@ -1,16 +1,17 @@
 /* eslint-disable no-shadow */
 import { debounce } from 'lodash';
-import { useEffect, useState, useMemo } from '@wordpress/element';
-import { useInstantSearch, useSearchBox } from 'react-instantsearch-hooks-web';
+import { useEffect, useState, useMemo, useRef } from '@wordpress/element';
 import moduleAI from '@newfold-labs/wp-module-ai';
 //
 import { ReactComponent as SearchIcon } from '../icons/search.svg';
 //
 import { SearchResult } from './SearchResult';
 import { ResultContent } from './ResultContent';
-import { Analytics, LocalStorageUtils } from '../utils';
+import { Analytics, LocalStorageUtils, CapabilityAPI } from '../utils';
 import Loader from './Loader';
 import { __ } from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
+import { ThreeDots } from 'react-loader-spinner';
 
 const SearchResults = ( props ) => {
 	const [ isLoading, setIsLoading ] = useState( false );
@@ -19,8 +20,8 @@ const SearchResults = ( props ) => {
 	const [ resultContent, setResultContent ] = useState( '' );
 	const [ postId, setPostId ] = useState();
 	const [ source, setSource ] = useState( 'kb' );
-	const { refine, clear } = useSearchBox();
-	const { results } = useInstantSearch();
+	const [ multiResults, setMultiResults ] = useState( {} );
+	const [ loading, setLoading ] = useState( false );
 
 	const populateSearchResult = ( resultContent, postId, searchInput ) => {
 		const resultContentFormatted = resultContent.replace( /\n/g, '<br />' );
@@ -37,29 +38,62 @@ const SearchResults = ( props ) => {
 		}
 	};
 
+	const fetchMultiSearchResults = async ( query, brand ) => {
+		try {
+			const response = await apiFetch({
+				path: '/newfold-multi-search/v1/multi_search',
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ query, brand }),
+			});
+			
+			return response; 
+		} catch ( error ) {
+			console.error( 'Error fetching multi-search results:', error );
+			return {};
+		}
+	};
+
+	const fetchInitialData = async () => {
+		try {
+			// Populate the results from local storage if they exist
+			const {
+				content: currentResultContent,
+				postId: currentResultPostId,
+			} = LocalStorageUtils.getResultInfo();
+			if ( currentResultContent ) {
+				setResultContent( currentResultContent );
+			}
+			if ( currentResultPostId ) {
+				setPostId( currentResultPostId );
+			}
+			const savedInput = LocalStorageUtils.getSearchInput();
+			const input = savedInput || ' ';
+			setSearchInput( input );
+			const brand = await CapabilityAPI.getBrand();
+			const multiSearchResults = await fetchMultiSearchResults(
+				input,
+				brand
+			);
+			setMultiResults( {
+				...multiSearchResults,
+				hits: multiSearchResults?.results?.[ 0 ]?.grouped_hits,
+			} );
+		} catch ( error ) {
+			console.error( 'Error fetching initial data:', error );
+		}
+	};
+
 	useEffect( () => {
 		setSearchInput( '' );
 		setResultContent( '' );
-		refine( '' );
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ props.refresh ] );
 
 	useEffect( () => {
-		// Populate the results from local storage if they exist
-		const { content: currentResultContent, postId: currentResultPostId } =
-			LocalStorageUtils.getResultInfo();
-		if ( currentResultContent ) {
-			setResultContent( currentResultContent );
-		}
-		if ( currentResultPostId ) {
-			setPostId( currentResultPostId );
-		}
-
-		const input = LocalStorageUtils.getSearchInput();
-		if ( input ) {
-			setSearchInput( input );
-			refine( input );
-		}
+		fetchInitialData();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [] );
 
@@ -72,7 +106,7 @@ const SearchResults = ( props ) => {
 		setIsLoading( true );
 		try {
 			// Check if the algolia results are close enough
-			const hits = results.hits;
+			const hits = multiResults.hits;
 			const resultMatches =
 				hits.length > 0
 					? getResultMatches(
@@ -107,11 +141,29 @@ const SearchResults = ( props ) => {
 	};
 
 	const debouncedResults = useMemo( () => {
-		return debounce( function ( query ) {
-			if ( query && query.length === 0 ) {
-				clear();
+		return debounce( async ( query ) => {
+			if ( ! query || query.length === 0 ) {
+				setMultiResults( {} );
+				return;
 			}
-			refine( query );
+			setLoading( true );
+			try {
+				const brand = await CapabilityAPI.getBrand();
+				const multiSearchResults = await fetchMultiSearchResults(
+					query,
+					brand
+				);
+				if ( multiSearchResults?.results?.[ 0 ]?.grouped_hits ) {
+					setMultiResults( {
+						...multiSearchResults,
+						hits: multiSearchResults?.results?.[ 0 ]?.grouped_hits,
+					} );
+				}
+			} catch ( error ) {
+				console.error( 'Error fetching debounced results:', error );
+			} finally {
+				setLoading( false );
+			}
 		}, 300 );
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [] );
@@ -170,20 +222,31 @@ const SearchResults = ( props ) => {
 					<span>{ searchInput ? searchInput.length : 0 }/144</span>
 				</p>
 			</div>
-			<ResultContent
-				content={ resultContent }
-				noResult={ noResult }
-				postId={ postId }
-				source={ source }
-				showFeedbackSection={
-					! resultContent.includes( 'do not possess the answer' )
-				}
-			/>
-
-			{ results.hits.length > 0 && (
+			{ loading ? (
+				<ThreeDots 
+					height="40" 
+					width="40" 
+					radius="4"
+					color="#196BDE" 
+					ariaLabel="three-dots-loading"
+					wrapperStyle={{}}
+					visible={true}
+				/> // show loader when loading is true
+			) : (
+				<ResultContent
+					content={ resultContent }
+					noResult={ noResult }
+					postId={ postId }
+					source={ source }
+					showFeedbackSection={
+						! resultContent.includes( 'do not possess the answer' )
+					}
+				/>
+			) }
+			{ multiResults?.hits?.length > 0 && (
 				<p>
 					<b>
-						{ resultContent.length > 0
+						{ resultContent?.length > 0
 							? __( 'Other Resources', 'wp-module-help-center' )
 							: __(
 									'Search Suggestions',
@@ -192,10 +255,10 @@ const SearchResults = ( props ) => {
 					</b>
 				</p>
 			) }
-			{ results.hits.map( ( result, index ) => {
+			{ multiResults?.hits?.map( ( result, index ) => {
 				const el = document.createElement( 'span' );
 				el.setAttribute( 'display', 'none' );
-				el.innerHTML = result.post_title;
+				el.innerHTML = result?.group_key;
 				const postTitle = el.textContent || el.innerText;
 
 				return (
@@ -206,8 +269,8 @@ const SearchResults = ( props ) => {
 							onGo={ () => {
 								setSearchInput( postTitle );
 								populateSearchResult(
-									result.post_content,
-									result.post_id,
+									result?.hits[0]?.document?.post_content,
+									result?.hits[0]?.document?.id,
 									postTitle
 								);
 							} }
