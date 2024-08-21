@@ -1,14 +1,16 @@
-name: Lint
+name: 'Lint Checker: PHP'
 on:
   push:
     branches:
       - '**'
     paths:
       - '**.php'
+      - '!build/**/*.php'
   pull_request:
     types: [opened, edited, reopened, ready_for_review]
     paths:
       - '**.php'
+      - '!build/**/*.php'
   workflow_dispatch:
 
 concurrency:
@@ -24,17 +26,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      # User PHP 7.4 here for compatibility with the WordPress codesniffer rules.
+      # Using PHP 8.1 here for compatibility with the latest WordPress code sniffer rules.
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: '8.1'
           coverage: none
           tools: composer, cs2pr
 
       - uses: technote-space/get-diff-action@v6
         with:
-          SUFFIX_FILTER: .php
+          PATTERNS: |
+            **/*.php
+            !build/**/*.php
 
       - name: Get Composer cache directory
         id: composer-cache
