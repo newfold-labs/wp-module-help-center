@@ -26,7 +26,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      # User PHP 7.4 here for compatibility with the WordPress codesniffer rules.
+      # Using PHP 8.1 here for compatibility with the latest WordPress code sniffer rules.
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
