@@ -70,7 +70,7 @@ const SearchResults = ( props ) => {
 				setPostId( currentResultPostId );
 			}
 			const savedInput = LocalStorageUtils.getSearchInput();
-			const input = savedInput || ' ';
+			const input = savedInput || '';
 			setSearchInput( input );
 			const brand = await CapabilityAPI.getBrand();
 			const multiSearchResults = await fetchMultiSearchResults(
@@ -164,7 +164,7 @@ const SearchResults = ( props ) => {
 			} finally {
 				setLoading( false );
 			}
-		}, 300 );
+		}, 500 );
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [] );
 
