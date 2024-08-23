@@ -1,10 +1,8 @@
 /* eslint-disable no-shadow */
 import { debounce } from 'lodash';
-import { useEffect, useState, useMemo, useRef } from '@wordpress/element';
+import { useEffect, useState, useMemo } from '@wordpress/element';
 import moduleAI from '@newfold-labs/wp-module-ai';
-//
 import { ReactComponent as SearchIcon } from '../icons/search.svg';
-//
 import { SearchResult } from './SearchResult';
 import { ResultContent } from './ResultContent';
 import { Analytics, LocalStorageUtils, CapabilityAPI } from '../utils';
@@ -40,16 +38,16 @@ const SearchResults = ( props ) => {
 
 	const fetchMultiSearchResults = async ( query, brand ) => {
 		try {
-			const response = await apiFetch({
+			const response = await apiFetch( {
 				path: '/newfold-multi-search/v1/multi_search',
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ query, brand }),
-			});
-			
-			return response; 
+				body: JSON.stringify( { query, brand } ),
+			} );
+
+			return response;
 		} catch ( error ) {
 			console.error( 'Error fetching multi-search results:', error );
 			return {};
@@ -223,14 +221,14 @@ const SearchResults = ( props ) => {
 				</p>
 			</div>
 			{ loading ? (
-				<ThreeDots 
-					height="40" 
-					width="40" 
+				<ThreeDots
+					height="40"
+					width="40"
 					radius="4"
-					color="#196BDE" 
+					color="#196BDE"
 					ariaLabel="three-dots-loading"
-					wrapperStyle={{}}
-					visible={true}
+					wrapperStyle={ {} }
+					visible={ true }
 				/> // show loader when loading is true
 			) : (
 				<ResultContent
@@ -269,8 +267,8 @@ const SearchResults = ( props ) => {
 							onGo={ () => {
 								setSearchInput( postTitle );
 								populateSearchResult(
-									result?.hits[0]?.document?.post_content,
-									result?.hits[0]?.document?.id,
+									result?.hits[ 0 ]?.document?.post_content,
+									result?.hits[ 0 ]?.document?.id,
 									postTitle
 								);
 							} }
