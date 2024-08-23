@@ -106,7 +106,7 @@ const SearchResults = ( props ) => {
 		setIsLoading( true );
 		try {
 			// Check if the algolia results are close enough
-			const hits = multiResults.hits;
+			const hits = multiResults.hits[ 0 ].hits;
 			const resultMatches =
 				hits.length > 0
 					? getResultMatches(
@@ -117,8 +117,8 @@ const SearchResults = ( props ) => {
 					: false;
 			if ( resultMatches ) {
 				populateSearchResult(
-					hits[ 0 ].post_content,
-					hits[ 0 ].post_id,
+					hits[ 0 ].document.post_content,
+					hits[ 0 ].document.post_id,
 					searchInput
 				);
 				return;
