@@ -1,6 +1,7 @@
 $gray-text: #394150;
 
 #nfd-help-center {
+  
   .modal {
     padding-bottom: 32px;
 
@@ -13,6 +14,8 @@ $gray-text: #394150;
       padding: 16px;
       display: flex;
       justify-content: space-between;
+      position: fixed;
+
       .heading {
         display: flex;
         align-items: center;

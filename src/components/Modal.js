@@ -2,7 +2,7 @@ import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 //
 import { ReactComponent as CloseIcon } from '../icons/close.svg';
-import { ReactComponent as Help } from '../icons/help.svg';
+import { ReactComponent as Help } from '../icons/helpcenter-icon.svg';
 import HelpCenter from './HelpCenter';
 
 import { toggleHelp } from '..';
@@ -31,7 +31,7 @@ const Modal = ( { onClose } ) => {
 					<span className="icon">
 						<Help />
 					</span>
-					{ __( 'Help Center', 'wp-module-help-center' ) }
+					{ __( 'Help with WordPress', 'wp-module-help-center' ) }
 				</h3>
 				<button
 					className="close-button"
