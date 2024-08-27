@@ -49,6 +49,7 @@ const SearchResults = ( props ) => {
 
 			return response;
 		} catch ( error ) {
+			// eslint-disable-next-line no-console
 			console.error( 'Error fetching multi-search results:', error );
 			return {};
 		}
@@ -76,10 +77,10 @@ const SearchResults = ( props ) => {
 				brand
 			);
 			setMultiResults( {
-				...multiSearchResults,
 				hits: multiSearchResults?.results?.[ 0 ]?.grouped_hits,
 			} );
 		} catch ( error ) {
+			// eslint-disable-next-line no-console
 			console.error( 'Error fetching initial data:', error );
 		}
 	};
@@ -153,11 +154,11 @@ const SearchResults = ( props ) => {
 				);
 				if ( multiSearchResults?.results?.[ 0 ]?.grouped_hits ) {
 					setMultiResults( {
-						...multiSearchResults,
 						hits: multiSearchResults?.results?.[ 0 ]?.grouped_hits,
 					} );
 				}
 			} catch ( error ) {
+				// eslint-disable-next-line no-console
 				console.error( 'Error fetching debounced results:', error );
 			} finally {
 				setLoading( false );

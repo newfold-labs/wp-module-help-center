@@ -99,13 +99,13 @@ class MultiSearchController extends \WP_REST_Controller {
 	
 		$response = wp_remote_post( $this->endpoint, $args );
 		if ( is_wp_error( $response ) ) {
-			return new WP_Error( 'request_failed', 'The request failed', array( 'status' => 500 ) );
+			return new \WP_Error( 'request_failed', 'The request failed', array( 'status' => 500 ) );
 		}
 	
 		$body = wp_remote_retrieve_body( $response );
 		$data =  json_decode( $body, true );
 		if ( empty( $data ) ) {
-			return new WP_Error( 'no_data', 'No data found', array( 'status' => 404 ) );
+			return new \WP_Error( 'no_data', 'No data found', array( 'status' => 404 ) );
 		}
 	
 		return rest_ensure_response( $data );
