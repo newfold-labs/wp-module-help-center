@@ -31,7 +31,7 @@ const Modal = ( { onClose } ) => {
 					<span className="icon">
 						<Help />
 					</span>
-					{ __( 'Help with WordPress', 'wp-module-help-center' ) }
+					<span>{ __( 'Help with WordPress', 'wp-module-help-center' ) }</span>
 				</h3>
 				<button
 					className="close-button"
