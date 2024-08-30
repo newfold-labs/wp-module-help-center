@@ -4,6 +4,7 @@ import {
 	HiiveEvent,
 } from '@newfold-labs/js-utility-ui-analytics';
 import apiFetch from '@wordpress/api-fetch';
+import { useEffect, useState } from '@wordpress/element';
 
 const base = 'nfd-help-center/v1';
 const onboardingBase = 'newfold-onboarding/v1';
@@ -88,4 +89,31 @@ export const Analytics = {
 		);
 		HiiveAnalytics.send( hiiveEvent );
 	},
+};
+
+export const useRevealText = ( text, speed = 1 ) => {
+	const [ displayedText, setDisplayedText ] = useState( '' );
+
+	useEffect( () => {
+		if ( ! text ) {
+			setDisplayedText( '' );
+			return;
+		}
+
+		let index = 0;
+		setDisplayedText( '' );
+
+		const intervalId = setInterval( () => {
+			setDisplayedText( ( prev ) => prev + text.charAt( index ) );
+			index++;
+			if ( index >= text.length ) {
+				clearInterval( intervalId );
+			}
+		}, speed );
+
+		// Cleanup interval on component unmount or when text/speed changes
+		return () => clearInterval( intervalId );
+	}, [ text, speed ] );
+
+	return displayedText;
 };
