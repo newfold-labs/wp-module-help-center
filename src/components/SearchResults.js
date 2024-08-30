@@ -105,13 +105,13 @@ const SearchResults = ( props ) => {
 		setIsLoading( true );
 		try {
 			// Check if the algolia results are close enough
-			const hits = multiResults.hits[ 0 ].hits;
+			const hits = multiResults?.hits?.[ 0 ]?.hits;
 			const resultMatches =
-				hits.length > 0
+				hits?.length > 0
 					? getResultMatches(
 							searchInput,
-							hits[ 0 ].text_match_info?.tokens_matched,
-							hits[ 0 ].text_match_info?.fields_matched
+							hits[ 0 ]?.text_match_info?.tokens_matched,
+							hits[ 0 ]?.text_match_info?.fields_matched
 					  )
 					: false;
 			if ( resultMatches ) {
@@ -134,6 +134,7 @@ const SearchResults = ( props ) => {
 			);
 		} catch ( exception ) {
 			setNoResult( true );
+			console.log(exception);
 		} finally {
 			setIsLoading( false );
 		}
