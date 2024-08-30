@@ -134,7 +134,6 @@ const SearchResults = ( props ) => {
 			);
 		} catch ( exception ) {
 			setNoResult( true );
-			console.log(exception);
 		} finally {
 			setIsLoading( false );
 		}
