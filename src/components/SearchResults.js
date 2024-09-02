@@ -5,7 +5,7 @@ import moduleAI from '@newfold-labs/wp-module-ai';
 //
 import { ReactComponent as SearchIcon } from '../icons/search.svg';
 //
-import { SearchResult } from './SearchResult';
+import { SearchResultSuggestions } from './SearchResultSuggestions';
 import { ResultContent } from './ResultContent';
 import { Analytics, LocalStorageUtils, CapabilityAPI } from '../utils';
 import Loader from './Loader';
@@ -40,16 +40,16 @@ const SearchResults = ( props ) => {
 
 	const fetchMultiSearchResults = async ( query, brand ) => {
 		try {
-			const response = await apiFetch({
+			const response = await apiFetch( {
 				path: '/newfold-multi-search/v1/multi_search',
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ query, brand }),
-			});
-			
-			return response; 
+				body: JSON.stringify( { query, brand } ),
+			} );
+
+			return response;
 		} catch ( error ) {
 			console.error( 'Error fetching multi-search results:', error );
 			return {};
@@ -184,100 +184,122 @@ const SearchResults = ( props ) => {
 
 	return (
 		<>
-			<div className="search-container">
-				<button
-					onClick={ () => {
-						document.getElementById( 'search-input-box' ).focus();
-					} }
-				>
-					<SearchIcon />
-				</button>
-				<input
-					type="text"
-					id="search-input-box"
-					style={ {
-						flexGrow: 2,
-					} }
-					value={ searchInput }
-					maxLength="144"
-					placeholder={ __(
-						'Ask me anything…',
-						'wp-module-help-center'
-					) }
-					onChange={ ( e ) => {
-						setSearchInput( e.target.value );
-						populateSearchResult( '', undefined, e.target.value );
-						setNoResult( false );
-						debouncedResults( e.target.value );
-					} }
-					onKeyDown={ async ( e ) => {
-						if ( e.key === 'Enter' ) {
-							await getAIResult();
+			<div className="hc-results-container">
+				{ loading ? (
+					<ThreeDots
+						height="40"
+						width="40"
+						radius="4"
+						color="#196BDE"
+						ariaLabel="three-dots-loading"
+						wrapperStyle={ {} }
+						visible={ true }
+					/> // show loader when loading is true
+				) : (
+					<ResultContent
+						content={ resultContent }
+						noResult={ noResult }
+						postId={ postId }
+						source={ source }
+						showFeedbackSection={
+							! resultContent.includes(
+								'do not possess the answer'
+							)
 						}
-					} }
-				/>
-			</div>
-			<div className="attribute">
-				<p>
-					<span>{ searchInput ? searchInput.length : 0 }/144</span>
-				</p>
-			</div>
-			{ loading ? (
-				<ThreeDots 
-					height="40" 
-					width="40" 
-					radius="4"
-					color="#196BDE" 
-					ariaLabel="three-dots-loading"
-					wrapperStyle={{}}
-					visible={true}
-				/> // show loader when loading is true
-			) : (
-				<ResultContent
-					content={ resultContent }
-					noResult={ noResult }
-					postId={ postId }
-					source={ source }
-					showFeedbackSection={
-						! resultContent.includes( 'do not possess the answer' )
-					}
-				/>
-			) }
-			{ multiResults?.hits?.length > 0 && (
-				<p>
-					<b>
-						{ resultContent?.length > 0
-							? __( 'Other Resources', 'wp-module-help-center' )
-							: __(
-									'Search Suggestions',
-									'wp-module-help-center'
-							  ) }
-					</b>
-				</p>
-			) }
-			{ multiResults?.hits?.map( ( result, index ) => {
-				const el = document.createElement( 'span' );
-				el.setAttribute( 'display', 'none' );
-				el.innerHTML = result?.group_key;
-				const postTitle = el.textContent || el.innerText;
-
-				return (
-					<>
-						<SearchResult
-							key={ index }
-							searchTitle={ postTitle }
-							onGo={ () => {
-								setSearchInput( postTitle );
+						questionBlock={ searchInput }
+					/>
+				) }
+				<div className="search-container__wrapper">
+					<div className="search-container">
+						<button
+							onClick={ () => {
+								document
+									.getElementById( 'search-input-box' )
+									.focus();
+							} }
+						>
+							<SearchIcon />
+						</button>
+						<input
+							type="text"
+							id="search-input-box"
+							style={ {
+								flexGrow: 2,
+							} }
+							value={ searchInput }
+							maxLength="144"
+							placeholder={ __(
+								'Ask me anything…',
+								'wp-module-help-center'
+							) }
+							onChange={ ( e ) => {
+								setSearchInput( e.target.value );
 								populateSearchResult(
-									result?.hits[0]?.document?.post_content,
-									result?.hits[0]?.document?.id,
-									postTitle
+									'',
+									undefined,
+									e.target.value
 								);
+								setNoResult( false );
+								debouncedResults( e.target.value );
+							} }
+							onKeyDown={ async ( e ) => {
+								if ( e.key === 'Enter' ) {
+									await getAIResult();
+								}
 							} }
 						/>
-					</>
-				);
-			} ) }
+					</div>
+					<div className="attribute">
+						<p>
+							<span>
+								{ searchInput ? searchInput.length : 0 }/144
+							</span>
+						</p>
+					</div>
+				</div>
+				<div className="suggestions-wrapper">
+					{ multiResults?.hits?.length > 0 && (
+						<p>
+							<b>
+								{ resultContent?.length > 0
+									? __(
+											'Other Resources',
+											'wp-module-help-center'
+									)
+									: __(
+											'Search Suggestions',
+											'wp-module-help-center'
+									) }
+							</b>
+						</p>
+					) }
+					{ multiResults?.hits?.map( ( result, index ) => {
+						console.log( 'Result', result );
+						const el = document.createElement( 'span' );
+						el.setAttribute( 'display', 'none' );
+						el.innerHTML = result?.group_key;
+						const postTitle = el.textContent || el.innerText;
+
+						return (
+							<>
+								<SearchResultSuggestions
+									key={ index }
+									searchTitle={ postTitle }
+									onGo={ () => {
+										setSearchInput( postTitle );
+										populateSearchResult(
+											result?.hits[ 0 ]?.document
+												?.post_content,
+											result?.hits[ 0 ]?.document?.id,
+											postTitle
+										);
+									} }
+								/>
+							</>
+						);
+					} ) }
+				</div>
+			</div>
 		</>
 	);
 };

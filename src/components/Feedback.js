@@ -44,12 +44,10 @@ const Feedback = ( { postId, source } ) => {
 		<div className="feedback-container">
 			<div className="feedback-question">
 				<p>
-					<b>
-						{ __(
-							'Did this result help you?',
-							'wp-module-help-center'
-						) }
-					</b>
+					{ __(
+						'Did this result help you?',
+						'wp-module-help-center'
+					) }
 				</p>
 			</div>
 			<div className="icon">
