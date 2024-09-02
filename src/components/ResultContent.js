@@ -16,7 +16,10 @@ export const ResultContent = ( {
 	if ( content && content.length > 0 ) {
 		return (
 			<>
-				<p dangerouslySetInnerHTML={ { __html: content } } />
+				<p
+					className="helpcenter-results"
+					dangerouslySetInnerHTML={ { __html: content } }
+				/>
 				{ showFeedbackSection && content && content.length > 0 && (
 					<Feedback postId={ postId } source={ source } />
 				) }
