@@ -122,6 +122,19 @@ const SearchResults = ( props ) => {
 	};
 
 	const getAIResult = async () => {
+		// Check for empty search input
+		if (!searchInput.trim()) {
+			setResultContent('Please enter a search term to get results.');
+			setNoResult(true);
+			return;
+		}
+		const regex = /^\s*Ask\s+me\s+anything\s*$/i;
+		if (regex.test(searchInput.trim())) {
+			setResultContent('Please enter a specific search term to get results.');
+			setNoResult(true);
+			return;
+		}
+
 		setIsLoading( true );
 		setNoResult( false );
 
@@ -257,9 +270,8 @@ const SearchResults = ( props ) => {
 					noResult={ noResult }
 					postId={ postId }
 					source={ source }
-					showFeedbackSection={
-						! resultContent.includes( 'do not possess the answer' )
-					}
+					showFeedbackSection={ ! resultContent.includes( 'do not possess the answer' ) }
+					searchInput={ searchInput }
 				/>
 			) }
 			{ multiResults?.hits?.length > 0 && (

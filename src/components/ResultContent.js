@@ -11,6 +11,14 @@ export const ResultContent = ( {
 	source,
 	showFeedbackSection,
 } ) => {
+	if ( noResult && content ) {
+		return (
+			<p>
+				<b>{ content }</b>
+			</p>
+		);
+	}
+
 	if ( noResult ) {
 		return <NoResults />;
 	}
