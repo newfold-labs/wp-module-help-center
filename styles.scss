@@ -257,6 +257,17 @@ $gray-text: #394150;
         height: 24px;
       }
     }
+
+    .helpcenter-result-block{
+      display: flex;
+      align-items: stretch;
+      gap: 8px;
+      padding: 12px;
+
+      &__aistars{
+        padding-top: 12px;
+      }
+    }
   }
 
 }

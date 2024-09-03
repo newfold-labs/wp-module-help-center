@@ -2,6 +2,7 @@
 import Feedback from './Feedback';
 import NoResults from './NoResults';
 import { ReactComponent as UserAvatar } from '../icons/user-avatar.svg';
+import { ReactComponent as AIStars } from '../icons/ai-stars.svg';
 
 export const ResultContent = ( {
 	content,
@@ -24,10 +25,18 @@ export const ResultContent = ( {
 					</div>
 					<div>{ questionBlock }</div>
 				</div>
-				<p
-					className="helpcenter-results"
-					dangerouslySetInnerHTML={ { __html: content } }
-				/>
+				<div className="helpcenter-result-block">
+					<div className="helpcenter-result-block__aistars">
+						<AIStars />
+					</div>
+					<div>
+						<p
+							className="helpcenter-results"
+							dangerouslySetInnerHTML={ { __html: content } }
+						/>
+					</div>
+				</div>
+
 				{ showFeedbackSection && content && content.length > 0 && (
 					<Feedback postId={ postId } source={ source } />
 				) }
