@@ -53,7 +53,7 @@ export const LocalStorageUtils = {
 	persistResult: ( resultContent, postId, searchInput ) => {
 		// Retrieve existing results or initialize as an empty array
 		const existingResults =
-			JSON.parse( localStorage.getItem( 'searchResults' ) ) || [];
+			JSON.parse( localStorage.getItem( 'helpResultContent' ) ) || [];
 
 		// Create a new result object
 		const newResult = {
@@ -67,7 +67,7 @@ export const LocalStorageUtils = {
 
 		// Store the updated array back in local storage
 		localStorage.setItem(
-			'searchResults',
+			'helpResultContent',
 			JSON.stringify( existingResults )
 		);
 	},
@@ -81,7 +81,7 @@ export const LocalStorageUtils = {
 	},
 	// Update getResultInfo to retrieve all results
 	getResultInfo: () => {
-		const results = localStorage.getItem( 'searchResults' );
+		const results = localStorage.getItem( 'helpResultContent' );
 		return results ? JSON.parse( results ) : [];
 	},
 	getSearchInput: () => {
