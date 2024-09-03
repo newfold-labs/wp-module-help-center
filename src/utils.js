@@ -50,9 +50,26 @@ export const LocalStorageUtils = {
 	getHelpVisible: () => {
 		return localStorage.getItem( 'helpVisible' ) === 'true';
 	},
-	persistResult: ( resultContent, postId ) => {
-		localStorage.setItem( 'helpResultContent', resultContent );
-		localStorage.setItem( 'helpPostId', postId );
+	persistResult: ( resultContent, postId, searchInput ) => {
+		// Retrieve existing results or initialize as an empty array
+		const existingResults =
+			JSON.parse( localStorage.getItem( 'searchResults' ) ) || [];
+
+		// Create a new result object
+		const newResult = {
+			searchInput,
+			resultContent,
+			postId,
+		};
+
+		// Add new result to the array
+		existingResults.push( newResult );
+
+		// Store the updated array back in local storage
+		localStorage.setItem(
+			'searchResults',
+			JSON.stringify( existingResults )
+		);
 	},
 	persistSearchInput: ( searchInput ) => {
 		localStorage.setItem( 'searchInput', searchInput );
@@ -62,11 +79,10 @@ export const LocalStorageUtils = {
 		localStorage.removeItem( 'helpPostId' );
 		localStorage.removeItem( 'searchInput' );
 	},
+	// Update getResultInfo to retrieve all results
 	getResultInfo: () => {
-		return {
-			content: localStorage.getItem( 'helpResultContent' ),
-			postId: localStorage.getItem( 'helpPostId' ),
-		};
+		const results = localStorage.getItem( 'searchResults' );
+		return results ? JSON.parse( results ) : [];
 	},
 	getSearchInput: () => {
 		return localStorage.getItem( 'searchInput' );

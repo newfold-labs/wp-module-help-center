@@ -17,7 +17,7 @@ const SearchResults = ( props ) => {
 	const [ isLoading, setIsLoading ] = useState( false );
 	const [ noResult, setNoResult ] = useState( false );
 	const [ searchInput, setSearchInput ] = useState( '' );
-	const [ resultContent, setResultContent ] = useState( '' );
+	const [ resultContent, setResultContent ] = useState( [] );
 	const [ postId, setPostId ] = useState();
 	const [ source, setSource ] = useState( 'kb' );
 	const [ multiResults, setMultiResults ] = useState( {} );
@@ -25,9 +25,21 @@ const SearchResults = ( props ) => {
 
 	const populateSearchResult = ( resultContent, postId, searchInput ) => {
 		const resultContentFormatted = resultContent.replace( /\n/g, '<br />' );
-		setResultContent( resultContentFormatted );
+		// Retrieve existing results from local storage
+		// Use the updated persistResult method to store the result
+		LocalStorageUtils.persistResult(
+			resultContentFormatted,
+			postId,
+			searchInput
+		);
+		// Add new result to existing results
+		// Retrieve all results from local storage
+		const updatedResults = LocalStorageUtils.getResultInfo();
+
+		// Update state with new results
+		setResultContent( updatedResults );
+
 		setPostId( postId );
-		LocalStorageUtils.persistResult( resultContentFormatted, postId );
 		LocalStorageUtils.persistSearchInput( searchInput );
 		if ( postId ) {
 			Analytics.sendEvent( 'help_search', {
@@ -59,15 +71,9 @@ const SearchResults = ( props ) => {
 	const fetchInitialData = async () => {
 		try {
 			// Populate the results from local storage if they exist
-			const {
-				content: currentResultContent,
-				postId: currentResultPostId,
-			} = LocalStorageUtils.getResultInfo();
-			if ( currentResultContent ) {
-				setResultContent( currentResultContent );
-			}
-			if ( currentResultPostId ) {
-				setPostId( currentResultPostId );
+			const savedResults = LocalStorageUtils.getResultInfo();
+			if ( savedResults ) {
+				setResultContent( savedResults );
 			}
 			const savedInput = LocalStorageUtils.getSearchInput();
 			const input = savedInput || ' ';
@@ -88,7 +94,7 @@ const SearchResults = ( props ) => {
 
 	useEffect( () => {
 		setSearchInput( '' );
-		setResultContent( '' );
+		setResultContent( [] );
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ props.refresh ] );
 
@@ -196,18 +202,24 @@ const SearchResults = ( props ) => {
 						visible={ true }
 					/> // show loader when loading is true
 				) : (
-					<ResultContent
-						content={ resultContent }
-						noResult={ noResult }
-						postId={ postId }
-						source={ source }
-						showFeedbackSection={
-							! resultContent.includes(
-								'do not possess the answer'
-							)
-						}
-						questionBlock={ searchInput }
-					/>
+					<>
+						{ resultContent?.length > 0 &&
+							resultContent.map( ( result, index ) => (
+								<ResultContent
+									key={ index }
+									content={ result.resultContent }
+									noResult={ noResult }
+									postId={ result.postId }
+									source={ source }
+									showFeedbackSection={
+										! result.resultContent.includes(
+											'do not possess the answer'
+										)
+									}
+									questionBlock={ result.searchInput }
+								/>
+							) ) }
+					</>
 				) }
 				<div className="search-container__wrapper">
 					<div className="search-container">
@@ -265,11 +277,11 @@ const SearchResults = ( props ) => {
 									? __(
 											'Other Resources',
 											'wp-module-help-center'
-									)
+									  )
 									: __(
 											'Search Suggestions',
 											'wp-module-help-center'
-									) }
+									  ) }
 							</b>
 						</p>
 					) }
