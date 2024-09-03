@@ -4,6 +4,18 @@ import NoResults from './NoResults';
 import { useEffect, useState } from 'react';
 import { marked } from 'marked';
 
+const MarkdownRenderer = ( { markdownText } ) => {
+	const [ htmlContent, setHtmlContent ] = useState( '' );
+
+	useEffect( () => {
+		// Convert Markdown to HTML whenever markdownText changes
+		const convertedHTML = marked( markdownText );
+		setHtmlContent( convertedHTML );
+	}, [ markdownText ] ); // Dependency array ensures this runs on markdownText change
+
+	return <p dangerouslySetInnerHTML={ { __html: htmlContent } } />;
+};
+
 export const ResultContent = ( {
 	content,
 	noResult,
@@ -11,21 +23,17 @@ export const ResultContent = ( {
 	source,
 	showFeedbackSection,
 } ) => {
+	if ( noResult && content ) {
+		return (
+			<p>
+				<MarkdownRenderer markdownText={ content } />
+			</p>
+		);
+	}
+
 	if ( noResult ) {
 		return <NoResults />;
 	}
-
-	const MarkdownRenderer = ( { markdownText } ) => {
-		const [ htmlContent, setHtmlContent ] = useState( '' );
-
-		useEffect( () => {
-			// Convert Markdown to HTML whenever markdownText changes
-			const convertedHTML = marked( markdownText );
-			setHtmlContent( convertedHTML );
-		}, [ markdownText ] ); // Dependency array ensures this runs on markdownText change
-
-		return <p dangerouslySetInnerHTML={ { __html: htmlContent } } />;
-	};
 
 	if ( content && content.length > 0 ) {
 		return (

@@ -101,37 +101,70 @@ const SearchResults = ( props ) => {
 		return fieldsMatched >= 1 && tokensPerQuery >= 0.99;
 	};
 
-	const getAIResult = async () => {
-		setIsLoading( true );
-		try {
-			// Check if the algolia results are close enough
-			const hits = multiResults.hits[ 0 ].hits;
-			const resultMatches =
-				hits.length > 0
-					? getResultMatches(
-							searchInput,
-							hits[ 0 ].text_match_info?.tokens_matched,
-							hits[ 0 ].text_match_info?.fields_matched
-					  )
-					: false;
+	const checkAndPopulateResult = ( hits, searchInput ) => {
+		if ( hits?.length > 0 ) {
+			const resultMatches = getResultMatches(
+				searchInput,
+				hits[ 0 ]?.text_match_info?.tokens_matched,
+				hits[ 0 ]?.text_match_info?.fields_matched
+			);
+	
 			if ( resultMatches ) {
 				populateSearchResult(
 					hits[ 0 ].document.post_content,
 					hits[ 0 ].document.post_id,
 					searchInput
 				);
-				return;
+				return true;
 			}
+		}
+		return false;
+	};
+
+	const getAIResult = async () => {
+		// Check for empty search input
+		if (!searchInput.trim()) {
+			setResultContent('Please enter a search term to get results.');
+			setNoResult(true);
+			return;
+		}
+		const regex = /^\s*Ask\s+me\s+anything\s*$/i;
+		if (regex.test(searchInput.trim())) {
+			setResultContent('Please enter a specific search term to get results.');
+			setNoResult(true);
+			return;
+		}
+
+		setIsLoading( true );
+		setNoResult( false );
+
+		try {
+			// Check existing multiResults
+			let hits = multiResults?.hits?.[ 0 ]?.hits;
+			if ( checkAndPopulateResult( hits, searchInput ) ) return;
+
+			// Make a new multi-search API call if no match is found
+			const brand = await CapabilityAPI.getBrand();
+			const multiSearchResults = await fetchMultiSearchResults( searchInput, brand );
+			hits = multiSearchResults?.results?.[ 0 ]?.grouped_hits?.[ 0 ]?.hits;
+			if ( checkAndPopulateResult( hits, searchInput ) ) return;
+			
+			// If no match is found in both cases, fall back to AI search
 			setSource( 'ai' );
 			const result = await moduleAI.search.getSearchResult(
 				searchInput,
 				'helpcenter'
 			);
-			populateSearchResult(
-				result.result[ 0 ].text,
-				result.post_id,
-				searchInput
-			);
+			if( result.result[ 0 ] ) {
+				populateSearchResult(
+					result.result[ 0 ].text,
+					result.post_id,
+					searchInput
+				);
+			} else {
+				setNoResult( true );
+			}
+			
 		} catch ( exception ) {
 			setNoResult( true );
 		} finally {
@@ -237,9 +270,8 @@ const SearchResults = ( props ) => {
 					noResult={ noResult }
 					postId={ postId }
 					source={ source }
-					showFeedbackSection={
-						! resultContent.includes( 'do not possess the answer' )
-					}
+					showFeedbackSection={ ! resultContent.includes( 'do not possess the answer' ) }
+					searchInput={ searchInput }
 				/>
 			) }
 			{ multiResults?.hits?.length > 0 && (
