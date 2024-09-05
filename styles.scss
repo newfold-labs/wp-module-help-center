@@ -146,6 +146,11 @@ $gray-text: #394150;
         color: $gray-text;
       }
     }
+
+    .multisearch-loader{
+      display: flex;
+      justify-content: center;
+    }
   }
  .suggestions-wrapper {
   padding: 0 12px;

@@ -2,16 +2,12 @@
 import { debounce } from 'lodash';
 import { useEffect, useState, useMemo, useRef } from '@wordpress/element';
 import moduleAI from '@newfold-labs/wp-module-ai';
-//
-import { ReactComponent as SearchIcon } from '../icons/search.svg';
-//
 import { SearchResultSuggestions } from './SearchResultSuggestions';
 import { ResultContent } from './ResultContent';
 import { Analytics, LocalStorageUtils, CapabilityAPI } from '../utils';
-import Loader from './Loader';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
-import { ThreeDots } from 'react-loader-spinner';
+import SearchInput from './SearchInput';
 
 const SearchResults = ( props ) => {
 	const [ isLoading, setIsLoading ] = useState( false );
@@ -180,95 +176,37 @@ const SearchResults = ( props ) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [] );
 
-	if ( isLoading ) {
-		return (
-			<>
-				<Loader />
-			</>
-		);
-	}
-
 	return (
 		<>
 			<div className="hc-results-container">
-				{ loading ? (
-					<ThreeDots
-						height="40"
-						width="40"
-						radius="4"
-						color="#196BDE"
-						ariaLabel="three-dots-loading"
-						wrapperStyle={ {} }
-						visible={ true }
-					/> // show loader when loading is true
-				) : (
-					<>
-						{ resultContent?.length > 0 &&
-							resultContent.map( ( result, index ) => (
-								<ResultContent
-									key={ index }
-									content={ result.resultContent }
-									noResult={ noResult }
-									postId={ result.postId }
-									source={ source }
-									showFeedbackSection={
-										! result.resultContent.includes(
-											'do not possess the answer'
-										)
-									}
-									questionBlock={ result.searchInput }
-								/>
-							) ) }
-					</>
-				) }
-				<div className="search-container__wrapper">
-					<div className="search-container">
-						<button
-							onClick={ () => {
-								document
-									.getElementById( 'search-input-box' )
-									.focus();
-							} }
-						>
-							<SearchIcon />
-						</button>
-						<input
-							type="text"
-							id="search-input-box"
-							style={ {
-								flexGrow: 2,
-							} }
-							value={ searchInput }
-							maxLength="144"
-							placeholder={ __(
-								'Ask me anything…',
-								'wp-module-help-center'
-							) }
-							onChange={ ( e ) => {
-								setSearchInput( e.target.value );
-								populateSearchResult(
-									'',
-									undefined,
-									e.target.value
-								);
-								setNoResult( false );
-								debouncedResults( e.target.value );
-							} }
-							onKeyDown={ async ( e ) => {
-								if ( e.key === 'Enter' ) {
-									await getAIResult();
+				<>
+					{ resultContent?.length > 0 &&
+						resultContent.map( ( result, index ) => (
+							<ResultContent
+								key={ index }
+								content={ result.resultContent }
+								noResult={ noResult }
+								postId={ result.postId }
+								source={ source }
+								showFeedbackSection={
+									! result.resultContent.includes(
+										'do not possess the answer'
+									)
 								}
-							} }
-						/>
-					</div>
-					<div className="attribute">
-						<p>
-							<span>
-								{ searchInput ? searchInput.length : 0 }/144
-							</span>
-						</p>
-					</div>
-				</div>
+								questionBlock={ result.searchInput }
+							/>
+						) ) }
+				</>
+				<SearchInput
+					searchInput={ searchInput }
+					setSearchInput={ setSearchInput }
+					populateSearchResult={ populateSearchResult }
+					debouncedResults={ debouncedResults }
+					setNoResult={ setNoResult }
+					getAIResult={ getAIResult }
+					loading={ loading }
+					isLoading={ isLoading }
+				/>
 				<div className="suggestions-wrapper">
 					{ multiResults?.hits?.length > 0 && (
 						<p>
