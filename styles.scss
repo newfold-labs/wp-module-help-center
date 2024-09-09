@@ -100,58 +100,103 @@ $gray-text: #394150;
     }
   }
 
-  .search-container__wrapper{
-    padding: 0 12px;
+  .helpcenter-input-wrapper {
+    border-top: 1px solid #E2E8F0;
+    height: 254px;
+    position: fixed;
+    bottom: 0;
+    width: 356px;
+    background: #fff;
 
-    .search-container {
-      display: flex;
-      height: 42px;
-      border-radius: 8px;
-      padding-right: 5px;
-      background-color: $light-gray;
-      margin: 16px 0px 0px;
-      input {
-        border: none;
+    .search-container__wrapper{
+      padding: 0 12px;
+  
+      .search-container {
+        display: flex;
+        height: 42px;
+        border-radius: 8px;
+        padding-right: 5px;
         background-color: $light-gray;
-        font-size: 15px;
-        color:$dark-gray;
-        padding-left: 0px ;
-        &:focus {
-          outline: none;
+        margin: 16px 0px 0px;
+        input {
+          border: none;
+          background-color: $light-gray;
+          font-size: 15px;
+          color:$dark-gray;
+          padding-left: 0px ;
+          &:focus {
+            outline: none;
+            box-shadow: none;
+          }
+        }
+        button {
           box-shadow: none;
+          padding-top: 3px;
+          background-color: $light-gray;
+          border: none;
+          background: transparent;
+          cursor: text;
         }
       }
-      button {
-        box-shadow: none;
-        padding-top: 3px;
-        background-color: $light-gray;
-        border: none;
-        background: transparent;
-        cursor: text;
-      }
-    }
-  
-    .attribute {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 0px;
-      padding-left: 2px;
-      padding-right: 2px;
-      color: $gray-text;
-      span {
-        font-weight: 500;
-        font-size: 12px;
-        line-height: 14px;
-        text-align: right;
+    
+      .attribute {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 0px;
+        padding-left: 2px;
+        padding-right: 2px;
         color: $gray-text;
+        span {
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 14px;
+          text-align: right;
+          color: $gray-text;
+        }
       }
-    }
+  
+      .multisearch-loader{
+        display: flex;
+        justify-content: center;
+      }
+    }  
 
-    .multisearch-loader{
-      display: flex;
-      justify-content: center;
+    .helpcenter-supportinfo__wrapper {
+      padding: 0 12px 12px 12px;
+
+      .helpcenter-supportinfo__text{
+        padding: 8px 0;
+      }
+      .helpcenter-supportinfo__telephone {
+        margin-bottom: 12px;
+
+        span{
+          margin-right: 8px;
+          vertical-align: text-top;
+          
+          a{
+            text-decoration: none;
+            color: #196CDF;
+          }
+        }
+      }
+
+      .helpcenter-supportinfo__chat {
+        margin-bottom: 12px;
+
+        span{
+          margin-right: 8px;
+          vertical-align: text-top;
+
+          a{
+            text-decoration: none;
+            color: #196CDF;
+          }
+        }
+      }
     }
   }
+
  .suggestions-wrapper {
   padding: 0 12px;
 
@@ -278,7 +323,7 @@ $gray-text: #394150;
 }
 
 .help-container {
-  width: 350px;
+  width: 356px;
   height: 100vh;
   overflow: auto;
   position: fixed;
