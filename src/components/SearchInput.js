@@ -1,7 +1,7 @@
-import { ReactComponent as SearchIcon } from '../icons/search.svg';
 import { __ } from '@wordpress/i18n';
 import { ThreeDots } from 'react-loader-spinner'; // Assuming you're using this loader
 import Loader from './Loader'; // Importing your Loader component
+import { ReactComponent as GoSearchIcon } from '../icons/paper-airplane.svg';
 import { ReactComponent as PhoneIcon } from '../icons/phone.svg';
 import { ReactComponent as ChatIcon } from '../icons/chat-bubble.svg';
 
@@ -25,25 +25,13 @@ const SearchInput = ( {
 					<>
 						<div className="search-container">
 							<>
-								<button
-									onClick={ () => {
-										document
-											.getElementById(
-												'search-input-box'
-											)
-											.focus();
-									} }
-								>
-									<SearchIcon />
-								</button>
 								<input
 									type="text"
 									id="search-input-box"
-									style={ { flexGrow: 2 } }
 									value={ searchInput }
 									maxLength="144"
 									placeholder={ __(
-										'Ask me anything…',
+										'Ask about WordPress',
 										'wp-module-help-center'
 									) }
 									onChange={ ( e ) => {
@@ -62,6 +50,19 @@ const SearchInput = ( {
 										}
 									} }
 								/>
+								{
+									<button
+										onClick={ () => {
+											document
+												.getElementById(
+													'search-input-box'
+												)
+												.focus();
+										} }
+									>
+										<GoSearchIcon />
+									</button>
+								}
 							</>
 						</div>
 					</>

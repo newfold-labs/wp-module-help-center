@@ -197,59 +197,59 @@ const SearchResults = ( props ) => {
 							/>
 						) ) }
 				</>
-				<SearchInput
-					searchInput={ searchInput }
-					setSearchInput={ setSearchInput }
-					populateSearchResult={ populateSearchResult }
-					debouncedResults={ debouncedResults }
-					setNoResult={ setNoResult }
-					getAIResult={ getAIResult }
-					loading={ loading }
-					isLoading={ isLoading }
-				/>
-				<div className="suggestions-wrapper">
-					{ multiResults?.hits?.length > 0 && (
-						<p>
-							<b>
-								{ resultContent?.length > 0
-									? __(
-											'Other Resources',
-											'wp-module-help-center'
-									  )
-									: __(
-											'Search Suggestions',
-											'wp-module-help-center'
-									  ) }
-							</b>
-						</p>
-					) }
-					{ multiResults?.hits?.map( ( result, index ) => {
-						console.log( 'Result', result );
-						const el = document.createElement( 'span' );
-						el.setAttribute( 'display', 'none' );
-						el.innerHTML = result?.group_key;
-						const postTitle = el.textContent || el.innerText;
-
-						return (
-							<>
-								<SearchResultSuggestions
-									key={ index }
-									searchTitle={ postTitle }
-									onGo={ () => {
-										setSearchInput( postTitle );
-										populateSearchResult(
-											result?.hits[ 0 ]?.document
-												?.post_content,
-											result?.hits[ 0 ]?.document?.id,
-											postTitle
-										);
-									} }
-								/>
-							</>
-						);
-					} ) }
-				</div>
 			</div>
+			<div className="suggestions-wrapper">
+				{ multiResults?.hits?.length > 0 && (
+					<p>
+						<b>
+							{ resultContent?.length > 0
+								? __(
+										'Other Resources',
+										'wp-module-help-center'
+								  )
+								: __(
+										'Search Suggestions',
+										'wp-module-help-center'
+								  ) }
+						</b>
+					</p>
+				) }
+				{ multiResults?.hits?.map( ( result, index ) => {
+					console.log( 'Result', result );
+					const el = document.createElement( 'span' );
+					el.setAttribute( 'display', 'none' );
+					el.innerHTML = result?.group_key;
+					const postTitle = el.textContent || el.innerText;
+
+					return (
+						<>
+							<SearchResultSuggestions
+								key={ index }
+								searchTitle={ postTitle }
+								onGo={ () => {
+									setSearchInput( postTitle );
+									populateSearchResult(
+										result?.hits[ 0 ]?.document
+											?.post_content,
+										result?.hits[ 0 ]?.document?.id,
+										postTitle
+									);
+								} }
+							/>
+						</>
+					);
+				} ) }
+			</div>
+			<SearchInput
+				searchInput={ searchInput }
+				setSearchInput={ setSearchInput }
+				populateSearchResult={ populateSearchResult }
+				debouncedResults={ debouncedResults }
+				setNoResult={ setNoResult }
+				getAIResult={ getAIResult }
+				loading={ loading }
+				isLoading={ isLoading }
+			/>
 		</>
 	);
 };

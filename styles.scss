@@ -14,6 +14,7 @@ $box-shadow-hover: #3575d3;
 $box-shadow-light: #DDDFE0;
 $box-shadow-dark: rgba(0, 0, 0, 0.25);
 $gray-text: #394150;
+$blue-night-sky: #7A889D;
 
 .nfd-plugin-sidebar {
   .nfd-help-center{
@@ -107,6 +108,7 @@ $gray-text: #394150;
     bottom: 0;
     width: 356px;
     background: #fff;
+    z-index: 1;
 
     .search-container__wrapper{
       padding: 0 12px;
@@ -121,14 +123,19 @@ $gray-text: #394150;
         input {
           border: none;
           background-color: $light-gray;
-          font-size: 15px;
-          color:$dark-gray;
-          padding-left: 0px ;
+          font-size: 13px;
+          line-height: 19px;
+          padding-left: 10px;
+          width: 100%;
+          padding-right: 30px;
+
+          color: $blue-night-sky;
           &:focus {
             outline: none;
             box-shadow: none;
           }
         }
+
         button {
           box-shadow: none;
           padding-top: 3px;
@@ -136,6 +143,9 @@ $gray-text: #394150;
           border: none;
           background: transparent;
           cursor: text;
+          position: absolute;
+          right: 15px;
+          top: 25px;
         }
       }
     
@@ -198,7 +208,11 @@ $gray-text: #394150;
   }
 
  .suggestions-wrapper {
-  padding: 0 12px;
+    padding: 0 12px;
+    position: fixed;
+    width: 356px;
+    bottom: 254px;
+    background: white;
 
   .algoliaResult {
     border-radius: 24px;
