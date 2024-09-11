@@ -16,6 +16,12 @@ $box-shadow-dark: rgba(0, 0, 0, 0.25);
 $gray-text: #394150;
 $blue-night-sky: #7A889D;
 
+#nfd-help-center{
+  * {
+    box-sizing: border-box;
+  }
+}
+
 .nfd-plugin-sidebar {
   .nfd-help-center{
     .feedback-container{
@@ -304,6 +310,7 @@ $blue-night-sky: #7A889D;
   }
 
   .hc-results-container{
+    padding-bottom: 508px;
 
     .helpcenter-results{
       padding: 0 12px;

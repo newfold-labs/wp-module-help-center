@@ -17,7 +17,10 @@ const SearchResults = ( props ) => {
 	const [ postId, setPostId ] = useState();
 	const [ source, setSource ] = useState( 'kb' );
 	const [ multiResults, setMultiResults ] = useState( {} );
-	const [ loading, setLoading ] = useState( false );
+	// const [ loading, setLoading ] = useState( false );
+	const [ showSuggestions, setShowSuggestions ] = useState( true );
+
+	const containerRef = useRef( null );
 
 	const populateSearchResult = ( resultContent, postId, searchInput ) => {
 		const resultContentFormatted = resultContent.replace( /\n/g, '<br />' );
@@ -37,6 +40,14 @@ const SearchResults = ( props ) => {
 
 		setPostId( postId );
 		LocalStorageUtils.persistSearchInput( searchInput );
+		const helpCenterElement = document.getElementById( 'nfd-help-center' );
+		if ( helpCenterElement ) {
+			helpCenterElement.scrollTo( {
+				top: helpCenterElement.scrollHeight,
+				behavior: 'smooth', // This enables smooth scrolling
+			} );
+		}
+
 		if ( postId ) {
 			Analytics.sendEvent( 'help_search', {
 				label_key: 'term',
@@ -106,6 +117,7 @@ const SearchResults = ( props ) => {
 
 	const getAIResult = async () => {
 		setIsLoading( true );
+		setShowSuggestions( false );
 		try {
 			// Check if the algolia results are close enough
 			const hits = multiResults.hits;
@@ -148,7 +160,8 @@ const SearchResults = ( props ) => {
 				setMultiResults( {} );
 				return;
 			}
-			setLoading( true );
+			// setLoading( true );
+			setShowSuggestions( true );
 			try {
 				const brand = await CapabilityAPI.getBrand();
 				const multiSearchResults = await fetchMultiSearchResults(
@@ -164,7 +177,8 @@ const SearchResults = ( props ) => {
 			} catch ( error ) {
 				console.error( 'Error fetching debounced results:', error );
 			} finally {
-				setLoading( false );
+				// setLoading( false );
+				// setShowSuggestions( false );
 			}
 		}, 300 );
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -178,7 +192,7 @@ const SearchResults = ( props ) => {
 
 	return (
 		<>
-			<div className="hc-results-container">
+			<div className="hc-results-container" ref={ containerRef }>
 				<>
 					{ resultContent?.length > 0 &&
 						resultContent.map( ( result, index ) => (
@@ -198,48 +212,51 @@ const SearchResults = ( props ) => {
 						) ) }
 				</>
 			</div>
-			<div className="suggestions-wrapper">
-				{ multiResults?.hits?.length > 0 && (
-					<p>
-						<b>
-							{ resultContent?.length > 0
-								? __(
-										'Other Resources',
-										'wp-module-help-center'
-								  )
-								: __(
-										'Search Suggestions',
-										'wp-module-help-center'
-								  ) }
-						</b>
-					</p>
-				) }
-				{ multiResults?.hits?.map( ( result, index ) => {
-					console.log( 'Result', result );
-					const el = document.createElement( 'span' );
-					el.setAttribute( 'display', 'none' );
-					el.innerHTML = result?.group_key;
-					const postTitle = el.textContent || el.innerText;
+			{ showSuggestions && (
+				<div className="suggestions-wrapper">
+					{ multiResults?.hits?.length > 0 && (
+						<p>
+							<b>
+								{ resultContent?.length > 0
+									? __(
+											'Common Topics',
+											'wp-module-help-center'
+									  )
+									: __(
+											'Search Suggestions',
+											'wp-module-help-center'
+									  ) }
+							</b>
+						</p>
+					) }
+					{ multiResults?.hits?.map( ( result, index ) => {
+						console.log( 'Result', result );
+						const el = document.createElement( 'span' );
+						el.setAttribute( 'display', 'none' );
+						el.innerHTML = result?.group_key;
+						const postTitle = el.textContent || el.innerText;
 
-					return (
-						<>
-							<SearchResultSuggestions
-								key={ index }
-								searchTitle={ postTitle }
-								onGo={ () => {
-									setSearchInput( postTitle );
-									populateSearchResult(
-										result?.hits[ 0 ]?.document
-											?.post_content,
-										result?.hits[ 0 ]?.document?.id,
-										postTitle
-									);
-								} }
-							/>
-						</>
-					);
-				} ) }
-			</div>
+						return (
+							<>
+								<SearchResultSuggestions
+									key={ index }
+									searchTitle={ postTitle }
+									onGo={ () => {
+										setSearchInput( postTitle );
+										setShowSuggestions( false );
+										populateSearchResult(
+											result?.hits[ 0 ]?.document
+												?.post_content,
+											result?.hits[ 0 ]?.document?.id,
+											postTitle
+										);
+									} }
+								/>
+							</>
+						);
+					} ) }
+				</div>
+			) }
 			<SearchInput
 				searchInput={ searchInput }
 				setSearchInput={ setSearchInput }
@@ -247,7 +264,6 @@ const SearchResults = ( props ) => {
 				debouncedResults={ debouncedResults }
 				setNoResult={ setNoResult }
 				getAIResult={ getAIResult }
-				loading={ loading }
 				isLoading={ isLoading }
 			/>
 		</>

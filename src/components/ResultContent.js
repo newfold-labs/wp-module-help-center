@@ -19,27 +19,29 @@ export const ResultContent = ( {
 	if ( content && content.length > 0 ) {
 		return (
 			<>
-				<div className="helpcenter-question-block">
-					<div className="helpcenter-question__user-avatar">
-						<UserAvatar />
+				<div className="helpcenter-response-block">
+					<div className="helpcenter-question-block">
+						<div className="helpcenter-question__user-avatar">
+							<UserAvatar />
+						</div>
+						<div>{ questionBlock }</div>
 					</div>
-					<div>{ questionBlock }</div>
-				</div>
-				<div className="helpcenter-result-block">
-					<div className="helpcenter-result-block__aistars">
-						<AIStars />
+					<div className="helpcenter-result-block">
+						<div className="helpcenter-result-block__aistars">
+							<AIStars />
+						</div>
+						<div>
+							<p
+								className="helpcenter-results"
+								dangerouslySetInnerHTML={ { __html: content } }
+							/>
+						</div>
 					</div>
-					<div>
-						<p
-							className="helpcenter-results"
-							dangerouslySetInnerHTML={ { __html: content } }
-						/>
-					</div>
-				</div>
 
-				{ showFeedbackSection && content && content.length > 0 && (
-					<Feedback postId={ postId } source={ source } />
-				) }
+					{ showFeedbackSection && content && content.length > 0 && (
+						<Feedback postId={ postId } source={ source } />
+					) }
+				</div>
 			</>
 		);
 	}

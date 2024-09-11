@@ -1,5 +1,4 @@
-import { __ } from '@wordpress/i18n';
-import { ThreeDots } from 'react-loader-spinner'; // Assuming you're using this loader
+import { __ } from '@wordpress/i18n'; // Assuming you're using this loader
 import Loader from './Loader'; // Importing your Loader component
 import { ReactComponent as GoSearchIcon } from '../icons/paper-airplane.svg';
 import { ReactComponent as PhoneIcon } from '../icons/phone.svg';
@@ -13,7 +12,6 @@ const SearchInput = ( {
 	setNoResult,
 	getAIResult,
 	isLoading, // Added this prop for loading state
-	loading, // Added this prop for loading state
 } ) => {
 	return (
 		<div className="helpcenter-input-wrapper">
@@ -74,19 +72,6 @@ const SearchInput = ( {
 								{ searchInput ? searchInput.length : 0 }/144
 							</span>
 						</p>
-					</div>
-				) }
-				{ loading && (
-					<div className="multisearch-loader">
-						<ThreeDots
-							height="40"
-							width="40"
-							radius="4"
-							color="#196BDE"
-							ariaLabel="three-dots-loading"
-							wrapperStyle={ {} }
-							visible={ true }
-						/>
 					</div>
 				) }
 			</div>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from '@wordpress/element';
 import SearchResults from './SearchResults';
 import { CapabilityAPI, LocalStorageUtils } from '../utils';
+import HelpCenterIntro from './HelpCenterIntro';
 
 const HelpCenter = ( props ) => {
 	const [ visible, setVisible ] = useState( false );
@@ -38,6 +39,7 @@ const HelpCenter = ( props ) => {
 
 	return (
 		<div className="nfd-help-center">
+			<HelpCenterIntro />
 			<SearchResults refresh={ props.refresh } />
 		</div>
 	);

@@ -7,7 +7,6 @@ import HelpCenter from './HelpCenter';
 
 import { toggleHelp } from '..';
 import { CapabilityAPI, LocalStorageUtils } from '../utils';
-import HelpCenterIntro from './HelpCenterIntro';
 
 const Modal = ( { onClose } ) => {
 	const [ brand, setBrand ] = useState( '' );
@@ -47,7 +46,6 @@ const Modal = ( { onClose } ) => {
 					</div>
 				</button>
 			</div>
-			<HelpCenterIntro />
 			<HelpCenter
 				closeHelp={ () => {
 					onClose();
