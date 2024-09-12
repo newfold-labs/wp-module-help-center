@@ -11,6 +11,7 @@ export const ResultContent = ( {
 	showFeedbackSection,
 	questionBlock,
 	isLoading,
+	loadingPostId, // New prop to track which postId is loading
 } ) => {
 	if ( noResult ) {
 		return <NoResults />;
@@ -19,30 +20,33 @@ export const ResultContent = ( {
 	return (
 		<>
 			<div className="helpcenter-response-block">
-				{ isLoading ||
-					( content && content.length > 0 && (
-						<div className="helpcenter-question-block">
-							<div className="helpcenter-question__user-avatar">
-								<UserAvatar />
-							</div>
-							<div>{ questionBlock }</div>
-						</div>
-					) ) }
+				<div className="helpcenter-question-block">
+					<div className="helpcenter-question__user-avatar">
+						<UserAvatar />
+					</div>
+					<div>{ questionBlock }</div>
+				</div>
 				<div className="helpcenter-result-block">
 					<div className="helpcenter-result-block__aistars">
-						{ isLoading ||
-							( content && content.length > 0 && <AIStars /> ) }
+						<AIStars />
 					</div>
-
 					<div>
-						{ isLoading && <p>Loading</p> }
-						{ ! isLoading && content && content.length > 0 && (
-							<p
-								className="helpcenter-results"
-								dangerouslySetInnerHTML={ {
-									__html: content,
-								} }
-							/>
+						{ /* Only show "Loading" for the specific postId that is loading */ }
+						{ isLoading &&
+						source === 'ai' &&
+						loadingPostId &&
+						loadingPostId === postId ? (
+							<p>Loading</p>
+						) : (
+							content &&
+							content.length > 0 && (
+								<p
+									className="helpcenter-results"
+									dangerouslySetInnerHTML={ {
+										__html: content,
+									} }
+								/>
+							)
 						) }
 					</div>
 				</div>
@@ -52,6 +56,4 @@ export const ResultContent = ( {
 			</div>
 		</>
 	);
-
-	// return <></>;
 };

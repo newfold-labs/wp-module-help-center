@@ -51,6 +51,11 @@ export const LocalStorageUtils = {
 		return localStorage.getItem( 'helpVisible' ) === 'true';
 	},
 	persistResult: ( resultContent, postId, searchInput ) => {
+		// Only store the result if resultContent has a value
+		if ( ! resultContent || resultContent.trim() === '' ) {
+			return; // Exit the function if resultContent is empty
+		}
+
 		// Retrieve existing results or initialize as an empty array
 		const existingResults =
 			JSON.parse( localStorage.getItem( 'helpResultContent' ) ) || [];
@@ -71,6 +76,7 @@ export const LocalStorageUtils = {
 			JSON.stringify( existingResults )
 		);
 	},
+
 	persistSearchInput: ( searchInput ) => {
 		localStorage.setItem( 'searchInput', searchInput );
 	},

@@ -19,6 +19,7 @@ const SearchResults = ( props ) => {
 	const [ multiResults, setMultiResults ] = useState( {} );
 	// const [ loading, setLoading ] = useState( false );
 	const [ showSuggestions, setShowSuggestions ] = useState( true );
+	const [ loadingPostId, setLoadingPostId ] = useState( null );
 
 	const containerRef = useRef( null );
 
@@ -142,6 +143,7 @@ const SearchResults = ( props ) => {
 				searchInput,
 				'helpcenter'
 			);
+			setLoadingPostId( result.post_id );
 			populateSearchResult(
 				result.result[ 0 ].text,
 				result.post_id,
@@ -151,6 +153,7 @@ const SearchResults = ( props ) => {
 			setNoResult( true );
 		} finally {
 			setIsLoading( false );
+			setLoadingPostId( null );
 		}
 	};
 
@@ -209,6 +212,7 @@ const SearchResults = ( props ) => {
 								}
 								questionBlock={ result.searchInput }
 								isLoading={ isLoading }
+								loadingPostId={ loadingPostId }
 							/>
 						) ) }
 				</>
