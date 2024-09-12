@@ -11,12 +11,12 @@ export const ResultContent = ( {
 	showFeedbackSection,
 	questionBlock,
 	isLoading,
-	loadingPostId, // New prop to track which postId is loading
+	loadingQuery,
 } ) => {
 	if ( noResult ) {
 		return <NoResults />;
 	}
-
+	console.log( 'source', source );
 	return (
 		<>
 			<div className="helpcenter-response-block">
@@ -31,11 +31,10 @@ export const ResultContent = ( {
 						<AIStars />
 					</div>
 					<div>
-						{ /* Only show "Loading" for the specific postId that is loading */ }
+						{ /* Show "Loading" for the specific query being fetched */ }
 						{ isLoading &&
-						source === 'ai' &&
-						loadingPostId &&
-						loadingPostId === postId ? (
+						loadingQuery === questionBlock &&
+						source === 'ai' ? (
 							<p>Loading</p>
 						) : (
 							content &&

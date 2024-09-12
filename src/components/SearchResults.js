@@ -19,7 +19,7 @@ const SearchResults = ( props ) => {
 	const [ multiResults, setMultiResults ] = useState( {} );
 	// const [ loading, setLoading ] = useState( false );
 	const [ showSuggestions, setShowSuggestions ] = useState( true );
-	const [ loadingPostId, setLoadingPostId ] = useState( null );
+	const [ loadingQuery, setLoadingQuery ] = useState( null );
 
 	const containerRef = useRef( null );
 
@@ -119,6 +119,7 @@ const SearchResults = ( props ) => {
 	const getAIResult = async () => {
 		setIsLoading( true );
 		setShowSuggestions( false );
+		setLoadingQuery( searchInput );
 		try {
 			// Check if the algolia results are close enough
 			const hits = multiResults.hits;
@@ -143,7 +144,6 @@ const SearchResults = ( props ) => {
 				searchInput,
 				'helpcenter'
 			);
-			setLoadingPostId( result.post_id );
 			populateSearchResult(
 				result.result[ 0 ].text,
 				result.post_id,
@@ -152,8 +152,8 @@ const SearchResults = ( props ) => {
 		} catch ( exception ) {
 			setNoResult( true );
 		} finally {
+			setLoadingQuery( null );
 			setIsLoading( false );
-			setLoadingPostId( null );
 		}
 	};
 
@@ -192,30 +192,44 @@ const SearchResults = ( props ) => {
 		debouncedResults.cancel();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [] );
-
+	console.log( 'reduly', resultContent );
 	return (
 		<>
 			<div className="hc-results-container" ref={ containerRef }>
-				<>
-					{ resultContent?.length > 0 &&
-						resultContent.map( ( result, index ) => (
-							<ResultContent
-								key={ index }
-								content={ result.resultContent }
-								noResult={ noResult }
-								postId={ result.postId }
-								source={ source }
-								showFeedbackSection={
-									! result.resultContent.includes(
-										'do not possess the answer'
-									)
-								}
-								questionBlock={ result.searchInput }
-								isLoading={ isLoading }
-								loadingPostId={ loadingPostId }
-							/>
-						) ) }
-				</>
+				{ /* Render existing results */ }
+				{ resultContent?.length > 0 &&
+					resultContent.map( ( result, index ) => (
+						<ResultContent
+							key={ index }
+							content={ result.resultContent }
+							noResult={ noResult }
+							postId={ result.postId }
+							source={ source }
+							showFeedbackSection={
+								! result.resultContent.includes(
+									'do not possess the answer'
+								)
+							}
+							questionBlock={ result.searchInput }
+							isLoading={ isLoading }
+							loadingQuery={ loadingQuery }
+						/>
+					) ) }
+
+				{ /* Render a placeholder for the loading state if isLoading is true */ }
+				{ isLoading && (
+					<ResultContent
+						key="loading"
+						content={ null } // No content while loading
+						noResult={ false }
+						postId={ null }
+						source="ai" // Assume loading for AI
+						showFeedbackSection={ false }
+						questionBlock={ loadingQuery } // Display the query being loaded
+						isLoading={ isLoading }
+						loadingQuery={ loadingQuery }
+					/>
+				) }
 			</div>
 			{ showSuggestions && (
 				<div className="suggestions-wrapper">
