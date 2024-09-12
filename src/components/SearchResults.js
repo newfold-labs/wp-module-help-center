@@ -208,6 +208,7 @@ const SearchResults = ( props ) => {
 									)
 								}
 								questionBlock={ result.searchInput }
+								isLoading={ isLoading }
 							/>
 						) ) }
 				</>
@@ -264,7 +265,6 @@ const SearchResults = ( props ) => {
 				debouncedResults={ debouncedResults }
 				setNoResult={ setNoResult }
 				getAIResult={ getAIResult }
-				isLoading={ isLoading }
 			/>
 		</>
 	);

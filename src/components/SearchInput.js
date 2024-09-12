@@ -1,5 +1,4 @@
 import { __ } from '@wordpress/i18n'; // Assuming you're using this loader
-import Loader from './Loader'; // Importing your Loader component
 import { ReactComponent as GoSearchIcon } from '../icons/paper-airplane.svg';
 import { ReactComponent as PhoneIcon } from '../icons/phone.svg';
 import { ReactComponent as ChatIcon } from '../icons/chat-bubble.svg';
@@ -11,69 +10,53 @@ const SearchInput = ( {
 	debouncedResults,
 	setNoResult,
 	getAIResult,
-	isLoading, // Added this prop for loading state
 } ) => {
 	return (
 		<div className="helpcenter-input-wrapper">
 			<div className="search-container__wrapper">
-				{ isLoading ? (
-					// Show the Loader component when isLoading is true
-					<Loader />
-				) : (
-					<>
-						<div className="search-container">
-							<>
-								<input
-									type="text"
-									id="search-input-box"
-									value={ searchInput }
-									maxLength="144"
-									placeholder={ __(
-										'Ask about WordPress',
-										'wp-module-help-center'
-									) }
-									onChange={ ( e ) => {
-										setSearchInput( e.target.value );
-										populateSearchResult(
-											'',
-											undefined,
-											e.target.value
-										);
-										setNoResult( false );
-										debouncedResults( e.target.value );
-									} }
-									onKeyDown={ async ( e ) => {
-										if ( e.key === 'Enter' ) {
-											await getAIResult();
-										}
-									} }
-								/>
-								{
-									<button
-										onClick={ () => {
-											document
-												.getElementById(
-													'search-input-box'
-												)
-												.focus();
-										} }
-									>
-										<GoSearchIcon />
-									</button>
-								}
-							</>
-						</div>
-					</>
-				) }
-				{ true && (
-					<div className="attribute">
-						<p>
-							<span>
-								{ searchInput ? searchInput.length : 0 }/144
-							</span>
-						</p>
-					</div>
-				) }
+				<div className="search-container">
+					<input
+						type="text"
+						id="search-input-box"
+						value={ searchInput }
+						maxLength="144"
+						placeholder={ __(
+							'Ask about WordPress',
+							'wp-module-help-center'
+						) }
+						onChange={ ( e ) => {
+							setSearchInput( e.target.value );
+							populateSearchResult(
+								'',
+								undefined,
+								e.target.value
+							);
+							setNoResult( false );
+							debouncedResults( e.target.value );
+						} }
+						onKeyDown={ async ( e ) => {
+							if ( e.key === 'Enter' ) {
+								await getAIResult();
+							}
+						} }
+					/>
+					<button
+						onClick={ () => {
+							document
+								.getElementById( 'search-input-box' )
+								.focus();
+						} }
+					>
+						<GoSearchIcon />
+					</button>
+				</div>
+				<div className="attribute">
+					<p>
+						<span>
+							{ searchInput ? searchInput.length : 0 }/144
+						</span>
+					</p>
+				</div>
 			</div>
 			<div className="helpcenter-supportinfo__wrapper">
 				<div className="">
