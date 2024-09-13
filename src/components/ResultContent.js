@@ -12,6 +12,8 @@ export const ResultContent = ( {
 	questionBlock,
 	isLoading,
 	loadingQuery,
+	loadingIndex,
+	index,
 } ) => {
 	if ( noResult ) {
 		return <NoResults />;
@@ -31,9 +33,10 @@ export const ResultContent = ( {
 						<AIStars />
 					</div>
 					<div>
-						{ /* Show "Loading" for the specific query being fetched */ }
+						{ /* Only show "Loading" for the most recent query at the correct index */ }
 						{ isLoading &&
 						loadingQuery === questionBlock &&
+						loadingIndex === index &&
 						source === 'ai' ? (
 							<p>Loading</p>
 						) : (

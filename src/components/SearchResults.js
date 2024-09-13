@@ -20,6 +20,7 @@ const SearchResults = ( props ) => {
 	// const [ loading, setLoading ] = useState( false );
 	const [ showSuggestions, setShowSuggestions ] = useState( true );
 	const [ loadingQuery, setLoadingQuery ] = useState( null );
+	const [ loadingIndex, setLoadingIndex ] = useState( null );
 
 	const containerRef = useRef( null );
 
@@ -120,6 +121,7 @@ const SearchResults = ( props ) => {
 		setIsLoading( true );
 		setShowSuggestions( false );
 		setLoadingQuery( searchInput );
+		setLoadingIndex( resultContent.length );
 		try {
 			// Check if the algolia results are close enough
 			const hits = multiResults.hits;
@@ -154,6 +156,7 @@ const SearchResults = ( props ) => {
 		} finally {
 			setLoadingQuery( null );
 			setIsLoading( false );
+			setLoadingIndex( null );
 		}
 	};
 
@@ -213,6 +216,8 @@ const SearchResults = ( props ) => {
 							questionBlock={ result.searchInput }
 							isLoading={ isLoading }
 							loadingQuery={ loadingQuery }
+							loadingIndex={ loadingIndex } // Pass the loading index
+							index={ index } // Pass the index of the current query
 						/>
 					) ) }
 
@@ -228,6 +233,8 @@ const SearchResults = ( props ) => {
 						questionBlock={ loadingQuery } // Display the query being loaded
 						isLoading={ isLoading }
 						loadingQuery={ loadingQuery }
+						loadingIndex={ loadingIndex } // Pass the loading index
+						index={ resultContent.length } // Pass the index for the loading placeholder
 					/>
 				) }
 			</div>
