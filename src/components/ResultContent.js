@@ -5,6 +5,7 @@ import { useEffect, useState } from '@wordpress/element';
 import { useRevealText, LocalStorageUtils } from '../utils';
 import { ReactComponent as UserAvatar } from '../icons/user-avatar.svg';
 import { ReactComponent as AIStars } from '../icons/ai-stars.svg';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { marked } from 'marked';
 
 export const ResultContent = ( {
