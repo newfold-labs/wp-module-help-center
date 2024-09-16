@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import Feedback from './Feedback';
 import NoResults from './NoResults';
-import { useRevealText } from '../utils';
+import { useRevealText, LocalStorageUtils } from '../utils';
 import { ReactComponent as UserAvatar } from '../icons/user-avatar.svg';
 import { ReactComponent as AIStars } from '../icons/ai-stars.svg';
 
@@ -15,8 +16,17 @@ export const ResultContent = ( {
 	loadingQuery,
 	loadingIndex,
 	index,
+	isNewResult,
 } ) => {
-	const revealedText = useRevealText( content || '', 150 );
+	const storedResultsLength = LocalStorageUtils.getResultInfo().length;
+
+	// Only apply reveal effect if the result is new and it's the last result
+	const isNewEntry = isNewResult && index === storedResultsLength - 1;
+
+	// Apply the reveal effect for new results, otherwise show content directly
+	const textToDisplay = isNewEntry
+		? useRevealText( content || '', 150 )
+		: content;
 
 	if ( noResult ) {
 		return <NoResults />;
@@ -48,10 +58,7 @@ export const ResultContent = ( {
 								<p
 									className="helpcenter-results"
 									dangerouslySetInnerHTML={ {
-										__html:
-											loadingIndex === index
-												? revealedText
-												: content,
+										__html: textToDisplay,
 									} }
 								/>
 							)

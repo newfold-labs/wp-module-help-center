@@ -20,6 +20,7 @@ const SearchResults = ( props ) => {
 	const [ showSuggestions, setShowSuggestions ] = useState( true );
 	const [ loadingQuery, setLoadingQuery ] = useState( null );
 	const [ loadingIndex, setLoadingIndex ] = useState( null );
+	const [ isNewResult, setIsNewResult ] = useState( false );
 
 	const containerRef = useRef( null );
 
@@ -38,6 +39,7 @@ const SearchResults = ( props ) => {
 
 		setPostId( postId );
 		LocalStorageUtils.persistSearchInput( searchInput );
+		setIsNewResult( true );
 		const helpCenterElement = document.getElementById( 'nfd-help-center' );
 		if ( helpCenterElement ) {
 			helpCenterElement.scrollTo( {
@@ -79,6 +81,7 @@ const SearchResults = ( props ) => {
 			const savedResults = LocalStorageUtils.getResultInfo();
 			if ( savedResults ) {
 				setResultContent( savedResults );
+				setIsNewResult( false );
 			}
 			const savedInput = LocalStorageUtils.getSearchInput();
 			const input = savedInput || ' ';
@@ -213,6 +216,7 @@ const SearchResults = ( props ) => {
 							loadingQuery={ loadingQuery }
 							loadingIndex={ loadingIndex }
 							index={ index }
+							isNewResult={ isNewResult }
 						/>
 					) ) }
 
@@ -230,6 +234,7 @@ const SearchResults = ( props ) => {
 						loadingQuery={ loadingQuery }
 						loadingIndex={ loadingIndex }
 						index={ resultContent.length }
+						isNewResult={ isNewResult }
 					/>
 				) }
 			</div>
