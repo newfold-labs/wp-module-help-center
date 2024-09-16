@@ -1,9 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import Feedback from './Feedback';
 import NoResults from './NoResults';
+import { useEffect, useState } from '@wordpress/element';
 import { useRevealText, LocalStorageUtils } from '../utils';
 import { ReactComponent as UserAvatar } from '../icons/user-avatar.svg';
 import { ReactComponent as AIStars } from '../icons/ai-stars.svg';
+import { marked } from 'marked';
 
 export const ResultContent = ( {
 	content,
@@ -27,6 +29,24 @@ export const ResultContent = ( {
 	const textToDisplay = isNewEntry
 		? useRevealText( content || '', 150 )
 		: content;
+
+	// Markdown rendering logic with state
+	const MarkdownRenderer = ( { markdownText } ) => {
+		const [ htmlContent, setHtmlContent ] = useState( '' );
+
+		useEffect( () => {
+			// Convert Markdown to HTML whenever markdownText changes
+			const convertedHTML = marked( markdownText );
+			setHtmlContent( convertedHTML );
+		}, [ markdownText ] ); // Dependency array ensures this runs on markdownText change
+
+		return (
+			<p
+				className="helpcenter-results"
+				dangerouslySetInnerHTML={ { __html: htmlContent } }
+			/>
+		);
+	};
 
 	if ( noResult ) {
 		return <NoResults />;
@@ -55,12 +75,12 @@ export const ResultContent = ( {
 						) : (
 							content &&
 							content.length > 0 && (
-								<p
-									className="helpcenter-results"
-									dangerouslySetInnerHTML={ {
-										__html: textToDisplay,
-									} }
-								/>
+								<>
+									{ /* If content is Markdown, render it using MarkdownRenderer */ }
+									<MarkdownRenderer
+										markdownText={ textToDisplay }
+									/>
+								</>
 							)
 						) }
 					</div>

@@ -28,6 +28,7 @@
 		"algoliasearch": "4.20.0",
 		"lodash": "4.17.21",
 		"lodash.debounce": "4.0.8",
+		"marked": "14.0.0",
 		"react-instantsearch-hooks-web": "6.43.0",
 		"react-loader-spinner": "6.1.6",
 		"react-router-dom": "6.6.2",
