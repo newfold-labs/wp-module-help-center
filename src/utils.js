@@ -53,7 +53,7 @@ export const LocalStorageUtils = {
 	persistResult: ( resultContent, postId, searchInput ) => {
 		// Only store the result if resultContent has a value
 		if ( ! resultContent || resultContent.trim() === '' ) {
-			return; // Exit the function if resultContent is empty
+			return;
 		}
 
 		// Retrieve existing results or initialize as an empty array
@@ -113,7 +113,7 @@ export const Analytics = {
 	},
 };
 
-export const useRevealText = ( text, speed = 1 ) => {
+export const useRevealText = ( text, speed = 500 ) => {
 	const [ displayedText, setDisplayedText ] = useState( '' );
 
 	useEffect( () => {
@@ -122,18 +122,20 @@ export const useRevealText = ( text, speed = 1 ) => {
 			return;
 		}
 
+		const words = text.split( ' ' );
 		let index = 0;
 		setDisplayedText( '' );
-
+		// Append words one by one
 		const intervalId = setInterval( () => {
-			setDisplayedText( ( prev ) => prev + text.charAt( index ) );
+			setDisplayedText(
+				( prev ) => prev + ( prev ? ' ' : '' ) + words[ index ]
+			);
 			index++;
-			if ( index >= text.length ) {
+			if ( index >= words.length ) {
 				clearInterval( intervalId );
 			}
 		}, speed );
 
-		// Cleanup interval on component unmount or when text/speed changes
 		return () => clearInterval( intervalId );
 	}, [ text, speed ] );
 

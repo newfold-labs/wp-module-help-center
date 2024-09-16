@@ -1,5 +1,6 @@
 import Feedback from './Feedback';
 import NoResults from './NoResults';
+import { useRevealText } from '../utils';
 import { ReactComponent as UserAvatar } from '../icons/user-avatar.svg';
 import { ReactComponent as AIStars } from '../icons/ai-stars.svg';
 
@@ -15,10 +16,12 @@ export const ResultContent = ( {
 	loadingIndex,
 	index,
 } ) => {
+	const revealedText = useRevealText( content || '', 150 );
+
 	if ( noResult ) {
 		return <NoResults />;
 	}
-	console.log( 'source', source );
+
 	return (
 		<>
 			<div className="helpcenter-response-block">
@@ -38,14 +41,17 @@ export const ResultContent = ( {
 						loadingQuery === questionBlock &&
 						loadingIndex === index &&
 						source === 'ai' ? (
-							<p>Loading</p>
+							<div className="loading-cursor"></div>
 						) : (
 							content &&
 							content.length > 0 && (
 								<p
 									className="helpcenter-results"
 									dangerouslySetInnerHTML={ {
-										__html: content,
+										__html:
+											loadingIndex === index
+												? revealedText
+												: content,
 									} }
 								/>
 							)

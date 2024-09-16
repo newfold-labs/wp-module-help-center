@@ -17,7 +17,6 @@ const SearchResults = ( props ) => {
 	const [ postId, setPostId ] = useState();
 	const [ source, setSource ] = useState( 'kb' );
 	const [ multiResults, setMultiResults ] = useState( {} );
-	// const [ loading, setLoading ] = useState( false );
 	const [ showSuggestions, setShowSuggestions ] = useState( true );
 	const [ loadingQuery, setLoadingQuery ] = useState( null );
 	const [ loadingIndex, setLoadingIndex ] = useState( null );
@@ -26,18 +25,15 @@ const SearchResults = ( props ) => {
 
 	const populateSearchResult = ( resultContent, postId, searchInput ) => {
 		const resultContentFormatted = resultContent.replace( /\n/g, '<br />' );
-		// Retrieve existing results from local storage
-		// Use the updated persistResult method to store the result
+		// Retrieve existing results from local storage and using the updated persistResult method to store the result
 		LocalStorageUtils.persistResult(
 			resultContentFormatted,
 			postId,
 			searchInput
 		);
-		// Add new result to existing results
-		// Retrieve all results from local storage
+		// Add new result to existing results and retrieve all results from local storage
 		const updatedResults = LocalStorageUtils.getResultInfo();
 
-		// Update state with new results
 		setResultContent( updatedResults );
 
 		setPostId( postId );
@@ -46,7 +42,7 @@ const SearchResults = ( props ) => {
 		if ( helpCenterElement ) {
 			helpCenterElement.scrollTo( {
 				top: helpCenterElement.scrollHeight,
-				behavior: 'smooth', // This enables smooth scrolling
+				behavior: 'smooth',
 			} );
 		}
 
@@ -166,7 +162,6 @@ const SearchResults = ( props ) => {
 				setMultiResults( {} );
 				return;
 			}
-			// setLoading( true );
 			setShowSuggestions( true );
 			try {
 				const brand = await CapabilityAPI.getBrand();
@@ -195,7 +190,7 @@ const SearchResults = ( props ) => {
 		debouncedResults.cancel();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [] );
-	console.log( 'reduly', resultContent );
+
 	return (
 		<>
 			<div className="hc-results-container" ref={ containerRef }>
@@ -216,8 +211,8 @@ const SearchResults = ( props ) => {
 							questionBlock={ result.searchInput }
 							isLoading={ isLoading }
 							loadingQuery={ loadingQuery }
-							loadingIndex={ loadingIndex } // Pass the loading index
-							index={ index } // Pass the index of the current query
+							loadingIndex={ loadingIndex }
+							index={ index }
 						/>
 					) ) }
 
@@ -225,16 +220,16 @@ const SearchResults = ( props ) => {
 				{ isLoading && (
 					<ResultContent
 						key="loading"
-						content={ null } // No content while loading
+						content={ null }
 						noResult={ false }
 						postId={ null }
-						source="ai" // Assume loading for AI
+						source="ai"
 						showFeedbackSection={ false }
-						questionBlock={ loadingQuery } // Display the query being loaded
+						questionBlock={ loadingQuery }
 						isLoading={ isLoading }
 						loadingQuery={ loadingQuery }
-						loadingIndex={ loadingIndex } // Pass the loading index
-						index={ resultContent.length } // Pass the index for the loading placeholder
+						loadingIndex={ loadingIndex }
+						index={ resultContent.length }
 					/>
 				) }
 			</div>
@@ -256,7 +251,6 @@ const SearchResults = ( props ) => {
 						</p>
 					) }
 					{ multiResults?.hits?.map( ( result, index ) => {
-						console.log( 'Result', result );
 						const el = document.createElement( 'span' );
 						el.setAttribute( 'display', 'none' );
 						el.innerHTML = result?.group_key;

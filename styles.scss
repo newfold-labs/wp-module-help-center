@@ -402,3 +402,25 @@ body:is(.page, .post-php, .post-new-php) {
 .icon-button {
   cursor: pointer;  
 }
+
+.loading-cursor {
+  display: inline-block;
+  width: 10px;
+  height: 2px;
+  background-color: black;
+  margin-left: 5px;
+  animation: blip 1s infinite;
+  margin-top: 30px;
+}
+
+@keyframes blip {
+  0% {
+      opacity: 1;
+  }
+  50% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
