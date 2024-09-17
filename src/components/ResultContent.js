@@ -23,13 +23,9 @@ export const ResultContent = ( {
 } ) => {
 	const storedResultsLength = LocalStorageUtils.getResultInfo().length;
 
-	// Only apply reveal effect if the result is new and it's the last result
 	const isNewEntry = isNewResult && index === storedResultsLength - 1;
 
-	// Apply the reveal effect for new results, otherwise show content directly
-	const textToDisplay = isNewEntry
-		? useRevealText( content || '', 150 )
-		: content;
+	const textToDisplay = useRevealText( content || '', 150, isNewEntry );
 
 	// Markdown rendering logic with state
 	const MarkdownRenderer = ( { markdownText } ) => {
@@ -39,7 +35,7 @@ export const ResultContent = ( {
 			// Convert Markdown to HTML whenever markdownText changes
 			const convertedHTML = marked( markdownText );
 			setHtmlContent( convertedHTML );
-		}, [ markdownText ] ); // Dependency array ensures this runs on markdownText change
+		}, [ markdownText ] );
 
 		return (
 			<p

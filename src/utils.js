@@ -113,7 +113,7 @@ export const Analytics = {
 	},
 };
 
-export const useRevealText = ( text, speed = 500 ) => {
+export const useRevealText = ( text, speed = 500, startReveal = false ) => {
 	const [ displayedText, setDisplayedText ] = useState( '' );
 
 	useEffect( () => {
@@ -122,22 +122,27 @@ export const useRevealText = ( text, speed = 500 ) => {
 			return;
 		}
 
-		const words = text.split( ' ' );
-		let index = 0;
-		setDisplayedText( '' );
-		// Append words one by one
-		const intervalId = setInterval( () => {
-			setDisplayedText(
-				( prev ) => prev + ( prev ? ' ' : '' ) + words[ index ]
-			);
-			index++;
-			if ( index >= words.length ) {
-				clearInterval( intervalId );
-			}
-		}, speed );
+		// Only trigger the reveal effect if startReveal is true
+		if ( startReveal ) {
+			const words = text.trim().split( ' ' );
+			let index = 0;
+			setDisplayedText( '' );
 
-		return () => clearInterval( intervalId );
-	}, [ text, speed ] );
+			const intervalId = setInterval( () => {
+				if ( index < words.length ) {
+					setDisplayedText(
+						( prev ) => prev + ( prev ? ' ' : '' ) + words[ index ]
+					);
+					index++;
+				} else {
+					clearInterval( intervalId );
+				}
+			}, speed );
+
+			return () => clearInterval( intervalId );
+		}
+		setDisplayedText( text );
+	}, [ text, speed, startReveal ] );
 
 	return displayedText;
 };
