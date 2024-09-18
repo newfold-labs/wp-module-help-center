@@ -113,7 +113,7 @@ export const Analytics = {
 	},
 };
 
-export const useRevealText = ( text, speed = 500, startReveal = false ) => {
+export const useRevealText = ( text, speed = 100, startReveal = false ) => {
 	const [ displayedText, setDisplayedText ] = useState( '' );
 
 	useEffect( () => {

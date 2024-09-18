@@ -25,7 +25,7 @@ export const ResultContent = ( {
 
 	const isNewEntry = isNewResult && index === storedResultsLength - 1;
 
-	const textToDisplay = useRevealText( content || '', 150, isNewEntry );
+	const textToDisplay = useRevealText( content || '', 50, isNewEntry );
 
 	// Markdown rendering logic with state
 	const MarkdownRenderer = ( { markdownText } ) => {
