@@ -124,16 +124,17 @@ export const useRevealText = ( text, speed = 500, startReveal = false ) => {
 
 		// Only trigger the reveal effect if startReveal is true
 		if ( startReveal ) {
-			const words = text.trim().split( ' ' );
+			// Split text and filter out empty strings
+			const words = text.trim().split( ' ' ).filter( Boolean );
 			let index = 0;
-			setDisplayedText( '' );
+
+			// Initialize with the first word
+			setDisplayedText( words[ 0 ] );
 
 			const intervalId = setInterval( () => {
-				if ( index < words.length ) {
-					setDisplayedText(
-						( prev ) => prev + ( prev ? ' ' : '' ) + words[ index ]
-					);
+				if ( index < words.length - 1 ) {
 					index++;
+					setDisplayedText( ( prev ) => prev + ' ' + words[ index ] );
 				} else {
 					clearInterval( intervalId );
 				}
@@ -141,6 +142,7 @@ export const useRevealText = ( text, speed = 500, startReveal = false ) => {
 
 			return () => clearInterval( intervalId );
 		}
+
 		setDisplayedText( text );
 	}, [ text, speed, startReveal ] );
 
