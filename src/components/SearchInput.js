@@ -41,10 +41,8 @@ const SearchInput = ( {
 						} }
 					/>
 					<button
-						onClick={ () => {
-							document
-								.getElementById( 'search-input-box' )
-								.focus();
+						onClick={ async () => {
+							await getAIResult();
 						} }
 					>
 						<GoSearchIcon />
