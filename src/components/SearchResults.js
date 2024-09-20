@@ -39,11 +39,62 @@ const SearchResults = ( props ) => {
 		LocalStorageUtils.persistSearchInput( searchInput );
 		setIsNewResult( true );
 		const helpCenterElement = document.getElementById( 'nfd-help-center' );
-		if ( helpCenterElement ) {
-			helpCenterElement.scrollTo( {
-				top: helpCenterElement.scrollHeight,
-				behavior: 'smooth',
-			} );
+		if ( postId ) {
+			/* if ( helpCenterElement ) {
+				const viewportHeight = window.innerHeight;
+
+				// Calculate the total scroll value (scrollHeight + (viewport height - 354))
+				const scrollValue =
+					helpCenterElement.scrollHeight - ( viewportHeight - 354 );
+
+				// Scroll to the calculated position
+				helpCenterElement.scrollTo( {
+					bottom: scrollValue,
+					behavior: 'smooth', // Smooth scrolling
+				} );
+			} */
+			if ( helpCenterElement ) {
+				// eslint-disable-next-line no-undef
+				const observer = new MutationObserver( ( mutations ) => {
+					mutations.forEach( ( mutation ) => {
+						if ( mutation.addedNodes.length > 0 ) {
+							// Loop through added nodes
+							mutation.addedNodes.forEach( ( node ) => {
+								// Ensure the node is an element node
+								if (
+									// eslint-disable-next-line no-undef
+									node.nodeType === Node.ELEMENT_NODE &&
+									node.classList.contains(
+										'helpcenter-response-block'
+									)
+								) {
+									// Set the height of the new element
+									const viewportHeight = window.innerHeight;
+									const minHeight = viewportHeight - 354;
+									node.style.minHeight = `${ minHeight }px`;
+
+									// Scroll to the bottom of the container after setting the height
+									console.log("scroll heigjt : ", helpCenterElement.scrollHeight)
+									helpCenterElement.scrollTo( {
+										top: helpCenterElement.scrollHeight,
+										behavior: 'smooth',
+									} );
+								}
+							} );
+						}
+					} );
+				} );
+
+				const mainElement = document.getElementsByClassName(
+					'hc-results-container'
+				)[ 0 ];
+
+				// Start observing the container for child additions
+				observer.observe( mainElement, {
+					childList: true, // Listen for child node additions/removals
+					subtree: false, // Only observe direct children
+				} );
+			}
 		}
 
 		if ( postId ) {
@@ -216,6 +267,7 @@ const SearchResults = ( props ) => {
 							loadingIndex={ loadingIndex }
 							index={ index }
 							isNewResult={ isNewResult }
+							searchInput={ searchInput }
 						/>
 					) ) }
 
@@ -234,6 +286,7 @@ const SearchResults = ( props ) => {
 						loadingIndex={ loadingIndex }
 						index={ resultContent.length }
 						isNewResult={ isNewResult }
+						searchInput={ searchInput }
 					/>
 				) }
 			</div>

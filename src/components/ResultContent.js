@@ -20,6 +20,7 @@ export const ResultContent = ( {
 	loadingIndex,
 	index,
 	isNewResult,
+	searchInput,
 } ) => {
 	const storedResultsLength = LocalStorageUtils.getResultInfo().length;
 
@@ -45,10 +46,6 @@ export const ResultContent = ( {
 		);
 	};
 
-	if ( noResult ) {
-		return <NoResults />;
-	}
-
 	return (
 		<>
 			<div className="helpcenter-response-block">
@@ -56,35 +53,47 @@ export const ResultContent = ( {
 					<div className="helpcenter-question__user-avatar">
 						<UserAvatar />
 					</div>
-					<div>{ questionBlock }</div>
+					<div>
+						{ noResult && isNewEntry ? searchInput : questionBlock }
+					</div>
 				</div>
 				<div className="helpcenter-result-block">
 					<div className="helpcenter-result-block__aistars">
 						<AIStars />
 					</div>
 					<div>
-						{ /* Only show "Loading" for the most recent query at the correct index */ }
-						{ isLoading &&
-						loadingQuery === questionBlock &&
-						loadingIndex === index &&
-						source === 'ai' ? (
-							<div className="loading-cursor"></div>
+						{ /* Show NoResults only for the most recent entry with no results */ }
+						{ noResult && isNewEntry ? (
+							<NoResults />
 						) : (
-							content &&
-							content.length > 0 && (
-								<>
-									{ /* If content is Markdown, render it using MarkdownRenderer */ }
-									<MarkdownRenderer
-										markdownText={ textToDisplay }
-									/>
-								</>
-							)
+							<>
+								{ /* Only show "Loading" for the most recent query at the correct index */ }
+								{ isLoading &&
+								loadingQuery === questionBlock &&
+								loadingIndex === index &&
+								source === 'ai' ? (
+									<div className="loading-cursor"></div>
+								) : (
+									content &&
+									content.length > 0 && (
+										<>
+											{ /* If content is Markdown, render it using MarkdownRenderer */ }
+											<MarkdownRenderer
+												markdownText={ textToDisplay }
+											/>
+										</>
+									)
+								) }
+							</>
 						) }
 					</div>
 				</div>
-				{ showFeedbackSection && content && content.length > 0 && (
-					<Feedback postId={ postId } source={ source } />
-				) }
+				{ ! noResult &&
+					showFeedbackSection &&
+					content &&
+					content.length > 0 && (
+						<Feedback postId={ postId } source={ source } />
+					) }
 			</div>
 		</>
 	);
