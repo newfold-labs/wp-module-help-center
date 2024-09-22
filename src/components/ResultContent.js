@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import Feedback from './Feedback';
 import NoResults from './NoResults';
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect, useState, useRef } from '@wordpress/element';
 import { useRevealText, LocalStorageUtils } from '../utils';
 import { ReactComponent as UserAvatar } from '../icons/user-avatar.svg';
 import { ReactComponent as AIStars } from '../icons/ai-stars.svg';
@@ -26,6 +26,25 @@ export const ResultContent = ( {
 
 	const isNewEntry = isNewResult && index === storedResultsLength - 1;
 
+	// Get the viewport height
+	const viewportHeight = window.innerHeight;
+
+	const responseRef = useRef( null );
+
+	// Set height and scroll into view BEFORE the reveal effect starts
+	useEffect( () => {
+		if ( isNewEntry && responseRef.current ) {
+			// Set the height of the new element to the viewport height
+			responseRef.current.style.minHeight = `${ viewportHeight }px`;
+
+			// Scroll the response block into view at the top of the window
+			responseRef.current.scrollIntoView( {
+				behavior: 'smooth', // Smooth scroll
+				block: 'start', // Align with the top of the viewport
+			} );
+		}
+	}, [ isNewEntry, viewportHeight ] );
+
 	const { displayedText: textToDisplay, isComplete: revealComplete } =
 		useRevealText( content || '', 50, isNewEntry );
 
@@ -49,7 +68,7 @@ export const ResultContent = ( {
 
 	return (
 		<>
-			<div className="helpcenter-response-block">
+			<div ref={ responseRef } className="helpcenter-response-block">
 				<div className="helpcenter-question-block">
 					<div className="helpcenter-question__user-avatar">
 						<UserAvatar />
