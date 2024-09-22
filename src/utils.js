@@ -115,10 +115,12 @@ export const Analytics = {
 
 export const useRevealText = ( text, speed = 100, startReveal = false ) => {
 	const [ displayedText, setDisplayedText ] = useState( '' );
+	const [ isComplete, setIsComplete ] = useState( false );
 
 	useEffect( () => {
 		if ( ! text ) {
 			setDisplayedText( '' );
+			setIsComplete( false );
 			return;
 		}
 
@@ -130,6 +132,7 @@ export const useRevealText = ( text, speed = 100, startReveal = false ) => {
 
 			// Initialize with the first word
 			setDisplayedText( words[ 0 ] );
+			setIsComplete( false );
 
 			const intervalId = setInterval( () => {
 				if ( index < words.length - 1 ) {
@@ -137,6 +140,7 @@ export const useRevealText = ( text, speed = 100, startReveal = false ) => {
 					setDisplayedText( ( prev ) => prev + ' ' + words[ index ] );
 				} else {
 					clearInterval( intervalId );
+					setIsComplete( true );
 				}
 			}, speed );
 
@@ -144,7 +148,8 @@ export const useRevealText = ( text, speed = 100, startReveal = false ) => {
 		}
 
 		setDisplayedText( text );
+		setIsComplete( true );
 	}, [ text, speed, startReveal ] );
 
-	return displayedText;
+	return { displayedText, isComplete };
 };

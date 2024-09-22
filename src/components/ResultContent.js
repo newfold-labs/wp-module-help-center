@@ -26,7 +26,8 @@ export const ResultContent = ( {
 
 	const isNewEntry = isNewResult && index === storedResultsLength - 1;
 
-	const textToDisplay = useRevealText( content || '', 50, isNewEntry );
+	const { displayedText: textToDisplay, isComplete: revealComplete } =
+		useRevealText( content || '', 50, isNewEntry );
 
 	// Markdown rendering logic with state
 	const MarkdownRenderer = ( { markdownText } ) => {
@@ -91,6 +92,7 @@ export const ResultContent = ( {
 				{ ! noResult &&
 					showFeedbackSection &&
 					content &&
+					revealComplete &&
 					content.length > 0 && (
 						<Feedback postId={ postId } source={ source } />
 					) }
