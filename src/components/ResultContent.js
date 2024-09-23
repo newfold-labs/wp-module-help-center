@@ -29,9 +29,10 @@ export const ResultContent = ( {
 	// Get the viewport height
 	const viewportHeight = window.innerHeight;
 
+	// const [ shouldReveal, setShouldReveal ] = useState( false );
 	const responseRef = useRef( null );
 
-	// Set height and scroll into view BEFORE the reveal effect starts
+	/* // Set height and scroll into view BEFORE the reveal effect starts
 	useEffect( () => {
 		if ( isNewEntry && responseRef.current ) {
 			// Set the height of the new element to the viewport height
@@ -40,10 +41,35 @@ export const ResultContent = ( {
 			// Scroll the response block into view at the top of the window
 			responseRef.current.scrollIntoView( {
 				behavior: 'smooth', // Smooth scroll
-				block: 'start', // Align with the top of the viewport
+				block: 'end', // Align with the top of the viewport
 			} );
 		}
-	}, [ isNewEntry, viewportHeight ] );
+	}, [ isNewEntry, viewportHeight ] ); */
+	// Scroll logic inside the child component using the containerRef passed from the parent
+	// Scroll logic inside the child component using the container's ID
+	// Manually scroll the element inside the container
+	/* useEffect( () => {
+		// Get the scrollable container by ID
+		const container = document.getElementById( 'nfd-help-center' );
+
+		if ( responseRef.current && container && isNewEntry ) {
+			// Get the target element's position relative to the container
+			const elementTop = responseRef.current.getBoundingClientRect().top;
+			const containerTop = container.getBoundingClientRect().top;
+
+			// Calculate the scroll position within the container
+			const scrollToPosition = container.scrollHeight;
+			// Scroll the container to the calculated position
+			container.scrollTo( {
+				top: scrollToPosition,
+				behavior: 'smooth', // Smooth scroll
+			} );
+			setTimeout( () => {
+				// Once scroll is complete, start the reveal effect
+				setShouldReveal( true );
+			}, 5000 );
+		}
+	}, [ isNewEntry ] ); */
 
 	const { displayedText: textToDisplay, isComplete: revealComplete } =
 		useRevealText( content || '', 50, isNewEntry );

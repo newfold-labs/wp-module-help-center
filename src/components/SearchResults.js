@@ -189,6 +189,28 @@ const SearchResults = ( props ) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [] );
 
+	const handleSuggestionsClick = ( result, postTitle ) => {
+		setSearchInput( postTitle );
+		setShowSuggestions( false );
+		const container = document.getElementById( 'nfd-help-center' );
+
+		// Calculate the scroll position within the container
+		const scrollToPosition = container.scrollHeight;
+		// Scroll the container to the calculated position
+		container.scrollTo( {
+			top: scrollToPosition,
+			behavior: 'smooth', // Smooth scroll
+		} );
+		setTimeout( () => {
+			// Once scroll is complete, start the reveal effect
+			populateSearchResult(
+				result?.hits[ 0 ]?.document?.post_content,
+				result?.hits[ 0 ]?.document?.id,
+				postTitle
+			);
+		}, 1000 );
+	};
+
 	return (
 		<>
 			<div className="hc-results-container">
@@ -264,12 +286,8 @@ const SearchResults = ( props ) => {
 									key={ index }
 									searchTitle={ postTitle }
 									onGo={ () => {
-										setSearchInput( postTitle );
-										setShowSuggestions( false );
-										populateSearchResult(
-											result?.hits[ 0 ]?.document
-												?.post_content,
-											result?.hits[ 0 ]?.document?.id,
+										handleSuggestionsClick(
+											result,
 											postTitle
 										);
 									} }
