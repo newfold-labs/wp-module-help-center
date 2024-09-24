@@ -5,7 +5,6 @@ import { useEffect, useState, useRef } from '@wordpress/element';
 import { useRevealText, LocalStorageUtils } from '../utils';
 import { ReactComponent as UserAvatar } from '../icons/user-avatar.svg';
 import { ReactComponent as AIStars } from '../icons/ai-stars.svg';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { marked } from 'marked';
 
 export const ResultContent = ( {
@@ -26,60 +25,35 @@ export const ResultContent = ( {
 
 	const isNewEntry = isNewResult && index === storedResultsLength - 1;
 
-	// Get the viewport height
-	const viewportHeight = window.innerHeight;
-
-	// const [ shouldReveal, setShouldReveal ] = useState( false );
+	const [ shouldReveal, setShouldReveal ] = useState( false );
 	const responseRef = useRef( null );
 
-	/* // Set height and scroll into view BEFORE the reveal effect starts
 	useEffect( () => {
-		if ( isNewEntry && responseRef.current ) {
-			// Set the height of the new element to the viewport height
-			responseRef.current.style.minHeight = `${ viewportHeight }px`;
-
-			// Scroll the response block into view at the top of the window
-			responseRef.current.scrollIntoView( {
-				behavior: 'smooth', // Smooth scroll
-				block: 'end', // Align with the top of the viewport
+		if ( ( isNewEntry && responseRef.current ) || isLoading ) {
+			const viewportHeight = window.innerHeight;
+			const minHeight = viewportHeight - 332;
+			responseRef.current.style.minHeight = `${ minHeight }px`;
+			const helpcenterResultsWrapper = document.getElementById(
+				'helpcenterResultsWrapper'
+			);
+			const scrollDistance = helpcenterResultsWrapper.scrollHeight;
+			helpcenterResultsWrapper.scrollBy( {
+				top: scrollDistance,
+				left: 0,
+				behavior: 'smooth',
 			} );
-		}
-	}, [ isNewEntry, viewportHeight ] ); */
-	// Scroll logic inside the child component using the containerRef passed from the parent
-	// Scroll logic inside the child component using the container's ID
-	// Manually scroll the element inside the container
-	/* useEffect( () => {
-		// Get the scrollable container by ID
-		const container = document.getElementById( 'nfd-help-center' );
 
-		if ( responseRef.current && container && isNewEntry ) {
-			// Get the target element's position relative to the container
-			const elementTop = responseRef.current.getBoundingClientRect().top;
-			const containerTop = container.getBoundingClientRect().top;
-
-			// Calculate the scroll position within the container
-			const scrollToPosition = container.scrollHeight;
-			// Scroll the container to the calculated position
-			container.scrollTo( {
-				top: scrollToPosition,
-				behavior: 'smooth', // Smooth scroll
-			} );
-			setTimeout( () => {
-				// Once scroll is complete, start the reveal effect
-				setShouldReveal( true );
-			}, 5000 );
+			setShouldReveal( true );
 		}
-	}, [ isNewEntry ] ); */
+	}, [ isNewEntry, isLoading ] );
 
 	const { displayedText: textToDisplay, isComplete: revealComplete } =
-		useRevealText( content || '', 50, isNewEntry );
+		useRevealText( content || '', 50, shouldReveal && isNewEntry );
 
-	// Markdown rendering logic with state
 	const MarkdownRenderer = ( { markdownText } ) => {
 		const [ htmlContent, setHtmlContent ] = useState( '' );
 
 		useEffect( () => {
-			// Convert Markdown to HTML whenever markdownText changes
 			const convertedHTML = marked( markdownText );
 			setHtmlContent( convertedHTML );
 		}, [ markdownText ] );
@@ -94,7 +68,14 @@ export const ResultContent = ( {
 
 	return (
 		<>
-			<div ref={ responseRef } className="helpcenter-response-block">
+			<div
+				ref={ responseRef }
+				className={
+					isNewEntry
+						? 'helpcenter-response-block last-block'
+						: 'helpcenter-response-block'
+				}
+			>
 				<div className="helpcenter-question-block">
 					<div className="helpcenter-question__user-avatar">
 						<UserAvatar />
@@ -123,7 +104,6 @@ export const ResultContent = ( {
 									content &&
 									content.length > 0 && (
 										<>
-											{ /* If content is Markdown, render it using MarkdownRenderer */ }
 											<MarkdownRenderer
 												markdownText={ textToDisplay }
 											/>

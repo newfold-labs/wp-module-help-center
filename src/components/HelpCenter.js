@@ -38,7 +38,7 @@ const HelpCenter = ( props ) => {
 	}
 
 	return (
-		<div className="nfd-help-center">
+		<div className="nfd-help-center" id="helpcenterResultsWrapper">
 			<HelpCenterIntro />
 			<SearchResults refresh={ props.refresh } />
 		</div>

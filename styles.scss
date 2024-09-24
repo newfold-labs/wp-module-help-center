@@ -37,6 +37,10 @@ $blue-night-sky: #7A889D;
 }
 
 .nfd-help-center {
+  position: relative;
+  height: calc(100vh - 332px);
+  overflow-y: auto;
+  
   p{
     font-size: 14px;
     br{
@@ -310,7 +314,7 @@ $blue-night-sky: #7A889D;
   }
 
   .hc-results-container{
-    padding-bottom: 508px;
+    // padding-bottom: 508px;
 
     .helpcenter-results{
       padding: 0 12px;
@@ -345,7 +349,7 @@ $blue-night-sky: #7A889D;
 
 .help-container {
   width: 356px;
-  height: 100vh;
+  // height: 100vh;
   overflow: auto;
   position: fixed;
   right: 0;

@@ -23,6 +23,7 @@ const SearchResults = ( props ) => {
 	const [ isNewResult, setIsNewResult ] = useState( false );
 
 	const populateSearchResult = ( resultContent, postId, searchInput ) => {
+		console.log( 'populate reuslt' );
 		const resultContentFormatted = resultContent.replace( /\n/g, '<br />' );
 		// Retrieve existing results from local storage and using the updated persistResult method to store the result
 		LocalStorageUtils.persistResult(
@@ -37,9 +38,10 @@ const SearchResults = ( props ) => {
 
 		setPostId( postId );
 		LocalStorageUtils.persistSearchInput( searchInput );
-		setIsNewResult( true );
+
 		// const helpCenterElement = document.getElementById( 'nfd-help-center' );
 		if ( postId ) {
+			setIsNewResult( true );
 		}
 
 		if ( postId ) {
@@ -192,23 +194,11 @@ const SearchResults = ( props ) => {
 	const handleSuggestionsClick = ( result, postTitle ) => {
 		setSearchInput( postTitle );
 		setShowSuggestions( false );
-		const container = document.getElementById( 'nfd-help-center' );
-
-		// Calculate the scroll position within the container
-		const scrollToPosition = container.scrollHeight;
-		// Scroll the container to the calculated position
-		container.scrollTo( {
-			top: scrollToPosition,
-			behavior: 'smooth', // Smooth scroll
-		} );
-		setTimeout( () => {
-			// Once scroll is complete, start the reveal effect
-			populateSearchResult(
-				result?.hits[ 0 ]?.document?.post_content,
-				result?.hits[ 0 ]?.document?.id,
-				postTitle
-			);
-		}, 1000 );
+		populateSearchResult(
+			result?.hits[ 0 ]?.document?.post_content,
+			result?.hits[ 0 ]?.document?.id,
+			postTitle
+		);
 	};
 
 	return (
