@@ -40,7 +40,7 @@ $blue-night-sky: #7A889D;
   position: relative;
   height: calc(100vh - 332px);
   overflow-y: auto;
-  
+
   p{
     font-size: 14px;
     br{
@@ -349,8 +349,8 @@ $blue-night-sky: #7A889D;
 
 .help-container {
   width: 356px;
-  // height: 100vh;
-  overflow: auto;
+  height: 100vh;
+  overflow: hidden;
   position: fixed;
   right: 0;
   background: $white;
