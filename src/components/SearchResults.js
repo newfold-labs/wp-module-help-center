@@ -23,7 +23,6 @@ const SearchResults = ( props ) => {
 	const [ isNewResult, setIsNewResult ] = useState( false );
 
 	const populateSearchResult = ( resultContent, postId, searchInput ) => {
-		console.log( 'populate reuslt' );
 		const resultContentFormatted = resultContent.replace( /\n/g, '<br />' );
 		// Retrieve existing results from local storage and using the updated persistResult method to store the result
 		LocalStorageUtils.persistResult(
@@ -113,42 +112,65 @@ const SearchResults = ( props ) => {
 		return fieldsMatched >= 1 && tokensPerQuery >= 0.99;
 	};
 
-	const getAIResult = async () => {
-		setIsLoading( true );
-		setShowSuggestions( false );
-		setLoadingQuery( searchInput );
-		setLoadingIndex( resultContent.length );
-		try {
-			// Check if the algolia results are close enough
-			const hits = multiResults.hits[ 0 ].hits;
-			const resultMatches =
-				hits.length > 0
-					? getResultMatches(
-							searchInput,
-							hits[ 0 ].text_match_info?.tokens_matched,
-							hits[ 0 ].text_match_info?.fields_matched
-					  )
-					: false;
+	const checkAndPopulateResult = ( hits, searchInput ) => {
+		if ( hits?.length > 0 ) {
+			const resultMatches = getResultMatches(
+				searchInput,
+				hits[ 0 ]?.text_match_info?.tokens_matched,
+				hits[ 0 ]?.text_match_info?.fields_matched
+			);
+
 			if ( resultMatches ) {
 				populateSearchResult(
 					hits[ 0 ].document.post_content,
 					hits[ 0 ].document.post_id,
 					searchInput
 				);
-				return;
+				return true;
 			}
+		}
+		return false;
+	};
+
+	const getAIResult = async () => {
+		setIsLoading( true );
+		setShowSuggestions( false );
+		setLoadingQuery( searchInput );
+		setLoadingIndex( resultContent.length );
+		try {
+			// Check existing multiResults
+			let hits = multiResults?.hits?.[ 0 ]?.hits;
+			if ( checkAndPopulateResult( hits, searchInput ) ) return;
+
+			// Make a new multi-search API call if no match is found
+			const brand = await CapabilityAPI.getBrand();
+			const multiSearchResults = await fetchMultiSearchResults(
+				searchInput,
+				brand
+			);
+			hits =
+				multiSearchResults?.results?.[ 0 ]?.grouped_hits?.[ 0 ]?.hits;
+			if ( checkAndPopulateResult( hits, searchInput ) ) return;
+
 			setSource( 'ai' );
 			const result = await moduleAI.search.getSearchResult(
 				searchInput,
 				'helpcenter'
 			);
-			populateSearchResult(
-				result.result[ 0 ].text,
-				result.post_id,
-				searchInput
-			);
+			if ( result.result[ 0 ] ) {
+				populateSearchResult(
+					result.result[ 0 ].text,
+					result.post_id,
+					searchInput
+				);
+			} else {
+				setNoResult( true );
+			}
 		} catch ( exception ) {
+			// eslint-disable-next-line no-console
+			console.error( 'An error occurred:', exception );
 			setNoResult( true );
+			setIsNewResult( true ); // to display no result error only for the upcoming result.
 		} finally {
 			setLoadingQuery( null );
 			setIsLoading( false );

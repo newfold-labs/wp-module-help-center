@@ -1,4 +1,5 @@
-import { __ } from '@wordpress/i18n'; // Assuming you're using this loader
+import { useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 import { ReactComponent as GoSearchIcon } from '../icons/paper-airplane.svg';
 import { ReactComponent as PhoneIcon } from '../icons/phone.svg';
 import { ReactComponent as ChatIcon } from '../icons/chat-bubble.svg';
@@ -11,6 +12,22 @@ const SearchInput = ( {
 	setNoResult,
 	getAIResult,
 } ) => {
+	const [ error, setError ] = useState( '' );
+
+	const validateInput = () => {
+		if ( ! searchInput.trim() ) {
+			setError(
+				__(
+					'Please enter a specific search term to get results.',
+					'wp-module-help-center'
+				)
+			);
+			return false;
+		}
+		setError( '' );
+		return true;
+	};
+
 	return (
 		<div className="helpcenter-input-wrapper">
 			<div className="search-container__wrapper">
@@ -25,6 +42,7 @@ const SearchInput = ( {
 							'wp-module-help-center'
 						) }
 						onChange={ ( e ) => {
+							setError( '' );
 							setSearchInput( e.target.value );
 							populateSearchResult(
 								'',
@@ -35,21 +53,24 @@ const SearchInput = ( {
 							debouncedResults( e.target.value );
 						} }
 						onKeyDown={ async ( e ) => {
-							if ( e.key === 'Enter' ) {
+							if ( e.key === 'Enter' && validateInput() ) {
 								await getAIResult();
 							}
 						} }
 					/>
 					<button
 						onClick={ async () => {
-							await getAIResult();
+							if ( validateInput() ) {
+								await getAIResult();
+							}
 						} }
 					>
 						<GoSearchIcon />
 					</button>
 				</div>
+				{ error && <p className="hc-input-error-message">{ error }</p> }
 				<div className="attribute">
-					<p>
+					<p className="hc-input-counter">
 						<span>
 							{ searchInput ? searchInput.length : 0 }/144
 						</span>
@@ -57,7 +78,7 @@ const SearchInput = ( {
 				</div>
 			</div>
 			<div className="helpcenter-supportinfo__wrapper">
-				<div className="">
+				<div>
 					<h4>
 						{ __( 'Account Support', 'wp-module-help-center' ) }
 					</h4>

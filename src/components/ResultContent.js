@@ -86,7 +86,7 @@ export const ResultContent = ( {
 			content.length > 0
 		);
 	}
-
+	console.log( 'is no result:', noResult, 'is new entry:', isNewEntry );
 	return (
 		<>
 			<div ref={ responseRef } className="helpcenter-response-block">
