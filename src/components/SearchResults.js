@@ -274,15 +274,10 @@ const SearchResults = ( props ) => {
 					{ multiResults?.hits?.length > 0 && (
 						<p>
 							<b>
-								{ resultContent?.length > 0
-									? __(
-											'Common Topics',
-											'wp-module-help-center'
-									  )
-									: __(
-											'Search Suggestions',
-											'wp-module-help-center'
-									  ) }
+								{ __(
+									'Common Topics',
+									'wp-module-help-center'
+								) }
 							</b>
 						</p>
 					) }

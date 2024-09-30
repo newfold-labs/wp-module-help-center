@@ -24,10 +24,10 @@ const Modal = ( { onClose } ) => {
 	}, [] );
 
 	return (
-		<div className="modal">
-			<div className="modal-header">
-				<h3 className="heading">
-					<span className="icon">
+		<div className="nfd-hc-modal">
+			<div className="nfd-hc-modal__header">
+				<h3 className="nfd-hc-modal__header__heading">
+					<span className="nfd-hc-modal__header__heading__icon">
 						<Help />
 					</span>
 					<span>
@@ -35,13 +35,13 @@ const Modal = ( { onClose } ) => {
 					</span>
 				</h3>
 				<button
-					className="close-button"
+					className="nfd-hc-modal__header__close-button"
 					onClick={ () => {
 						onClose();
 						setRefresh( ! refresh );
 					} }
 				>
-					<div className="icon-button">
+					<div className="nfd-hc-modal__header__close-button__icon-button">
 						<CloseIcon />
 					</div>
 				</button>

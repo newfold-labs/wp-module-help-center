@@ -2,58 +2,58 @@ $gray-text: #394150;
 $container-width: 350px;
 
 #nfd-help-center {
-  box-sizing: border-box;
+	box-sizing: border-box;
 
-  .modal {
-    padding-bottom: 32px;
+	.nfd-hc-modal {
+		padding-bottom: 32px;
 
-    h4,
-    h3 {
-      margin: 0;
-    }
+		h4,
+		h3 {
+			margin: 0;
+		}
 
-    .modal-header {
-	  background-color: #fff;
-      display: flex;
-      justify-content: space-between;
-	  align-items: center;
-      position: sticky;
-	  width: $container-width;
-	  height: 48px;
-	  top:0;
-	  left:0;
-	  border-bottom: 1px solid #dddfe0;
+		&__header {
+			background-color: #fff;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			position: sticky;
+			width: $container-width;
+			height: 48px;
+			top: 0;
+			left: 0;
+			border-bottom: 1px solid #dddfe0;
 
-      .heading {
-        font-size: 20px;
-        line-height: 24px;
-        font-weight: normal;
-        color: $gray-text;
-		padding-top: 4px;
+			&__heading {
+				font-size: 20px;
+				line-height: 24px;
+				font-weight: 400;
+				color: $gray-text;
+				padding-top: 4px;
 
-        .icon {
-          margin-right: 12px;
-		  margin-left: 12px;
-		  vertical-align: middle;
-        }
-      }
+				&__icon {
+					margin-right: 12px;
+					margin-left: 12px;
+					vertical-align: middle;
+				}
+			}
 
-      .close-button {
-        border: 0;
-        background: none;
-		margin-right: 1px;
-      }
-    }
-  }
-  
-  .helpcenter-intro{
-	padding: 12px;
-	display: flex;
-	justify-content: flex-start;	
-	align-items: stretch;
-
-	&__text{
-		padding: 0 8px;
+			&__close-button {
+				border: 0;
+				background: none;
+				margin-right: 1px;
+			}
+		}
 	}
-  }
+
+	.helpcenter-intro {
+		padding: 12px;
+		display: flex;
+		justify-content: flex-start;
+		align-items: stretch;
+
+		&__text {
+			padding: 0 8px;
+		}
+	}
 }
