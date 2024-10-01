@@ -33,6 +33,25 @@ const HelpCenter = ( props ) => {
 		};
 	}, [] );
 
+	useEffect( () => {
+		const handleHeartbeat = ( event, data ) => {
+			if (
+				data.hasOwnProperty( 'wp-auth-check' ) &&
+				! data[ 'wp-auth-check' ]
+			) {
+				// WordPress auth check failed, session is expired, Clear relevant localStorage data
+				LocalStorageUtils.clear();
+			}
+		};
+
+		// Listening to the WordPress Heartbeat tick event to check user session
+		window.jQuery( document ).on( 'heartbeat-tick', handleHeartbeat );
+
+		return () => {
+			window.jQuery( document ).off( 'heartbeat-tick', handleHeartbeat );
+		};
+	}, [] );
+
 	if ( ! helpEnabled || ! visible ) {
 		return <></>;
 	}
