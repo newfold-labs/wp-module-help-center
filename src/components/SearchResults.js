@@ -173,6 +173,7 @@ const SearchResults = ( props ) => {
 			setLoadingQuery( null );
 			setIsLoading( false );
 			setLoadingIndex( null );
+			setShowSuggestions( false );
 		}
 	};
 
@@ -197,8 +198,6 @@ const SearchResults = ( props ) => {
 			} catch ( error ) {
 				// eslint-disable-next-line no-console
 				console.error( 'Error fetching debounced results:', error );
-			} finally {
-				setShowSuggestions( false );
 			}
 		}, 500 );
 		// eslint-disable-next-line react-hooks/exhaustive-deps
