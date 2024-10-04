@@ -319,7 +319,6 @@ $blue-night-sky: #7A889D;
   }
 
   .hc-results-container{
-    // padding-bottom: 508px;
 
     .helpcenter-results{
       padding: 0 12px;
@@ -343,6 +342,19 @@ $blue-night-sky: #7A889D;
       align-items: stretch;
       gap: 8px;
       padding: 12px;
+
+      /* Reset default styles */
+      ul, ol {
+        margin: 0;
+        padding: 0;
+        list-style-position: inside;
+      }
+
+      /* Standardize list items */
+      li {
+        margin: 0;
+        padding: 0;
+      }
 
       &__aistars{
         padding-top: 12px;

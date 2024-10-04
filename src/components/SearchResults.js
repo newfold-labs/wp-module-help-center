@@ -38,7 +38,6 @@ const SearchResults = ( props ) => {
 		setPostId( postId );
 		LocalStorageUtils.persistSearchInput( searchInput );
 
-		// const helpCenterElement = document.getElementById( 'nfd-help-center' );
 		if ( postId ) {
 			setIsNewResult( true );
 		}
@@ -98,7 +97,6 @@ const SearchResults = ( props ) => {
 
 	useEffect( () => {
 		setSearchInput( '' );
-		setResultContent( [] );
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ props.refresh ] );
 
@@ -123,7 +121,7 @@ const SearchResults = ( props ) => {
 			if ( resultMatches ) {
 				populateSearchResult(
 					hits[ 0 ].document.post_content,
-					hits[ 0 ].document.post_id,
+					hits[ 0 ].document.post_id || hits[ 0 ].document.id,
 					searchInput
 				);
 				return true;
@@ -200,8 +198,7 @@ const SearchResults = ( props ) => {
 				// eslint-disable-next-line no-console
 				console.error( 'Error fetching debounced results:', error );
 			} finally {
-				// setLoading( false );
-				// setShowSuggestions( false );
+				setShowSuggestions( false );
 			}
 		}, 500 );
 		// eslint-disable-next-line react-hooks/exhaustive-deps

@@ -23,7 +23,6 @@ export const ResultContent = ( {
 	const isNewEntry =
 		isNewResult && index === LocalStorageUtils.getResultInfo().length - 1;
 	const responseRef = useRef( null );
-
 	const [ shouldReveal, setShouldReveal ] = useState( false );
 
 	useEffect( () => {
@@ -50,13 +49,49 @@ export const ResultContent = ( {
 		setShouldReveal( true );
 	};
 
+	/* Parse the html in string to a document node, replace the <p>  tags with a fragment and line break */
+	const processContentForMarkdown = ( textToDisplay ) => {
+		if ( textToDisplay ) {
+			// eslint-disable-next-line no-undef
+			const parser = new DOMParser();
+			const doc = parser.parseFromString( textToDisplay, 'text/html' );
+
+			const paragraphElements = doc.querySelectorAll( 'p' );
+
+			paragraphElements.forEach( ( p ) => {
+				// Create a DocumentFragment to hold the content and <br> tags
+				const fragment = document.createDocumentFragment();
+
+				// Append all child nodes of the <p> to the fragment
+				while ( p.firstChild ) {
+					fragment.appendChild( p.firstChild );
+				}
+
+				const br1 = document.createElement( 'br' );
+				const br2 = document.createElement( 'br' );
+				fragment.appendChild( br1 );
+				fragment.appendChild( br2 );
+
+				// Replace the <p> element with the fragment
+				p.parentNode.replaceChild( fragment, p );
+			} );
+
+			const updatedContent = doc.body.innerHTML;
+			return updatedContent;
+		}
+		return '';
+	};
+
 	const { displayedText: textToDisplay, isComplete: revealComplete } =
 		useRevealText( content || '', 50, shouldReveal );
 
-	const htmlContent = useMemo(
-		() => marked( textToDisplay ),
-		[ textToDisplay ]
-	);
+	const htmlContent = useMemo( () => {
+		const processedHTMLContent = processContentForMarkdown( textToDisplay );
+		const markedContent = processedHTMLContent
+			? marked( processedHTMLContent )
+			: '';
+		return markedContent;
+	}, [ textToDisplay ] );
 
 	function renderContentOrLoading() {
 		if (

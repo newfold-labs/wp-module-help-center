@@ -69,7 +69,6 @@ window.newfoldEmbeddedHelp = {
 					<Modal
 						onClose={ () => {
 							toggleHelp( false );
-							LocalStorageUtils.clear();
 						} }
 					/>
 				);
@@ -78,7 +77,6 @@ window.newfoldEmbeddedHelp = {
 					<Modal
 						onClose={ () => {
 							toggleHelp( false );
-							LocalStorageUtils.clear();
 						} }
 					/>,
 					DOM_TARGET
