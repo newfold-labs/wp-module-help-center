@@ -32,9 +32,11 @@ export const CapabilityAPI = {
 	getHelpCenterCapability: () => {
 		return window.NewfoldRuntime?.capabilities?.canAccessHelpCenter || false ;
 	},
-	getBrand: () => {
-		return window.NewfoldRuntime?.plugin?.brand || false ;
-	},
+	getBrand: () =>
+		apiFetch( {
+			path: base + '/capability/brand',
+			method: 'GET',
+		} ),
 };
 
 // A wrapper to get and set things more easily
