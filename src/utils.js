@@ -29,16 +29,12 @@ export const OnboardingAPIs = {
 };
 
 export const CapabilityAPI = {
-	getHelpCenterCapability: () =>
-		apiFetch( {
-			path: base + '/capability',
-			method: 'GET',
-		} ),
-	getBrand: () =>
-		apiFetch( {
-			path: base + '/capability/brand',
-			method: 'GET',
-		} ),
+	getHelpCenterCapability: () => {
+		return window.NewfoldRuntime?.capabilities?.canAccessHelpCenter || false ;
+	},
+	getBrand: () => {
+		return window.NewfoldRuntime?.plugin?.brand || false ;
+	},
 };
 
 // A wrapper to get and set things more easily
