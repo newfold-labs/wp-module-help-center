@@ -30,7 +30,9 @@ export const OnboardingAPIs = {
 
 export const CapabilityAPI = {
 	getHelpCenterCapability: () => {
-		return window.NewfoldRuntime?.capabilities?.canAccessHelpCenter || false ;
+		return (
+			window.NewfoldRuntime?.capabilities?.canAccessHelpCenter || false
+		);
 	},
 	getBrand: () =>
 		apiFetch( {
