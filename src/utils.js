@@ -39,7 +39,10 @@ export const CapabilityAPI = {
 		// get the brand name from newfold runtime
 		const brand = window.NewfoldRuntime?.plugin?.brand || 'wordpress';
 		// add region if HostGator
-		if ( brand.includes( 'hostgator' ) ) {
+		if (
+			brand.includes( 'hostgator' ) &&
+			window.NewfoldRuntime?.plugin?.region
+		) {
 			return brand + '-' + window.NewfoldRuntime?.plugin?.region;
 		}
 		return brand;
