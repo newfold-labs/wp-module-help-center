@@ -31,14 +31,19 @@ export const OnboardingAPIs = {
 export const CapabilityAPI = {
 	getHelpCenterCapability: () => {
 		return (
+			// get the help center capability from newfold runtime
 			window.NewfoldRuntime?.capabilities?.canAccessHelpCenter || false
 		);
 	},
-	getBrand: () =>
-		apiFetch( {
-			path: base + '/capability/brand',
-			method: 'GET',
-		} ),
+	getBrand: () => {
+		// get the brand name from newfold runtime
+		const brand = window.NewfoldRuntime?.plugin?.brand || 'wordpress';
+		// add region if HostGator
+		if ( brand.includes( 'hostgator' ) ) {
+			return brand + '-' + window.NewfoldRuntime?.plugin?.region;
+		}
+		return brand;
+	},
 };
 
 // A wrapper to get and set things more easily
