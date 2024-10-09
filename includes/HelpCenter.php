@@ -101,7 +101,7 @@ class HelpCenter {
             \wp_register_script(
 				self::$slug,
                 NFD_HELPCENTER_PLUGIN_URL . 'vendor/newfold-labs/wp-module-help-center/build/index.js',
-				array_merge( $asset['dependencies'], array() ),
+				array_merge( $asset['dependencies'], array(), array( 'jquery', 'heartbeat' ) ),
 				$asset['version'],
 				true
 			);
@@ -130,6 +130,33 @@ class HelpCenter {
                 ) . ';',
                 'before'
             );
+
+            /* Remove values on log out */
+            $logout_listener_js = <<<JS
+            jQuery(document).ready(function ($) {
+                $('a[href*="wp-login.php?action=logout"]').on('click', function () {
+                    localStorage.removeItem('helpResultContent');
+                    localStorage.removeItem('searchInput');
+                    localStorage.removeItem('helpVisible');
+                });
+            });
+            JS;
+
+            \wp_add_inline_script( self::$slug, $logout_listener_js );
+
+             /* Remove values when the user is logged out */
+            $session_expiration_js = <<<JS
+            jQuery(document).on('heartbeat-tick', function (event, data) {
+                if (data.hasOwnProperty('wp-auth-check') && data['wp-auth-check'] === false) {
+                    localStorage.removeItem('helpResultContent');
+                    localStorage.removeItem('searchInput');
+                    localStorage.removeItem('helpVisible');
+                }
+            });
+            JS;
+
+            \wp_add_inline_script( self::$slug, $session_expiration_js );
+
         }
     }
 }
