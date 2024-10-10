@@ -1,32 +1,30 @@
 import { __ } from '@wordpress/i18n';
-import { ReactComponent as NoResultIllustration } from '../icons/no-result.svg';
-import ResourceLink from './ResourceLink';
 
 const NoResults = () => {
+	const resourceLink = window?.nfdHelpCenter?.resourceLink || '#'; // Fallback if resourceLink is not defined
+
+	// Define the content with a placeholder for the link
+	const contentWithLink = __(
+		'You can try searching our <a href="{link}">Resource center.</a> though to see if there’s a helpful article or video on that subject.',
+		'wp-module-help-center'
+	);
+
+	// Replace the {link} placeholder with the actual link
+	const formattedContent = contentWithLink.replace( '{link}', resourceLink );
+
 	return (
 		<div>
 			<p>
 				{ __(
-					'Result based on your search:',
+					'Sorry, I don’t have any information on that topic yet.',
 					'wp-module-help-center'
 				) }
 			</p>
-			<h4>
-				{ __(
-					"Sorry, we don't have any content for that yet.",
-					'wp-module-help-center'
-				) }
-			</h4>
-			<hr />
-			<NoResultIllustration />
-			<p>
-				{ __(
-					"This tool is being built and doesn't always have a match.",
-					'wp-module-help-center'
-				) }
-			</p>
-			<ResourceLink />
-			<hr />
+			<p
+				dangerouslySetInnerHTML={ {
+					__html: formattedContent,
+				} }
+			/>
 		</div>
 	);
 };
