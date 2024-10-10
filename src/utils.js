@@ -29,16 +29,24 @@ export const OnboardingAPIs = {
 };
 
 export const CapabilityAPI = {
-	getHelpCenterCapability: () =>
-		apiFetch( {
-			path: base + '/capability',
-			method: 'GET',
-		} ),
-	getBrand: () =>
-		apiFetch( {
-			path: base + '/capability/brand',
-			method: 'GET',
-		} ),
+	getHelpCenterCapability: () => {
+		return (
+			// get the help center capability from newfold runtime
+			window.NewfoldRuntime?.capabilities?.canAccessHelpCenter || false
+		);
+	},
+	getBrand: () => {
+		// get the brand name from newfold runtime
+		const brand = window.NewfoldRuntime?.plugin?.brand || 'wordpress';
+		// add region if HostGator
+		if (
+			brand.includes( 'hostgator' ) &&
+			window.NewfoldRuntime?.plugin?.region
+		) {
+			return brand + '-' + window.NewfoldRuntime?.plugin?.region;
+		}
+		return brand;
+	},
 };
 
 // A wrapper to get and set things more easily
