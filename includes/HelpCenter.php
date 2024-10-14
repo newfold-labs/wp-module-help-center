@@ -92,7 +92,7 @@ class HelpCenter {
 					'onclick' => 'newfoldEmbeddedHelp.toggleNFDLaunchedEmbeddedHelp()',
 				),
 			);
-			$help_enabled     = $this->container->get('capabilities')->get( 'canAccessHelpCenter' );
+			$help_enabled     = $this->container->get( 'capabilities' )->get( 'canAccessHelpCenter' );
 			if ( $help_enabled ) {
 				$admin_bar->add_menu( $help_center_menu );
 				$menu_name = $this->container->plugin()->id . '-help-center';
@@ -105,9 +105,8 @@ class HelpCenter {
 	 * Load WP dependencies into the page.
 	 */
 	public function register_assets() {
-		$asset_file = NFD_HELPCENTER_BUILD_DIR . 'index.asset.php';
-		error_log( 'CONTAINER:: ' . print_r( $this->container->get( 'capabilities' )->get( 'canAccessHelpCenter' ), true ) );
-		$help_enabled = $this->container->get('capabilities')->get( 'canAccessHelpCenter' );
+		$asset_file   = NFD_HELPCENTER_BUILD_DIR . 'index.asset.php';
+		$help_enabled = $this->container->get( 'capabilities' )->get( 'canAccessHelpCenter' );
 		if ( file_exists( $asset_file ) && $help_enabled ) {
 			$asset = require_once $asset_file;
 			\wp_register_script(
