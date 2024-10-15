@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { ReactComponent as Go } from '../icons/go.svg';
 
-export const SearchResult = ( { searchTitle, onGo } ) => {
+export const SearchResultSuggestions = ( { searchTitle, onGo } ) => {
 	return (
 		<>
 			<div className="algoliaResult" onClick={ onGo }>
