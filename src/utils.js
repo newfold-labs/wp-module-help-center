@@ -4,6 +4,7 @@ import {
 	HiiveEvent,
 } from '@newfold-labs/js-utility-ui-analytics';
 import apiFetch from '@wordpress/api-fetch';
+import { useEffect, useState } from '@wordpress/element';
 
 const base = 'nfd-help-center/v1';
 const onboardingBase = 'newfold-onboarding/v1';
@@ -57,10 +58,33 @@ export const LocalStorageUtils = {
 	getHelpVisible: () => {
 		return localStorage.getItem( 'helpVisible' ) === 'true';
 	},
-	persistResult: ( resultContent, postId ) => {
-		localStorage.setItem( 'helpResultContent', resultContent );
-		localStorage.setItem( 'helpPostId', postId );
+	persistResult: ( resultContent, postId, searchInput ) => {
+		// Only store the result if resultContent has a value
+		if ( ! resultContent || resultContent.trim() === '' ) {
+			return;
+		}
+
+		// Retrieve existing results or initialize as an empty array
+		const existingResults =
+			JSON.parse( localStorage.getItem( 'helpResultContent' ) ) || [];
+
+		// Create a new result object
+		const newResult = {
+			searchInput,
+			resultContent,
+			postId,
+		};
+
+		// Add new result to the array
+		existingResults.push( newResult );
+
+		// Store the updated array back in local storage
+		localStorage.setItem(
+			'helpResultContent',
+			JSON.stringify( existingResults )
+		);
 	},
+
 	persistSearchInput: ( searchInput ) => {
 		localStorage.setItem( 'searchInput', searchInput );
 	},
@@ -69,11 +93,10 @@ export const LocalStorageUtils = {
 		localStorage.removeItem( 'helpPostId' );
 		localStorage.removeItem( 'searchInput' );
 	},
+	// Update getResultInfo to retrieve all results
 	getResultInfo: () => {
-		return {
-			content: localStorage.getItem( 'helpResultContent' ),
-			postId: localStorage.getItem( 'helpPostId' ),
-		};
+		const results = localStorage.getItem( 'helpResultContent' );
+		return results ? JSON.parse( results ) : [];
 	},
 	getSearchInput: () => {
 		return localStorage.getItem( 'searchInput' );
@@ -96,4 +119,45 @@ export const Analytics = {
 		);
 		HiiveAnalytics.send( hiiveEvent );
 	},
+};
+
+export const useRevealText = ( text, speed = 100, startReveal = false ) => {
+	const [ displayedText, setDisplayedText ] = useState( '' );
+	const [ isComplete, setIsComplete ] = useState( false );
+
+	useEffect( () => {
+		if ( ! text ) {
+			setDisplayedText( '' );
+			setIsComplete( false );
+			return;
+		}
+
+		// Only trigger the reveal effect if startReveal is true
+		if ( startReveal ) {
+			// Split text and filter out empty strings
+			const words = text.trim().split( ' ' ).filter( Boolean );
+			let index = 0;
+
+			// Initialize with the first word
+			setDisplayedText( words[ 0 ] );
+			setIsComplete( false );
+
+			const intervalId = setInterval( () => {
+				if ( index < words.length - 1 ) {
+					index++;
+					setDisplayedText( ( prev ) => prev + ' ' + words[ index ] );
+				} else {
+					clearInterval( intervalId );
+					setIsComplete( true );
+				}
+			}, speed );
+
+			return () => clearInterval( intervalId );
+		}
+
+		setDisplayedText( text );
+		setIsComplete( true );
+	}, [ text, speed, startReveal ] );
+
+	return { displayedText, isComplete };
 };

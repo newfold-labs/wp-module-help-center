@@ -1,10 +1,11 @@
 import { useEffect, useState, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-//
 import { Analytics, InteractionAPIs } from '../utils';
 
 const Feedback = ( { postId, source } ) => {
 	const [ status, setStatus ] = useState( '' );
+	const [ hasSubmitted, setHasSubmitted ] = useState( false );
+	const [ showThanksMessage, setShowThanksMessage ] = useState( false );
 	const yesButtonRef = useRef( null );
 	const noButtonRef = useRef( null );
 
@@ -29,67 +30,63 @@ const Feedback = ( { postId, source } ) => {
 
 	useEffect( () => {
 		postFeedback();
-		if ( status === 'helpful' ) {
-			yesButtonRef.current.className = 'feedback-button yes selected-yes';
-			noButtonRef.current.className = 'feedback-button no';
+
+		if ( status === 'helpful' || status === 'notHelpful' ) {
+			setHasSubmitted( true );
+			setShowThanksMessage( true );
+
+			const timeout = setTimeout( () => {
+				setShowThanksMessage( false );
+			}, 3000 );
+
+			return () => clearTimeout( timeout );
 		}
-		if ( status === 'notHelpful' ) {
-			noButtonRef.current.className = 'feedback-button no selected-no';
-			yesButtonRef.current.className = 'feedback-button yes';
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ status ] );
 
 	return (
 		<div className="feedback-container">
-			<div className="feedback-question">
-				<p>
-					<b>
-						{ __(
-							'Did this result help you?',
-							'wp-module-help-center'
-						) }
-					</b>
-				</p>
-			</div>
-			<div className="icon">
-				<button
-					ref={ yesButtonRef }
-					onClick={ () => {
-						setStatus( 'helpful' );
-					} }
-					className="feedback-button yes"
-				>
-					{ status === 'helpful' && (
-						<span
-							className="feedback-button-emoji"
-							role="img"
-							aria-label="helpful"
+			{ /* Conditionally render the question and buttons */ }
+			{ ! hasSubmitted && (
+				<>
+					<div className="feedback-question">
+						<p>
+							{ __(
+								'Did this result help you?',
+								'wp-module-help-center'
+							) }
+						</p>
+					</div>
+					<div className="icon">
+						<button
+							ref={ yesButtonRef }
+							onClick={ () => {
+								setStatus( 'helpful' );
+							} }
+							className="feedback-button yes"
 						>
-							&#129395;
-						</span>
-					) }
-					{ __( 'Yes', 'wp-module-help-center' ) }
-				</button>
-				<button
-					onClick={ () => {
-						setStatus( 'notHelpful' );
-					} }
-					ref={ noButtonRef }
-					className="feedback-button no"
-				>
-					{ status === 'notHelpful' && (
-						<span
-							className="feedback-button-emoji"
-							role="img"
-							aria-label="not helpful"
+							{ __( 'Yes', 'wp-module-help-center' ) }
+						</button>
+						<button
+							onClick={ () => {
+								setStatus( 'notHelpful' );
+							} }
+							ref={ noButtonRef }
+							className="feedback-button no"
 						>
-							&#128557;
-						</span>
+							{ __( 'No', 'wp-module-help-center' ) }
+						</button>
+					</div>
+				</>
+			) }
+
+			{ hasSubmitted && showThanksMessage && (
+				<div className="thanks-message">
+					{ __(
+						'Thanks for the feedback!',
+						'wp-module-help-center'
 					) }
-					{ __( 'No', 'wp-module-help-center' ) }
-				</button>
-			</div>
+				</div>
+			) }
 		</div>
 	);
 };
