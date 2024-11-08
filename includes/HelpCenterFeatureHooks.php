@@ -40,7 +40,7 @@ class HelpCenterFeatureHooks {
 	}
 
 	/**
-	 * incline script to clear localStorage
+	 * Inline script to clear localStorage
 	 */
 	public function enqueue_clear_storage_script() {
 
@@ -54,9 +54,6 @@ class HelpCenterFeatureHooks {
 		// Add the inline script to `nfd-help-center` if it’s enqueued
 		if ( wp_script_is( 'nfd-help-center', 'enqueued' ) ) {
 			wp_add_inline_script( 'nfd-help-center', $clear_storage_js );
-		} else {
-			// Fallback: Add the inline script directly to `admin_enqueue_scripts`
-			echo "<script>{$clear_storage_js}</script>";
 		}
 	}
 
