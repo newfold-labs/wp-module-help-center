@@ -18,7 +18,9 @@ const Modal = ( { onClose } ) => {
 	};
 
 	useEffect( () => {
-		const helpVisible = LocalStorageUtils.getHelpVisible();
+		const helpVisible = window.newfoldHelpCenter?.closeOnLoad
+			? false
+			: LocalStorageUtils.getHelpVisible();
 		toggleHelp( helpVisible );
 		getBrand();
 	}, [] );

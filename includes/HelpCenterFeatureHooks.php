@@ -2,7 +2,6 @@
 namespace NewfoldLabs\WP\Module\HelpCenter;
 
 use NewfoldLabs\WP\Module\Data\SiteCapabilities;
-use NewfoldLabs\WP\Module\Features\Features;
 
 /**
  * This class adds helpCenter feature hooks.
@@ -29,32 +28,6 @@ class HelpCenterFeatureHooks {
 	public function hooks() {
 		// add filter so we don't show/load help during onboarding
 		add_filter( 'newfold/features/filter/isEnabled:helpCenter', array( $this, 'filterValue' ) );
-		add_filter( 'newfold/features/action/onDisable:helpCenter', array( $this, 'clearhelpCenter' ) );
-	}
-
-	/**
-	 * Enqueue inline script as back up to hide the helpcenter UI on onboarding flow
-	 */
-	public function clearhelpCenter() {
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_clear_storage_script' ), 20 );
-	}
-
-	/**
-	 * Inline script to clear localStorage
-	 */
-	public function enqueue_clear_storage_script() {
-
-		$clear_storage_js = <<<JS
-			document.addEventListener("DOMContentLoaded", function() {
-				const nfdHelpContainer = document.getElementById( 'nfd-help-center' );
-				nfdHelpContainer.classList.toggle( 'help-container', false );
-			});
-		JS;
-
-		// Add the inline script to `nfd-help-center` if it’s enqueued
-		if ( wp_script_is( 'nfd-help-center', 'enqueued' ) ) {
-			wp_add_inline_script( 'nfd-help-center', $clear_storage_js );
-		}
 	}
 
 	/**
@@ -64,14 +37,8 @@ class HelpCenterFeatureHooks {
 	 * @return boolean the filtered value
 	 */
 	public function filterValue( $value ) {
-		$helpCenterFeature = Features::getInstance()->getFeature( 'helpCenter' );
 		if ( $this->shouldDisable() ) {
 			$value = false;
-			if ( $helpCenterFeature ) {
-				$helpCenterFeature->disable();
-			}
-		} elseif ( $helpCenterFeature ) {
-				$helpCenterFeature->enable();
 		}
 		return $value;
 	}
