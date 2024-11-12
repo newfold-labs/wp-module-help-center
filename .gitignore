@@ -18,6 +18,9 @@ cypress.env.json
 /assets/*
 /dist/*
 
+# Ignore all .map files in the /build directory
+/build/*.map
+
 # File Types
 *.log
 *.sql
