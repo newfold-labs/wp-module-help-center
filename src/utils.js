@@ -65,8 +65,7 @@ export const LocalStorageUtils = {
 		}
 
 		// Retrieve existing results or initialize as an empty array
-		const existingResults =
-			JSON.parse( localStorage.getItem( 'helpResultContent' ) ) || [];
+		const existingResults = LocalStorageUtils.getResultInfo();
 
 		// Create a new result object
 		const newResult = {
@@ -96,7 +95,7 @@ export const LocalStorageUtils = {
 	// Update getResultInfo to retrieve all results
 	getResultInfo: () => {
 		const results = localStorage.getItem( 'helpResultContent' );
-		return results ? JSON.parse( results ) : [];
+		return results && isValidJSON( results ) ? JSON.parse( results ) : [];
 	},
 	getSearchInput: () => {
 		return localStorage.getItem( 'searchInput' );
@@ -160,4 +159,13 @@ export const useRevealText = ( text, speed = 100, startReveal = false ) => {
 	}, [ text, speed, startReveal ] );
 
 	return { displayedText, isComplete };
+};
+
+export const isValidJSON = ( json ) => {
+	try {
+		JSON.parse( json );
+		return true;
+	} catch ( e ) {
+		return false;
+	}
 };
