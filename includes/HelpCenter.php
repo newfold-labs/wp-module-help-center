@@ -144,6 +144,9 @@ class HelpCenter {
 				'before'
 			);
 
+			/* Hide the helpcenter on onboarding flow */
+			\wp_localize_script( self::$slug, 'newfoldHelpCenter', array( 'closeOnLoad' => ( isset( $_GET['page'] ) && 'nfd-onboarding' === sanitize_text_field( $_GET['page'] ) ) ) );
+
 			/* Remove values on log out */
 			$logout_listener_js = <<<JS
 			jQuery(document).ready(function ($) {
