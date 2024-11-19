@@ -55,6 +55,7 @@ const SearchInput = ( {
 						onKeyDown={ async ( e ) => {
 							if ( e.key === 'Enter' && validateInput() ) {
 								await getAIResult();
+								setSearchInput( '' );
 							}
 						} }
 					/>
@@ -62,6 +63,7 @@ const SearchInput = ( {
 						onClick={ async () => {
 							if ( validateInput() ) {
 								await getAIResult();
+								setSearchInput( '' );
 							}
 						} }
 					>
