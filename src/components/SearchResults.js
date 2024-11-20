@@ -101,9 +101,34 @@ const SearchResults = ( props ) => {
 	}, [ props.refresh ] );
 
 	useEffect( () => {
-		fetchInitialData();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		// Define the async function
+		const fetchAndScroll = async () => {
+			try {
+				await fetchInitialData(); // Fetch your data
+				const helpcenterResultsWrapper = document.getElementById(
+					'helpcenterResultsWrapper'
+				);
+				if ( helpcenterResultsWrapper ) {
+					const scrollDistance =
+						helpcenterResultsWrapper.scrollHeight;
+					console.log( 'Scroll Distance:', scrollDistance );
+					helpcenterResultsWrapper.scrollBy( {
+						top: scrollDistance,
+						left: 0,
+						behavior: 'smooth',
+					} );
+				} // Perform the scroll after data is fetched
+			} catch ( error ) {
+				console.error( 'Error in fetchAndScroll:', error );
+			}
+		};
+
+		// Call the async function
+		fetchAndScroll();
 	}, [] );
+
+
+	showSuggestions
 
 	const getResultMatches = ( query, tokensMatched, fieldsMatched ) => {
 		const tokensPerQuery = tokensMatched / query.split( /\s+/ ).length;
@@ -266,7 +291,7 @@ const SearchResults = ( props ) => {
 				) }
 			</div>
 			{ showSuggestions && (
-				<div className="suggestions-wrapper">
+				<div className="suggestions-wrapper" id="suggestionsWrapper">
 					{ multiResults?.hits?.length > 0 && (
 						<p>
 							<b>
