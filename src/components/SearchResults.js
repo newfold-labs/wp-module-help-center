@@ -78,12 +78,9 @@ const SearchResults = ( props ) => {
 				setResultContent( savedResults );
 				setIsNewResult( false );
 			}
-			const savedInput = LocalStorageUtils.getSearchInput();
-			const input = savedInput || '';
-			setSearchInput( input );
 			const brand = await CapabilityAPI.getBrand();
 			const multiSearchResults = await fetchMultiSearchResults(
-				input,
+				'',
 				brand
 			);
 			setMultiResults( {
@@ -210,7 +207,6 @@ const SearchResults = ( props ) => {
 	}, [] );
 
 	const handleSuggestionsClick = ( result, postTitle ) => {
-		setSearchInput( postTitle );
 		setShowSuggestions( false );
 		populateSearchResult(
 			result?.hits[ 0 ]?.document?.post_content,
