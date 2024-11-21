@@ -17,7 +17,7 @@ const SearchResults = ( props ) => {
 	const [ postId, setPostId ] = useState();
 	const [ source, setSource ] = useState( 'kb' );
 	const [ multiResults, setMultiResults ] = useState( {} );
-	const [ showSuggestions, setShowSuggestions ] = useState( true );
+	const [ showSuggestions, setShowSuggestions ] = useState( false );
 	const [ loadingQuery, setLoadingQuery ] = useState( null );
 	const [ loadingIndex, setLoadingIndex ] = useState( null );
 	const [ isNewResult, setIsNewResult ] = useState( false );
@@ -86,6 +86,7 @@ const SearchResults = ( props ) => {
 				input,
 				brand
 			);
+			setShowSuggestions( true );
 			setMultiResults( {
 				hits: multiSearchResults?.results?.[ 0 ]?.grouped_hits,
 			} );
@@ -101,34 +102,46 @@ const SearchResults = ( props ) => {
 	}, [ props.refresh ] );
 
 	useEffect( () => {
-		// Define the async function
-		const fetchAndScroll = async () => {
-			try {
-				await fetchInitialData(); // Fetch your data
-				const helpcenterResultsWrapper = document.getElementById(
-					'helpcenterResultsWrapper'
-				);
-				if ( helpcenterResultsWrapper ) {
-					const scrollDistance =
-						helpcenterResultsWrapper.scrollHeight;
-					console.log( 'Scroll Distance:', scrollDistance );
-					helpcenterResultsWrapper.scrollBy( {
-						top: scrollDistance,
-						left: 0,
-						behavior: 'smooth',
-					} );
-				} // Perform the scroll after data is fetched
-			} catch ( error ) {
-				console.error( 'Error in fetchAndScroll:', error );
+		/* Recalculating the padding of the search results container to allow it scroll when suggestions pop up */
+		const adjustPadding = () => {
+			const helpcenterResultsWrapper = document.getElementById(
+				'helpcenterResultsWrapper'
+			);
+			const suggestionsWrapper =
+				document.getElementById( 'suggestionsWrapper' );
+
+			if ( helpcenterResultsWrapper ) {
+				if ( showSuggestions ) {
+					const suggestionsHeight =
+						suggestionsWrapper.getBoundingClientRect().height;
+					helpcenterResultsWrapper.style.paddingBottom = `${ suggestionsHeight }px`;
+				} else {
+					helpcenterResultsWrapper.style.paddingBottom = '0px';
+				}
 			}
 		};
 
-		// Call the async function
-		fetchAndScroll();
+		adjustPadding();
+	}, [ showSuggestions ] );
+
+	useEffect( () => {
+		const fetchDataAndScroll = async () => {
+			await fetchInitialData();
+			const helpcenterResultsWrapper = document.getElementById(
+				'helpcenterResultsWrapper'
+			);
+			if ( helpcenterResultsWrapper ) {
+				const scrollDistance = helpcenterResultsWrapper.scrollHeight;
+				helpcenterResultsWrapper.scrollBy( {
+					top: scrollDistance,
+					left: 0,
+					behavior: 'smooth',
+				} );
+			}
+		};
+
+		fetchDataAndScroll();
 	}, [] );
-
-
-	showSuggestions
 
 	const getResultMatches = ( query, tokensMatched, fieldsMatched ) => {
 		const tokensPerQuery = tokensMatched / query.split( /\s+/ ).length;
@@ -206,9 +219,9 @@ const SearchResults = ( props ) => {
 		return debounce( async ( query ) => {
 			if ( ! query || query.length === 0 ) {
 				setMultiResults( {} );
+				setShowSuggestions( false );
 				return;
 			}
-			setShowSuggestions( true );
 			try {
 				const brand = await CapabilityAPI.getBrand();
 				const multiSearchResults = await fetchMultiSearchResults(
@@ -219,6 +232,7 @@ const SearchResults = ( props ) => {
 					setMultiResults( {
 						hits: multiSearchResults?.results?.[ 0 ]?.grouped_hits,
 					} );
+					setShowSuggestions( true );
 				}
 			} catch ( error ) {
 				// eslint-disable-next-line no-console
@@ -309,18 +323,13 @@ const SearchResults = ( props ) => {
 						const postTitle = el.textContent || el.innerText;
 
 						return (
-							<>
-								<SearchResultSuggestions
-									key={ index }
-									searchTitle={ postTitle }
-									onGo={ () => {
-										handleSuggestionsClick(
-											result,
-											postTitle
-										);
-									} }
-								/>
-							</>
+							<SearchResultSuggestions
+								key={ index }
+								searchTitle={ postTitle }
+								onGo={ () => {
+									handleSuggestionsClick( result, postTitle );
+								} }
+							/>
 						);
 					} ) }
 				</div>
