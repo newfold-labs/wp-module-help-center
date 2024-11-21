@@ -126,10 +126,10 @@ class HelpCenter {
 			\wp_enqueue_script( self::$slug );
 
 			\wp_enqueue_style(
-				'stylesheet',
+				self::$slug,
 				NFD_HELPCENTER_PLUGIN_URL . 'vendor/newfold-labs/wp-module-help-center/build/index.css',
 				array(),
-				'1',
+				$asset['version'],
 				'screen'
 			);
 
