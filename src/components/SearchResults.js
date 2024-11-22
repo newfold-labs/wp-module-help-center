@@ -109,7 +109,6 @@ const SearchResults = ( { wrapper, refresh, brand } ) => {
 	};
 
 	const adjustPadding = () => {
-		wrapper.current.boxSizing = 'unset!important';
 		let paddingBottom = 0;
 		if ( showSuggestions ) {
 			const suggestionsHeight =
@@ -268,6 +267,7 @@ const SearchResults = ( { wrapper, refresh, brand } ) => {
 							index={ index }
 							isNewResult={ isNewResult }
 							searchInput={ searchInput }
+							wrapper={ wrapper }
 						/>
 					) ) }
 
@@ -287,6 +287,7 @@ const SearchResults = ( { wrapper, refresh, brand } ) => {
 						index={ resultContent.length }
 						isNewResult={ isNewResult }
 						searchInput={ searchInput }
+						wrapper={ wrapper }
 					/>
 				) }
 			</div>
