@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 import { debounce } from 'lodash';
-import { useEffect, useState, useMemo } from '@wordpress/element';
+import { useEffect, useState, useMemo, useRef } from '@wordpress/element';
 import moduleAI from '@newfold-labs/wp-module-ai';
 import { SearchResultSuggestions } from './SearchResultSuggestions';
 import { ResultContent } from './ResultContent';
@@ -9,18 +9,40 @@ import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 import SearchInput from './SearchInput';
 
-const SearchResults = ( props ) => {
+const SearchResults = ( { wrapper, refresh, brand } ) => {
 	const [ isLoading, setIsLoading ] = useState( false );
 	const [ noResult, setNoResult ] = useState( false );
 	const [ searchInput, setSearchInput ] = useState( '' );
 	const [ resultContent, setResultContent ] = useState( [] );
-	const [ postId, setPostId ] = useState();
+
 	const [ source, setSource ] = useState( 'kb' );
 	const [ multiResults, setMultiResults ] = useState( {} );
 	const [ showSuggestions, setShowSuggestions ] = useState( false );
+
 	const [ loadingQuery, setLoadingQuery ] = useState( null );
 	const [ loadingIndex, setLoadingIndex ] = useState( null );
 	const [ isNewResult, setIsNewResult ] = useState( false );
+	const [ initComplete, setInitComplete ] = useState( false );
+	const suggestionsRef = useRef();
+
+	useEffect( () => {
+		fetchInitialData();
+	}, [] );
+
+	useEffect( () => {
+		setSearchInput( '' );
+	}, [ refresh ] );
+
+	useEffect( () => {
+		if ( initComplete ) {
+			adjustPadding();
+			scroll();
+		}
+	}, [ initComplete ] );
+
+	useEffect( () => {
+		adjustPadding();
+	}, [ showSuggestions ] );
 
 	const populateSearchResult = ( resultContent, postId, searchInput ) => {
 		const resultContentFormatted = resultContent.replace( /\n/g, '<br />' );
@@ -32,17 +54,10 @@ const SearchResults = ( props ) => {
 		);
 		// Add new result to existing results and retrieve all results from local storage
 		const updatedResults = LocalStorageUtils.getResultInfo();
-
 		setResultContent( updatedResults );
-
-		setPostId( postId );
-		LocalStorageUtils.persistSearchInput( searchInput );
 
 		if ( postId ) {
 			setIsNewResult( true );
-		}
-
-		if ( postId ) {
 			Analytics.sendEvent( 'help_search', {
 				label_key: 'term',
 				term: searchInput,
@@ -76,72 +91,43 @@ const SearchResults = ( props ) => {
 			const savedResults = LocalStorageUtils.getResultInfo();
 			if ( savedResults ) {
 				setResultContent( savedResults );
-				setIsNewResult( false );
 			}
-			const savedInput = LocalStorageUtils.getSearchInput();
-			const input = savedInput || '';
-			setSearchInput( input );
-			const brand = await CapabilityAPI.getBrand();
 			const multiSearchResults = await fetchMultiSearchResults(
-				input,
+				'',
 				brand
 			);
-			setShowSuggestions( true );
+
 			setMultiResults( {
 				hits: multiSearchResults?.results?.[ 0 ]?.grouped_hits,
 			} );
+			setShowSuggestions( true );
+			setInitComplete( true );
 		} catch ( error ) {
 			// eslint-disable-next-line no-console
 			console.error( 'Error fetching initial data:', error );
 		}
 	};
 
-	useEffect( () => {
-		setSearchInput( '' );
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [ props.refresh ] );
+	const adjustPadding = () => {
+		wrapper.current.boxSizing = 'unset!important';
+		let paddingBottom = 0;
+		if ( showSuggestions ) {
+			const suggestionsHeight =
+				suggestionsRef.current.getBoundingClientRect().height;
+			paddingBottom = `${ suggestionsHeight }px`;
+		}
+		wrapper.current.style.paddingBottom = paddingBottom;
+	};
 
-	useEffect( () => {
-		/* Recalculating the padding of the search results container to allow it scroll when suggestions pop up */
-		const adjustPadding = () => {
-			const helpcenterResultsWrapper = document.getElementById(
-				'helpcenterResultsWrapper'
-			);
-			const suggestionsWrapper =
-				document.getElementById( 'suggestionsWrapper' );
+	const scroll = () => {
+		const scrollDistance = wrapper.current.scrollHeight;
 
-			if ( helpcenterResultsWrapper ) {
-				if ( showSuggestions ) {
-					const suggestionsHeight =
-						suggestionsWrapper.getBoundingClientRect().height;
-					helpcenterResultsWrapper.style.paddingBottom = `${ suggestionsHeight }px`;
-				} else {
-					helpcenterResultsWrapper.style.paddingBottom = '0px';
-				}
-			}
-		};
-
-		adjustPadding();
-	}, [ showSuggestions ] );
-
-	useEffect( () => {
-		const fetchDataAndScroll = async () => {
-			await fetchInitialData();
-			const helpcenterResultsWrapper = document.getElementById(
-				'helpcenterResultsWrapper'
-			);
-			if ( helpcenterResultsWrapper ) {
-				const scrollDistance = helpcenterResultsWrapper.scrollHeight;
-				helpcenterResultsWrapper.scrollBy( {
-					top: scrollDistance,
-					left: 0,
-					behavior: 'smooth',
-				} );
-			}
-		};
-
-		fetchDataAndScroll();
-	}, [] );
+		wrapper.current.scrollBy( {
+			top: scrollDistance,
+			left: 0,
+			behavior: 'smooth',
+		} );
+	};
 
 	const getResultMatches = ( query, tokensMatched, fieldsMatched ) => {
 		const tokensPerQuery = tokensMatched / query.split( /\s+/ ).length;
@@ -179,11 +165,11 @@ const SearchResults = ( props ) => {
 			if ( checkAndPopulateResult( hits, searchInput ) ) return;
 
 			// Make a new multi-search API call if no match is found
-			const brand = await CapabilityAPI.getBrand();
 			const multiSearchResults = await fetchMultiSearchResults(
 				searchInput,
 				brand
 			);
+
 			hits =
 				multiSearchResults?.results?.[ 0 ]?.grouped_hits?.[ 0 ]?.hits;
 			if ( checkAndPopulateResult( hits, searchInput ) ) return;
@@ -217,7 +203,7 @@ const SearchResults = ( props ) => {
 
 	const debouncedResults = useMemo( () => {
 		return debounce( async ( query ) => {
-			if ( ! query || query.length === 0 ) {
+			if ( ! query || query === '' ) {
 				setMultiResults( {} );
 				setShowSuggestions( false );
 				return;
@@ -305,7 +291,11 @@ const SearchResults = ( props ) => {
 				) }
 			</div>
 			{ showSuggestions && (
-				<div className="suggestions-wrapper" id="suggestionsWrapper">
+				<div
+					className="suggestions-wrapper"
+					id="suggestionsWrapper"
+					ref={ suggestionsRef }
+				>
 					{ multiResults?.hits?.length > 0 && (
 						<p>
 							<b>
