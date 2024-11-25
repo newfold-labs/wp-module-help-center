@@ -44,15 +44,13 @@ const Feedback = ( { postId, source } ) => {
 	}, [ status ] );
 
 	const handleFeedback = (feedback) => {
-		console.log("post ID", postId);
 		setStatus( feedback );
 		let savedResults = LocalStorageUtils.getResultInfo();
-		console.log(savedResults);
 		savedResults = savedResults.map(result => {
 			if (result.postId === postId ) {
-				return { ...result, feedbackSubmitted: true }; // Update or add key
+				return { ...result, feedbackSubmitted: true };
 			}
-			return result; // Leave other posts untouched
+			return result;
 		});
 		localStorage.setItem(
 			'helpResultContent',
