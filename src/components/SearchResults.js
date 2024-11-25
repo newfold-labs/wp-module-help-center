@@ -243,6 +243,9 @@ const SearchResults = ( props ) => {
 							index={ index }
 							isNewResult={ isNewResult }
 							searchInput={ searchInput }
+							feedbackSubmitted={
+								result.feedbackSubmitted || false
+							}
 						/>
 					) ) }
 
@@ -262,6 +265,7 @@ const SearchResults = ( props ) => {
 						index={ resultContent.length }
 						isNewResult={ isNewResult }
 						searchInput={ searchInput }
+						feedbackSubmitted={ false }
 					/>
 				) }
 			</div>

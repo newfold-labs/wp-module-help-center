@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { Analytics, InteractionAPIs } from '../utils';
+import { Analytics, InteractionAPIs, LocalStorageUtils } from '../utils';
 
 const Feedback = ( { postId, source } ) => {
 	const [ status, setStatus ] = useState( '' );
@@ -43,6 +43,23 @@ const Feedback = ( { postId, source } ) => {
 		}
 	}, [ status ] );
 
+	const handleFeedback = (feedback) => {
+		console.log("post ID", postId);
+		setStatus( feedback );
+		let savedResults = LocalStorageUtils.getResultInfo();
+		console.log(savedResults);
+		savedResults = savedResults.map(result => {
+			if (result.postId === postId ) {
+				return { ...result, feedbackSubmitted: true }; // Update or add key
+			}
+			return result; // Leave other posts untouched
+		});
+		localStorage.setItem(
+			'helpResultContent',
+			JSON.stringify( savedResults )
+		);
+	}
+
 	return (
 		<div className="feedback-container">
 			{ /* Conditionally render the question and buttons */ }
@@ -59,17 +76,13 @@ const Feedback = ( { postId, source } ) => {
 					<div className="icon">
 						<button
 							ref={ yesButtonRef }
-							onClick={ () => {
-								setStatus( 'helpful' );
-							} }
+							onClick={ () =>  handleFeedback( 'helpful' ) }
 							className="feedback-button yes"
 						>
 							{ __( 'Yes', 'wp-module-help-center' ) }
 						</button>
 						<button
-							onClick={ () => {
-								setStatus( 'notHelpful' );
-							} }
+							onClick={ () => handleFeedback( 'notHelpful' ) }
 							ref={ noButtonRef }
 							className="feedback-button no"
 						>
