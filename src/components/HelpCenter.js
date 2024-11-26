@@ -1,4 +1,4 @@
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect, useState, useRef } from '@wordpress/element';
 import SearchResults from './SearchResults';
 import { CapabilityAPI, LocalStorageUtils } from '../utils';
 import HelpCenterIntro from './HelpCenterIntro';
@@ -6,6 +6,7 @@ import HelpCenterIntro from './HelpCenterIntro';
 const HelpCenter = ( props ) => {
 	const [ visible, setVisible ] = useState( false );
 	const [ helpEnabled, setHelpEnabled ] = useState( false );
+	const wrapper = useRef();
 
 	const getHelpStatus = async () => {
 		try {
@@ -38,9 +39,13 @@ const HelpCenter = ( props ) => {
 	}
 
 	return (
-		<div className="nfd-help-center" id="helpcenterResultsWrapper">
+		<div
+			className="nfd-help-center"
+			id="helpcenterResultsWrapper"
+			ref={ wrapper }
+		>
 			<HelpCenterIntro />
-			<SearchResults refresh={ props.refresh } />
+			<SearchResults wrapper={ wrapper } { ...props } />
 		</div>
 	);
 };
