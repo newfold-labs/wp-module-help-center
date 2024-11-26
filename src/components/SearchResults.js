@@ -159,6 +159,7 @@ const SearchResults = ( { wrapper, refresh, brand } ) => {
 		setShowSuggestions( false );
 		setLoadingQuery( searchInput );
 		setLoadingIndex( resultContent.length );
+		setSearchInput( '' );
 		try {
 			// Check existing multiResults
 			let hits = multiResults?.hits?.[ 0 ]?.hits;
@@ -193,6 +194,7 @@ const SearchResults = ( { wrapper, refresh, brand } ) => {
 			console.error( 'An error occurred:', exception );
 			setNoResult( true );
 			setIsNewResult( true ); // to display no result error only for the upcoming result.
+			setSearchInput( searchInput );
 		} finally {
 			setLoadingQuery( null );
 			setIsLoading( false );

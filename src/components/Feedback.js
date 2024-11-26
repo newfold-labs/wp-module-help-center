@@ -45,17 +45,7 @@ const Feedback = ( { postId, source } ) => {
 
 	const handleFeedback = (feedback) => {
 		setStatus( feedback );
-		let savedResults = LocalStorageUtils.getResultInfo();
-		savedResults = savedResults.map(result => {
-			if (result.postId === postId ) {
-				return { ...result, feedbackSubmitted: true };
-			}
-			return result;
-		});
-		localStorage.setItem(
-			'helpResultContent',
-			JSON.stringify( savedResults )
-		);
+		LocalStorageUtils.updateFeedbackStatus( postId );
 	}
 
 	return (
