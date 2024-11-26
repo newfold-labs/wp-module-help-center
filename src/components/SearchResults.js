@@ -92,6 +92,7 @@ const SearchResults = ( { wrapper, refresh, brand } ) => {
 			if ( savedResults ) {
 				setResultContent( savedResults );
 			}
+			const brand = await CapabilityAPI.getBrand();
 			const multiSearchResults = await fetchMultiSearchResults(
 				'',
 				brand
@@ -234,7 +235,6 @@ const SearchResults = ( { wrapper, refresh, brand } ) => {
 	}, [] );
 
 	const handleSuggestionsClick = ( result, postTitle ) => {
-		setSearchInput( postTitle );
 		setShowSuggestions( false );
 		populateSearchResult(
 			result?.hits[ 0 ]?.document?.post_content,
