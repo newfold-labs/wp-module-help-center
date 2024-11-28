@@ -4,21 +4,11 @@ import { __ } from '@wordpress/i18n';
 import { ReactComponent as AIStars } from '../icons/ai-stars.svg';
 import { useRevealText, LocalStorageUtils } from '../utils';
 
-const HelpCenterIntro = () => {
+const HelpCenterIntro = ( { introRef } ) => {
 	const [ startReveal, setStartReveal ] = useState( false );
 
 	useEffect( () => {
-		// Get the stored results from localStorage using LocalStorageUtils
-		const storedResults = LocalStorageUtils.getResultInfo();
-
-		// Check if the length of the stored results is <= 0
-		if ( storedResults.length <= 0 ) {
-			// If true, enable reveal effect
-			setStartReveal( true );
-		} else {
-			// Always ensure startReveal is set, even if it's false
-			setStartReveal( false );
-		}
+		setStartReveal( LocalStorageUtils.getResultInfo().length <= 0 );
 	}, [] );
 
 	const introText = __(
@@ -26,14 +16,22 @@ const HelpCenterIntro = () => {
 		'wp-module-help-center'
 	);
 
-	// const revealedIntro = useRevealText( introText, 50, startReveal );
 	const { displayedText: revealedIntro } = useRevealText(
 		introText || '',
 		50,
 		startReveal
 	);
 	return (
-		<div className="helpcenter-intro">
+		<div
+			className="helpcenter-intro"
+			ref={ introRef }
+			style={ {
+				visibility:
+					LocalStorageUtils.getResultInfo().length > 0
+						? 'hidden'
+						: 'visible',
+			} }
+		>
 			<div>
 				<AIStars />
 			</div>
