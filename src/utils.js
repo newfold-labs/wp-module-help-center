@@ -106,6 +106,18 @@ export const LocalStorageUtils = {
 	setFeatureFlag( flagName, value ) {
 		localStorage.setItem( flagName, value );
 	},
+	updateFeedbackStatus: ( postId ) => {
+		const savedResults = LocalStorageUtils.getResultInfo();
+		const updatedResults = savedResults.map( ( result ) =>
+			result.postId === postId
+				? { ...result, feedbackSubmitted: true }
+				: result
+		);
+		localStorage.setItem(
+			'helpResultContent',
+			JSON.stringify( updatedResults )
+		);
+	},
 };
 
 export const Analytics = {

@@ -20,6 +20,7 @@ export const ResultContent = ( {
 	isNewResult,
 	searchInput,
 	wrapper,
+	feedbackSubmitted,
 } ) => {
 	const isNewEntry =
 		isNewResult && index === LocalStorageUtils.getResultInfo().length - 1;
@@ -112,6 +113,7 @@ export const ResultContent = ( {
 	function shouldShowFeedback() {
 		return (
 			! noResult &&
+			! feedbackSubmitted &&
 			showFeedbackSection &&
 			content &&
 			revealComplete &&
