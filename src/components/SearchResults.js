@@ -9,7 +9,7 @@ import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 import SearchInput from './SearchInput';
 
-const SearchResults = ( { wrapper, refresh, brand } ) => {
+const SearchResults = ( { wrapper, introRef, refresh, brand } ) => {
 	const [ isLoading, setIsLoading ] = useState( false );
 	const [ noResult, setNoResult ] = useState( false );
 	const [ searchInput, setSearchInput ] = useState( '' );
@@ -24,6 +24,7 @@ const SearchResults = ( { wrapper, refresh, brand } ) => {
 	const [ isNewResult, setIsNewResult ] = useState( false );
 	const [ initComplete, setInitComplete ] = useState( false );
 	const suggestionsRef = useRef();
+	const resultsContainer = useRef();
 
 	useEffect( () => {
 		fetchInitialData();
@@ -125,8 +126,12 @@ const SearchResults = ( { wrapper, refresh, brand } ) => {
 		wrapper.current.scrollBy( {
 			top: scrollDistance,
 			left: 0,
-			behavior: 'smooth',
 		} );
+
+		setTimeout( () => {
+			introRef.current.style.visibility = 'visible';
+			resultsContainer.current.style.visibility = 'visible';
+		}, 500 );
 	};
 
 	const getResultMatches = ( query, tokensMatched, fieldsMatched ) => {
@@ -247,7 +252,11 @@ const SearchResults = ( { wrapper, refresh, brand } ) => {
 
 	return (
 		<>
-			<div className="hc-results-container">
+			<div
+				className="hc-results-container"
+				ref={ resultsContainer }
+				style={ { visibility: 'hidden' } }
+			>
 				{ /* Render existing results */ }
 				{ resultContent?.length > 0 &&
 					resultContent.map( ( result, index ) => (

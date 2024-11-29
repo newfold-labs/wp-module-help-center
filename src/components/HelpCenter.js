@@ -7,6 +7,7 @@ const HelpCenter = ( props ) => {
 	const [ visible, setVisible ] = useState( false );
 	const [ helpEnabled, setHelpEnabled ] = useState( false );
 	const wrapper = useRef();
+	const introRef = useRef();
 
 	const getHelpStatus = async () => {
 		try {
@@ -44,8 +45,12 @@ const HelpCenter = ( props ) => {
 			id="helpcenterResultsWrapper"
 			ref={ wrapper }
 		>
-			<HelpCenterIntro />
-			<SearchResults wrapper={ wrapper } { ...props } />
+			<HelpCenterIntro introRef={ introRef } />
+			<SearchResults
+				wrapper={ wrapper }
+				introRef={ introRef }
+				{ ...props }
+			/>
 		</div>
 	);
 };
