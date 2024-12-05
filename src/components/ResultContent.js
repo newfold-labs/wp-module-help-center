@@ -19,6 +19,8 @@ export const ResultContent = ( {
 	index,
 	isNewResult,
 	searchInput,
+	wrapper,
+	feedbackSubmitted,
 } ) => {
 	const isNewEntry =
 		isNewResult && index === LocalStorageUtils.getResultInfo().length - 1;
@@ -35,12 +37,8 @@ export const ResultContent = ( {
 		const viewportHeight = window.innerHeight;
 		const minHeight = viewportHeight - 332;
 		responseRef.current.style.minHeight = `${ minHeight }px`;
-
-		const helpcenterResultsWrapper = document.getElementById(
-			'helpcenterResultsWrapper'
-		);
-		const scrollDistance = helpcenterResultsWrapper.scrollHeight;
-		helpcenterResultsWrapper.scrollBy( {
+		const scrollDistance = wrapper.current.scrollHeight;
+		wrapper.current.scrollBy( {
 			top: scrollDistance,
 			left: 0,
 			behavior: 'smooth',
@@ -115,6 +113,7 @@ export const ResultContent = ( {
 	function shouldShowFeedback() {
 		return (
 			! noResult &&
+			! feedbackSubmitted &&
 			showFeedbackSection &&
 			content &&
 			revealComplete &&

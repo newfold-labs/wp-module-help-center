@@ -374,7 +374,7 @@ $blue-night-sky: #7A889D;
   display: block !important;
   border: 1px solid $border-light-gray;
   box-shadow: -5px 0px 36px $box-shadow-dark;
-  z-index: 100;
+  z-index: 9999;
 }
 
 .wpcontent-container {
