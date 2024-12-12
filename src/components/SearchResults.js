@@ -106,6 +106,7 @@ const SearchResults = ( { wrapper, introRef, refresh, brand } ) => {
 			setMultiResults( {
 				hits: multiSearchResults?.results?.[ 0 ]?.grouped_hits,
 			} );
+
 			setShowSuggestions( true );
 			setInitComplete( true );
 		} catch ( error ) {
