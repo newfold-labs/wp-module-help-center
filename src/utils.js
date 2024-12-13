@@ -118,6 +118,9 @@ export const LocalStorageUtils = {
 			JSON.stringify( updatedResults )
 		);
 	},
+	setCurrentHelpQuery: ( helpQuery ) => {
+		localStorage.setItem( 'nfdHelpCurrentQuery', helpQuery );
+	},
 };
 
 export const Analytics = {

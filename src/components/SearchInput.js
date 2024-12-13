@@ -1,5 +1,6 @@
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { LocalStorageUtils } from '../utils';
 import { ReactComponent as GoSearchIcon } from '../icons/paper-airplane.svg';
 import { ReactComponent as PhoneIcon } from '../icons/phone.svg';
 import { ReactComponent as ChatIcon } from '../icons/chat-bubble.svg';
@@ -15,7 +16,7 @@ const SearchInput = ( {
 	const [ error, setError ] = useState( '' );
 
 	const validateInput = () => {
-		if ( ! searchInput.trim() ) {
+		if ( ! searchInput || ! searchInput.trim() ) {
 			setError(
 				__(
 					'Please enter a specific search term to get results.',
@@ -24,6 +25,7 @@ const SearchInput = ( {
 			);
 			return false;
 		}
+		LocalStorageUtils.setCurrentHelpQuery( searchInput );
 		setError( '' );
 		return true;
 	};
