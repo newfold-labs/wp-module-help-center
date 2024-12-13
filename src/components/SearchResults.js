@@ -140,7 +140,13 @@ const SearchResults = ( { wrapper, introRef, refresh, brand } ) => {
 	};
 
 	const getResultMatches = ( query, tokensMatched, fieldsMatched ) => {
-		const tokensPerQuery = tokensMatched / query.split( /\s+/ ).length;
+		const clearedQuery = query
+			.replace( /[^\w\s]|_/g, '' )
+			.replace( /\s{2,}/g, ' ' )
+			.trim();
+
+		const tokensPerQuery =
+			tokensMatched / clearedQuery.split( /\s+/ ).length;
 		return fieldsMatched >= 1 && tokensPerQuery >= 0.99;
 	};
 
