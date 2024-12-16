@@ -25,7 +25,6 @@ const SearchInput = ( {
 			);
 			return false;
 		}
-		LocalStorageUtils.setCurrentHelpQuery( searchInput );
 		setError( '' );
 		return true;
 	};
