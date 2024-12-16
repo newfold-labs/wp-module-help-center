@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo, useRef } from '@wordpress/element';
 import moduleAI from '@newfold-labs/wp-module-ai';
 import { SearchResultSuggestions } from './SearchResultSuggestions';
 import { ResultContent } from './ResultContent';
-import { Analytics, LocalStorageUtils, CapabilityAPI } from '../utils';
+import { Analytics, LocalStorageUtils } from '../utils';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 import SearchInput from './SearchInput';
@@ -12,7 +12,9 @@ import SearchInput from './SearchInput';
 const SearchResults = ( { wrapper, introRef, refresh, brand } ) => {
 	const [ isLoading, setIsLoading ] = useState( false );
 	const [ noResult, setNoResult ] = useState( false );
-	const [ searchInput, setSearchInput ] = useState( '' );
+	const [ searchInput, setSearchInput ] = useState(
+		LocalStorageUtils.getSearchInput()
+	);
 	const [ resultContent, setResultContent ] = useState( [] );
 
 	const [ source, setSource ] = useState( 'kb' );
@@ -31,7 +33,9 @@ const SearchResults = ( { wrapper, introRef, refresh, brand } ) => {
 	}, [] );
 
 	useEffect( () => {
-		setSearchInput( '' );
+		if ( refresh && searchInput !== '' ) {
+			setSearchInput( '' );
+		}
 	}, [ refresh ] );
 
 	useEffect( () => {
@@ -93,15 +97,16 @@ const SearchResults = ( { wrapper, introRef, refresh, brand } ) => {
 			if ( savedResults ) {
 				setResultContent( savedResults );
 			}
-			const brand = await CapabilityAPI.getBrand();
+
 			const multiSearchResults = await fetchMultiSearchResults(
-				'',
+				searchInput,
 				brand
 			);
 
 			setMultiResults( {
 				hits: multiSearchResults?.results?.[ 0 ]?.grouped_hits,
 			} );
+
 			setShowSuggestions( true );
 			setInitComplete( true );
 		} catch ( error ) {
@@ -122,20 +127,26 @@ const SearchResults = ( { wrapper, introRef, refresh, brand } ) => {
 
 	const scroll = () => {
 		const scrollDistance = wrapper.current.scrollHeight;
-
 		wrapper.current.scrollBy( {
 			top: scrollDistance,
 			left: 0,
+			behavior: 'auto',
 		} );
 
 		setTimeout( () => {
 			introRef.current.style.visibility = 'visible';
 			resultsContainer.current.style.visibility = 'visible';
-		}, 500 );
+		}, 100 );
 	};
 
 	const getResultMatches = ( query, tokensMatched, fieldsMatched ) => {
-		const tokensPerQuery = tokensMatched / query.split( /\s+/ ).length;
+		const clearedQuery = query
+			.replace( /[^\w\s]|_/g, '' )
+			.replace( /\s{2,}/g, ' ' )
+			.trim();
+
+		const tokensPerQuery =
+			tokensMatched / clearedQuery.split( /\s+/ ).length;
 		return fieldsMatched >= 1 && tokensPerQuery >= 0.99;
 	};
 
@@ -164,11 +175,16 @@ const SearchResults = ( { wrapper, introRef, refresh, brand } ) => {
 		setShowSuggestions( false );
 		setLoadingQuery( searchInput );
 		setLoadingIndex( resultContent.length );
-		setSearchInput( '' );
 		try {
 			// Check existing multiResults
 			let hits = multiResults?.hits?.[ 0 ]?.hits;
-			if ( checkAndPopulateResult( hits, searchInput ) ) return;
+			const lastQuery = multiResults?.results?.[ 0 ]?.request_params?.q;
+
+			if (
+				searchInput === lastQuery &&
+				checkAndPopulateResult( hits, searchInput )
+			)
+				return;
 
 			// Make a new multi-search API call if no match is found
 			const multiSearchResults = await fetchMultiSearchResults(
@@ -201,10 +217,12 @@ const SearchResults = ( { wrapper, introRef, refresh, brand } ) => {
 			setIsNewResult( true ); // to display no result error only for the upcoming result.
 			setSearchInput( searchInput );
 		} finally {
+			setSearchInput( '' );
 			setLoadingQuery( null );
 			setIsLoading( false );
 			setLoadingIndex( null );
 			setShowSuggestions( false );
+			LocalStorageUtils.persistSearchInput( '' );
 		}
 	};
 
@@ -216,15 +234,16 @@ const SearchResults = ( { wrapper, introRef, refresh, brand } ) => {
 				return;
 			}
 			try {
-				const brand = await CapabilityAPI.getBrand();
 				const multiSearchResults = await fetchMultiSearchResults(
 					query,
 					brand
 				);
+
 				if ( multiSearchResults?.results?.[ 0 ]?.grouped_hits ) {
 					setMultiResults( {
 						hits: multiSearchResults?.results?.[ 0 ]?.grouped_hits,
 					} );
+
 					setShowSuggestions( true );
 				}
 			} catch ( error ) {
@@ -323,10 +342,7 @@ const SearchResults = ( { wrapper, introRef, refresh, brand } ) => {
 						</p>
 					) }
 					{ multiResults?.hits?.map( ( result, index ) => {
-						const el = document.createElement( 'span' );
-						el.setAttribute( 'display', 'none' );
-						el.innerHTML = result?.group_key;
-						const postTitle = el.textContent || el.innerText;
+						const postTitle = result?.group_key[ 0 ];
 
 						return (
 							<SearchResultSuggestions
