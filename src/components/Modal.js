@@ -4,6 +4,7 @@ import { __ } from '@wordpress/i18n';
 import { ReactComponent as CloseIcon } from '../icons/close.svg';
 import { ReactComponent as Help } from '../icons/helpcenter-icon.svg';
 import HelpCenter from './HelpCenter';
+import Footer from './Footer';
 
 import { toggleHelp } from '..';
 import { CapabilityAPI, LocalStorageUtils } from '../utils';
@@ -56,6 +57,7 @@ const Modal = ( { onClose } ) => {
 				refresh={ refresh }
 				brand={ brand }
 			/>
+			<Footer />
 		</div>
 	);
 };

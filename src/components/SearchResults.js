@@ -7,7 +7,6 @@ import { ResultContent } from './ResultContent';
 import { Analytics, LocalStorageUtils } from '../utils';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
-import SearchInput from './SearchInput';
 
 const SearchResults = ( { wrapper, introRef, refresh, brand } ) => {
 	const [ isLoading, setIsLoading ] = useState( false );
@@ -356,14 +355,6 @@ const SearchResults = ( { wrapper, introRef, refresh, brand } ) => {
 					} ) }
 				</div>
 			) }
-			<SearchInput
-				searchInput={ searchInput }
-				setSearchInput={ setSearchInput }
-				populateSearchResult={ populateSearchResult }
-				debouncedResults={ debouncedResults }
-				setNoResult={ setNoResult }
-				getAIResult={ getAIResult }
-			/>
 		</>
 	);
 };

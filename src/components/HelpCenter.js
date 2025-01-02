@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from '@wordpress/element';
 import SearchResults from './SearchResults';
 import { CapabilityAPI, LocalStorageUtils } from '../utils';
 import HelpCenterIntro from './HelpCenterIntro';
+import SearchInput from './SearchInput';
 
 const HelpCenter = ( props ) => {
 	const [ visible, setVisible ] = useState( false );
@@ -50,6 +51,14 @@ const HelpCenter = ( props ) => {
 				wrapper={ wrapper }
 				introRef={ introRef }
 				{ ...props }
+			/>
+			<SearchInput
+				searchInput={ searchInput }
+				setSearchInput={ setSearchInput }
+				populateSearchResult={ populateSearchResult }
+				debouncedResults={ debouncedResults }
+				setNoResult={ setNoResult }
+				getAIResult={ getAIResult }
 			/>
 		</div>
 	);
