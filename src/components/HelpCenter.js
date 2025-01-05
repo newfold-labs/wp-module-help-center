@@ -1,11 +1,14 @@
 import { useEffect, useState, useMemo, useRef } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
 import { debounce } from 'lodash';
 import moduleAI from '@newfold-labs/wp-module-ai';
 import SearchResults from './SearchResults';
 import { CapabilityAPI, LocalStorageUtils, Analytics } from '../utils';
 import HelpCenterIntro from './HelpCenterIntro';
 import SearchInput from './SearchInput';
-import apiFetch from '@wordpress/api-fetch';
+
+import { SearchResultSuggestions } from './SearchResultSuggestions';
 
 const HelpCenter = ( props ) => {
 	const [ visible, setVisible ] = useState( false );
@@ -75,13 +78,20 @@ const HelpCenter = ( props ) => {
 		adjustPadding();
 	}, [ showSuggestions ] );
 
-	const populateSearchResult = ( postId ) => {
-		const resultContentFormatted = resultContent.replace( /\n/g, '<br />' );
+	// Clear any debounce problems
+	useEffect( () => {
+		debouncedResults.cancel();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [] );
+
+	const populateSearchResult = ( postContent, postId, postTitle ) => {
+		const resultContentFormatted =
+			postContent && postContent.replace( /\n/g, '<br />' );
 		// Retrieve existing results from local storage and using the updated persistResult method to store the result
 		LocalStorageUtils.persistResult(
 			resultContentFormatted,
 			postId,
-			searchInput
+			postTitle
 		);
 		// Add new result to existing results and retrieve all results from local storage
 		const updatedResults = LocalStorageUtils.getResultInfo();
@@ -91,7 +101,7 @@ const HelpCenter = ( props ) => {
 			setIsNewResult( true );
 			Analytics.sendEvent( 'help_search', {
 				label_key: 'term',
-				term: searchInput,
+				term: postTitle,
 				page: window.location.href.toString(),
 			} );
 		}
@@ -120,12 +130,6 @@ const HelpCenter = ( props ) => {
 				console.error( 'Error fetching debounced results:', error );
 			}
 		}, 500 );
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [] );
-
-	// Clear any debounce problems
-	useEffect( () => {
-		debouncedResults.cancel();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [] );
 
@@ -176,7 +180,7 @@ const HelpCenter = ( props ) => {
 			setIsLoading( false );
 			setLoadingIndex( null );
 			setShowSuggestions( false );
-			LocalStorageUtils.persistSearchInput( '' );
+			LocalStorageUtils.persistSearchInput( searchInput );
 		}
 	};
 
@@ -319,6 +323,37 @@ const HelpCenter = ( props ) => {
 				handleSuggestionsClick={ handleSuggestionsClick }
 				{ ...props }
 			/>
+			{ showSuggestions && (
+				<div
+					className="suggestions-wrapper"
+					id="suggestionsWrapper"
+					ref={ suggestionsRef }
+				>
+					{ multiResults?.hits?.length > 0 && (
+						<p>
+							<b>
+								{ __(
+									'Common Topics',
+									'wp-module-help-center'
+								) }
+							</b>
+						</p>
+					) }
+					{ multiResults?.hits?.map( ( result, index ) => {
+						const postTitle = result?.group_key[ 0 ];
+
+						return (
+							<SearchResultSuggestions
+								key={ index }
+								searchTitle={ postTitle }
+								onGo={ () => {
+									handleSuggestionsClick( result, postTitle );
+								} }
+							/>
+						);
+					} ) }
+				</div>
+			) }
 			<SearchInput
 				searchInput={ searchInput }
 				setSearchInput={ setSearchInput }

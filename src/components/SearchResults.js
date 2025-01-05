@@ -1,7 +1,5 @@
 /* eslint-disable no-shadow */
-import { SearchResultSuggestions } from './SearchResultSuggestions';
 import { ResultContent } from './ResultContent';
-import { __ } from '@wordpress/i18n';
 
 const SearchResults = ( {
 	wrapper,
@@ -13,10 +11,6 @@ const SearchResults = ( {
 	source,
 	resultContent,
 	resultsContainer,
-	showSuggestions,
-	suggestionsRef,
-	multiResults,
-	handleSuggestionsClick,
 	searchInput,
 } ) => {
 	return (
@@ -75,37 +69,6 @@ const SearchResults = ( {
 					/>
 				) }
 			</div>
-			{ showSuggestions && (
-				<div
-					className="suggestions-wrapper"
-					id="suggestionsWrapper"
-					ref={ suggestionsRef }
-				>
-					{ multiResults?.hits?.length > 0 && (
-						<p>
-							<b>
-								{ __(
-									'Common Topics',
-									'wp-module-help-center'
-								) }
-							</b>
-						</p>
-					) }
-					{ multiResults?.hits?.map( ( result, index ) => {
-						const postTitle = result?.group_key[ 0 ];
-
-						return (
-							<SearchResultSuggestions
-								key={ index }
-								searchTitle={ postTitle }
-								onGo={ () => {
-									handleSuggestionsClick( result, postTitle );
-								} }
-							/>
-						);
-					} ) }
-				</div>
-			) }
 		</>
 	);
 };
