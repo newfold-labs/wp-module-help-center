@@ -320,39 +320,14 @@ const HelpCenter = ( props ) => {
 				showSuggestions={ showSuggestions }
 				suggestionsRef={ suggestionsRef }
 				multiResults={ multiResults }
-				handleSuggestionsClick={ handleSuggestionsClick }
 				{ ...props }
 			/>
 			{ showSuggestions && (
-				<div
-					className="suggestions-wrapper"
-					id="suggestionsWrapper"
-					ref={ suggestionsRef }
-				>
-					{ multiResults?.hits?.length > 0 && (
-						<p>
-							<b>
-								{ __(
-									'Common Topics',
-									'wp-module-help-center'
-								) }
-							</b>
-						</p>
-					) }
-					{ multiResults?.hits?.map( ( result, index ) => {
-						const postTitle = result?.group_key[ 0 ];
-
-						return (
-							<SearchResultSuggestions
-								key={ index }
-								searchTitle={ postTitle }
-								onGo={ () => {
-									handleSuggestionsClick( result, postTitle );
-								} }
-							/>
-						);
-					} ) }
-				</div>
+				<SearchResultSuggestions
+					suggestionsRef={ suggestionsRef }
+					multiResults={ multiResults }
+					handleSuggestionsClick={ handleSuggestionsClick }
+				/>
 			) }
 			<SearchInput
 				searchInput={ searchInput }
