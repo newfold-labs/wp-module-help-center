@@ -3,7 +3,12 @@ import apiFetch from '@wordpress/api-fetch';
 import { debounce } from 'lodash';
 import moduleAI from '@newfold-labs/wp-module-ai';
 import SearchResults from './SearchResults';
-import { CapabilityAPI, LocalStorageUtils, Analytics } from '../utils';
+import {
+	CapabilityAPI,
+	LocalStorageUtils,
+	Analytics,
+	MultiSearchAPI,
+} from '../utils';
 import HelpCenterIntro from './HelpCenterIntro';
 import SearchInput from './SearchInput';
 
@@ -13,7 +18,7 @@ const HelpCenter = ( props ) => {
 	const [ visible, setVisible ] = useState( false );
 	const [ helpEnabled, setHelpEnabled ] = useState( false );
 	const [ searchInput, setSearchInput ] = useState(
-		LocalStorageUtils.getSearchInput()
+		LocalStorageUtils.getSearchInput() || ''
 	);
 	const [ noResult, setNoResult ] = useState( false );
 	const [ loadingQuery, setLoadingQuery ] = useState( null );
@@ -115,7 +120,10 @@ const HelpCenter = ( props ) => {
 			}
 			try {
 				const multiSearchResults =
-					await fetchMultiSearchResults( query );
+					await MultiSearchAPI.fetchMultiSearchResults(
+						query,
+						brand
+					);
 
 				if ( multiSearchResults?.results?.[ 0 ]?.grouped_hits ) {
 					setMultiResults( {
@@ -147,7 +155,10 @@ const HelpCenter = ( props ) => {
 
 			// Make a new multi-search API call if no match is found
 			const multiSearchResults =
-				await fetchMultiSearchResults( searchInput );
+				await MultiSearchAPI.fetchMultiSearchResults(
+					searchInput,
+					brand
+				);
 
 			hits =
 				multiSearchResults?.results?.[ 0 ]?.grouped_hits?.[ 0 ]?.hits;
@@ -192,25 +203,6 @@ const HelpCenter = ( props ) => {
 		);
 	};
 
-	const fetchMultiSearchResults = async ( query ) => {
-		try {
-			const response = await apiFetch( {
-				path: '/newfold-multi-search/v1/multi_search',
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify( { query, brand } ),
-			} );
-
-			return response;
-		} catch ( error ) {
-			// eslint-disable-next-line no-console
-			console.error( 'Error fetching multi-search results:', error );
-			return {};
-		}
-	};
-
 	const fetchInitialData = async () => {
 		try {
 			// Populate the results from local storage if they exist
@@ -219,10 +211,11 @@ const HelpCenter = ( props ) => {
 				setResultContent( savedResults );
 			}
 
-			const multiSearchResults = await fetchMultiSearchResults(
-				searchInput,
-				brand
-			);
+			const multiSearchResults =
+				await MultiSearchAPI.fetchMultiSearchResults(
+					searchInput,
+					brand
+				);
 
 			setMultiResults( {
 				hits: multiSearchResults?.results?.[ 0 ]?.grouped_hits,

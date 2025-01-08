@@ -29,6 +29,27 @@ export const OnboardingAPIs = {
 		} ),
 };
 
+export const MultiSearchAPI = {
+	fetchMultiSearchResults: async ( query, brand ) => {
+		try {
+			const response = await apiFetch( {
+				path: '/newfold-multi-search/v1/multi_search',
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify( { query, brand } ),
+			} );
+
+			return response;
+		} catch ( error ) {
+			// eslint-disable-next-line no-console
+			console.error( 'Error in getMultiSearchResults:', error );
+			return {};
+		}
+	},
+};
+
 export const CapabilityAPI = {
 	getHelpCenterCapability: () => {
 		return (
