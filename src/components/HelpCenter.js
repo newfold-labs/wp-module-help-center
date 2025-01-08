@@ -1,5 +1,4 @@
 import { useEffect, useState, useMemo, useRef } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 import { debounce } from 'lodash';
 import moduleAI from '@newfold-labs/wp-module-ai';
@@ -8,7 +7,7 @@ import { CapabilityAPI, LocalStorageUtils, Analytics } from '../utils';
 import HelpCenterIntro from './HelpCenterIntro';
 import SearchInput from './SearchInput';
 
-import { SearchResultSuggestions } from './SearchResultSuggestions';
+import { SuggestionList } from './SuggestionList';
 
 const HelpCenter = ( props ) => {
 	const [ visible, setVisible ] = useState( false );
@@ -239,7 +238,7 @@ const HelpCenter = ( props ) => {
 
 	const adjustPadding = () => {
 		let paddingBottom = 0;
-		if ( showSuggestions ) {
+		if ( showSuggestions && suggestionsRef.current ) {
 			const suggestionsHeight =
 				suggestionsRef.current.getBoundingClientRect().height;
 			paddingBottom = `${ suggestionsHeight }px`;
@@ -323,7 +322,7 @@ const HelpCenter = ( props ) => {
 				{ ...props }
 			/>
 			{ showSuggestions && (
-				<SearchResultSuggestions
+				<SuggestionList
 					suggestionsRef={ suggestionsRef }
 					multiResults={ multiResults }
 					handleSuggestionsClick={ handleSuggestionsClick }
