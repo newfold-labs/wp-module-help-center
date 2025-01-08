@@ -1,5 +1,4 @@
 import { useEffect, useState, useMemo, useRef } from '@wordpress/element';
-import apiFetch from '@wordpress/api-fetch';
 import { debounce } from 'lodash';
 import moduleAI from '@newfold-labs/wp-module-ai';
 import SearchResults from './SearchResults';
@@ -43,23 +42,6 @@ const HelpCenter = ( props ) => {
 			setHelpEnabled( false );
 		}
 	};
-	useEffect( () => {
-		getHelpStatus();
-	}, [] );
-
-	useEffect( () => {
-		const updateVisibility = () => {
-			setVisible( LocalStorageUtils.getHelpVisible() );
-		};
-
-		// Add the event listener on component mount
-		window.addEventListener( 'storage', updateVisibility );
-
-		// Remove the event listener when the component unmounts
-		return () => {
-			window.removeEventListener( 'storage', updateVisibility );
-		};
-	}, [] );
 
 	useEffect( () => {
 		if ( props.refresh && searchInput !== '' ) {
@@ -68,7 +50,26 @@ const HelpCenter = ( props ) => {
 	}, [ props.refresh ] );
 
 	useEffect( () => {
+		// Check help center capability
+		getHelpStatus();
+
+		// Fetch initial data
 		fetchInitialData();
+
+		// Add event listener for localStorage changes
+		const updateVisibility = () => {
+			setVisible( LocalStorageUtils.getHelpVisible() );
+		};
+		window.addEventListener( 'storage', updateVisibility );
+
+		// Remove the event listener when the component unmounts
+		return () => {
+			// Cancel any debounced calls
+			debouncedResults.cancel();
+
+			// Remove the storage event listener
+			window.removeEventListener( 'storage', updateVisibility );
+		};
 	}, [] );
 
 	useEffect( () => {
@@ -81,12 +82,6 @@ const HelpCenter = ( props ) => {
 	useEffect( () => {
 		adjustPadding();
 	}, [ showSuggestions ] );
-
-	// Clear any debounce problems
-	useEffect( () => {
-		debouncedResults.cancel();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [] );
 
 	const populateSearchResult = ( postContent, postId, postTitle ) => {
 		const resultContentFormatted =
