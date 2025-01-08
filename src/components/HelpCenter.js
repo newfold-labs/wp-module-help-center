@@ -7,6 +7,10 @@ import {
 	LocalStorageUtils,
 	Analytics,
 	MultiSearchAPI,
+	formatPostContent,
+	getResultMatches,
+	scrollToBottom,
+	adjustPadding,
 } from '../utils';
 import HelpCenterIntro from './HelpCenterIntro';
 import SearchInput from './SearchInput';
@@ -74,18 +78,19 @@ const HelpCenter = ( props ) => {
 
 	useEffect( () => {
 		if ( initComplete ) {
-			adjustPadding();
-			scroll();
+			adjustPadding( wrapper, suggestionsRef, showSuggestions );
+			scrollToBottom( wrapper, introRef, resultsContainer );
 		}
 	}, [ initComplete ] );
 
 	useEffect( () => {
-		adjustPadding();
+		adjustPadding( wrapper, suggestionsRef, showSuggestions );
 	}, [ showSuggestions ] );
 
 	const populateSearchResult = ( postContent, postId, postTitle ) => {
-		const resultContentFormatted =
-			postContent && postContent.replace( /\n/g, '<br />' );
+		const resultContentFormatted = postContent
+			? formatPostContent( postContent )
+			: '';
 		// Retrieve existing results from local storage and using the updated persistResult method to store the result
 		LocalStorageUtils.persistResult(
 			resultContentFormatted,
@@ -222,43 +227,6 @@ const HelpCenter = ( props ) => {
 			// eslint-disable-next-line no-console
 			console.error( 'Error fetching initial data:', error );
 		}
-	};
-
-	const adjustPadding = () => {
-		let paddingBottom = 0;
-		if ( showSuggestions && suggestionsRef.current ) {
-			const suggestionsHeight =
-				suggestionsRef.current.getBoundingClientRect().height;
-			paddingBottom = `${ suggestionsHeight }px`;
-		}
-		if ( wrapper && wrapper.current ) {
-			wrapper.current.style.paddingBottom = paddingBottom;
-		}
-	};
-
-	const scroll = () => {
-		const scrollDistance = wrapper.current.scrollHeight;
-		wrapper.current.scrollBy( {
-			top: scrollDistance,
-			left: 0,
-			behavior: 'auto',
-		} );
-
-		setTimeout( () => {
-			introRef.current.style.visibility = 'visible';
-			resultsContainer.current.style.visibility = 'visible';
-		}, 100 );
-	};
-
-	const getResultMatches = ( query, tokensMatched, fieldsMatched ) => {
-		const clearedQuery = query
-			.replace( /[^\w\s]|_/g, '' )
-			.replace( /\s{2,}/g, ' ' )
-			.trim();
-
-		const tokensPerQuery =
-			tokensMatched / clearedQuery.split( /\s+/ ).length;
-		return fieldsMatched >= 1 && tokensPerQuery >= 0.99;
 	};
 
 	const checkAndPopulateResult = ( hits ) => {

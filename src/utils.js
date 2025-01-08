@@ -202,3 +202,50 @@ export const isValidJSON = ( json ) => {
 		return false;
 	}
 };
+
+export function formatPostContent( postContent = '' ) {
+	return postContent.replace( /\n/g, '<br />' );
+}
+
+export function getResultMatches( query, tokensMatched, fieldsMatched ) {
+	const clearedQuery = query
+		.replace( /[^\w\s]|_/g, '' )
+		.replace( /\s{2,}/g, ' ' )
+		.trim();
+
+	const tokensPerQuery = tokensMatched / clearedQuery.split( /\s+/ ).length;
+	return fieldsMatched >= 1 && tokensPerQuery >= 0.99;
+}
+
+export function scrollToBottom( wrapperRef, introRef, resultsContainerRef ) {
+	if ( ! wrapperRef?.current ) return;
+	const scrollDistance = wrapperRef.current.scrollHeight;
+
+	wrapperRef.current.scrollBy( {
+		top: scrollDistance,
+		left: 0,
+		behavior: 'auto',
+	} );
+
+	setTimeout( () => {
+		if ( introRef?.current ) {
+			introRef.current.style.visibility = 'visible';
+		}
+		if ( resultsContainerRef?.current ) {
+			resultsContainerRef.current.style.visibility = 'visible';
+		}
+	}, 100 );
+}
+
+export function adjustPadding( wrapperRef, suggestionsRef, showSuggestions ) {
+	let paddingBottom = 0;
+	if ( showSuggestions && suggestionsRef?.current ) {
+		const suggestionsHeight =
+			suggestionsRef.current.getBoundingClientRect().height;
+		paddingBottom = `${ suggestionsHeight }px`;
+	}
+
+	if ( wrapperRef?.current ) {
+		wrapperRef.current.style.paddingBottom = paddingBottom;
+	}
+}
