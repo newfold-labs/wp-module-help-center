@@ -1,4 +1,4 @@
-@import "./modal.scss";
+@import "./modal";
 
 $blue: #196bde;
 $white: #fff;
@@ -63,14 +63,17 @@ $blue-night-sky: #7a889d;
 
 	.launch-help-center {
 		text-align: center;
+
 		.launch-description {
 			margin: 24px 0;
 		}
+
 		.launch-action {
 			display: flex;
 			justify-content: center;
 			align-items: center;
 		}
+
 		button {
 			width: 146px;
 			height: 36px;
@@ -79,9 +82,11 @@ $blue-night-sky: #7a889d;
 			color: $white;
 			cursor: grab;
 		}
+
 		p {
 			font-size: 18px;
 		}
+
 		a {
 			margin-top: 16px;
 			display: block;
@@ -140,7 +145,7 @@ $blue-night-sky: #7a889d;
 				border-radius: 8px;
 				padding-right: 5px;
 				background-color: $light-gray;
-				margin: 16px 0px 0px;
+				margin: 16px 0 0;
 
 				input {
 					border: none;
@@ -277,25 +282,28 @@ $blue-night-sky: #7a889d;
 		}
 
 		.yes {
-			border-bottom-right-radius: 0px;
-			border-top-right-radius: 0px;
-			border-right-width: 0px;
+			border-bottom-right-radius: 0;
+			border-top-right-radius: 0;
+			border-right-width: 0;
 		}
 
 		.no {
-			border-bottom-left-radius: 0px;
-			border-top-left-radius: 0px;
+			border-bottom-left-radius: 0;
+			border-top-left-radius: 0;
 		}
+
 		.selected-yes {
 			background: $feedback-bg;
 			padding-bottom: 4.4px;
 			padding-top: 5.8px;
 		}
+
 		.selected-no {
 			background-color: $feedback-negative;
 			padding-bottom: 4.4px;
 			padding-top: 5.8px;
 		}
+
 		.icon {
 			cursor: pointer;
 			display: flex;
@@ -359,7 +367,7 @@ $blue-night-sky: #7a889d;
 	background: $white;
 	display: block !important;
 	border: 1px solid $border-light-gray;
-	box-shadow: -5px 0px 36px $box-shadow-dark;
+	box-shadow: -5px 0 36px $box-shadow-dark;
 	z-index: 9999;
 }
 
@@ -428,12 +436,15 @@ body:is(.page, .post-php, .post-new-php) {
 }
 
 @keyframes blip {
+
 	0% {
 		opacity: 1;
 	}
+
 	50% {
 		opacity: 0;
 	}
+
 	100% {
 		opacity: 1;
 	}

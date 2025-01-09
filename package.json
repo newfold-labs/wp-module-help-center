@@ -11,6 +11,8 @@
 		"prepare": "npm run build",
 		"build": "wp-scripts build ./src/index.js",
 		"lint": "wp-scripts lint-js src",
+		"lint:css": "wp-scripts lint-style src/styles/*.scss",
+		"lint:css:fix": "wp-scripts lint-style src/styles/*.scss --fix",
 		"format": "wp-scripts format src",
 		"start": "wp-scripts start ./src/index.js",
 		"test:unit": "echo \"No tests implemented\"",
@@ -37,9 +39,8 @@
 	},
 	"devDependencies": {
 		"@wordpress/eslint-plugin": "^15.0.0",
-		"@wordpress/prettier-config": "^2.23.0",
-		"@wordpress/scripts": "25.0.0",
-		"eslint-plugin-prettier": "5.0.0",
-		"prettier": "npm:wp-prettier@3.0.3"
+		"@wordpress/scripts": "30.8.1",
+		"@wordpress/stylelint-config": "23.7.0",
+		"stylelint": "16.12.0"
 	}
 }
