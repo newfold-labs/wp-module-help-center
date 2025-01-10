@@ -3,7 +3,7 @@
 import { ReactComponent as Go } from '../icons/go.svg';
 import { __ } from '@wordpress/i18n';
 
-export const SearchResultSuggestions = ( {
+export const SuggestionList = ( {
 	suggestionsRef,
 	multiResults,
 	handleSuggestionsClick,

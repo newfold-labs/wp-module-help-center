@@ -1,20 +1,27 @@
 import { useEffect, useState, useMemo, useRef } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
-import apiFetch from '@wordpress/api-fetch';
 import { debounce } from 'lodash';
 import moduleAI from '@newfold-labs/wp-module-ai';
 import SearchResults from './SearchResults';
-import { CapabilityAPI, LocalStorageUtils, Analytics } from '../utils';
+import {
+	CapabilityAPI,
+	LocalStorageUtils,
+	Analytics,
+	MultiSearchAPI,
+	formatPostContent,
+	getResultMatches,
+	scrollToBottom,
+	adjustPadding,
+} from '../utils';
 import HelpCenterIntro from './HelpCenterIntro';
 import SearchInput from './SearchInput';
 
-import { SearchResultSuggestions } from './SearchResultSuggestions';
+import { SuggestionList } from './SuggestionList';
 
 const HelpCenter = ( props ) => {
 	const [ visible, setVisible ] = useState( false );
 	const [ helpEnabled, setHelpEnabled ] = useState( false );
 	const [ searchInput, setSearchInput ] = useState(
-		LocalStorageUtils.getSearchInput()
+		LocalStorageUtils.getSearchInput() || ''
 	);
 	const [ noResult, setNoResult ] = useState( false );
 	const [ loadingQuery, setLoadingQuery ] = useState( null );
@@ -39,23 +46,6 @@ const HelpCenter = ( props ) => {
 			setHelpEnabled( false );
 		}
 	};
-	useEffect( () => {
-		getHelpStatus();
-	}, [] );
-
-	useEffect( () => {
-		const updateVisibility = () => {
-			setVisible( LocalStorageUtils.getHelpVisible() );
-		};
-
-		// Add the event listener on component mount
-		window.addEventListener( 'storage', updateVisibility );
-
-		// Remove the event listener when the component unmounts
-		return () => {
-			window.removeEventListener( 'storage', updateVisibility );
-		};
-	}, [] );
 
 	useEffect( () => {
 		if ( props.refresh && searchInput !== '' ) {
@@ -64,29 +54,43 @@ const HelpCenter = ( props ) => {
 	}, [ props.refresh ] );
 
 	useEffect( () => {
+		// Check help center capability
+		getHelpStatus();
+
+		// Fetch initial data
 		fetchInitialData();
+
+		// Add event listener for localStorage changes
+		const updateVisibility = () => {
+			setVisible( LocalStorageUtils.getHelpVisible() );
+		};
+		window.addEventListener( 'storage', updateVisibility );
+
+		// Remove the event listener when the component unmounts
+		return () => {
+			// Cancel any debounced calls
+			debouncedResults.cancel();
+
+			// Remove the storage event listener
+			window.removeEventListener( 'storage', updateVisibility );
+		};
 	}, [] );
 
 	useEffect( () => {
 		if ( initComplete ) {
-			adjustPadding();
-			scroll();
+			adjustPadding( wrapper, suggestionsRef, showSuggestions );
+			scrollToBottom( wrapper, introRef, resultsContainer );
 		}
 	}, [ initComplete ] );
 
 	useEffect( () => {
-		adjustPadding();
+		adjustPadding( wrapper, suggestionsRef, showSuggestions );
 	}, [ showSuggestions ] );
 
-	// Clear any debounce problems
-	useEffect( () => {
-		debouncedResults.cancel();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [] );
-
 	const populateSearchResult = ( postContent, postId, postTitle ) => {
-		const resultContentFormatted =
-			postContent && postContent.replace( /\n/g, '<br />' );
+		const resultContentFormatted = postContent
+			? formatPostContent( postContent )
+			: '';
 		// Retrieve existing results from local storage and using the updated persistResult method to store the result
 		LocalStorageUtils.persistResult(
 			resultContentFormatted,
@@ -116,7 +120,10 @@ const HelpCenter = ( props ) => {
 			}
 			try {
 				const multiSearchResults =
-					await fetchMultiSearchResults( query );
+					await MultiSearchAPI.fetchMultiSearchResults(
+						query,
+						brand
+					);
 
 				if ( multiSearchResults?.results?.[ 0 ]?.grouped_hits ) {
 					setMultiResults( {
@@ -148,7 +155,10 @@ const HelpCenter = ( props ) => {
 
 			// Make a new multi-search API call if no match is found
 			const multiSearchResults =
-				await fetchMultiSearchResults( searchInput );
+				await MultiSearchAPI.fetchMultiSearchResults(
+					searchInput,
+					brand
+				);
 
 			hits =
 				multiSearchResults?.results?.[ 0 ]?.grouped_hits?.[ 0 ]?.hits;
@@ -193,25 +203,6 @@ const HelpCenter = ( props ) => {
 		);
 	};
 
-	const fetchMultiSearchResults = async ( query ) => {
-		try {
-			const response = await apiFetch( {
-				path: '/newfold-multi-search/v1/multi_search',
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify( { query, brand } ),
-			} );
-
-			return response;
-		} catch ( error ) {
-			// eslint-disable-next-line no-console
-			console.error( 'Error fetching multi-search results:', error );
-			return {};
-		}
-	};
-
 	const fetchInitialData = async () => {
 		try {
 			// Populate the results from local storage if they exist
@@ -220,10 +211,11 @@ const HelpCenter = ( props ) => {
 				setResultContent( savedResults );
 			}
 
-			const multiSearchResults = await fetchMultiSearchResults(
-				searchInput,
-				brand
-			);
+			const multiSearchResults =
+				await MultiSearchAPI.fetchMultiSearchResults(
+					searchInput,
+					brand
+				);
 
 			setMultiResults( {
 				hits: multiSearchResults?.results?.[ 0 ]?.grouped_hits,
@@ -235,43 +227,6 @@ const HelpCenter = ( props ) => {
 			// eslint-disable-next-line no-console
 			console.error( 'Error fetching initial data:', error );
 		}
-	};
-
-	const adjustPadding = () => {
-		let paddingBottom = 0;
-		if ( showSuggestions ) {
-			const suggestionsHeight =
-				suggestionsRef.current.getBoundingClientRect().height;
-			paddingBottom = `${ suggestionsHeight }px`;
-		}
-		if ( wrapper && wrapper.current ) {
-			wrapper.current.style.paddingBottom = paddingBottom;
-		}
-	};
-
-	const scroll = () => {
-		const scrollDistance = wrapper.current.scrollHeight;
-		wrapper.current.scrollBy( {
-			top: scrollDistance,
-			left: 0,
-			behavior: 'auto',
-		} );
-
-		setTimeout( () => {
-			introRef.current.style.visibility = 'visible';
-			resultsContainer.current.style.visibility = 'visible';
-		}, 100 );
-	};
-
-	const getResultMatches = ( query, tokensMatched, fieldsMatched ) => {
-		const clearedQuery = query
-			.replace( /[^\w\s]|_/g, '' )
-			.replace( /\s{2,}/g, ' ' )
-			.trim();
-
-		const tokensPerQuery =
-			tokensMatched / clearedQuery.split( /\s+/ ).length;
-		return fieldsMatched >= 1 && tokensPerQuery >= 0.99;
 	};
 
 	const checkAndPopulateResult = ( hits ) => {
@@ -323,7 +278,7 @@ const HelpCenter = ( props ) => {
 				{ ...props }
 			/>
 			{ showSuggestions && (
-				<SearchResultSuggestions
+				<SuggestionList
 					suggestionsRef={ suggestionsRef }
 					multiResults={ multiResults }
 					handleSuggestionsClick={ handleSuggestionsClick }
