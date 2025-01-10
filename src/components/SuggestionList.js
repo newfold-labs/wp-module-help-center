@@ -36,7 +36,7 @@ export const SuggestionList = ( {
 				const postTitle = result?.group_key?.[ 0 ] ?? '';
 				return (
 					<div
-						className="algoliaResult"
+						className="algolia-result"
 						key={ index }
 						onClick={ () => onSuggestionClick( result, postTitle ) }
 					>
