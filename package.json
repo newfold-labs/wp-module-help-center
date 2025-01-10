@@ -14,7 +14,7 @@
 		"format": "wp-scripts format src",
 		"start": "wp-scripts start ./src/index.js",
 		"test:unit": "echo \"No tests implemented\"",
-		"test:e2e": "echo \"No tests implemented\""
+		"test:e2e": "npx cypress run"
 	},
 	"dependencies": {
 		"@newfold-labs/js-utility-ui-analytics": "1.2.0",
@@ -36,9 +36,12 @@
 		"typesense-instantsearch-adapter": "2.7.1"
 	},
 	"devDependencies": {
+		"@testing-library/cypress": "^10.0.1",
 		"@wordpress/eslint-plugin": "^15.0.0",
 		"@wordpress/prettier-config": "^2.23.0",
 		"@wordpress/scripts": "25.0.0",
+		"cypress": "^13.6.1",
+		"cypress-axe": "^1.5.0",
 		"eslint-plugin-prettier": "5.0.0",
 		"prettier": "npm:wp-prettier@3.0.3"
 	}
