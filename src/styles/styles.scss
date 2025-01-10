@@ -1,3 +1,4 @@
+/* stylelint-disable selector-class-pattern */
 @import "./modal";
 
 $blue: #196bde;
@@ -19,24 +20,6 @@ $blue-night-sky: #7a889d;
 
 	* {
 		box-sizing: border-box;
-	}
-}
-
-.nfd-plugin-sidebar {
-
-	.nfd-help-center {
-
-		.feedback-container {
-
-			.feedback-button {
-				padding-left: 6px;
-				padding-right: 6px;
-			}
-
-			.feedback-question {
-				padding-top: 8px;
-			}
-		}
 	}
 }
 
@@ -218,16 +201,6 @@ $blue-night-sky: #7a889d;
 		justify-content: space-between;
 		padding: 15px 12px;
 
-		button {
-			border-radius: 20px;
-			border-color: $border-color-button;
-			border-width: 1px;
-			padding-top: 5%;
-			padding-bottom: 5%;
-			cursor: pointer;
-			box-shadow: none;
-		}
-
 		.feedback-button {
 			padding-left: 13px;
 			padding-right: 13px;
@@ -235,6 +208,11 @@ $blue-night-sky: #7a889d;
 			padding-top: 6px;
 			flex-shrink: 0;
 			white-space: nowrap;
+			border-radius: 20px;
+			border-color: $border-color-button;
+			border-width: 1px;
+			cursor: pointer;
+			box-shadow: none;
 
 			.feedback-button-emoji {
 				margin-right: 5px;
@@ -395,7 +373,7 @@ body:is(.page, .post-php, .post-new-php) {
 	display: inline-block;
 	width: 10px;
 	height: 2px;
-	background-color: black;
+	background-color: #000;
 	margin-left: 5px;
 	animation: blip 1s infinite;
 	margin-top: 30px;
@@ -437,6 +415,7 @@ body:is(.page, .post-php, .post-new-php) {
 		.helpcenter-supportinfo__telephone {
 			margin-bottom: 12px;
 
+			/* stylelint-disable-next-line no-descending-specificity */
 			span {
 				margin-right: 8px;
 				vertical-align: text-top;
@@ -451,6 +430,7 @@ body:is(.page, .post-php, .post-new-php) {
 		.helpcenter-supportinfo__chat {
 			margin-bottom: 12px;
 
+			/* stylelint-disable-next-line no-descending-specificity */
 			span {
 				margin-right: 8px;
 				vertical-align: text-top;
