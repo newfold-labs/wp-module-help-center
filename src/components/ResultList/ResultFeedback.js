@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { Analytics, InteractionAPIs, LocalStorageUtils } from '../utils';
+import { Analytics, InteractionAPIs, LocalStorageUtils } from '../../utils';
 
-const Feedback = ( { postId, source } ) => {
+const ResultFeedback = ( { postId, source } ) => {
 	const [ status, setStatus ] = useState( '' );
 	const [ hasSubmitted, setHasSubmitted ] = useState( false );
 	const [ showThanksMessage, setShowThanksMessage ] = useState( false );
@@ -92,4 +92,4 @@ const Feedback = ( { postId, source } ) => {
 	);
 };
 
-export default Feedback;
+export default ResultFeedback;

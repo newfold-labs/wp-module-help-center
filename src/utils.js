@@ -249,3 +249,36 @@ export function adjustPadding( wrapperRef, suggestionsRef, showSuggestions ) {
 		wrapperRef.current.style.paddingBottom = paddingBottom;
 	}
 }
+
+/* Parse the html in string to a document node, replace the <p>  tags with a fragment and line break */
+export const processContentForMarkdown = ( textToDisplay ) => {
+	if ( textToDisplay ) {
+		// eslint-disable-next-line no-undef
+		const parser = new DOMParser();
+		const doc = parser.parseFromString( textToDisplay, 'text/html' );
+
+		const paragraphElements = doc.querySelectorAll( 'p' );
+
+		paragraphElements.forEach( ( p ) => {
+			// Create a DocumentFragment to hold the content and <br> tags
+			const fragment = document.createDocumentFragment();
+
+			// Append all child nodes of the <p> to the fragment
+			while ( p.firstChild ) {
+				fragment.appendChild( p.firstChild );
+			}
+
+			const br1 = document.createElement( 'br' );
+			const br2 = document.createElement( 'br' );
+			fragment.appendChild( br1 );
+			fragment.appendChild( br2 );
+
+			// Replace the <p> element with the fragment
+			p.parentNode.replaceChild( fragment, p );
+		} );
+
+		const updatedContent = doc.body.innerHTML;
+		return updatedContent;
+	}
+	return '';
+};

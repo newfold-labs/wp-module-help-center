@@ -1,6 +1,5 @@
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { LocalStorageUtils } from '../utils';
 import { ReactComponent as GoSearchIcon } from '../icons/paper-airplane.svg';
 
 const SearchInput = ( {

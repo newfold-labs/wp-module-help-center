@@ -1,5 +1,5 @@
 /* eslint-disable no-shadow */
-import { ResultContent } from './ResultContent';
+import { Result } from './Result';
 
 const ResultList = ( {
 	wrapper,
@@ -23,7 +23,7 @@ const ResultList = ( {
 				{ /* Render existing results */ }
 				{ resultContent?.length > 0 &&
 					resultContent.map( ( result, index ) => (
-						<ResultContent
+						<Result
 							key={ index }
 							content={ result.resultContent }
 							noResult={ noResult }
@@ -50,7 +50,7 @@ const ResultList = ( {
 
 				{ /* Render a placeholder for the loading state if isLoading is true */ }
 				{ isLoading && (
-					<ResultContent
+					<Result
 						key="loading"
 						content={ null }
 						noResult={ false }
