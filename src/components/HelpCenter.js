@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo, useRef } from '@wordpress/element';
 import { debounce } from 'lodash';
 import moduleAI from '@newfold-labs/wp-module-ai';
-import SearchResults from './SearchResults';
+import ResultList from './ResultList';
 import {
 	CapabilityAPI,
 	LocalStorageUtils,
@@ -260,7 +260,7 @@ const HelpCenter = ( props ) => {
 			ref={ wrapper }
 		>
 			<HelpCenterIntro introRef={ introRef } />
-			<SearchResults
+			<ResultList
 				wrapper={ wrapper }
 				introRef={ introRef }
 				noResult={ noResult }

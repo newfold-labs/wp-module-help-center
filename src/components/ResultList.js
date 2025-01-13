@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 import { ResultContent } from './ResultContent';
 
-const SearchResults = ( {
+const ResultList = ( {
 	wrapper,
 	noResult,
 	loadingQuery,
@@ -73,4 +73,4 @@ const SearchResults = ( {
 	);
 };
 
-export default SearchResults;
+export default ResultList;
