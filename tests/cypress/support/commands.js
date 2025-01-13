@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 // <reference types="Cypress" />
 
 // ***********************************************
