@@ -21,7 +21,7 @@ const HelpCenter = ( props ) => {
 	const [ visible, setVisible ] = useState( false );
 	const [ helpEnabled, setHelpEnabled ] = useState( false );
 	const [ searchInput, setSearchInput ] = useState(
-		LocalStorageUtils.getSearchInput() || ''
+		LocalStorageUtils.getSearchInput()
 	);
 	const [ noResult, setNoResult ] = useState( false );
 	const [ loadingQuery, setLoadingQuery ] = useState( null );
@@ -48,13 +48,7 @@ const HelpCenter = ( props ) => {
 	};
 
 	useEffect( () => {
-		if ( props.refresh && searchInput !== '' ) {
-			setSearchInput( '' );
-		}
-	}, [ props.refresh ] );
 
-	useEffect( () => {
-		// Check help center capability
 		getHelpStatus();
 
 		// Fetch initial data
@@ -76,17 +70,23 @@ const HelpCenter = ( props ) => {
 		};
 	}, [] );
 
-	useEffect( () => {
-		if ( initComplete ) {
-			adjustPadding( wrapper, suggestionsRef, showSuggestions );
-			scrollToBottom( wrapper, introRef, resultsContainer );
+	  useEffect(() => {
+		// If visible changed to true, reset search input
+		if (visible) {
+			setSearchInput('');
 		}
-	}, [ initComplete ] );
-
-	useEffect( () => {
-		adjustPadding( wrapper, suggestionsRef, showSuggestions );
-	}, [ showSuggestions ] );
-
+	
+		// Always adjust padding if any of these dependencies change
+		adjustPadding(wrapper, suggestionsRef, showSuggestions);
+	
+		// If the wrapper is visible or we’ve just finished init, scroll
+		if (initComplete || visible) {
+			setTimeout(() => {
+				scrollToBottom(wrapper, introRef, resultsContainer);
+			}, 100);
+		}
+	}, [initComplete, showSuggestions, visible]);
+	
 	const populateSearchResult = ( postContent, postId, postTitle ) => {
 		const resultContentFormatted = postContent
 			? formatPostContent( postContent )

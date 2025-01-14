@@ -77,7 +77,6 @@ export const Result = ( {
 			<ResultHeader
 				noResult={ noResult }
 				isNewEntry={ isNewEntry }
-				searchInput={ searchInput }
 				questionBlock={ questionBlock }
 			/>
 			<ResultContent

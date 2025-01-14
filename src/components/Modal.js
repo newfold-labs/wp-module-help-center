@@ -11,7 +11,6 @@ import { CapabilityAPI, LocalStorageUtils } from '../utils';
 
 const Modal = ( { onClose } ) => {
 	const [ brand, setBrand ] = useState( '' );
-	const [ refresh, setRefresh ] = useState( false );
 
 	const getBrand = async () => {
 		const brandRetrieved = await CapabilityAPI.getBrand();
@@ -41,7 +40,6 @@ const Modal = ( { onClose } ) => {
 					className="nfd-hc-modal__header__close-button"
 					onClick={ () => {
 						onClose();
-						setRefresh( ! refresh );
 					} }
 				>
 					<div className="nfd-hc-modal__header__close-button__icon-button">
@@ -49,14 +47,7 @@ const Modal = ( { onClose } ) => {
 					</div>
 				</button>
 			</div>
-			<HelpCenter
-				closeHelp={ () => {
-					onClose();
-					setRefresh( ! refresh );
-				} }
-				refresh={ refresh }
-				brand={ brand }
-			/>
+			<HelpCenter />
 			<Footer />
 		</div>
 	);

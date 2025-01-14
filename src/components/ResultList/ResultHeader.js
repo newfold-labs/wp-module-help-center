@@ -1,9 +1,9 @@
 import { ReactComponent as UserAvatar } from '../../icons/user-avatar.svg';
+import { LocalStorageUtils } from '../../utils';
 
 export default function ResultHeader( {
 	noResult,
 	isNewEntry,
-	searchInput,
 	questionBlock,
 } ) {
 	return (
@@ -11,7 +11,11 @@ export default function ResultHeader( {
 			<div className="helpcenter-question__user-avatar">
 				<UserAvatar />
 			</div>
-			<div>{ noResult && isNewEntry ? searchInput : questionBlock }</div>
+			<div>
+				{ noResult && isNewEntry
+					? LocalStorageUtils.getSearchInput()
+					: questionBlock }
+			</div>
 		</div>
 	);
 }
