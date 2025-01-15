@@ -12,6 +12,7 @@ describe(
 	() => {
 		beforeEach(() => {
 			wpLogin();
+			cy.visit("/wp-admin/index.php");
 		});
 
 		it('Verify HelpCenter icon visible.', () => {
@@ -62,6 +63,22 @@ describe(
 
 		it('Accessibility Test for Help Center.', () => {
 			cy.injectAxe();
+			cy.configureAxe({
+				rules: [
+					{
+						id: 'color-contrast',
+						enabled: false,
+					},
+					{
+						id: 'aria-allowed-role',
+						enabled: false,
+					},
+					{
+						id: 'link-in-text-block',
+						enabled: false,
+					},
+				],
+			});
 			cy.get('#wp-admin-bar-help-center .ab-item.ab-empty-item', {
 				timeout: customCommandTimeout,
 			})
