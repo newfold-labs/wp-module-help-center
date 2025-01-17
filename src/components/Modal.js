@@ -1,6 +1,5 @@
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-//
 import { ReactComponent as CloseIcon } from '../icons/close.svg';
 import { ReactComponent as Help } from '../icons/helpcenter-icon.svg';
 import HelpCenter from './HelpCenter';
@@ -10,7 +9,7 @@ import { toggleHelp } from '..';
 import { CapabilityAPI, LocalStorageUtils } from '../utils';
 
 const Modal = ( { onClose } ) => {
-	const [ brand, setBrand ] = useState( '' );
+	const [ , setBrand ] = useState( '' );
 
 	const getBrand = async () => {
 		const brandRetrieved = await CapabilityAPI.getBrand();
@@ -26,9 +25,18 @@ const Modal = ( { onClose } ) => {
 	}, [] );
 
 	return (
-		<div className="nfd-hc-modal">
+		<div
+			role="dialog"
+			aria-labelledby="helpcenter-modal-heading"
+			aria-describedby="helpcenter-modal-description"
+			aria-modal="true"
+			className="nfd-hc-modal"
+		>
 			<div className="nfd-hc-modal__header">
-				<h3 className="nfd-hc-modal__header__heading">
+				<h3
+					id="helpcenter-modal-heading"
+					className="nfd-hc-modal__header__heading"
+				>
 					<span className="nfd-hc-modal__header__heading__icon">
 						<Help />
 					</span>
@@ -37,17 +45,25 @@ const Modal = ( { onClose } ) => {
 					</span>
 				</h3>
 				<button
+					aria-label={ __(
+						'Close Help Modal',
+						'wp-module-help-center'
+					) }
+					title={ __( 'Close Help Modal', 'wp-module-help-center' ) }
 					className="nfd-hc-modal__header__close-button"
 					onClick={ () => {
 						onClose();
 					} }
 				>
-					<div className="nfd-hc-modal__header__close-button__icon-button">
-						<CloseIcon />
-					</div>
+					<CloseIcon aria-hidden="true" />
 				</button>
 			</div>
-			<HelpCenter />
+			<div
+				id="helpcenter-modal-description"
+				className="nfd-hc-modal__content"
+			>
+				<HelpCenter />
+			</div>
 			<Footer />
 		</div>
 	);

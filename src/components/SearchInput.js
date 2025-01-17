@@ -27,52 +27,56 @@ const SearchInput = ( {
 	};
 
 	return (
-		<div className="helpcenter-input-wrapper">
-			<div className="search-container__wrapper">
-				<div className="search-container">
-					<input
-						type="text"
-						id="search-input-box"
+		<div role="search" aria-label={__('Search Help Center', 'wp-module-help-center')}>
+			<div className="helpcenter-input-wrapper">
+				<div className="search-container__wrapper">
+					<div className="search-container">
+						<input
+							type="text"
+							id="search-input-box"
 						value={ searchInput }
-						maxLength="144"
+							maxLength="144"
 						placeholder={ __(
-							'Ask about WordPress',
-							'wp-module-help-center'
+								'Ask about WordPress',
+								'wp-module-help-center'
 						) }
 						onChange={ ( e ) => {
 							setError( '' );
 							setSearchInput( e.target.value );
-							populateSearchResult(
-								'',
-								undefined,
-								e.target.value
-							);
+								populateSearchResult(
+									'',
+									undefined,
+									e.target.value
+								);
 							setNoResult( false );
 							debouncedResults( e.target.value );
 						} }
 						onKeyDown={ async ( e ) => {
 							if ( e.key === 'Enter' && validateInput() ) {
-								await getAIResult();
-							}
+									await getAIResult();
+								}
 						} }
-					/>
-					<button
+						/>
+						<button
+						aria-label={__('submit text', 'wp-module-help-center')}
+						title={__('submit text', 'wp-module-help-center')}
 						onClick={ async () => {
 							if ( validateInput() ) {
-								await getAIResult();
-							}
+									await getAIResult();
+								}
 						} }
-					>
-						<GoSearchIcon />
-					</button>
-				</div>
+						>
+							<GoSearchIcon />
+						</button>
+					</div>
 				{ error && <p className="hc-input-error-message">{ error }</p> }
-				<div className="attribute">
-					<p className="hc-input-counter">
-						<span>
+					<div className="attribute">
+						<p className="hc-input-counter">
+							<span>
 							{ searchInput ? searchInput.length : 0 }/144
-						</span>
-					</p>
+							</span>
+						</p>
+					</div>
 				</div>
 			</div>
 		</div>
