@@ -107,7 +107,7 @@ class HelpCenter {
 	public function register_assets() {
 		$asset_file   = NFD_HELPCENTER_BUILD_DIR . 'index.asset.php';
 		$help_enabled = $this->container->get( 'capabilities' )->get( 'canAccessHelpCenter' );
-		if ( file_exists( $asset_file ) && $help_enabled ) {
+		if ( file_exists( $asset_file ) && $help_enabled && current_user_can( 'manage_options' ) ) {
 			$asset = require_once $asset_file;
 			\wp_register_script(
 				self::$slug,
