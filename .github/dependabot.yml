@@ -33,11 +33,7 @@ updates:
       - "dependencies"
       - "javascript"
     registries:
-      npm-github:
-        type: npm-registry
-        url: https://npm.pkg.github.com
-        token: ${{ secrets.NEWFOLD_ACCESS_TOKEN }}
-        replaces-base: true
+      - npm-github
 
   # Maintain dependencies for Composer
   - package-ecosystem: "composer"
@@ -55,3 +51,10 @@ updates:
     labels:
       - "dependencies"
       - "php"
+
+registries:
+  npm-github:
+    type: npm-registry
+    url: https://npm.pkg.github.com
+    token: ${{ secrets.NEWFOLD_ACCESS_TOKEN }}
+    replaces-base: true
