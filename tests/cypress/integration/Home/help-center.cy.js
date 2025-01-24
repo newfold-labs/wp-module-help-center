@@ -6,12 +6,29 @@ import {
 
 const customCommandTimeout = 20000;
 
+export const HCTrue = JSON.stringify({
+	"canAccessAI": true,
+	"hasAISiteGen": true,
+	"canAccessHelpCenter": true,
+	"canAccessGlobalCTB": true,
+	"hasEcomdash": true,
+	"hasYithExtended": true,
+	"isEcommerce": true,
+	"isJarvis": true,
+});
+
 describe(
 	'Home Page- Help Center',
 	{ testIsolation: true },
 	() => {
+
 		beforeEach(() => {
 			wpLogin();
+			cy.exec(
+				`npx wp-env run cli wp option update _transient_nfd_site_capabilities '${HCTrue}' --format=json`,
+				{ timeout: customCommandTimeout }
+			);
+			cy.reload();
 			cy.visit("/wp-admin/index.php");
 		});
 
