@@ -120,7 +120,7 @@ describe(
 				.click()
 
 			cy.get('.nfd-help-center').should('exist').and('be.visible')
-			cy.get('.nfd-hc-modal__header__close-button__icon-button')
+			cy.get('.nfd-hc-modal__header__close-button')
 				.should('be.visible')
 				.click()
 
