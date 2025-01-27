@@ -25,8 +25,7 @@
     "newfold-labs/wp-module-ai": "^1.1.12",
     "newfold-labs/wp-module-data": "^2.6.9",
     "newfold-labs/wp-module-features": "^1.4.1",
-    "typesense/typesense-php": "^4.9",
-    "symfony/http-client": "^7.2"
+    "typesense/typesense-php": "^4.9"
  
   },
   "autoload": {
@@ -39,8 +38,7 @@
   },
   "config": {
     "allow-plugins": {
-      "dealerdirect/phpcodesniffer-composer-installer": true,
-      "php-http/discovery": true
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
   }
 }
