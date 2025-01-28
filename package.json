@@ -33,7 +33,7 @@
 		"react-loader-spinner": "6.1.6",
 		"react-router-dom": "6.6.2",
 		"regenerator-runtime": "0.14.1",
-		"typesense-instantsearch-adapter": "2.7.1"
+		"typesense-instantsearch-adapter": "2.8.0"
 	},
 	"devDependencies": {
 		"@wordpress/eslint-plugin": "^15.0.0",
