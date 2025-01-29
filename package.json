@@ -21,11 +21,11 @@
 	"dependencies": {
 		"@newfold-labs/js-utility-ui-analytics": "1.2.0",
 		"@newfold-labs/wp-module-ai": "github:newfold-labs/js-utility-ai#1.0.1",
-		"@wordpress/api-fetch": "^6.37.0",
-		"@wordpress/components": "^25.7.0",
+		"@wordpress/api-fetch": "^7.16.0",
+		"@wordpress/components": "^29.2.0",
 		"@wordpress/data": "^9.11.0",
-		"@wordpress/element": "^5.18.0",
-		"@wordpress/i18n": "^4.41.0",
+		"@wordpress/element": "^6.16.0",
+		"@wordpress/i18n": "^5.16.0",
 		"@wordpress/plugins": "6.9.0",
 		"algoliasearch": "4.20.0",
 		"lodash": "4.17.21",
@@ -35,7 +35,7 @@
 		"react-loader-spinner": "6.1.6",
 		"react-router-dom": "6.6.2",
 		"regenerator-runtime": "0.14.1",
-		"typesense-instantsearch-adapter": "2.7.1"
+		"typesense-instantsearch-adapter": "2.8.0"
 	},
 	"devDependencies": {
 		"@testing-library/cypress": "^10.0.1",
