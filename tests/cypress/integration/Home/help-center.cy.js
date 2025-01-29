@@ -56,7 +56,7 @@ describe(
 
 		});
 
-		it('Verify HelpCenter search response.', () => {
+		it('Verify HelpCenter search response.', function() {
 
 			if ( pluginId === 'hostgator' ) {
 				this.skip();
