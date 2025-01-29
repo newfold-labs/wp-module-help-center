@@ -1,10 +1,12 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-undef */
+import { GetPluginId } from '../wp-module-support/pluginID.cy';
 import {
 	wpLogin,
 } from '../wp-module-support/utils.cy';
 
 const customCommandTimeout = 20000;
+const pluginId = GetPluginId();
 
 export const HCTrue = JSON.stringify({
 	"canAccessAI": true,
@@ -55,6 +57,11 @@ describe(
 		});
 
 		it('Verify HelpCenter search response.', () => {
+
+			if ( pluginId === 'hostgator' ) {
+				this.skip();
+			}
+
 			cy.get('#wp-admin-bar-help-center .ab-item.ab-empty-item', {
 				timeout: customCommandTimeout,
 			})
