@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f25385e33cfc1e744a792f4111aefb54",
+    "content-hash": "c8254b27411ef532c69da103d7c8d10b",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -311,16 +311,16 @@
         },
         {
             "name": "newfold-labs/wp-module-ai",
-            "version": "1.1.12",
+            "version": "1.1.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/newfold-labs/wp-module-ai.git",
-                "reference": "3836a576e83e068b53de1d850bcb60aac471656d"
+                "reference": "382a7efcb240c99cc19c0d9bf9054409b03013f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/newfold-labs/wp-module-ai/zipball/3836a576e83e068b53de1d850bcb60aac471656d",
-                "reference": "3836a576e83e068b53de1d850bcb60aac471656d",
+                "url": "https://api.github.com/repos/newfold-labs/wp-module-ai/zipball/382a7efcb240c99cc19c0d9bf9054409b03013f7",
+                "reference": "382a7efcb240c99cc19c0d9bf9054409b03013f7",
                 "shasum": ""
             },
             "require": {
@@ -350,10 +350,10 @@
             ],
             "description": "A module for providing artificial intelligence capabilities.",
             "support": {
-                "source": "https://github.com/newfold-labs/wp-module-ai/tree/1.1.12",
+                "source": "https://github.com/newfold-labs/wp-module-ai/tree/1.1.13",
                 "issues": "https://github.com/newfold-labs/wp-module-ai/issues"
             },
-            "time": "2024-09-19T07:47:50+00:00"
+            "time": "2025-01-29T06:28:43+00:00"
         },
         {
             "name": "newfold-labs/wp-module-context",
@@ -2838,10 +2838,10 @@
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": {},
-    "platform-dev": {},
+    "platform": [],
+    "platform-dev": [],
     "platform-overrides": {
         "php": "8.1"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.3.0"
 }
