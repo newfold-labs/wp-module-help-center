@@ -1,5 +1,6 @@
 /* eslint-disable no-shadow */
 import { Result } from './Result';
+import NoResults from './NoResults';
 
 const ResultList = ( {
 	wrapper,
@@ -13,6 +14,7 @@ const ResultList = ( {
 	resultsContainer,
 	searchInput,
 } ) => {
+	console.log( 'render' );
 	return (
 		<>
 			<div
@@ -47,7 +49,6 @@ const ResultList = ( {
 							}
 						/>
 					) ) }
-
 				{ /* Render a placeholder for the loading state if isLoading is true */ }
 				{ isLoading && (
 					<Result
@@ -67,6 +68,9 @@ const ResultList = ( {
 						wrapper={ wrapper }
 						feedbackSubmitted={ false }
 					/>
+				) }
+				{ noResult && isNewResult && (
+					<NoResults isNewResult={ isNewResult } />
 				) }
 			</div>
 		</>

@@ -1,9 +1,6 @@
-import NoResults from './NoResults';
 import { ReactComponent as AIStars } from '../../icons/ai-stars.svg';
 
 function ResultContent( {
-	noResult,
-	isNewEntry,
 	isLoading,
 	loadingQuery,
 	loadingIndex,
@@ -13,11 +10,6 @@ function ResultContent( {
 	content,
 } ) {
 	function renderContentOrLoading() {
-		// 1) Check "noResult" scenario
-		if ( noResult && isNewEntry ) {
-			return <NoResults />;
-		}
-
 		// 2) Check loading scenario
 		const isAISourceLoading =
 			isLoading &&

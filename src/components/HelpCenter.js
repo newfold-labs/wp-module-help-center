@@ -48,7 +48,6 @@ const HelpCenter = ( props ) => {
 	};
 
 	useEffect( () => {
-
 		getHelpStatus();
 
 		// Fetch initial data
@@ -70,23 +69,23 @@ const HelpCenter = ( props ) => {
 		};
 	}, [] );
 
-	  useEffect(() => {
+	useEffect( () => {
 		// If visible changed to true, reset search input
-		if (visible) {
-			setSearchInput('');
+		if ( visible ) {
+			setSearchInput( '' );
 		}
-	
+
 		// Always adjust padding if any of these dependencies change
-		adjustPadding(wrapper, suggestionsRef, showSuggestions);
-	
+		adjustPadding( wrapper, suggestionsRef, showSuggestions );
+
 		// If the wrapper is visible or we’ve just finished init, scroll
-		if (initComplete || visible) {
-			setTimeout(() => {
-				scrollToBottom(wrapper, introRef, resultsContainer);
-			}, 100);
+		if ( initComplete || visible ) {
+			setTimeout( () => {
+				scrollToBottom( wrapper, introRef, resultsContainer );
+			}, 100 );
 		}
-	}, [initComplete, showSuggestions, visible]);
-	
+	}, [ initComplete, showSuggestions, visible ] );
+
 	const populateSearchResult = ( postContent, postId, postTitle ) => {
 		const resultContentFormatted = postContent
 			? formatPostContent( postContent )
@@ -175,6 +174,7 @@ const HelpCenter = ( props ) => {
 					result.post_id,
 					searchInput
 				);
+				console.log( 'result:- ', result );
 			} else {
 				setNoResult( true );
 			}

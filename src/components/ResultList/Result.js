@@ -21,7 +21,6 @@ export const Result = ( {
 	loadingIndex,
 	index,
 	isNewResult,
-	searchInput,
 	wrapper,
 	feedbackSubmitted,
 } ) => {

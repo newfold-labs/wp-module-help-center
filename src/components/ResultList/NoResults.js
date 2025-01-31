@@ -1,6 +1,9 @@
 import { __ } from '@wordpress/i18n';
+import ResultHeader from './ResultHeader';
+import { useRef } from '@wordpress/element';
 
-const NoResults = () => {
+const NoResults = ( { isNewResult } ) => {
+	const responseRef = useRef( null );
 	const resourceLink = window?.nfdHelpCenter?.resourceLink || '#'; // Fallback if resourceLink is not defined
 
 	// Define the content with a placeholder for the link
@@ -13,18 +16,21 @@ const NoResults = () => {
 	const formattedContent = contentWithLink.replace( '{link}', resourceLink );
 
 	return (
-		<div>
-			<p>
-				{ __(
-					'Sorry, I don’t have any information on that topic yet.',
-					'wp-module-help-center'
-				) }
-			</p>
-			<p
-				dangerouslySetInnerHTML={ {
-					__html: formattedContent,
-				} }
-			/>
+		<div ref={ responseRef } className="helpcenter-response-block">
+			<ResultHeader noResult={ true } isNewEntry={ isNewResult } />
+			<div>
+				<p>
+					{ __(
+						'Sorry, I don’t have any information on that topic yet.',
+						'wp-module-help-center'
+					) }
+				</p>
+				<p
+					dangerouslySetInnerHTML={ {
+						__html: formattedContent,
+					} }
+				/>
+			</div>
 		</div>
 	);
 };
