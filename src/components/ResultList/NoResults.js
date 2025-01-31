@@ -1,6 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import ResultHeader from './ResultHeader';
 import { useRef } from '@wordpress/element';
+import { ReactComponent as AIStars } from '../../icons/ai-stars.svg';
 
 const NoResults = ( { isNewResult } ) => {
 	const responseRef = useRef( null );
@@ -18,18 +19,23 @@ const NoResults = ( { isNewResult } ) => {
 	return (
 		<div ref={ responseRef } className="helpcenter-response-block">
 			<ResultHeader noResult={ true } isNewEntry={ isNewResult } />
-			<div>
-				<p>
-					{ __(
-						'Sorry, I don’t have any information on that topic yet.',
-						'wp-module-help-center'
-					) }
-				</p>
-				<p
-					dangerouslySetInnerHTML={ {
-						__html: formattedContent,
-					} }
-				/>
+			<div className="helpcenter-result-block">
+				<div className="helpcenter-result-block__aistars">
+					<AIStars />
+				</div>
+				<div>
+					<p>
+						{ __(
+							'Sorry, I don’t have any information on that topic yet.',
+							'wp-module-help-center'
+						) }
+					</p>
+					<p
+						dangerouslySetInnerHTML={ {
+							__html: formattedContent,
+						} }
+					/>
+				</div>
 			</div>
 		</div>
 	);
