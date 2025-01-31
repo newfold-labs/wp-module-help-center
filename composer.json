@@ -22,12 +22,10 @@
     "newfold-labs/wp-php-standards": "@stable"
   },
   "require": {
-    "newfold-labs/wp-module-ai": "^1.1.12",
+    "newfold-labs/wp-module-ai": "^1.1.13",
     "newfold-labs/wp-module-data": "^2.6.9",
-    "newfold-labs/wp-module-features": "^1.4.1",
-    "typesense/typesense-php": "^4.9",
-    "symfony/http-client": "^6.4"
- 
+    "newfold-labs/wp-module-features": "^1.4.2",
+    "typesense/typesense-php": "^2.0.4"
   },
   "autoload": {
     "psr-4": {
@@ -43,7 +41,7 @@
       "php-http/discovery": true
     },
     "platform": {
-      "php": "8.1"
+      "php": "7.3"
     }
   }
 }
