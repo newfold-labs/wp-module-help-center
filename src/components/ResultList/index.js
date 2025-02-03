@@ -14,7 +14,6 @@ const ResultList = ( {
 	resultsContainer,
 	searchInput,
 } ) => {
-	console.log( 'render' );
 	return (
 		<>
 			<div
