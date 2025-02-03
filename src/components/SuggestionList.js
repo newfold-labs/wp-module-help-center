@@ -13,7 +13,6 @@ export const SuggestionList = ( {
 		handleSuggestionsClick( result, postTitle );
 	};
 
-	// If there are no results, return null or a specific fallback
 	if ( ! multiResults?.hits?.length ) {
 		return null;
 	}
@@ -24,14 +23,12 @@ export const SuggestionList = ( {
 			id="suggestionsWrapper"
 			ref={ suggestionsRef }
 		>
-			{ /* Title for the suggestions */ }
 			{ multiResults.hits.length > 0 && (
 				<p>
 					<b>{ __( 'Common Topics', 'wp-module-help-center' ) }</b>
 				</p>
 			) }
 
-			{ /* Map over the hits array and render suggestions */ }
 			{ multiResults.hits.map( ( result, index ) => {
 				const postTitle = result?.group_key?.[ 0 ] ?? '';
 				return (

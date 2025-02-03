@@ -27,53 +27,64 @@ const SearchInput = ( {
 	};
 
 	return (
-		<div role="search" aria-label={__('Search Help Center', 'wp-module-help-center')}>
+		<div
+			role="search"
+			aria-label={ __( 'Search Help Center', 'wp-module-help-center' ) }
+		>
 			<div className="helpcenter-input-wrapper">
 				<div className="search-container__wrapper">
 					<div className="search-container">
 						<input
 							type="text"
 							id="search-input-box"
-						value={ searchInput }
+							value={ searchInput }
 							maxLength="144"
-						placeholder={ __(
+							placeholder={ __(
 								'Ask about WordPress',
 								'wp-module-help-center'
-						) }
-						onChange={ ( e ) => {
-							setError( '' );
-							setSearchInput( e.target.value );
+							) }
+							onChange={ ( e ) => {
+								setError( '' );
+								setSearchInput( e.target.value );
 								populateSearchResult(
 									'',
 									undefined,
 									e.target.value
 								);
-							setNoResult( false );
-							debouncedResults( e.target.value );
-						} }
-						onKeyDown={ async ( e ) => {
-							if ( e.key === 'Enter' && validateInput() ) {
+								setNoResult( false );
+								debouncedResults( e.target.value );
+							} }
+							onKeyDown={ async ( e ) => {
+								if ( e.key === 'Enter' && validateInput() ) {
 									await getAIResult();
 								}
-						} }
+							} }
 						/>
 						<button
-						aria-label={__('submit text', 'wp-module-help-center')}
-						title={__('submit text', 'wp-module-help-center')}
-						onClick={ async () => {
-							if ( validateInput() ) {
+							aria-label={ __(
+								'submit text',
+								'wp-module-help-center'
+							) }
+							title={ __(
+								'submit text',
+								'wp-module-help-center'
+							) }
+							onClick={ async () => {
+								if ( validateInput() ) {
 									await getAIResult();
 								}
-						} }
+							} }
 						>
 							<GoSearchIcon />
 						</button>
 					</div>
-				{ error && <p className="hc-input-error-message">{ error }</p> }
+					{ error && (
+						<p className="hc-input-error-message">{ error }</p>
+					) }
 					<div className="attribute">
 						<p className="hc-input-counter">
 							<span>
-							{ searchInput ? searchInput.length : 0 }/144
+								{ searchInput ? searchInput.length : 0 }/144
 							</span>
 						</p>
 					</div>

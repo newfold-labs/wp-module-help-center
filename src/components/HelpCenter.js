@@ -75,16 +75,18 @@ const HelpCenter = ( props ) => {
 			setSearchInput( '' );
 		}
 
-		// Always adjust padding if any of these dependencies change
-		adjustPadding( wrapper, suggestionsRef, showSuggestions );
-
 		// If the wrapper is visible or we’ve just finished init, scroll
 		if ( initComplete || visible ) {
 			setTimeout( () => {
 				scrollToBottom( wrapper, introRef, resultsContainer );
 			}, 100 );
 		}
-	}, [ initComplete, showSuggestions, visible ] );
+	}, [ initComplete, visible ] );
+
+	useEffect( () => {
+		// Always adjust padding if any of these dependencies change
+		adjustPadding( wrapper, suggestionsRef, showSuggestions );
+	}, [ showSuggestions ] );
 
 	const populateSearchResult = ( postContent, postId, postTitle ) => {
 		const resultContentFormatted = postContent
