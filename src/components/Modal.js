@@ -1,4 +1,4 @@
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { ReactComponent as CloseIcon } from '../icons/close.svg';
 import { ReactComponent as Help } from '../icons/helpcenter-icon.svg';
@@ -6,22 +6,14 @@ import HelpCenter from './HelpCenter';
 import Footer from './Footer';
 
 import { toggleHelp } from '..';
-import { CapabilityAPI, LocalStorageUtils } from '../utils';
+import { LocalStorageUtils } from '../utils';
 
 const Modal = ( { onClose } ) => {
-	const [ , setBrand ] = useState( '' );
-
-	const getBrand = async () => {
-		const brandRetrieved = await CapabilityAPI.getBrand();
-		setBrand( brandRetrieved.toLowerCase() );
-	};
-
 	useEffect( () => {
 		const helpVisible = window.newfoldHelpCenter?.closeOnLoad
 			? false
 			: LocalStorageUtils.getHelpVisible();
 		toggleHelp( helpVisible );
-		getBrand();
 	}, [] );
 
 	return (

@@ -1,31 +1,13 @@
-import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { ReactComponent as GoSearchIcon } from '../icons/paper-airplane.svg';
 
 const SearchInput = ( {
 	searchInput,
 	setSearchInput,
-	populateSearchResult,
-	debouncedResults,
-	setNoResult,
-	getAIResult,
+	handleOnChange,
+	handleSubmit,
+	errorMsg,
 } ) => {
-	const [ error, setError ] = useState( '' );
-
-	const validateInput = () => {
-		if ( ! searchInput || ! searchInput.trim() ) {
-			setError(
-				__(
-					'Please enter a specific search term to get results.',
-					'wp-module-help-center'
-				)
-			);
-			return false;
-		}
-		setError( '' );
-		return true;
-	};
-
 	return (
 		<div
 			role="search"
@@ -44,21 +26,12 @@ const SearchInput = ( {
 								'wp-module-help-center'
 							) }
 							onChange={ ( e ) => {
-								setError( '' );
 								setSearchInput( e.target.value );
-								populateSearchResult(
-									'',
-									undefined,
-									e.target.value
-								);
-								setNoResult( false );
-								debouncedResults( e.target.value );
+								handleOnChange( e );
 							} }
-							onKeyDown={ async ( e ) => {
-								if ( e.key === 'Enter' && validateInput() ) {
-									await getAIResult();
-								}
-							} }
+							onKeyDown={ ( e ) =>
+								e.key === 'Enter' && handleSubmit()
+							}
 						/>
 						<button
 							aria-label={ __(
@@ -69,17 +42,13 @@ const SearchInput = ( {
 								'submit text',
 								'wp-module-help-center'
 							) }
-							onClick={ async () => {
-								if ( validateInput() ) {
-									await getAIResult();
-								}
-							} }
+							onClick={ () => handleSubmit() }
 						>
 							<GoSearchIcon />
 						</button>
 					</div>
-					{ error && (
-						<p className="hc-input-error-message">{ error }</p>
+					{ errorMsg && (
+						<p className="hc-input-error-message">{ errorMsg }</p>
 					) }
 					<div className="attribute">
 						<p className="hc-input-counter">

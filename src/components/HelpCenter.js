@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo, useRef } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 import { debounce } from 'lodash';
 import moduleAI from '@newfold-labs/wp-module-ai';
 import ResultList from './ResultList';
@@ -33,6 +34,7 @@ const HelpCenter = ( props ) => {
 	const [ multiResults, setMultiResults ] = useState( {} );
 	const [ showSuggestions, setShowSuggestions ] = useState( false );
 	const [ initComplete, setInitComplete ] = useState( false );
+	const [ errorMsg, setErrorMsg ] = useState( '' );
 	const suggestionsRef = useRef();
 	const resultsContainer = useRef();
 	const wrapper = useRef();
@@ -104,6 +106,7 @@ const HelpCenter = ( props ) => {
 
 		if ( postId ) {
 			setIsNewResult( true );
+			setSearchInput( '' );
 			Analytics.sendEvent( 'help_search', {
 				label_key: 'term',
 				term: postTitle,
@@ -176,7 +179,6 @@ const HelpCenter = ( props ) => {
 					result.post_id,
 					searchInput
 				);
-				console.log( 'result:- ', result );
 			} else {
 				setNoResult( true );
 			}
@@ -251,6 +253,33 @@ const HelpCenter = ( props ) => {
 		return false;
 	};
 
+	const validateInput = () => {
+		if ( ! searchInput || ! searchInput.trim() ) {
+			setErrorMsg(
+				__(
+					'Please enter a specific search term to get results.',
+					'wp-module-help-center'
+				)
+			);
+			return false;
+		}
+		setErrorMsg( '' );
+		return true;
+	};
+
+	const handleOnChange = ( e ) => {
+		populateSearchResult( '', undefined, e.target.value );
+		setNoResult( false );
+		debouncedResults( e.target.value );
+		setErrorMsg( '' );
+	};
+
+	const handleSubmit = async () => {
+		if ( validateInput() ) {
+			await getAIResult();
+		}
+	};
+
 	if ( ! helpEnabled || ! visible ) {
 		return <></>;
 	}
@@ -289,10 +318,9 @@ const HelpCenter = ( props ) => {
 			<SearchInput
 				searchInput={ searchInput }
 				setSearchInput={ setSearchInput }
-				populateSearchResult={ populateSearchResult }
-				debouncedResults={ debouncedResults }
-				setNoResult={ setNoResult }
-				getAIResult={ getAIResult }
+				handleOnChange={ handleOnChange }
+				handleSubmit={ handleSubmit }
+				errorMsg={ errorMsg }
 			/>
 		</div>
 	);
