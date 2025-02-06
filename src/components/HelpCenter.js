@@ -239,7 +239,7 @@ const HelpCenter = ( props ) => {
 	const handleSuggestionsClick = ( result, postTitle ) => {
 		setState( ( prev ) => ( {
 			...prev,
-			showSuggestions: true,
+			showSuggestions: false,
 		} ) );
 		populateSearchResult(
 			result?.hits[ 0 ]?.document?.post_content,
@@ -286,7 +286,7 @@ const HelpCenter = ( props ) => {
 			if ( resultMatches ) {
 				populateSearchResult(
 					hits[ 0 ].document.post_content,
-					hits[ 0 ].document.id,
+					hits[ 0 ].document.post_id || hits[ 0 ].document.id,
 					state.searchInput
 				);
 				return true;
@@ -296,7 +296,6 @@ const HelpCenter = ( props ) => {
 	};
 
 	const validateInput = () => {
-
 		const isValid = state.searchInput.trim().length > 0;
 		setState( ( prev ) => ( {
 			...prev,
@@ -314,7 +313,12 @@ const HelpCenter = ( props ) => {
 	const handleOnChange = ( e ) => {
 		populateSearchResult( '', undefined, e.target.value );
 		debouncedResults( e.target.value );
-		setState( ( prev ) => ( { ...prev, noResult: false, errorMsg: '', searchInput: e.target.value } ) );
+		setState( ( prev ) => ( {
+			...prev,
+			noResult: false,
+			errorMsg: '',
+			searchInput: e.target.value,
+		} ) );
 	};
 
 	const handleSubmit = async () => {
