@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { Analytics, InteractionAPIs, LocalStorageUtils } from '../utils';
+import { Analytics, InteractionAPIs, LocalStorageUtils } from '../../utils';
 
-const Feedback = ( { postId, source } ) => {
+const ResultFeedback = ( { postId, source } ) => {
 	const [ status, setStatus ] = useState( '' );
 	const [ hasSubmitted, setHasSubmitted ] = useState( false );
 	const [ showThanksMessage, setShowThanksMessage ] = useState( false );
@@ -43,10 +43,10 @@ const Feedback = ( { postId, source } ) => {
 		}
 	}, [ status ] );
 
-	const handleFeedback = (feedback) => {
+	const handleFeedback = ( feedback ) => {
 		setStatus( feedback );
 		LocalStorageUtils.updateFeedbackStatus( postId );
-	}
+	};
 
 	return (
 		<div className="feedback-container">
@@ -64,7 +64,7 @@ const Feedback = ( { postId, source } ) => {
 					<div className="icon">
 						<button
 							ref={ yesButtonRef }
-							onClick={ () =>  handleFeedback( 'helpful' ) }
+							onClick={ () => handleFeedback( 'helpful' ) }
 							className="feedback-button yes"
 						>
 							{ __( 'Yes', 'wp-module-help-center' ) }
@@ -92,4 +92,4 @@ const Feedback = ( { postId, source } ) => {
 	);
 };
 
-export default Feedback;
+export default ResultFeedback;

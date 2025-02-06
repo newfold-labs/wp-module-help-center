@@ -11,7 +11,7 @@ import { HiiveAnalytics } from '@newfold/js-utility-ui-analytics';
 import Modal from './components/Modal';
 import { ReactComponent as Help } from './icons/help-plugin-sidebar-icon.svg';
 import { Analytics, LocalStorageUtils } from './utils';
-import '../styles.scss';
+import './styles/styles.scss';
 
 domReady( () => {
 	// Run only once DOM is ready, else this won't work.
