@@ -19,45 +19,40 @@ import SearchInput from './SearchInput';
 import { SuggestionList } from './SuggestionList';
 
 const HelpCenter = ( props ) => {
-	const [ visible, setVisible ] = useState( false );
-	const [ helpEnabled, setHelpEnabled ] = useState( false );
-	const [ searchInput, setSearchInput ] = useState(
-		LocalStorageUtils.getSearchInput()
-	);
-	const [ noResult, setNoResult ] = useState( false );
-	const [ loadingQuery, setLoadingQuery ] = useState( null );
-	const [ loadingIndex, setLoadingIndex ] = useState( null );
-	const [ isNewResult, setIsNewResult ] = useState( false );
-	const [ isLoading, setIsLoading ] = useState( false );
-	const [ source, setSource ] = useState( 'kb' );
-	const [ resultContent, setResultContent ] = useState( [] );
-	const [ multiResults, setMultiResults ] = useState( {} );
-	const [ showSuggestions, setShowSuggestions ] = useState( false );
-	const [ initComplete, setInitComplete ] = useState( false );
-	const [ errorMsg, setErrorMsg ] = useState( '' );
+	const [ state, setState ] = useState( {
+		visible: false,
+		helpEnabled: false,
+		noResult: false,
+		isNewResult: false,
+		source: 'kb',
+		searchInput: LocalStorageUtils.getSearchInput(),
+		isLoading: false,
+		loadingQuery: null,
+		loadingIndex: null,
+		resultContent: [],
+		multiResults: {},
+		showSuggestions: false,
+		initComplete: false,
+		errorMsg: '',
+	} );
+
 	const suggestionsRef = useRef();
 	const resultsContainer = useRef();
 	const wrapper = useRef();
 	const introRef = useRef();
+
 	const brand = CapabilityAPI.getBrand();
-	const getHelpStatus = async () => {
-		try {
-			const response = await CapabilityAPI.getHelpCenterCapability();
-			setHelpEnabled( response );
-		} catch ( exception ) {
-			setHelpEnabled( false );
-		}
-	};
 
 	useEffect( () => {
 		getHelpStatus();
-
-		// Fetch initial data
 		fetchInitialData();
 
 		// Add event listener for localStorage changes
 		const updateVisibility = () => {
-			setVisible( LocalStorageUtils.getHelpVisible() );
+			setState( ( prev ) => ( {
+				...prev,
+				visible: LocalStorageUtils.getHelpVisible(),
+			} ) );
 		};
 		window.addEventListener( 'storage', updateVisibility );
 
@@ -65,7 +60,6 @@ const HelpCenter = ( props ) => {
 		return () => {
 			// Cancel any debounced calls
 			debouncedResults.cancel();
-
 			// Remove the storage event listener
 			window.removeEventListener( 'storage', updateVisibility );
 		};
@@ -73,22 +67,40 @@ const HelpCenter = ( props ) => {
 
 	useEffect( () => {
 		// If visible changed to true, reset search input
-		if ( visible ) {
-			setSearchInput( '' );
+		if ( state.visible ) {
+			setState( ( prev ) => ( {
+				...prev,
+				searchInput: '',
+			} ) );
 		}
 
 		// If the wrapper is visible or we’ve just finished init, scroll
-		if ( initComplete || visible ) {
+		if ( state.initComplete || state.visible ) {
 			setTimeout( () => {
 				scrollToBottom( wrapper, introRef, resultsContainer );
 			}, 100 );
 		}
-	}, [ initComplete, visible ] );
+	}, [ state.initComplete, state.visible ] );
 
 	useEffect( () => {
 		// Always adjust padding if any of these dependencies change
-		adjustPadding( wrapper, suggestionsRef, showSuggestions );
-	}, [ showSuggestions ] );
+		adjustPadding( wrapper, suggestionsRef, state.showSuggestions );
+	}, [ state.showSuggestions ] );
+
+	const getHelpStatus = async () => {
+		try {
+			const response = await CapabilityAPI.getHelpCenterCapability();
+			setState( ( prev ) => ( {
+				...prev,
+				helpEnabled: response,
+			} ) );
+		} catch ( exception ) {
+			setState( ( prev ) => ( {
+				...prev,
+				helpEnabled: false,
+			} ) );
+		}
+	};
 
 	const populateSearchResult = ( postContent, postId, postTitle ) => {
 		const resultContentFormatted = postContent
@@ -100,13 +112,20 @@ const HelpCenter = ( props ) => {
 			postId,
 			postTitle
 		);
+
 		// Add new result to existing results and retrieve all results from local storage
-		const updatedResults = LocalStorageUtils.getResultInfo();
-		setResultContent( updatedResults );
+		setState( ( prev ) => ( {
+			...prev,
+			resultContent: LocalStorageUtils.getResultInfo(),
+		} ) );
 
 		if ( postId ) {
-			setIsNewResult( true );
-			setSearchInput( '' );
+			setState( ( prev ) => ( {
+				...prev,
+				isNewResult: !! postId,
+				searchInput: '',
+			} ) );
+
 			Analytics.sendEvent( 'help_search', {
 				label_key: 'term',
 				term: postTitle,
@@ -117,11 +136,15 @@ const HelpCenter = ( props ) => {
 
 	const debouncedResults = useMemo( () => {
 		return debounce( async ( query ) => {
-			if ( ! query || query === '' ) {
-				setMultiResults( {} );
-				setShowSuggestions( false );
+			if ( ! query ) {
+				setState( ( prev ) => ( {
+					...prev,
+					multiResults: {},
+					showSuggestions: false,
+				} ) );
 				return;
 			}
+
 			try {
 				const multiSearchResults =
 					await MultiSearchAPI.fetchMultiSearchResults(
@@ -129,12 +152,14 @@ const HelpCenter = ( props ) => {
 						brand
 					);
 
-				if ( multiSearchResults?.results?.[ 0 ]?.grouped_hits ) {
-					setMultiResults( {
-						hits: multiSearchResults?.results?.[ 0 ]?.grouped_hits,
-					} );
-
-					setShowSuggestions( true );
+				const results =
+					multiSearchResults?.results?.[ 0 ]?.grouped_hits;
+				if ( results ) {
+					setState( ( prev ) => ( {
+						...prev,
+						multiResults: { hits: results },
+						showSuggestions: !! results,
+					} ) );
 				}
 			} catch ( error ) {
 				// eslint-disable-next-line no-console
@@ -145,61 +170,77 @@ const HelpCenter = ( props ) => {
 	}, [] );
 
 	const getAIResult = async () => {
-		setIsLoading( true );
-		setShowSuggestions( false );
-		setLoadingQuery( searchInput );
-		setLoadingIndex( resultContent.length );
+		setState( ( prev ) => ( {
+			...prev,
+			isLoading: true,
+			showSuggestions: false,
+			loadingQuery: prev.searchInput,
+			loadingIndex: prev.resultContent.length,
+		} ) );
 		try {
 			// Check existing multiResults
-			let hits = multiResults?.hits?.[ 0 ]?.hits;
-			const lastQuery = multiResults?.results?.[ 0 ]?.request_params?.q;
+			let hits = state.multiResults?.hits?.[ 0 ]?.hits;
+			const lastQuery =
+				state.multiResults?.results?.[ 0 ]?.request_params?.q;
 
-			if ( searchInput === lastQuery && checkAndPopulateResult( hits ) )
+			if (
+				state.searchInput === lastQuery &&
+				checkAndPopulateResult( hits )
+			)
 				return;
 
 			// Make a new multi-search API call if no match is found
 			const multiSearchResults =
 				await MultiSearchAPI.fetchMultiSearchResults(
-					searchInput,
+					state.searchInput,
 					brand
 				);
 
 			hits =
 				multiSearchResults?.results?.[ 0 ]?.grouped_hits?.[ 0 ]?.hits;
-			if ( checkAndPopulateResult( hits, searchInput ) ) return;
+			if ( checkAndPopulateResult( hits ) ) return;
 
-			setSource( 'ai' );
 			const result = await moduleAI.search.getSearchResult(
-				searchInput,
+				state.searchInput,
 				'helpcenter'
 			);
+
 			if ( result.result[ 0 ] ) {
+				setState( ( prevState ) => ( { ...prevState, source: 'ai' } ) );
 				populateSearchResult(
 					result.result[ 0 ].text,
 					result.post_id,
-					searchInput
+					state.searchInput
 				);
 			} else {
-				setNoResult( true );
+				setState( ( prev ) => ( { ...prev, noResult: true } ) );
 			}
 		} catch ( exception ) {
 			// eslint-disable-next-line no-console
 			console.error( 'An error occurred:', exception );
-			setNoResult( true );
-			setIsNewResult( true ); // to display no result error only for the upcoming result.
-			setSearchInput( searchInput );
+			setState( ( prev ) => ( {
+				...prev,
+				noResult: true,
+				isNewResult: true,
+			} ) );
 		} finally {
-			setSearchInput( '' );
-			setLoadingQuery( null );
-			setIsLoading( false );
-			setLoadingIndex( null );
-			setShowSuggestions( false );
-			LocalStorageUtils.persistSearchInput( searchInput );
+			setState( ( prev ) => ( {
+				...prev,
+				searchInput: '',
+				isLoading: false,
+				loadingIndex: null,
+				loadingQuery: null,
+				showSuggestions: false,
+			} ) );
+			LocalStorageUtils.persistSearchInput( state.searchInput );
 		}
 	};
 
 	const handleSuggestionsClick = ( result, postTitle ) => {
-		setShowSuggestions( false );
+		setState( ( prev ) => ( {
+			...prev,
+			showSuggestions: true,
+		} ) );
 		populateSearchResult(
 			result?.hits[ 0 ]?.document?.post_content,
 			result?.hits[ 0 ]?.document?.id,
@@ -210,23 +251,25 @@ const HelpCenter = ( props ) => {
 	const fetchInitialData = async () => {
 		try {
 			// Populate the results from local storage if they exist
-			const savedResults = LocalStorageUtils.getResultInfo();
-			if ( savedResults ) {
-				setResultContent( savedResults );
+			const resultContent = LocalStorageUtils.getResultInfo();
+			if ( resultContent ) {
+				setState( ( prev ) => ( { ...prev, resultContent } ) );
 			}
 
 			const multiSearchResults =
 				await MultiSearchAPI.fetchMultiSearchResults(
-					searchInput,
+					state.searchInput,
 					brand
 				);
 
-			setMultiResults( {
-				hits: multiSearchResults?.results?.[ 0 ]?.grouped_hits,
-			} );
-
-			setShowSuggestions( true );
-			setInitComplete( true );
+			setState( ( prev ) => ( {
+				...prev,
+				showSuggestions: true,
+				initComplete: true,
+				multiResults: {
+					hits: multiSearchResults?.results?.[ 0 ]?.grouped_hits,
+				},
+			} ) );
 		} catch ( error ) {
 			// eslint-disable-next-line no-console
 			console.error( 'Error fetching initial data:', error );
@@ -236,16 +279,15 @@ const HelpCenter = ( props ) => {
 	const checkAndPopulateResult = ( hits ) => {
 		if ( hits?.length > 0 ) {
 			const resultMatches = getResultMatches(
-				searchInput,
+				state.searchInput,
 				hits[ 0 ]?.text_match_info?.tokens_matched,
 				hits[ 0 ]?.text_match_info?.fields_matched
 			);
-
 			if ( resultMatches ) {
 				populateSearchResult(
 					hits[ 0 ].document.post_content,
-					hits[ 0 ].document.post_id || hits[ 0 ].document.id,
-					searchInput
+					hits[ 0 ].document.id,
+					state.searchInput
 				);
 				return true;
 			}
@@ -254,24 +296,25 @@ const HelpCenter = ( props ) => {
 	};
 
 	const validateInput = () => {
-		if ( ! searchInput || ! searchInput.trim() ) {
-			setErrorMsg(
-				__(
-					'Please enter a specific search term to get results.',
-					'wp-module-help-center'
-				)
-			);
-			return false;
-		}
-		setErrorMsg( '' );
-		return true;
+
+		const isValid = state.searchInput.trim().length > 0;
+		setState( ( prev ) => ( {
+			...prev,
+			errorMsg: isValid
+				? ''
+				: __(
+						'Please enter a specific search term to get results.',
+						'wp-module-help-center'
+				  ),
+		} ) );
+
+		return isValid;
 	};
 
 	const handleOnChange = ( e ) => {
 		populateSearchResult( '', undefined, e.target.value );
-		setNoResult( false );
 		debouncedResults( e.target.value );
-		setErrorMsg( '' );
+		setState( ( prev ) => ( { ...prev, noResult: false, errorMsg: '', searchInput: e.target.value } ) );
 	};
 
 	const handleSubmit = async () => {
@@ -280,9 +323,7 @@ const HelpCenter = ( props ) => {
 		}
 	};
 
-	if ( ! helpEnabled || ! visible ) {
-		return <></>;
-	}
+	if ( ! state.helpEnabled || ! state.visible ) return null;
 
 	return (
 		<div
@@ -292,35 +333,25 @@ const HelpCenter = ( props ) => {
 		>
 			<HelpCenterIntro introRef={ introRef } />
 			<ResultList
+				{ ...state }
 				wrapper={ wrapper }
 				introRef={ introRef }
-				noResult={ noResult }
-				loadingQuery={ loadingQuery }
-				loadingIndex={ loadingIndex }
-				isNewResult={ isNewResult }
-				isLoading={ isLoading }
-				source={ source }
-				resultContent={ resultContent }
 				resultsContainer={ resultsContainer }
-				searchInput={ searchInput }
-				showSuggestions={ showSuggestions }
 				suggestionsRef={ suggestionsRef }
-				multiResults={ multiResults }
 				{ ...props }
 			/>
-			{ showSuggestions && (
+			{ state.showSuggestions && (
 				<SuggestionList
 					suggestionsRef={ suggestionsRef }
-					multiResults={ multiResults }
+					multiResults={ state.multiResults }
 					handleSuggestionsClick={ handleSuggestionsClick }
 				/>
 			) }
 			<SearchInput
-				searchInput={ searchInput }
-				setSearchInput={ setSearchInput }
+				searchInput={ state.searchInput }
 				handleOnChange={ handleOnChange }
 				handleSubmit={ handleSubmit }
-				errorMsg={ errorMsg }
+				errorMsg={ state.errorMsg }
 			/>
 		</div>
 	);

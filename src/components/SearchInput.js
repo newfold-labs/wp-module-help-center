@@ -3,7 +3,6 @@ import { ReactComponent as GoSearchIcon } from '../icons/paper-airplane.svg';
 
 const SearchInput = ( {
 	searchInput,
-	setSearchInput,
 	handleOnChange,
 	handleSubmit,
 	errorMsg,
@@ -25,10 +24,7 @@ const SearchInput = ( {
 								'Ask about WordPress',
 								'wp-module-help-center'
 							) }
-							onChange={ ( e ) => {
-								setSearchInput( e.target.value );
-								handleOnChange( e );
-							} }
+							onChange={ ( e ) => handleOnChange( e )}
 							onKeyDown={ ( e ) =>
 								e.key === 'Enter' && handleSubmit()
 							}
