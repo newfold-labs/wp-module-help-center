@@ -2,7 +2,7 @@
 import {
 	HiiveAnalytics,
 	HiiveEvent,
-} from '@newfold-labs/js-utility-ui-analytics';
+} from '@newfold/js-utility-ui-analytics';
 import apiFetch from '@wordpress/api-fetch';
 import { useEffect, useState } from '@wordpress/element';
 

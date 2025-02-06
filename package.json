@@ -19,7 +19,7 @@
 		"test:e2e": "npx cypress run"
 	},
 	"dependencies": {
-		"@newfold-labs/js-utility-ui-analytics": "1.2.0",
+		"@newfold/js-utility-ui-analytics": "1.3.1",
 		"@newfold-labs/wp-module-ai": "github:newfold-labs/js-utility-ai#1.0.1",
 		"@wordpress/api-fetch": "^7.16.0",
 		"@wordpress/components": "^29.2.0",
