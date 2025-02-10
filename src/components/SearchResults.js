@@ -67,6 +67,7 @@ const SearchResults = ( { wrapper, introRef, refresh, brand } ) => {
 				label_key: 'term',
 				term: searchInput,
 				page: window.location.href.toString(),
+				search_source: source,
 			} );
 		}
 	};
