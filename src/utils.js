@@ -1,8 +1,5 @@
 /* eslint-disable no-undef */
-import {
-	HiiveAnalytics,
-	HiiveEvent,
-} from '@newfold/js-utility-ui-analytics';
+import { HiiveAnalytics, HiiveEvent } from '@newfold/js-utility-ui-analytics';
 import apiFetch from '@wordpress/api-fetch';
 import { useEffect, useState } from '@wordpress/element';
 
@@ -124,7 +121,7 @@ export const LocalStorageUtils = {
 	getFeatureFlag( flagName ) {
 		return localStorage.getItem( flagName );
 	},
-	clearSearchInput( ) {
+	clearSearchInput() {
 		localStorage.removeItem( 'searchInput' );
 	},
 	setFeatureFlag( flagName, value ) {
