@@ -66,7 +66,6 @@ const HelpCenter = ( props ) => {
 	}, [] );
 
 	useEffect( () => {
-
 		// If the wrapper is visible or we’ve just finished init, scroll
 		if ( state.initComplete || state.visible ) {
 			setTimeout( () => {

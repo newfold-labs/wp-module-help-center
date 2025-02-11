@@ -24,7 +24,7 @@ const SearchInput = ( {
 								'Ask about WordPress',
 								'wp-module-help-center'
 							) }
-							onChange={ ( e ) => handleOnChange( e )}
+							onChange={ ( e ) => handleOnChange( e ) }
 							onKeyDown={ ( e ) =>
 								e.key === 'Enter' && handleSubmit()
 							}

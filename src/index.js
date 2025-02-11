@@ -38,7 +38,7 @@ export const toggleHelp = ( visible ) => {
 	nfdHelpContainer.classList.toggle( 'help-container', visible );
 	LocalStorageUtils.updateHelpVisible( visible );
 	window.dispatchEvent( new Event( 'storage' ) );
-	if(!visible){
+	if ( ! visible ) {
 		LocalStorageUtils.clearSearchInput();
 	}
 };

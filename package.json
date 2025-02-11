@@ -28,6 +28,7 @@
 		"@wordpress/i18n": "^5.16.0",
 		"@wordpress/plugins": "6.9.0",
 		"algoliasearch": "4.20.0",
+		"eslint-plugin-prettier": "5.2.3",
 		"lodash": "4.17.21",
 		"lodash.debounce": "4.0.8",
 		"marked": "14.0.0",
