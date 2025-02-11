@@ -66,13 +66,6 @@ const HelpCenter = ( props ) => {
 	}, [] );
 
 	useEffect( () => {
-		// If visible changed to true, reset search input
-		if ( state.visible ) {
-			setState( ( prev ) => ( {
-				...prev,
-				searchInput: '',
-			} ) );
-		}
 
 		// If the wrapper is visible or we’ve just finished init, scroll
 		if ( state.initComplete || state.visible ) {

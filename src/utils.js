@@ -124,6 +124,9 @@ export const LocalStorageUtils = {
 	getFeatureFlag( flagName ) {
 		return localStorage.getItem( flagName );
 	},
+	clearSearchInput( ) {
+		localStorage.removeItem( 'searchInput' );
+	},
 	setFeatureFlag( flagName, value ) {
 		localStorage.setItem( flagName, value );
 	},
