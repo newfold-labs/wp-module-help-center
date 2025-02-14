@@ -23,6 +23,8 @@ const HelpCenterIntro = ( { introRef } ) => {
 	);
 	return (
 		<div
+			role="region"
+			aria-labelledby="helpcenter-intro-heading"
 			className="helpcenter-intro"
 			ref={ introRef }
 			style={ {

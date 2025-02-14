@@ -1,8 +1,5 @@
 /* eslint-disable no-undef */
-import {
-	HiiveAnalytics,
-	HiiveEvent,
-} from '@newfold/js-utility-ui-analytics';
+import { HiiveAnalytics, HiiveEvent } from '@newfold/js-utility-ui-analytics';
 import apiFetch from '@wordpress/api-fetch';
 import { useEffect, useState } from '@wordpress/element';
 
@@ -27,6 +24,27 @@ export const OnboardingAPIs = {
 			path: onboardingBase + '/flow',
 			method: 'GET',
 		} ),
+};
+
+export const MultiSearchAPI = {
+	fetchMultiSearchResults: async ( query, brand ) => {
+		try {
+			const response = await apiFetch( {
+				path: '/newfold-multi-search/v1/multi_search',
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify( { query, brand } ),
+			} );
+
+			return response;
+		} catch ( error ) {
+			// eslint-disable-next-line no-console
+			console.error( 'Error in getMultiSearchResults:', error );
+			return {};
+		}
+	},
 };
 
 export const CapabilityAPI = {
@@ -102,6 +120,9 @@ export const LocalStorageUtils = {
 	},
 	getFeatureFlag( flagName ) {
 		return localStorage.getItem( flagName );
+	},
+	clearSearchInput() {
+		localStorage.removeItem( 'searchInput' );
 	},
 	setFeatureFlag( flagName, value ) {
 		localStorage.setItem( flagName, value );
@@ -180,4 +201,84 @@ export const isValidJSON = ( json ) => {
 	} catch ( e ) {
 		return false;
 	}
+};
+
+export function formatPostContent( postContent = '' ) {
+	return postContent.replace( /\n/g, '<br />' );
+}
+
+export function getResultMatches( query, tokensMatched, fieldsMatched ) {
+	const clearedQuery = query
+		.replace( /[^\w\s]|_/g, '' )
+		.replace( /\s{2,}/g, ' ' )
+		.trim();
+
+	const tokensPerQuery = tokensMatched / clearedQuery.split( /\s+/ ).length;
+	return fieldsMatched >= 1 && tokensPerQuery >= 0.99;
+}
+
+export function scrollToBottom( wrapperRef, introRef, resultsContainerRef ) {
+	if ( ! wrapperRef?.current ) return;
+	const scrollDistance = wrapperRef.current.scrollHeight;
+
+	wrapperRef.current.scrollBy( {
+		top: scrollDistance,
+		left: 0,
+		behavior: 'auto',
+	} );
+
+	setTimeout( () => {
+		if ( introRef?.current ) {
+			introRef.current.style.visibility = 'visible';
+		}
+		if ( resultsContainerRef?.current ) {
+			resultsContainerRef.current.style.visibility = 'visible';
+		}
+	}, 100 );
+}
+
+export function adjustPadding( wrapperRef, suggestionsRef, showSuggestions ) {
+	let paddingBottom = 0;
+	if ( showSuggestions && suggestionsRef?.current ) {
+		const suggestionsHeight =
+			suggestionsRef.current.getBoundingClientRect().height;
+		paddingBottom = `${ suggestionsHeight }px`;
+	}
+
+	if ( wrapperRef?.current ) {
+		wrapperRef.current.style.paddingBottom = paddingBottom;
+	}
+}
+
+/* Parse the html in string to a document node, replace the <p>  tags with a fragment and line break */
+export const processContentForMarkdown = ( textToDisplay ) => {
+	if ( textToDisplay ) {
+		// eslint-disable-next-line no-undef
+		const parser = new DOMParser();
+		const doc = parser.parseFromString( textToDisplay, 'text/html' );
+
+		const paragraphElements = doc.querySelectorAll( 'p' );
+
+		paragraphElements.forEach( ( p ) => {
+			// Create a DocumentFragment to hold the content and <br> tags
+			const fragment = document.createDocumentFragment();
+
+			// Append all child nodes of the <p> to the fragment
+			while ( p.firstChild ) {
+				fragment.appendChild( p.firstChild );
+			}
+
+			const br1 = document.createElement( 'br' );
+			const br2 = document.createElement( 'br' );
+			fragment.appendChild( br1 );
+			fragment.appendChild( br2 );
+
+			// Replace the <p> element with the fragment
+			p.parentNode.replaceChild( fragment, p );
+		} );
+
+		const updatedContent = doc.body.innerHTML;
+		return updatedContent;
+	}
+	return '';
 };

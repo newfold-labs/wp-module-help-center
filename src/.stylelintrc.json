@@ -1,0 +1,15 @@
+{
+    "extends": ["@wordpress/stylelint-config/scss", "stylelint-scss"],
+    "plugins": ["stylelint-scss"],
+    "rules": {
+        "at-rule-no-unknown": null,
+        "scss/at-rule-no-unknown": true,
+        "selector-class-pattern": [
+            "^([a-z][a-z0-9]*)([-_][a-z0-9]+)*$",
+            {
+                "message": "Selector should use lowercase and separate words with hyphens or underscores (selector-class-pattern)"
+            }
+        ]
+    },
+    "cache": false
+}
