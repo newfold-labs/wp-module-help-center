@@ -1,0 +1,98 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Vara Prasad Maruboina <varaprasad.maruboina@newfold.com>\n"
+"Language-Team: Spanish <es@tp.org.es>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-13T10:10:52+00:00\n"
+"PO-Revision-Date: 2025-02-13 19:20+0530\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: wp-module-help-center\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: includes/CapabilityController.php:75
+msgid "We could not find the brand"
+msgstr ""
+
+#: includes/CapabilityController.php:92 includes/MultiSearchController.php:128
+#: includes/UserInteractionController.php:81
+msgid "You must be authenticated to make this call"
+msgstr ""
+
+#: includes/HelpCenter.php:91
+msgid "Help"
+msgstr ""
+
+#: build/index.js:1 src/components/Feedback.js:58
+msgid "Did this result help you?"
+msgstr ""
+
+#: build/index.js:1 src/components/Feedback.js:70
+msgid "Yes"
+msgstr ""
+
+#: build/index.js:1 src/components/Feedback.js:77
+msgid "No"
+msgstr ""
+
+#: build/index.js:1 src/components/Feedback.js:85
+msgid "Thanks for the feedback!"
+msgstr ""
+
+#: build/index.js:1 src/components/NoResults.js:7
+msgid ""
+"You can try searching our <a href=\"{link}\">Resource center.</a> though to "
+"see if there’s a helpful article or video on that subject."
+msgstr ""
+
+#: build/index.js:1 src/components/NoResults.js:18
+msgid "Sorry, I don’t have any information on that topic yet."
+msgstr ""
+
+#: build/index.js:1 src/components/SearchInput.js:21
+msgid "Please enter a specific search term to get results."
+msgstr ""
+
+#: build/index.js:1 src/components/SearchInput.js:41
+msgid "Ask about WordPress"
+msgstr ""
+
+#: build/index.js:1 src/components/SearchInput.js:84
+msgid "Account Support"
+msgstr ""
+
+#: build/index.js:1 src/components/SearchInput.js:87
+msgid "If you need help with your Bluehost account, contact our support team:"
+msgstr ""
+
+#: build/index.js:1 src/components/SearchInput.js:112
+#: src/components/SearchInput.js:119
+msgid "Chat with support"
+msgstr ""
+
+#: build/index.js:1 src/components/SearchResults.js:337
+msgid "Common Topics"
+msgstr ""
+
+#: build/index.js:1 src/components/HelpCenterIntro.js:14
+msgid ""
+"Hi! I’m your WordPress AI assistant. </br></br> Ask me how to do things in "
+"WordPress and I’ll provide step by step instructions.</br></br> I’m still "
+"learning so I don’t have all the answers just yet."
+msgstr ""
+
+#: build/index.js:1 src/components/Modal.js:36
+msgid "Help with WordPress"
+msgstr ""
+
+#: src/components/ResourceLink.js:7
+msgid "In the meantime, try searching our"
+msgstr ""
+
+#: src/components/ResourceLink.js:12
+msgid "Resource center."
+msgstr ""
