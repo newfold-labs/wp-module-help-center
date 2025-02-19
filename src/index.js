@@ -11,7 +11,7 @@ import { HiiveAnalytics } from '@newfold/js-utility-ui-analytics';
 import Modal from './components/Modal';
 import { ReactComponent as Help } from './icons/help-plugin-sidebar-icon.svg';
 import { Analytics, LocalStorageUtils } from './utils';
-import '../styles.scss';
+import './styles/styles.scss';
 
 domReady( () => {
 	// Run only once DOM is ready, else this won't work.
@@ -38,6 +38,9 @@ export const toggleHelp = ( visible ) => {
 	nfdHelpContainer.classList.toggle( 'help-container', visible );
 	LocalStorageUtils.updateHelpVisible( visible );
 	window.dispatchEvent( new Event( 'storage' ) );
+	if ( ! visible ) {
+		LocalStorageUtils.clearSearchInput();
+	}
 };
 
 const toggleHelpViaLocalStorage = () => {
