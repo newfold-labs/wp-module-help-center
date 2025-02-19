@@ -1,13 +1,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: https://github.com/newfold-labs/wp-module-help-center/issues\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-13T10:10:52+00:00\n"
+"POT-Creation-Date: 2025-02-13T09:55:55+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wp-module-help-center\n"
@@ -27,64 +27,33 @@ msgid "Help"
 msgstr ""
 
 #: build/index.js:1
-#: src/components/Feedback.js:58
+#: src/components/ResultList/ResultFeedback.js:58
 msgid "Did this result help you?"
 msgstr ""
 
 #: build/index.js:1
-#: src/components/Feedback.js:70
+#: src/components/ResultList/ResultFeedback.js:70
 msgid "Yes"
 msgstr ""
 
 #: build/index.js:1
-#: src/components/Feedback.js:77
+#: src/components/ResultList/ResultFeedback.js:77
 msgid "No"
 msgstr ""
 
 #: build/index.js:1
-#: src/components/Feedback.js:85
+#: src/components/ResultList/ResultFeedback.js:85
 msgid "Thanks for the feedback!"
 msgstr ""
 
 #: build/index.js:1
-#: src/components/NoResults.js:7
+#: src/components/ResultList/NoResults.js:11
 msgid "You can try searching our <a href=\"{link}\">Resource center.</a> though to see if there’s a helpful article or video on that subject."
 msgstr ""
 
 #: build/index.js:1
-#: src/components/NoResults.js:18
+#: src/components/ResultList/NoResults.js:28
 msgid "Sorry, I don’t have any information on that topic yet."
-msgstr ""
-
-#: build/index.js:1
-#: src/components/SearchInput.js:21
-msgid "Please enter a specific search term to get results."
-msgstr ""
-
-#: build/index.js:1
-#: src/components/SearchInput.js:41
-msgid "Ask about WordPress"
-msgstr ""
-
-#: build/index.js:1
-#: src/components/SearchInput.js:84
-msgid "Account Support"
-msgstr ""
-
-#: build/index.js:1
-#: src/components/SearchInput.js:87
-msgid "If you need help with your Bluehost account, contact our support team:"
-msgstr ""
-
-#: build/index.js:1
-#: src/components/SearchInput.js:112
-#: src/components/SearchInput.js:119
-msgid "Chat with support"
-msgstr ""
-
-#: build/index.js:1
-#: src/components/SearchResults.js:337
-msgid "Common Topics"
 msgstr ""
 
 #: build/index.js:1
@@ -93,8 +62,56 @@ msgid "Hi! I’m your WordPress AI assistant. </br></br> Ask me how to do things
 msgstr ""
 
 #: build/index.js:1
+#: src/components/SearchInput.js:13
+msgid "Search Help Center"
+msgstr ""
+
+#: build/index.js:1
+#: src/components/SearchInput.js:23
+msgid "Ask about WordPress"
+msgstr ""
+
+#: build/index.js:1
+#: src/components/SearchInput.js:33
+#: src/components/SearchInput.js:37
+msgid "submit text"
+msgstr ""
+
+#: build/index.js:1
+#: src/components/SuggestionList.js:28
+msgid "Common Topics"
+msgstr ""
+
+#: build/index.js:1
+#: src/components/HelpCenter.js:296
+msgid "Please enter a specific search term to get results."
+msgstr ""
+
+#: build/index.js:1
+#: src/components/Footer.js:11
+msgid "Account Support"
+msgstr ""
+
+#: build/index.js:1
+#: src/components/Footer.js:14
+msgid "If you need help with your Bluehost account, contact our support team:"
+msgstr ""
+
+#: build/index.js:1
+#: src/components/Footer.js:39
+#: src/components/Footer.js:46
+msgid "Chat with support"
+msgstr ""
+
+#: build/index.js:1
 #: src/components/Modal.js:36
 msgid "Help with WordPress"
+msgstr ""
+
+#: build/index.js:1
+#: src/components/Modal.js:40
+#: src/components/Modal.js:44
+msgid "Close Help Modal"
 msgstr ""
 
 #: src/components/ResourceLink.js:7

@@ -1,98 +1,131 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: \n"
-"Last-Translator: Vara Prasad Maruboina <varaprasad.maruboina@newfold.com>\n"
-"Language-Team: Dutch <vertaling@vrijschrift.org>\n"
+"Project-Id-Version: newfold-labswp-module-staging\n"
+"Report-Msgid-Bugs-To: https://github.com/newfold-labs/wp-module-help-center/issues\n"
+"Last-Translator: \n"
+"Language-Team: Dutch\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-13T10:10:52+00:00\n"
-"PO-Revision-Date: 2025-02-13 19:20+0530\n"
+"POT-Creation-Date: 2025-02-13T09:55:55+00:00\n"
+"PO-Revision-Date: 2025-02-19 16:04\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wp-module-help-center\n"
-"Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: newfold-labswp-module-staging\n"
+"X-Crowdin-Project-ID: 764889\n"
+"X-Crowdin-Language: nl\n"
+"X-Crowdin-File: wp-module-help-center.pot\n"
+"X-Crowdin-File-ID: 44\n"
+"Language: nl_NL\n"
 
 #: includes/CapabilityController.php:75
 msgid "We could not find the brand"
-msgstr ""
+msgstr "We konden het merk niet vinden"
 
-#: includes/CapabilityController.php:92 includes/MultiSearchController.php:128
+#: includes/CapabilityController.php:92
+#: includes/MultiSearchController.php:128
 #: includes/UserInteractionController.php:81
 msgid "You must be authenticated to make this call"
-msgstr ""
+msgstr "U moet geverifieerd zijn om deze oproep te kunnen doen"
 
 #: includes/HelpCenter.php:91
 msgid "Help"
-msgstr ""
+msgstr "Hulp"
 
-#: build/index.js:1 src/components/Feedback.js:58
+#: build/index.js:1
+#: src/components/ResultList/ResultFeedback.js:58
 msgid "Did this result help you?"
-msgstr ""
+msgstr "Heeft dit resultaat u geholpen?"
 
-#: build/index.js:1 src/components/Feedback.js:70
+#: build/index.js:1
+#: src/components/ResultList/ResultFeedback.js:70
 msgid "Yes"
-msgstr ""
+msgstr "ja"
 
-#: build/index.js:1 src/components/Feedback.js:77
+#: build/index.js:1
+#: src/components/ResultList/ResultFeedback.js:77
 msgid "No"
-msgstr ""
+msgstr "Neen"
 
-#: build/index.js:1 src/components/Feedback.js:85
+#: build/index.js:1
+#: src/components/ResultList/ResultFeedback.js:85
 msgid "Thanks for the feedback!"
+msgstr "Bedankt voor de feedback!"
+
+#: build/index.js:1
+#: src/components/ResultList/NoResults.js:11
+msgid "You can try searching our <a href=\"{link}\">Resource center.</a> though to see if there’s a helpful article or video on that subject."
 msgstr ""
 
-#: build/index.js:1 src/components/NoResults.js:7
-msgid ""
-"You can try searching our <a href=\"{link}\">Resource center.</a> though to "
-"see if there’s a helpful article or video on that subject."
-msgstr ""
-
-#: build/index.js:1 src/components/NoResults.js:18
+#: build/index.js:1
+#: src/components/ResultList/NoResults.js:28
 msgid "Sorry, I don’t have any information on that topic yet."
-msgstr ""
+msgstr "Sorry, ik heb nog geen informatie over dat onderwerp."
 
-#: build/index.js:1 src/components/SearchInput.js:21
-msgid "Please enter a specific search term to get results."
-msgstr ""
+#: build/index.js:1
+#: src/components/HelpCenterIntro.js:14
+msgid "Hi! I’m your WordPress AI assistant. </br></br> Ask me how to do things in WordPress and I’ll provide step by step instructions.</br></br> I’m still learning so I don’t have all the answers just yet."
+msgstr "Hallo! Ik ben jouw WordPress AI assistent. </br></br> Vraag me hoe je dingen kunt doen in WordPress, dan zal ik stap voor stap instructies geven.</br></br> Ik leer nog steeds, zodat ik nog niet alle antwoorden heb."
 
-#: build/index.js:1 src/components/SearchInput.js:41
+#: build/index.js:1
+#: src/components/SearchInput.js:13
+msgid "Search Help Center"
+msgstr "Zoek naar hulpcentrum"
+
+#: build/index.js:1
+#: src/components/SearchInput.js:23
 msgid "Ask about WordPress"
-msgstr ""
+msgstr "Vraag over WordPress"
 
-#: build/index.js:1 src/components/SearchInput.js:84
-msgid "Account Support"
-msgstr ""
+#: build/index.js:1
+#: src/components/SearchInput.js:33
+#: src/components/SearchInput.js:37
+msgid "submit text"
+msgstr "dien tekst in"
 
-#: build/index.js:1 src/components/SearchInput.js:87
-msgid "If you need help with your Bluehost account, contact our support team:"
-msgstr ""
-
-#: build/index.js:1 src/components/SearchInput.js:112
-#: src/components/SearchInput.js:119
-msgid "Chat with support"
-msgstr ""
-
-#: build/index.js:1 src/components/SearchResults.js:337
+#: build/index.js:1
+#: src/components/SuggestionList.js:28
 msgid "Common Topics"
-msgstr ""
+msgstr "Algemene Onderwerpen"
 
-#: build/index.js:1 src/components/HelpCenterIntro.js:14
-msgid ""
-"Hi! I’m your WordPress AI assistant. </br></br> Ask me how to do things in "
-"WordPress and I’ll provide step by step instructions.</br></br> I’m still "
-"learning so I don’t have all the answers just yet."
-msgstr ""
+#: build/index.js:1
+#: src/components/HelpCenter.js:296
+msgid "Please enter a specific search term to get results."
+msgstr "Voer een specifieke zoekterm in om zoekresultaten te krijgen."
 
-#: build/index.js:1 src/components/Modal.js:36
+#: build/index.js:1
+#: src/components/Footer.js:11
+msgid "Account Support"
+msgstr "Ondersteuning voor account"
+
+#: build/index.js:1
+#: src/components/Footer.js:14
+msgid "If you need help with your Bluehost account, contact our support team:"
+msgstr "Als je hulp nodig hebt met je Bluehost account, neem dan contact op met ons ondersteuningsteam:"
+
+#: build/index.js:1
+#: src/components/Footer.js:39
+#: src/components/Footer.js:46
+msgid "Chat with support"
+msgstr "Chat met ondersteuning"
+
+#: build/index.js:1
+#: src/components/Modal.js:36
 msgid "Help with WordPress"
-msgstr ""
+msgstr "Help met WordPress"
+
+#: build/index.js:1
+#: src/components/Modal.js:40
+#: src/components/Modal.js:44
+msgid "Close Help Modal"
+msgstr "Help Modal sluiten"
 
 #: src/components/ResourceLink.js:7
 msgid "In the meantime, try searching our"
-msgstr ""
+msgstr "Probeer in de tussentijd onze"
 
 #: src/components/ResourceLink.js:12
 msgid "Resource center."
-msgstr ""
+msgstr "Grondstof Centrum."
+

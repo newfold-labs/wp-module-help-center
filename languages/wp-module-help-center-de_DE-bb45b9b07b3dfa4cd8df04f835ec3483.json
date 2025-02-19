@@ -1,0 +1,18 @@
+{
+    "translation-revision-date": "2025-02-19 16:04",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "src\/components\/HelpCenter.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "de_DE",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Please enter a specific search term to get results.": [
+                "Bitte geben Sie einen bestimmten Suchbegriff ein, um Ergebnisse zu erhalten."
+            ]
+        }
+    }
+}
