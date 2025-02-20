@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4d029722ca9100fc02c27852b786be17",
+    "content-hash": "9a4e4afb57445234c940f19f7fe64f55",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -440,16 +440,16 @@
         },
         {
             "name": "newfold-labs/wp-module-ai",
-            "version": "1.1.13",
+            "version": "1.1.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/newfold-labs/wp-module-ai.git",
-                "reference": "382a7efcb240c99cc19c0d9bf9054409b03013f7"
+                "reference": "aa9c8933316059736f49038a6a019cd245791f7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/newfold-labs/wp-module-ai/zipball/382a7efcb240c99cc19c0d9bf9054409b03013f7",
-                "reference": "382a7efcb240c99cc19c0d9bf9054409b03013f7",
+                "url": "https://api.github.com/repos/newfold-labs/wp-module-ai/zipball/aa9c8933316059736f49038a6a019cd245791f7e",
+                "reference": "aa9c8933316059736f49038a6a019cd245791f7e",
                 "shasum": ""
             },
             "require": {
@@ -479,10 +479,10 @@
             ],
             "description": "A module for providing artificial intelligence capabilities.",
             "support": {
-                "source": "https://github.com/newfold-labs/wp-module-ai/tree/1.1.13",
+                "source": "https://github.com/newfold-labs/wp-module-ai/tree/1.1.15",
                 "issues": "https://github.com/newfold-labs/wp-module-ai/issues"
             },
-            "time": "2025-01-29T06:28:43+00:00"
+            "time": "2025-02-19T18:53:57+00:00"
         },
         {
             "name": "newfold-labs/wp-module-context",
@@ -540,16 +540,16 @@
         },
         {
             "name": "newfold-labs/wp-module-data",
-            "version": "2.6.9",
+            "version": "2.6.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/newfold-labs/wp-module-data.git",
-                "reference": "368b604257780658caa4d83c3cc15f8fa2d48ffa"
+                "reference": "ddafe7e2fe8f9e71ffdd898b00f5c3f6e5d92070"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/newfold-labs/wp-module-data/zipball/368b604257780658caa4d83c3cc15f8fa2d48ffa",
-                "reference": "368b604257780658caa4d83c3cc15f8fa2d48ffa",
+                "url": "https://api.github.com/repos/newfold-labs/wp-module-data/zipball/ddafe7e2fe8f9e71ffdd898b00f5c3f6e5d92070",
+                "reference": "ddafe7e2fe8f9e71ffdd898b00f5c3f6e5d92070",
                 "shasum": ""
             },
             "require": {
@@ -636,10 +636,10 @@
             ],
             "description": "Newfold Data Module",
             "support": {
-                "source": "https://github.com/newfold-labs/wp-module-data/tree/2.6.9",
+                "source": "https://github.com/newfold-labs/wp-module-data/tree/2.6.10",
                 "issues": "https://github.com/newfold-labs/wp-module-data/issues"
             },
-            "time": "2025-01-22T18:55:15+00:00"
+            "time": "2025-02-06T18:33:49+00:00"
         },
         {
             "name": "newfold-labs/wp-module-features",
@@ -2015,5 +2015,5 @@
     "platform-overrides": {
         "php": "7.3"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.3.0"
 }
