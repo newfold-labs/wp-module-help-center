@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <ruleset name="Help-Center-Module">
     <rule ref="Newfold" />
-    <config name="testVersion" value="7.3-" />
-    <config name="minimum_supported_wp_version" value="6.3" />
+    <config name="testVersion" value="7.3-"/>
+    <config name="minimum_supported_wp_version" value="6.5"/>
     <rule ref="WordPress-Extra">
         <exclude name="WordPress.Arrays.ArrayDeclarationSpacing" />
         <!-- Allow short array declaration -->
