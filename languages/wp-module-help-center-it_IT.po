@@ -9,6 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2025-02-13T09:55:55+00:00\n"
 "PO-Revision-Date: 2025-02-19 16:04\n"
+"Language: it_IT\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wp-module-help-center\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,7 +18,6 @@ msgstr ""
 "X-Crowdin-Language: it\n"
 "X-Crowdin-File: wp-module-help-center.pot\n"
 "X-Crowdin-File-ID: 44\n"
-"Language: it_IT\n"
 
 #: includes/CapabilityController.php:75
 msgid "We could not find the brand"
@@ -34,98 +34,69 @@ msgid "Help"
 msgstr "Aiuto"
 
 #: build/index.js:1
-#: src/components/ResultList/ResultFeedback.js:58
 msgid "Did this result help you?"
 msgstr "Questo risultato ti ha aiutato?"
 
 #: build/index.js:1
-#: src/components/ResultList/ResultFeedback.js:70
 msgid "Yes"
 msgstr "Sì"
 
 #: build/index.js:1
-#: src/components/ResultList/ResultFeedback.js:77
 msgid "No"
 msgstr "No"
 
 #: build/index.js:1
-#: src/components/ResultList/ResultFeedback.js:85
 msgid "Thanks for the feedback!"
 msgstr "Grazie per il feedback!"
 
 #: build/index.js:1
-#: src/components/ResultList/NoResults.js:11
 msgid "You can try searching our <a href=\"{link}\">Resource center.</a> though to see if there’s a helpful article or video on that subject."
 msgstr "Puoi provare a cercare il nostro centro risorse <a href=\"{link}\">.</a> per vedere se c'è un utile articolo o video su questo argomento."
 
 #: build/index.js:1
-#: src/components/ResultList/NoResults.js:28
 msgid "Sorry, I don’t have any information on that topic yet."
 msgstr "Mi dispiace, non ho ancora alcuna informazione su questo argomento."
 
 #: build/index.js:1
-#: src/components/HelpCenterIntro.js:14
 msgid "Hi! I’m your WordPress AI assistant. </br></br> Ask me how to do things in WordPress and I’ll provide step by step instructions.</br></br> I’m still learning so I don’t have all the answers just yet."
 msgstr "Ciao! Sono il tuo assistente WordPress AI. </br></br> Mi chiede come fare le cose in WordPress e fornirò istruzioni passo dopo passo.</br></br> Sto ancora imparando quindi non ho ancora tutte le risposte."
 
 #: build/index.js:1
-#: src/components/SearchInput.js:13
 msgid "Search Help Center"
 msgstr "Search Help Center"
 
 #: build/index.js:1
-#: src/components/SearchInput.js:23
 msgid "Ask about WordPress"
 msgstr "Chiedi su WordPress"
 
 #: build/index.js:1
-#: src/components/SearchInput.js:33
-#: src/components/SearchInput.js:37
 msgid "submit text"
 msgstr "invia testo"
 
 #: build/index.js:1
-#: src/components/SuggestionList.js:28
 msgid "Common Topics"
 msgstr "Argomenti Comuni"
 
 #: build/index.js:1
-#: src/components/HelpCenter.js:296
 msgid "Please enter a specific search term to get results."
 msgstr "Inserisci un termine di ricerca specifico per ottenere risultati."
 
 #: build/index.js:1
-#: src/components/Footer.js:11
 msgid "Account Support"
 msgstr "Supporto Account"
 
 #: build/index.js:1
-#: src/components/Footer.js:14
 msgid "If you need help with your Bluehost account, contact our support team:"
 msgstr "Se hai bisogno di aiuto con il tuo account Bluehost, contatta il nostro team di supporto:"
 
 #: build/index.js:1
-#: src/components/Footer.js:39
-#: src/components/Footer.js:46
 msgid "Chat with support"
 msgstr "Chatta con supporto"
 
 #: build/index.js:1
-#: src/components/Modal.js:36
 msgid "Help with WordPress"
 msgstr "Aiuto con WordPress"
 
 #: build/index.js:1
-#: src/components/Modal.js:40
-#: src/components/Modal.js:44
 msgid "Close Help Modal"
 msgstr "Chiudi Aiuto Modal"
-
-#: src/components/ResourceLink.js:7
-msgid "In the meantime, try searching our"
-msgstr "Nel frattempo, prova a cercare il nostro"
-
-#: src/components/ResourceLink.js:12
-msgid "Resource center."
-msgstr "Centro risorse."
-
