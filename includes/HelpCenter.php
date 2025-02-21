@@ -158,10 +158,6 @@ class HelpCenter {
 						array(
 							'restUrl'      => \get_home_url() . '/index.php?rest_route=',
 							'resourceLink' => Brands::get_resource_link_for_brand( NFD_HELPCENTER_PLUGIN_BRAND ),
-							'dir_build'    => NFD_HELPCENTER_BUILD_DIR,
-							'dir_plugin'   => NFD_HELPCENTER_PLUGIN_DIRNAME,
-							'dir_module'   => NFD_HELPCENTER_DIR,
-							'dir' => $dir,
 						)
 					) . ';',
 					'before'
