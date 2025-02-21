@@ -56,7 +56,7 @@ msgstr "Bedankt voor de feedback!"
 #: build/index.js:1
 #: src/components/ResultList/NoResults.js:11
 msgid "You can try searching our <a href=\"{link}\">Resource center.</a> though to see if there’s a helpful article or video on that subject."
-msgstr ""
+msgstr "Je kunt proberen in ons <a href=\"{link}\">Kenniscentrum</a> te zoeken om te zien of er een nuttig artikel of video over dat onderwerp is."
 
 #: build/index.js:1
 #: src/components/ResultList/NoResults.js:28
