@@ -40,10 +40,40 @@ class HelpCenter {
 	 */
 	public function __construct( Container $container ) {
 		$this->container = $container;
-		add_action( 'init', array( $this, 'load_textdomains' ) );
+		add_action( 'init', array( $this, 'load_textdomains' ), 0 );
 		add_action( 'rest_api_init', array( $this, 'initialize_rest' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'assets' ) );
 		add_action( 'admin_bar_menu', array( $this, 'newfold_help_center' ), 11 );
+		add_filter( 'load_script_translation_file',
+		array( $this, 'load_script_translation_file' ), 10, 3 );
+	}
+
+	/**
+	 * Filters the file path for the JS translation JSON.
+	 *
+	 * If the script handle matches the module's handle, builds a custom path using
+	 * the languages directory, current locale, text domain, and a hash of the script.
+	 *
+	 * @param string $file   Default translation file path.
+	 * @param string $handle Script handle.
+	 * @param string $domain Text domain.
+	 * @return string Modified file path for the translation JSON.
+	 */
+	public function load_script_translation_file( $file, $handle, $domain ) {
+
+		if ( $handle === self::$handle ) {
+			$path   = NFD_HELPCENTER_DIR . '/languages/';
+			$locale = determine_locale();
+
+			$file_base = 'default' === $domain
+				? $locale
+				: $domain . '-' . $locale;
+			$file      = $path . $file_base . '-' . md5( 'build/index.js' )
+			             . '.json';
+
+		}
+
+		return $file;
 	}
 
 	/**
@@ -52,16 +82,10 @@ class HelpCenter {
 	 * @return boolean
 	 */
 	public static function load_textdomains() {
-		$langdir = container()->plugin()->url . 'vendor/newfold-labs/wp-module-help-center/languages/';
+		$langdir = dirname( container()->plugin()->basename ) . '/vendor/newfold-labs/wp-module-help-center/languages';
 		\load_plugin_textdomain(
 			self::$text_domain,
 			false,
-			$langdir
-		);
-
-		\load_script_textdomain( 
-			self::$handle,
-			self::$text_domain,
 			$langdir
 		);
 	}
