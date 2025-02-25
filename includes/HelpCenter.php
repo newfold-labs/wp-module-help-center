@@ -28,7 +28,7 @@ class HelpCenter {
 
 	/**
 	 * Text-domain
-	 * 
+	 *
 	 * @var string
 	 */
 	public static $text_domain = 'wp-module-help-center';
@@ -44,8 +44,12 @@ class HelpCenter {
 		add_action( 'rest_api_init', array( $this, 'initialize_rest' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'assets' ) );
 		add_action( 'admin_bar_menu', array( $this, 'newfold_help_center' ), 11 );
-		add_filter( 'load_script_translation_file',
-		array( $this, 'load_script_translation_file' ), 10, 3 );
+		add_filter(
+			'load_script_translation_file',
+			array( $this, 'load_script_translation_file' ),
+			10,
+			3
+		);
 	}
 
 	/**
@@ -69,7 +73,7 @@ class HelpCenter {
 				? $locale
 				: $domain . '-' . $locale;
 			$file      = $path . $file_base . '-' . md5( 'build/index.js' )
-			             . '.json';
+						. '.json';
 
 		}
 
@@ -78,8 +82,6 @@ class HelpCenter {
 
 	/**
 	 * Loads the textdomain for the module. This applies only to PHP strings.
-	 *
-	 * @return boolean
 	 */
 	public static function load_textdomains() {
 		$langdir = dirname( container()->plugin()->basename ) . '/vendor/newfold-labs/wp-module-help-center/languages';
@@ -145,7 +147,7 @@ class HelpCenter {
 	 * Load WP dependencies into the page.
 	 */
 	public function assets() {
-		$dir = container()->plugin()->url . 'vendor/newfold-labs/wp-module-help-center/';
+		$dir          = container()->plugin()->url . 'vendor/newfold-labs/wp-module-help-center/';
 		$asset_file   = NFD_HELPCENTER_BUILD_DIR . 'index.asset.php';
 		$help_enabled = $this->container->get( 'capabilities' )->get( 'canAccessHelpCenter' );
 		if ( file_exists( $asset_file ) ) {
@@ -188,7 +190,7 @@ class HelpCenter {
 				);
 
 				/* Hide the helpcenter on onboarding flow */
-				\wp_localize_script( self::$handle, 'newfoldHelpCenter', array( 'closeOnLoad' => ( isset( $_GET['page'] ) && 'nfd-onboarding' === sanitize_text_field( $_GET['page'] ) ) ) );
+				\wp_localize_script( self::$handle, 'newfoldHelpCenter', array( 'closeOnLoad' => ( isset( $_GET['page'] ) && 'nfd-onboarding' === sanitize_text_field( wp_unslash( $_GET['page'] ) ) ) ) );
 
 				/* Remove values on log out */
 				$logout_listener_js = <<<JS
