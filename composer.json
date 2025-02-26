@@ -23,7 +23,7 @@
     "wp-cli/i18n-command": "^2.6.3"
   },
   "require": {
-    "newfold-labs/wp-module-ai": "^1.1.13",
+    "newfold-labs/wp-module-ai": "^1.1.15",
     "newfold-labs/wp-module-data": "^2.6.9",
     "newfold-labs/wp-module-features": "^1.4.2",
     "typesense/typesense-php": "^2.0.4"
