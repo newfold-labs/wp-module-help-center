@@ -2,15 +2,16 @@
 import 'regenerator-runtime/runtime';
 import { createRoot, render } from '@wordpress/element';
 
-import { subscribe } from '@wordpress/data';
+import { subscribe, default as wpData } from '@wordpress/data';
+import { default as wpApiFetch } from '@wordpress/api-fetch';
 //
 import domReady from '@wordpress/dom-ready';
-import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
+import { HiiveAnalytics } from '@newfold/js-utility-ui-analytics';
 //
 import Modal from './components/Modal';
 import { ReactComponent as Help } from './icons/help-plugin-sidebar-icon.svg';
 import { Analytics, LocalStorageUtils } from './utils';
-import '../styles.scss';
+import './styles/styles.scss';
 
 domReady( () => {
 	// Run only once DOM is ready, else this won't work.
@@ -20,6 +21,10 @@ domReady( () => {
 			urls: {
 				single:
 					window.nfdHelpCenter.restUrl + '/newfold-data/v1/events',
+			},
+			dependencies: {
+				wpData,
+				wpApiFetch,
 			},
 		} );
 	}
@@ -33,6 +38,9 @@ export const toggleHelp = ( visible ) => {
 	nfdHelpContainer.classList.toggle( 'help-container', visible );
 	LocalStorageUtils.updateHelpVisible( visible );
 	window.dispatchEvent( new Event( 'storage' ) );
+	if ( ! visible ) {
+		LocalStorageUtils.clearSearchInput();
+	}
 };
 
 const toggleHelpViaLocalStorage = () => {

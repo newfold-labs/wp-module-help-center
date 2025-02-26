@@ -1,0 +1,97 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://github.com/newfold-labs/wp-module-help-center/issues\n"
+"Last-Translator: Vara Prasad Maruboina <varaprasad.maruboina@newfold.com>\n"
+"Language-Team: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-13T09:55:55+00:00\n"
+"PO-Revision-Date: 2025-02-19 21:36+0530\n"
+"Language: en_AU\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: wp-module-help-center\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: includes/CapabilityController.php:75
+msgid "We could not find the brand"
+msgstr "We could not find the brand"
+
+#: includes/CapabilityController.php:92
+#: includes/MultiSearchController.php:128
+#: includes/UserInteractionController.php:81
+msgid "You must be authenticated to make this call"
+msgstr "You must be authenticated to make this call"
+
+#: includes/HelpCenter.php:91
+msgid "Help"
+msgstr "Help"
+
+#: build/index.js:1
+msgid "Did this result help you?"
+msgstr "Did this result help you?"
+
+#: build/index.js:1
+msgid "Yes"
+msgstr "Yes"
+
+#: build/index.js:1
+msgid "No"
+msgstr "No"
+
+#: build/index.js:1
+msgid "Thanks for the feedback!"
+msgstr "Thanks for the feedback!"
+
+#: build/index.js:1
+msgid "You can try searching our <a href=\"{link}\">Resource center.</a> though to see if there’s a helpful article or video on that subject."
+msgstr "You can try searching our <a href=\"{link}\">Resource center.</a> though to see if there’s a helpful article or video on that subject."
+
+#: build/index.js:1
+msgid "Sorry, I don’t have any information on that topic yet."
+msgstr "Sorry, I don’t have any information on that topic yet."
+
+#: build/index.js:1
+msgid "Hi! I’m your WordPress AI assistant. </br></br> Ask me how to do things in WordPress and I’ll provide step by step instructions.</br></br> I’m still learning so I don’t have all the answers just yet."
+msgstr "Hi! I’m your WordPress AI assistant. </br></br> Ask me how to do things in WordPress and I’ll provide step by step instructions.</br></br> I’m still learning so I don’t have all the answers just yet."
+
+#: build/index.js:1
+msgid "Search Help Center"
+msgstr "Search Help Center"
+
+#: build/index.js:1
+msgid "Ask about WordPress"
+msgstr "Ask about WordPress"
+
+#: build/index.js:1
+msgid "submit text"
+msgstr "submit text"
+
+#: build/index.js:1
+msgid "Common Topics"
+msgstr "Common Topics"
+
+#: build/index.js:1
+msgid "Please enter a specific search term to get results."
+msgstr "Please enter a specific search term to get results."
+
+#: build/index.js:1
+msgid "Account Support"
+msgstr "Account Support"
+
+#: build/index.js:1
+msgid "If you need help with your Bluehost account, contact our support team:"
+msgstr "If you need help with your Bluehost account, contact our support team:"
+
+#: build/index.js:1
+msgid "Chat with support"
+msgstr "Chat with support"
+
+#: build/index.js:1
+msgid "Help with WordPress"
+msgstr "Help with WordPress"
+
+#: build/index.js:1
+msgid "Close Help Modal"
+msgstr "Close Help Modal"
