@@ -1,0 +1,102 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: newfold-labswp-module-staging\n"
+"Report-Msgid-Bugs-To: https://github.com/newfold-labs/wp-module-help-center/issues\n"
+"Last-Translator: \n"
+"Language-Team: Spanish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-13T09:55:55+00:00\n"
+"PO-Revision-Date: 2025-02-19 16:04\n"
+"Language: es_ES\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: wp-module-help-center\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: newfold-labswp-module-staging\n"
+"X-Crowdin-Project-ID: 764889\n"
+"X-Crowdin-Language: es-ES\n"
+"X-Crowdin-File: wp-module-help-center.pot\n"
+"X-Crowdin-File-ID: 44\n"
+
+#: includes/CapabilityController.php:75
+msgid "We could not find the brand"
+msgstr "No pudimos encontrar la marca"
+
+#: includes/CapabilityController.php:92
+#: includes/MultiSearchController.php:128
+#: includes/UserInteractionController.php:81
+msgid "You must be authenticated to make this call"
+msgstr "Debes estar autenticado para hacer esta llamada"
+
+#: includes/HelpCenter.php:91
+msgid "Help"
+msgstr "Ayuda"
+
+#: build/index.js:1
+msgid "Did this result help you?"
+msgstr "¿Te ha ayudado este resultado?"
+
+#: build/index.js:1
+msgid "Yes"
+msgstr "Sí"
+
+#: build/index.js:1
+msgid "No"
+msgstr "Nu"
+
+#: build/index.js:1
+msgid "Thanks for the feedback!"
+msgstr "¡Gracias por sus comentarios!"
+
+#: build/index.js:1
+msgid "You can try searching our <a href=\"{link}\">Resource center.</a> though to see if there’s a helpful article or video on that subject."
+msgstr "Puedes intentar buscar en nuestro centro <a href=\"{link}\">Recursos.</a> aunque para ver si hay un artículo o vídeo útil sobre este tema."
+
+#: build/index.js:1
+msgid "Sorry, I don’t have any information on that topic yet."
+msgstr "Lo siento, todavía no tengo información sobre ese tema."
+
+#: build/index.js:1
+msgid "Hi! I’m your WordPress AI assistant. </br></br> Ask me how to do things in WordPress and I’ll provide step by step instructions.</br></br> I’m still learning so I don’t have all the answers just yet."
+msgstr "¡Hola! Soy tu asistente de IA de WordPress. </br></br> Pregúntame cómo hacer cosas en WordPress y te proporcionaré instrucciones paso a paso.</br></br> Aún estoy aprendiendo, así que todavía no tengo todas las respuestas."
+
+#: build/index.js:1
+msgid "Search Help Center"
+msgstr "Buscar Centro de Ayuda"
+
+#: build/index.js:1
+msgid "Ask about WordPress"
+msgstr "Preguntar sobre WordPress"
+
+#: build/index.js:1
+msgid "submit text"
+msgstr "enviar texto"
+
+#: build/index.js:1
+msgid "Common Topics"
+msgstr "Temas comunes"
+
+#: build/index.js:1
+msgid "Please enter a specific search term to get results."
+msgstr "Por favor, introduzca un término de búsqueda específico para obtener resultados."
+
+#: build/index.js:1
+msgid "Account Support"
+msgstr "Soporte de Cuenta"
+
+#: build/index.js:1
+msgid "If you need help with your Bluehost account, contact our support team:"
+msgstr "Si necesitas ayuda con tu cuenta Bluehost, contacta con nuestro equipo de soporte:"
+
+#: build/index.js:1
+msgid "Chat with support"
+msgstr "Chatear con soporte"
+
+#: build/index.js:1
+msgid "Help with WordPress"
+msgstr "Ayuda con WordPress"
+
+#: build/index.js:1
+msgid "Close Help Modal"
+msgstr "Cerrar módulo de ayuda"

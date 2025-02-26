@@ -2,9 +2,10 @@
 
 namespace NewfoldLabs\WP\Module\HelpCenter;
 
-use NewfoldLabs\WP\Module\HelpCenter\I18nLoader;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\HelpCenter\Data\Brands;
+
+use function NewfoldLabs\WP\ModuleLoader\container;
 
 /**
  * The class to initialize and load the module.
@@ -19,11 +20,18 @@ class HelpCenter {
 	protected $container;
 
 	/**
-	 * Identifier for page and assets.
+	 * Identifier for script handle.
 	 *
 	 * @var string
 	 */
-	public static $slug = 'nfd-help-center';
+	public static $handle = 'nfd-help-center';
+
+	/**
+	 * Text-domain
+	 *
+	 * @var string
+	 */
+	public static $text_domain = 'wp-module-help-center';
 
 	/**
 	 * Constructor.
@@ -32,21 +40,55 @@ class HelpCenter {
 	 */
 	public function __construct( Container $container ) {
 		$this->container = $container;
-		add_action( 'init', array( $this, 'load_php_textdomain' ) );
+		add_action( 'init', array( $this, 'load_textdomains' ), 0 );
 		add_action( 'rest_api_init', array( $this, 'initialize_rest' ) );
-		add_action( 'admin_init', array( $this, 'register_assets' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'assets' ) );
 		add_action( 'admin_bar_menu', array( $this, 'newfold_help_center' ), 11 );
+		add_filter(
+			'load_script_translation_file',
+			array( $this, 'load_script_translation_file' ),
+			10,
+			3
+		);
+	}
+
+	/**
+	 * Filters the file path for the JS translation JSON.
+	 *
+	 * If the script handle matches the module's handle, builds a custom path using
+	 * the languages directory, current locale, text domain, and a hash of the script.
+	 *
+	 * @param string $file   Default translation file path.
+	 * @param string $handle Script handle.
+	 * @param string $domain Text domain.
+	 * @return string Modified file path for the translation JSON.
+	 */
+	public function load_script_translation_file( $file, $handle, $domain ) {
+
+		if ( $handle === self::$handle ) {
+			$path   = NFD_HELPCENTER_DIR . '/languages/';
+			$locale = determine_locale();
+
+			$file_base = 'default' === $domain
+				? $locale
+				: $domain . '-' . $locale;
+			$file      = $path . $file_base . '-' . md5( 'build/index.js' )
+						. '.json';
+
+		}
+
+		return $file;
 	}
 
 	/**
 	 * Loads the textdomain for the module. This applies only to PHP strings.
-	 *
-	 * @return boolean
 	 */
-	public static function load_php_textdomain() {
-		return I18nLoader::load_php_translations(
-			'wp-module-help-center',
-			NFD_HELPCENTER_PLUGIN_DIRNAME . '/vendor/newfold-labs/wp-module-help-center/languages'
+	public static function load_textdomains() {
+		$langdir = dirname( container()->plugin()->basename ) . '/vendor/newfold-labs/wp-module-help-center/languages';
+		\load_plugin_textdomain(
+			self::$text_domain,
+			false,
+			$langdir
 		);
 	}
 
@@ -104,75 +146,78 @@ class HelpCenter {
 	/**
 	 * Load WP dependencies into the page.
 	 */
-	public function register_assets() {
+	public function assets() {
+		$dir          = container()->plugin()->url . 'vendor/newfold-labs/wp-module-help-center/';
 		$asset_file   = NFD_HELPCENTER_BUILD_DIR . 'index.asset.php';
 		$help_enabled = $this->container->get( 'capabilities' )->get( 'canAccessHelpCenter' );
-		if ( file_exists( $asset_file ) && $help_enabled ) {
+		if ( file_exists( $asset_file ) ) {
 			$asset = require_once $asset_file;
+
 			\wp_register_script(
-				self::$slug,
-				NFD_HELPCENTER_PLUGIN_URL . 'vendor/newfold-labs/wp-module-help-center/build/index.js',
-				array_merge( $asset['dependencies'], array(), array( 'jquery', 'heartbeat' ) ),
+				self::$handle,
+				$dir . '/build/index.js',
+				array_merge( $asset['dependencies'], array( 'jquery', 'heartbeat' ) ),
 				$asset['version'],
 				true
 			);
 
-			I18nLoader::load_js_translations(
-				'wp-module-help-center',
-				self::$slug,
-				NFD_HELPCENTER_DIR . '/languages'
+			\wp_set_script_translations(
+				self::$handle,
+				self::$text_domain,
+				$dir . '/languages'
 			);
 
-			\wp_enqueue_script( self::$slug );
+			if ( $help_enabled ) {
+				\wp_enqueue_script( self::$handle );
 
-			\wp_enqueue_style(
-				self::$slug,
-				NFD_HELPCENTER_PLUGIN_URL . 'vendor/newfold-labs/wp-module-help-center/build/index.css',
-				array(),
-				$asset['version'],
-				'screen'
-			);
+				\wp_enqueue_style(
+					self::$handle,
+					$dir . '/build/index.css',
+					array(),
+					$asset['version'],
+					'screen'
+				);
 
-			\wp_add_inline_script(
-				self::$slug,
-				'var nfdHelpCenter =' . wp_json_encode(
-					array(
-						'restUrl'      => \get_home_url() . '/index.php?rest_route=',
-						'resourceLink' => Brands::get_resource_link_for_brand( NFD_HELPCENTER_PLUGIN_BRAND ),
-					)
-				) . ';',
-				'before'
-			);
+				\wp_add_inline_script(
+					self::$handle,
+					'var nfdHelpCenter =' . wp_json_encode(
+						array(
+							'restUrl'      => \get_home_url() . '/index.php?rest_route=',
+							'resourceLink' => Brands::get_resource_link_for_brand( NFD_HELPCENTER_PLUGIN_BRAND ),
+						)
+					) . ';',
+					'before'
+				);
 
-			/* Hide the helpcenter on onboarding flow */
-			\wp_localize_script( self::$slug, 'newfoldHelpCenter', array( 'closeOnLoad' => ( isset( $_GET['page'] ) && 'nfd-onboarding' === sanitize_text_field( $_GET['page'] ) ) ) );
+				/* Hide the helpcenter on onboarding flow */
+				\wp_localize_script( self::$handle, 'newfoldHelpCenter', array( 'closeOnLoad' => ( isset( $_GET['page'] ) && 'nfd-onboarding' === sanitize_text_field( wp_unslash( $_GET['page'] ) ) ) ) );
 
-			/* Remove values on log out */
-			$logout_listener_js = <<<JS
-			jQuery(document).ready(function ($) {
-				$('a[href*="wp-login.php?action=logout"]').on('click', function () {
-					localStorage.removeItem('helpResultContent');
-					localStorage.removeItem('searchInput');
-					localStorage.removeItem('helpVisible');
+				/* Remove values on log out */
+				$logout_listener_js = <<<JS
+				jQuery(document).ready(function ($) {
+					$('a[href*="wp-login.php?action=logout"]').on('click', function () {
+						localStorage.removeItem('helpResultContent');
+						localStorage.removeItem('searchInput');
+						localStorage.removeItem('helpVisible');
+					});
 				});
-			});
-			JS;
+				JS;
 
-			\wp_add_inline_script( self::$slug, $logout_listener_js );
+				\wp_add_inline_script( self::$handle, $logout_listener_js );
 
-			/* Remove values when the user is logged out */
-			$session_expiration_js = <<<JS
-			jQuery(document).on('heartbeat-tick', function (event, data) {
-				if (data.hasOwnProperty('wp-auth-check') && data['wp-auth-check'] === false) {
-					localStorage.removeItem('helpResultContent');
-					localStorage.removeItem('searchInput');
-					localStorage.removeItem('helpVisible');
-				}
-			});
-			JS;
+				/* Remove values when the user is logged out */
+				$session_expiration_js = <<<JS
+				jQuery(document).on('heartbeat-tick', function (event, data) {
+					if (data.hasOwnProperty('wp-auth-check') && data['wp-auth-check'] === false) {
+						localStorage.removeItem('helpResultContent');
+						localStorage.removeItem('searchInput');
+						localStorage.removeItem('helpVisible');
+					}
+				});
+				JS;
 
-			\wp_add_inline_script( self::$slug, $session_expiration_js );
-
+				\wp_add_inline_script( self::$handle, $session_expiration_js );
+			}
 		}
 	}
 }
