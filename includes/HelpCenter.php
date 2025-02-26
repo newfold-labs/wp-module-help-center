@@ -150,7 +150,7 @@ class HelpCenter {
 		$dir          = container()->plugin()->url . 'vendor/newfold-labs/wp-module-help-center/';
 		$asset_file   = NFD_HELPCENTER_BUILD_DIR . 'index.asset.php';
 		$help_enabled = $this->container->get( 'capabilities' )->get( 'canAccessHelpCenter' );
-		if ( file_exists( $asset_file ) ) {
+		if ( file_exists( $asset_file ) && $help_enabled && current_user_can( 'manage_options' ) ) {
 			$asset = require_once $asset_file;
 
 			\wp_register_script(
