@@ -25,7 +25,7 @@ const HelpCenter = ( props ) => {
 		noResult: false,
 		isNewResult: false,
 		source: 'kb',
-		searchInput: LocalStorageUtils.getSearchInput(),
+		searchInput: LocalStorageUtils.getSearchInput() || '',
 		isLoading: false,
 		loadingQuery: null,
 		loadingIndex: null,
