@@ -126,7 +126,7 @@ const HelpCenter = ( props ) => {
 				label_key: 'term',
 				term: postTitle,
 				page: window.location.href.toString(),
-				searchSource,
+				search_source: searchSource,
 			} );
 		}
 	};
