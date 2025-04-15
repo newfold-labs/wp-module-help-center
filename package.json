@@ -22,7 +22,7 @@
 		"@newfold-labs/wp-module-ai": "github:newfold-labs/js-utility-ai#1.0.1",
 		"@newfold/js-utility-ui-analytics": "1.4.0",
 		"@wordpress/api-fetch": "^7.16.0",
-		"@wordpress/components": "^29.2.0",
+		"@wordpress/components": "^29.8.0",
 		"@wordpress/data": "^10.22.0",
 		"@wordpress/element": "^6.16.0",
 		"@wordpress/i18n": "^5.16.0",
