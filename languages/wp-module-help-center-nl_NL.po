@@ -29,7 +29,7 @@ msgstr "We konden het merk niet vinden"
 msgid "You must be authenticated to make this call"
 msgstr "U moet geverifieerd zijn om deze oproep te kunnen doen"
 
-#: includes/HelpCenter.php:91
+#: includes/HelpCenter.php:133
 msgid "Help"
 msgstr "Hulp"
 

@@ -22,7 +22,7 @@ msgstr ""
 msgid "You must be authenticated to make this call"
 msgstr ""
 
-#: includes/HelpCenter.php:91
+#: includes/HelpCenter.php:133
 msgid "Help"
 msgstr ""
 

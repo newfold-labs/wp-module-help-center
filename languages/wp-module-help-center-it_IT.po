@@ -29,7 +29,7 @@ msgstr "Non siamo riusciti a trovare il marchio"
 msgid "You must be authenticated to make this call"
 msgstr "Devi essere autenticato per effettuare questa chiamata"
 
-#: includes/HelpCenter.php:91
+#: includes/HelpCenter.php:133
 msgid "Help"
 msgstr "Aiuto"
 
