@@ -29,7 +29,7 @@ msgstr "Nous n'avons pas pu trouver la marque"
 msgid "You must be authenticated to make this call"
 msgstr "Vous devez être authentifié pour passer cet appel"
 
-#: includes/HelpCenter.php:91
+#: includes/HelpCenter.php:133
 msgid "Help"
 msgstr "Aide"
 
