@@ -24,7 +24,6 @@ const HelpCenter = ( props ) => {
 		helpEnabled: false,
 		noResult: false,
 		isNewResult: false,
-		source: 'kb',
 		searchInput: LocalStorageUtils.getSearchInput() || '',
 		isLoading: false,
 		loadingQuery: null,
@@ -94,7 +93,12 @@ const HelpCenter = ( props ) => {
 		}
 	};
 
-	const populateSearchResult = ( postContent, postId, postTitle ) => {
+	const populateSearchResult = (
+		postContent,
+		postId,
+		postTitle,
+		searchSource = 'kb'
+	) => {
 		const resultContentFormatted = postContent
 			? formatPostContent( postContent )
 			: '';
@@ -122,6 +126,7 @@ const HelpCenter = ( props ) => {
 				label_key: 'term',
 				term: postTitle,
 				page: window.location.href.toString(),
+				search_source: searchSource,
 			} );
 		}
 	};
@@ -198,11 +203,11 @@ const HelpCenter = ( props ) => {
 			);
 
 			if ( result.result[ 0 ] ) {
-				setState( ( prevState ) => ( { ...prevState, source: 'ai' } ) );
 				populateSearchResult(
 					result.result[ 0 ].text,
 					result.post_id,
-					state.searchInput
+					state.searchInput,
+					'ai'
 				);
 			} else {
 				setState( ( prev ) => ( { ...prev, noResult: true } ) );
