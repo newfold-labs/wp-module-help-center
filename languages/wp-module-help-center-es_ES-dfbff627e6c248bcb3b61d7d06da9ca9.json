@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2025-02-19 16:04",
+    "translation-revision-date": "2025-04-25 14:25+0100",
     "generator": "WP-CLI\/2.11.0",
     "source": "build\/index.js",
     "domain": "messages",
@@ -11,19 +11,19 @@
                 "plural-forms": "nplurals=2; plural=(n != 1);"
             },
             "Did this result help you?": [
-                "\u00bfTe ha ayudado este resultado?"
+                "\u00bfTe ha sido \u00fatil este resultado?"
             ],
             "Yes": [
                 "S\u00ed"
             ],
             "No": [
-                "Nu"
+                "No"
             ],
             "Thanks for the feedback!": [
-                "\u00a1Gracias por sus comentarios!"
+                "\u00a1Gracias por tus comentarios!"
             ],
             "You can try searching our <a href=\"{link}\">Resource center.<\/a> though to see if there\u2019s a helpful article or video on that subject.": [
-                "Puedes intentar buscar en nuestro centro <a href=\"{link}\">Recursos.<\/a> aunque para ver si hay un art\u00edculo o v\u00eddeo \u00fatil sobre este tema."
+                "Puedes intentar buscar en nuestro <a href=\"{link}\">centro de recursos.<\/a> para ver si hay un art\u00edculo o v\u00eddeo \u00fatil sobre este tema."
             ],
             "Sorry, I don\u2019t have any information on that topic yet.": [
                 "Lo siento, todav\u00eda no tengo informaci\u00f3n sobre ese tema."
@@ -35,7 +35,7 @@
                 "Buscar Centro de Ayuda"
             ],
             "Ask about WordPress": [
-                "Preguntar sobre WordPress"
+                "Pregunta sobre WordPress"
             ],
             "submit text": [
                 "enviar texto"
@@ -44,22 +44,22 @@
                 "Temas comunes"
             ],
             "Please enter a specific search term to get results.": [
-                "Por favor, introduzca un t\u00e9rmino de b\u00fasqueda espec\u00edfico para obtener resultados."
+                "Por favor, introduce un t\u00e9rmino de b\u00fasqueda espec\u00edfico para obtener resultados."
             ],
             "Account Support": [
-                "Soporte de Cuenta"
+                "Soporte de cuenta"
             ],
             "If you need help with your Bluehost account, contact our support team:": [
                 "Si necesitas ayuda con tu cuenta Bluehost, contacta con nuestro equipo de soporte:"
             ],
             "Chat with support": [
-                "Chatear con soporte"
+                "Chatea con soporte"
             ],
             "Help with WordPress": [
                 "Ayuda con WordPress"
             ],
             "Close Help Modal": [
-                "Cerrar m\u00f3dulo de ayuda"
+                "Cerrar ventana de ayuda"
             ]
         }
     }

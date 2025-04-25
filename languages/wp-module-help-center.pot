@@ -26,6 +26,14 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
+#: includes/MultiSearchController.php:107
+msgid "The request failed"
+msgstr ""
+
+#: includes/MultiSearchController.php:113
+msgid "No data found"
+msgstr ""
+
 #: build/index.js:1
 msgid "Did this result help you?"
 msgstr ""
