@@ -202,17 +202,13 @@ $blue-night-sky: #7a889d;
 		padding: 15px 12px;
 
 		.feedback-button {
-			padding-left: 13px;
-			padding-right: 13px;
-			padding-bottom: 6px;
-			padding-top: 6px;
-			flex-shrink: 0;
-			white-space: nowrap;
-			border-radius: 20px;
-			border-color: $border-color-button;
-			border-width: 1px;
-			cursor: pointer;
-			box-shadow: none;
+			width: 29px;
+      height: 29px;
+      background-size: cover;
+      background-position: center;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
 
 			.feedback-button-emoji {
 				margin-right: 5px;
@@ -226,14 +222,13 @@ $blue-night-sky: #7a889d;
 		}
 
 		.yes {
-			border-bottom-right-radius: 0;
-			border-top-right-radius: 0;
-			border-right-width: 0;
+			margin: 2px;
+			background-image: url('../icons/yes.png');
 		}
 
 		.no {
-			border-bottom-left-radius: 0;
-			border-top-left-radius: 0;
+			margin: 2px;
+			background-image: url('../icons/no.png');
 		}
 
 		.selected-yes {

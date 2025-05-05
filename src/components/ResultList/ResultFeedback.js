@@ -65,17 +65,11 @@ const ResultFeedback = ( { postId, source } ) => {
 						<button
 							ref={ yesButtonRef }
 							onClick={ () => handleFeedback( 'helpful' ) }
-							className="feedback-button yes"
-						>
-							{ __( 'Yes', 'wp-module-help-center' ) }
-						</button>
+							/>
 						<button
 							onClick={ () => handleFeedback( 'notHelpful' ) }
 							ref={ noButtonRef }
-							className="feedback-button no"
-						>
-							{ __( 'No', 'wp-module-help-center' ) }
-						</button>
+						/>
 					</div>
 				</>
 			) }
