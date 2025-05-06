@@ -3,6 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { debounce } from 'lodash';
 import moduleAI from '@newfold-labs/wp-module-ai';
 import ResultList from './ResultList';
+import DislikeFeedbackPanel from './DislikeFeedbackPanel';
 import {
 	CapabilityAPI,
 	LocalStorageUtils,
@@ -34,6 +35,8 @@ const HelpCenter = ( props ) => {
 		initComplete: false,
 		errorMsg: '',
 	} );
+
+	const [ disliked, setDisliked ] = useState( false );
 
 	const suggestionsRef = useRef();
 	const resultsContainer = useRef();
@@ -71,7 +74,7 @@ const HelpCenter = ( props ) => {
 				scrollToBottom( wrapper, introRef, resultsContainer );
 			}, 100 );
 		}
-	}, [ state.initComplete, state.visible ] );
+	}, [ state.initComplete, state.visible, disliked ] );
 
 	useEffect( () => {
 		// Always adjust padding if any of these dependencies change
@@ -319,6 +322,7 @@ const HelpCenter = ( props ) => {
 	};
 
 	const handleSubmit = async () => {
+		setDisliked( false );
 		if ( validateInput() ) {
 			await getAIResult();
 		}
@@ -332,21 +336,28 @@ const HelpCenter = ( props ) => {
 			id="helpcenterResultsWrapper"
 			ref={ wrapper }
 		>
-			<HelpCenterIntro introRef={ introRef } />
-			<ResultList
-				{ ...state }
-				wrapper={ wrapper }
-				introRef={ introRef }
-				resultsContainer={ resultsContainer }
-				suggestionsRef={ suggestionsRef }
-				{ ...props }
-			/>
-			{ state.showSuggestions && (
-				<SuggestionList
-					suggestionsRef={ suggestionsRef }
-					multiResults={ state.multiResults }
-					handleSuggestionsClick={ handleSuggestionsClick }
-				/>
+			{ disliked ? (
+				<DislikeFeedbackPanel />
+			) : (
+				<>
+					<HelpCenterIntro introRef={ introRef } />
+					<ResultList
+						{ ...state }
+						wrapper={ wrapper }
+						introRef={ introRef }
+						resultsContainer={ resultsContainer }
+						suggestionsRef={ suggestionsRef }
+						{ ...props }
+						setDisliked={ setDisliked }
+					/>
+					{ state.showSuggestions && (
+						<SuggestionList
+							suggestionsRef={ suggestionsRef }
+							multiResults={ state.multiResults }
+							handleSuggestionsClick={ handleSuggestionsClick }
+						/>
+					) }
+				</>
 			) }
 			<SearchInput
 				searchInput={ state.searchInput }

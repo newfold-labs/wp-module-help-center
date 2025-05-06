@@ -13,6 +13,7 @@ const ResultList = ( {
 	resultContent,
 	resultsContainer,
 	searchInput,
+	setDisliked,
 } ) => {
 	return (
 		<>
@@ -46,6 +47,7 @@ const ResultList = ( {
 							feedbackSubmitted={
 								result.feedbackSubmitted || false
 							}
+							setDisliked={ setDisliked }
 						/>
 					) ) }
 				{ /* Render a placeholder for the loading state if isLoading is true */ }
@@ -66,6 +68,7 @@ const ResultList = ( {
 						searchInput={ searchInput }
 						wrapper={ wrapper }
 						feedbackSubmitted={ false }
+						setDisliked={ setDisliked }
 					/>
 				) }
 				{ noResult && isNewResult && (

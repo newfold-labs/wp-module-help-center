@@ -23,6 +23,7 @@ export const Result = ( {
 	isNewResult,
 	wrapper,
 	feedbackSubmitted,
+	setDisliked,
 } ) => {
 	const isNewEntry =
 		isNewResult && index === LocalStorageUtils.getResultInfo().length - 1;
@@ -90,7 +91,11 @@ export const Result = ( {
 				source={ source }
 			/>
 			{ shouldShowFeedback() && (
-				<ResultFeedback postId={ postId } source={ source } />
+				<ResultFeedback
+					postId={ postId }
+					source={ source }
+					setDisliked={ setDisliked }
+				/>
 			) }
 		</div>
 	);

@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { Analytics, InteractionAPIs, LocalStorageUtils } from '../../utils';
 
-const ResultFeedback = ( { postId, source } ) => {
+const ResultFeedback = ( { postId, source, setDisliked } ) => {
 	const [ status, setStatus ] = useState( '' );
 	const [ hasSubmitted, setHasSubmitted ] = useState( false );
 	const [ showThanksMessage, setShowThanksMessage ] = useState( false );
@@ -44,6 +44,7 @@ const ResultFeedback = ( { postId, source } ) => {
 	}, [ status ] );
 
 	const handleFeedback = ( feedback ) => {
+		if ( feedback === 'notHelpful' ) setDisliked( true );
 		setStatus( feedback );
 		LocalStorageUtils.updateFeedbackStatus( postId );
 	};
@@ -65,7 +66,7 @@ const ResultFeedback = ( { postId, source } ) => {
 						<button
 							ref={ yesButtonRef }
 							onClick={ () => handleFeedback( 'helpful' ) }
-							/>
+						/>
 						<button
 							onClick={ () => handleFeedback( 'notHelpful' ) }
 							ref={ noButtonRef }

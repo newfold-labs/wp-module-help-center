@@ -438,3 +438,25 @@ body:is(.page, .post-php, .post-new-php) {
 		}
 	}
 }
+
+.dislike-feedback {
+	font-size : 11px !important; 
+	margin: 20px;
+	font-weight : 400;
+
+	ul {
+		list-style-type: disc;
+		padding-left: 20px;
+	}
+	
+	a {
+		text-decoration: none;
+		font-weight: 700;
+	}
+	
+	.dislike-feedback-icon {
+		margin: 30px;
+		display: flex;
+		justify-content: center;
+	}
+}
