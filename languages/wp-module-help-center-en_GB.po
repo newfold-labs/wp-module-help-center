@@ -14,11 +14,11 @@ msgstr ""
 "X-Domain: wp-module-help-center\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: includes/CapabilityController.php:75
+#: includes/CapabilityController.php:76
 msgid "We could not find the brand"
 msgstr "We could not find the brand"
 
-#: includes/CapabilityController.php:92
+#: includes/CapabilityController.php:93
 #: includes/MultiSearchController.php:128
 #: includes/UserInteractionController.php:81
 msgid "You must be authenticated to make this call"
