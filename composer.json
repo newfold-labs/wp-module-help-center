@@ -20,7 +20,7 @@
   ],
   "require-dev": {
     "newfold-labs/wp-php-standards": "@stable",
-    "wp-cli/i18n-command": "^2.6.3"
+    "wp-cli/i18n-command": "^2.6.5"
   },
   "require": {
     "newfold-labs/wp-module-ai": "^1.2.1",
