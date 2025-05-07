@@ -8,22 +8,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2025-02-13T09:55:55+00:00\n"
-"PO-Revision-Date: 2025-02-19 16:04\n"
+"PO-Revision-Date: 2025-04-25 14:32+0100\n"
 "Language: es_ES\n"
-"X-Generator: WP-CLI 2.11.0\n"
-"X-Domain: wp-module-help-center\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.6\n"
+"X-Domain: wp-module-help-center\n"
 "X-Crowdin-Project: newfold-labswp-module-staging\n"
 "X-Crowdin-Project-ID: 764889\n"
 "X-Crowdin-Language: es-ES\n"
 "X-Crowdin-File: wp-module-help-center.pot\n"
 "X-Crowdin-File-ID: 44\n"
 
-#: includes/CapabilityController.php:75
+#: includes/CapabilityController.php:76
 msgid "We could not find the brand"
 msgstr "No pudimos encontrar la marca"
 
-#: includes/CapabilityController.php:92
+#: includes/CapabilityController.php:93
 #: includes/MultiSearchController.php:128
 #: includes/UserInteractionController.php:81
 msgid "You must be authenticated to make this call"
@@ -35,7 +35,7 @@ msgstr "Ayuda"
 
 #: build/index.js:1
 msgid "Did this result help you?"
-msgstr "¿Te ha ayudado este resultado?"
+msgstr "¿Te ha sido útil este resultado?"
 
 #: build/index.js:1
 msgid "Yes"
@@ -43,15 +43,15 @@ msgstr "Sí"
 
 #: build/index.js:1
 msgid "No"
-msgstr "Nu"
+msgstr "No"
 
 #: build/index.js:1
 msgid "Thanks for the feedback!"
-msgstr "¡Gracias por sus comentarios!"
+msgstr "¡Gracias por tus comentarios!"
 
 #: build/index.js:1
 msgid "You can try searching our <a href=\"{link}\">Resource center.</a> though to see if there’s a helpful article or video on that subject."
-msgstr "Puedes intentar buscar en nuestro centro <a href=\"{link}\">Recursos.</a> aunque para ver si hay un artículo o vídeo útil sobre este tema."
+msgstr "Puedes intentar buscar en nuestro <a href=\"{link}\">centro de recursos.</a> para ver si hay un artículo o vídeo útil sobre este tema."
 
 #: build/index.js:1
 msgid "Sorry, I don’t have any information on that topic yet."
@@ -67,7 +67,7 @@ msgstr "Buscar Centro de Ayuda"
 
 #: build/index.js:1
 msgid "Ask about WordPress"
-msgstr "Preguntar sobre WordPress"
+msgstr "Pregunta sobre WordPress"
 
 #: build/index.js:1
 msgid "submit text"
@@ -79,11 +79,11 @@ msgstr "Temas comunes"
 
 #: build/index.js:1
 msgid "Please enter a specific search term to get results."
-msgstr "Por favor, introduzca un término de búsqueda específico para obtener resultados."
+msgstr "Por favor, introduce un término de búsqueda específico para obtener resultados."
 
 #: build/index.js:1
 msgid "Account Support"
-msgstr "Soporte de Cuenta"
+msgstr "Soporte de cuenta"
 
 #: build/index.js:1
 msgid "If you need help with your Bluehost account, contact our support team:"
@@ -91,7 +91,7 @@ msgstr "Si necesitas ayuda con tu cuenta Bluehost, contacta con nuestro equipo d
 
 #: build/index.js:1
 msgid "Chat with support"
-msgstr "Chatear con soporte"
+msgstr "Chatea con soporte"
 
 #: build/index.js:1
 msgid "Help with WordPress"
@@ -99,4 +99,12 @@ msgstr "Ayuda con WordPress"
 
 #: build/index.js:1
 msgid "Close Help Modal"
-msgstr "Cerrar módulo de ayuda"
+msgstr "Cerrar ventana de ayuda"
+
+#: includes/MultiSearchController.php:107
+msgid "The request failed"
+msgstr "La solicitud falló"
+
+#: includes/MultiSearchController.php:113
+msgid "No data found"
+msgstr "No se encontraron datos"

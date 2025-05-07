@@ -75,7 +75,7 @@ class UserInteractionController extends \WP_REST_Controller {
 	 * @return \WP_Error|boolean
 	 */
 	public function check_permission() {
-		if ( ! current_user_can('read') ) {
+		if ( ! current_user_can( 'read' ) ) {
 			return new \WP_Error(
 				'rest_forbidden',
 				__( 'You must be authenticated to make this call', 'wp-module-help-center' ),

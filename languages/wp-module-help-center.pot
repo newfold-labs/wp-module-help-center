@@ -12,11 +12,11 @@ msgstr ""
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wp-module-help-center\n"
 
-#: includes/CapabilityController.php:75
+#: includes/CapabilityController.php:76
 msgid "We could not find the brand"
 msgstr ""
 
-#: includes/CapabilityController.php:92
+#: includes/CapabilityController.php:93
 #: includes/MultiSearchController.php:128
 #: includes/UserInteractionController.php:81
 msgid "You must be authenticated to make this call"
@@ -24,6 +24,14 @@ msgstr ""
 
 #: includes/HelpCenter.php:133
 msgid "Help"
+msgstr ""
+
+#: includes/MultiSearchController.php:107
+msgid "The request failed"
+msgstr ""
+
+#: includes/MultiSearchController.php:113
+msgid "No data found"
 msgstr ""
 
 #: build/index.js:1
