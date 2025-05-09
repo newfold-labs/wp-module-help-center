@@ -217,8 +217,10 @@ export function getResultMatches( query, tokensMatched, fieldsMatched ) {
 	return fieldsMatched >= 1 && tokensPerQuery >= 0.99;
 }
 
-export function scrollToBottom( wrapperRef, introRef, resultsContainerRef ) {
-	if ( ! wrapperRef?.current ) return;
+export function scrollToBottom( wrapperRef, resultsContainerRef ) {
+	if ( ! wrapperRef?.current ) {
+		return;
+	}
 	const scrollDistance = wrapperRef.current.scrollHeight;
 
 	wrapperRef.current.scrollBy( {
@@ -228,9 +230,6 @@ export function scrollToBottom( wrapperRef, introRef, resultsContainerRef ) {
 	} );
 
 	setTimeout( () => {
-		if ( introRef?.current ) {
-			introRef.current.style.visibility = 'visible';
-		}
 		if ( resultsContainerRef?.current ) {
 			resultsContainerRef.current.style.visibility = 'visible';
 		}
