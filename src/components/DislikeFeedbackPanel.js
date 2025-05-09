@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { ReactComponent as DislikeFeedback } from '../icons/dislike-help.svg';
 import { __ } from '@wordpress/i18n';
 
@@ -18,15 +17,22 @@ const DislikeFeedbackPanel = () => {
 				<ul>
 					<li>
 						{ __(
-							'Use different keywords in the search field. A clear, short prompt can make the difference.',
+							`Use different keywords in the search field.`,
+							'wp-module-help-center'
+						) }
+						<br />
+						{ __(
+							`A clear, short prompt can make the difference.`,
 							'wp-module-help-center'
 						) }
 					</li>
 					<li>
 						{ __(
-							'Reach out to our customer support. Call at ',
+							'Reach out to our customer support.',
 							'wp-module-help-center'
 						) }
+						<br />
+						{ __( 'Call at ', 'wp-module-help-center' ) }
 						<span>
 							<a href="#">888-401-4678</a>
 						</span>

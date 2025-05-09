@@ -1,6 +1,8 @@
 import { useEffect, useState, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { Analytics, InteractionAPIs, LocalStorageUtils } from '../../utils';
+import { ReactComponent as ThumbsUp } from '../../icons/thumb-up.svg';
+import { ReactComponent as ThumbsDown } from '../../icons/thumb-down.svg';
 
 const ResultFeedback = ( { postId, source, setDisliked } ) => {
 	const [ status, setStatus ] = useState( '' );
@@ -66,11 +68,15 @@ const ResultFeedback = ( { postId, source, setDisliked } ) => {
 						<button
 							ref={ yesButtonRef }
 							onClick={ () => handleFeedback( 'helpful' ) }
-						/>
+						>
+							<ThumbsUp />
+						</button>
 						<button
 							onClick={ () => handleFeedback( 'notHelpful' ) }
 							ref={ noButtonRef }
-						/>
+						>
+							<ThumbsDown />
+						</button>
 					</div>
 				</>
 			) }
