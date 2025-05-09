@@ -1,16 +1,14 @@
 import { __ } from '@wordpress/i18n';
 import { ReactComponent as LaptopIcon } from '../icons/figure-using-laptop.svg';
-import { ReactComponent as PhoneIcon } from '../icons/phone.svg';
-import { ReactComponent as ChatIcon } from '../icons/chat-bubble.svg';
 
 const Footer = () => {
 	return (
 		<div className="nfd-hc-modal__footer">
+			<div className="nfd-hc-modal__footer__breakline">
+				<hr />
+			</div>
 			<div className="helpcenter-supportinfo__wrapper">
-				<div className="breakline">
-					<hr />
-				</div>
-				<div>
+				<div className="helpcenter-supportinfo__text">
 					<p>{ __( 'Account Support', 'wp-module-help-center' ) }</p>
 					<p>
 						{ __(
@@ -20,7 +18,7 @@ const Footer = () => {
 						<span>
 							<a href="tel:8884014678">888-401-4678</a>
 						</span>
-						{ __( ' or ', 'wp-module-help-center' ) }
+						{ __( 'or', 'wp-module-help-center' ) }
 						<span>
 							<a href="https://www.bluehost.com/contact">
 								Chat Live
@@ -32,33 +30,32 @@ const Footer = () => {
 						) }
 					</p>
 				</div>
-				<div className="square">
-					<div className="footer-text">
-						<p>
-							{ __(
-								`Your dream site is just a click away.`,
-								'wp-module-help-center'
-							) }
-						</p>
-						<p>
-							{ __(
-								`Let's build a site you love, together.`,
-								'wp-module-help-center'
-							) }
-						</p>
-						<p>
-							{ __(
-								'With Pro Design Live, our expert team bring your vision to life. We help you to create and the site you’ve always dreamed of — tailored to your goals, ready to perform.',
-								'wp-module-help-center'
-							) }
-						</p>
-						<div className="startbutton">
-							<button>
-								{ __( 'Start Now', 'wp-module-help-center' ) }
-							</button>
-							<div className="LaptopIcon">
-								<LaptopIcon />
-							</div>
+			</div>
+			<div className="square">
+				<div className="footer-text">
+					<p className="footer-text__heading">
+						{ __(
+							`Your dream site is just a click away.`,
+							'wp-module-help-center'
+						) }
+						<br />
+						{ __(
+							`Let's build a site you love, together.`,
+							'wp-module-help-center'
+						) }
+					</p>
+					<p className="footer-text__body">
+						{ __(
+							'With Pro Design Live, our expert team bring your vision to life. We help you to create and the site you’ve always dreamed of — tailored to your goals, ready to perform.',
+							'wp-module-help-center'
+						) }
+					</p>
+					<div className="startbutton">
+						<button className="cta-pro-design">
+							{ __( 'Start Now', 'wp-module-help-center' ) }
+						</button>
+						<div className="LaptopIcon">
+							<LaptopIcon />
 						</div>
 					</div>
 				</div>
