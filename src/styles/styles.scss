@@ -199,6 +199,10 @@ $blue-night-sky: #7a889d;
     justify-content: space-between;
     padding: 15px 12px;
 
+    .feedback-question {
+      font-weight: 500;
+    }
+
     .feedback-button {
       width: 29px;
       height: 29px;
@@ -212,6 +216,11 @@ $blue-night-sky: #7a889d;
       .feedback-button-emoji {
         margin-right: 5px;
       }
+
+      :hover{
+          filter: brightness(1.05);
+          transition: filter 0.3s linear;
+      }
     }
 
     .button-icon {
@@ -220,30 +229,11 @@ $blue-night-sky: #7a889d;
       margin-right: 4px;
     }
 
-    .yes {
-      margin: 0 6px;
-    }
-
-    .no {
-      margin: 0 6px;
-    }
-
-    .selected-yes {
-      background: $feedback-bg;
-      padding-bottom: 4.4px;
-      padding-top: 5.8px;
-    }
-
-    .selected-no {
-      background-color: $feedback-negative;
-      padding-bottom: 4.4px;
-      padding-top: 5.8px;
-    }
-
     .icon {
       cursor: pointer;
       display: flex;
       align-items: center;
+      gap: 8px;
     }
   }
 
@@ -446,7 +436,7 @@ body:is(.page, .post-php, .post-new-php) {
   a {
     font-size: 13px !important;
     text-decoration: none;
-    font-weight: 590;
+    font-weight: 500;
     color: #356cd8 !important;
   }
 
