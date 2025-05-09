@@ -43,7 +43,6 @@ const HelpCenter = ( props ) => {
 
 	useEffect( () => {
 		getHelpStatus();
-		fetchInitialData();
 
 		// Add event listener for localStorage changes
 		const updateVisibility = () => {
@@ -65,12 +64,18 @@ const HelpCenter = ( props ) => {
 
 	useEffect( () => {
 		// If the wrapper is visible or we’ve just finished init, scroll
-		if ( state.initComplete || state.visible ) {
+		if ( state.initComplete ) {
 			setTimeout( () => {
 				scrollToBottom( wrapper, resultsContainer );
 			}, 100 );
 		}
-	}, [ state.initComplete, state.visible ] );
+	}, [ state.initComplete ] );
+
+	useEffect( () => {
+		if ( state.visible ) {
+			fetchInitialData();
+		}
+	}, [ state.visible ] );
 
 	useEffect( () => {
 		// Always adjust padding if any of these dependencies change
