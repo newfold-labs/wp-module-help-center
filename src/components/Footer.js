@@ -18,11 +18,13 @@ const Footer = () => {
 							'wp-module-help-center'
 						) }
 						<span>
-							<a href="#">888-401-4678</a>
+							<a href="tel:8884014678">888-401-4678</a>
 						</span>
 						{ __( ' or ', 'wp-module-help-center' ) }
 						<span>
-							<a href="#">Chat Live</a>
+							<a href="https://www.bluehost.com/contact">
+								Chat Live
+							</a>
 						</span>
 						{ __(
 							` with one of our support agents — we're here for you!`,
@@ -50,70 +52,19 @@ const Footer = () => {
 								'wp-module-help-center'
 							) }
 						</p>
-					</div>
-					<div className="startbutton">
-						<button>
-							{ __( 'Start Now', 'wp-module-help-center' ) }
-						</button>
-						<LaptopIcon />
+						<div className="startbutton">
+							<button>
+								{ __( 'Start Now', 'wp-module-help-center' ) }
+							</button>
+							<div className="LaptopIcon">
+								<LaptopIcon />
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	);
 };
-// function Footer() {
-// 	return (
-// 		<div className="nfd-hc-modal__footer">
-// 			<div className="helpcenter-supportinfo__wrapper">
-// 				<div>
-// 					<h4>
-// 						{ __( 'Account Support', 'wp-module-help-center' ) }
-// 					</h4>
-// 					<div className="helpcenter-supportinfo__text">
-// 						{ __(
-// 							'If you need help with your Bluehost account, contact our support team:',
-// 							'wp-module-help-center'
-// 						) }
-// 					</div>
-// 					<div className="helpcenter-supportinfo__telephone">
-// 						<span>
-// 							<PhoneIcon />
-// 						</span>
-// 						<span>
-// 							<a
-// 								href="tel:8884014678"
-// 								aria-label="Call 888-401-4678"
-// 							>
-// 								888-401-4678
-// 							</a>
-// 						</span>
-// 					</div>
-// 					<div className="helpcenter-supportinfo__chat">
-// 						<span>
-// 							<ChatIcon />
-// 						</span>
-// 						<span>
-// 							<a
-// 								href="https://www.bluehost.com/contact"
-// 								aria-label={ __(
-// 									'Chat with support',
-// 									'wp-module-help-center'
-// 								) }
-// 								target="_blank"
-// 								rel="noreferrer"
-// 							>
-// 								{ __(
-// 									'Chat with support',
-// 									'wp-module-help-center'
-// 								) }
-// 							</a>
-// 						</span>
-// 					</div>
-// 				</div>
-// 			</div>
-// 		</div>
-// 	);
-// }
 
 export default Footer;

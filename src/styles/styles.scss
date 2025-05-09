@@ -25,7 +25,7 @@ $blue-night-sky: #7a889d;
 
 .nfd-help-center {
   position: relative;
-  height: calc(100vh - 332px);
+  height: calc(100vh - 470px);
   overflow-y: auto;
   z-index: 10;
 
@@ -81,7 +81,7 @@ $blue-night-sky: #7a889d;
     border-top: 1px solid #e2e8f0;
     height: 254px;
     position: fixed;
-    bottom: 0;
+    bottom: calc(100vh - 650px);
     width: 356px;
     background: $white;
     z-index: 1;
@@ -402,64 +402,83 @@ body:is(.page, .post-php, .post-new-php) {
 
 .nfd-hc-modal__footer {
   position: absolute;
+  bottom: 10;
+  right: 0;
   z-index: 10;
+  background-color: #f3f7fa;
 
   .helpcenter-supportinfo__wrapper {
     // padding: 8px 12px 8px 12px;
-    margin: 15px;
+    margin:  0 15px;
 
     .breakline {
+      padding: 10px 0;
       border: none;
       color: #e7e7e7;
     }
 
     > div > p:first-of-type {
-      font-size: 12px;
+      padding-bottom: 4px;
+      font-size: 13px;
       font-weight: 510;
     }
 
     p {
-      font-size: 11px;
+      font-size: 13px;
       font-weight: 400;
+      margin: 0;
+    }
+
+    a {
+      text-decoration: none;
+      color: #356cd8 !important;
     }
 
     .square {
-      margin: -20px;
+      margin: -15px;
+      margin-top: 10px;
       background-image: url('../icons/eclipse.png');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      margin-bottom: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
 
       .footer-text {
-        margin: 30px;
+        margin: 0 15px;
+        margin-top: 30px;
 
         > p:nth-of-type(1),
         > p:nth-of-type(2) {
-          font-size: 11px;
+          font-size: 13px;
           font-weight: 590;
-          line-height: 90%;
+        }
+        > p:nth-of-type(2) {
+          padding-bottom: 20px;
         }
       }
 
       .startbutton {
+        padding-top: 10px;
         display: flex;
         justify-content: space-between;
-        margin: 20px;
+        width: calc(100% - 15px);
 
-        button {
-					height: 30px;
-					letter-spacing: 0%;
-          background-color: #121212;
-          color: white;
-          border-radius: 5px;
-          border: none;
-          padding: 0px 20px;
+        .LaptopIcon {
+          width: 50px;
         }
 
-        img {
-          width: 50px;
-          height: 50px;
+        button {
+          height: 40px;
+          letter-spacing: 0%;
+          background-color: #121212;
+          color: white;
+          border-radius: 8px;
+          border: none;
+          padding: 0px 20px;
+          font-weight: 700;
         }
       }
     }
