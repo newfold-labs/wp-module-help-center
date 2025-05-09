@@ -1,5 +1,5 @@
 /* stylelint-disable selector-class-pattern */
-@use "./modal";
+@use './modal';
 
 $blue: #196bde;
 $white: #fff;
@@ -17,7 +17,6 @@ $gray-text: #394150;
 $blue-night-sky: #7a889d;
 
 #nfd-help-center {
-
   * {
     box-sizing: border-box;
   }
@@ -25,7 +24,7 @@ $blue-night-sky: #7a889d;
 
 .nfd-help-center {
   position: relative;
-  height: calc(100vh - 470px);
+  height: calc(100vh - 450px);
   overflow-y: auto;
   z-index: 10;
 
@@ -33,7 +32,7 @@ $blue-night-sky: #7a889d;
     font-size: 14px;
 
     br {
-			content: "";
+      content: '';
       display: block;
       margin-bottom: 5px; /* Adjust this value as per your requirements */
     }
@@ -196,7 +195,6 @@ $blue-night-sky: #7a889d;
   }
 
   .feedback-container {
-
     display: flex;
     justify-content: space-between;
     padding: 15px 12px;
@@ -256,7 +254,6 @@ $blue-night-sky: #7a889d;
   }
 
   .hc-results-container {
-
     .helpcenter-results {
       padding: 0 12px;
     }
@@ -320,9 +317,7 @@ $blue-night-sky: #7a889d;
 }
 
 .toplevel_page_bluehost {
-
   @media screen and (min-width: 1814px) {
-
     .wpcontent-container {
       display: flex;
 
@@ -342,18 +337,14 @@ $blue-night-sky: #7a889d;
 }
 
 body:is(.page, .post-php, .post-new-php) {
-
   #wp-admin-bar-help-center {
     display: none;
   }
 }
 
 .mobile {
-
   #wpadminbar {
-
     ul#wp-admin-bar-root-default {
-
       li {
         width: 40px !important;
       }
@@ -380,7 +371,6 @@ body:is(.page, .post-php, .post-new-php) {
 }
 
 @keyframes blip {
-
   0% {
     opacity: 1;
   }
@@ -408,9 +398,6 @@ body:is(.page, .post-php, .post-new-php) {
   background-color: #f3f7fa;
 
   .helpcenter-supportinfo__wrapper {
-    // padding: 8px 12px 8px 12px;
-    margin:  0 15px;
-
     .breakline {
       padding: 10px 0;
       border: none;
@@ -418,12 +405,14 @@ body:is(.page, .post-php, .post-new-php) {
     }
 
     > div > p:first-of-type {
+      padding: 0 15px;
       padding-bottom: 4px;
       font-size: 13px;
       font-weight: 510;
     }
 
     p {
+      padding: 0 15px;
       font-size: 13px;
       font-weight: 400;
       margin: 0;
@@ -435,8 +424,7 @@ body:is(.page, .post-php, .post-new-php) {
     }
 
     .square {
-      margin: -15px;
-      margin-top: 10px;
+      padding-top: 10px;
       background-image: url('../icons/eclipse.png');
       background-size: cover;
       background-position: center;
@@ -447,8 +435,7 @@ body:is(.page, .post-php, .post-new-php) {
       align-items: center;
 
       .footer-text {
-        margin: 0 15px;
-        margin-top: 30px;
+        padding-top: 20px;
 
         > p:nth-of-type(1),
         > p:nth-of-type(2) {
@@ -461,6 +448,7 @@ body:is(.page, .post-php, .post-new-php) {
       }
 
       .startbutton {
+        padding: 0 15px;
         padding-top: 10px;
         display: flex;
         justify-content: space-between;
