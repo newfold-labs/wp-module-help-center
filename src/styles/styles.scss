@@ -382,6 +382,35 @@ body:is(.page, .post-php, .post-new-php) {
   margin: 5px 0 0 0;
 }
 
+.dislike-feedback {
+  font-size: 13px !important;
+  margin: 20px;
+  font-weight: 400;
+
+  p {
+    font-size: 13px !important;
+    font-weight: 700;
+  }
+
+  ul {
+    list-style-type: disc;
+    padding-left: 20px;
+  }
+
+  a {
+    font-size: 13px !important;
+    text-decoration: none;
+    font-weight: 500;
+    color: #356cd8 !important;
+  }
+
+  .dislike-feedback-icon {
+    margin: 30px;
+    display: flex;
+    justify-content: center;
+  }
+}
+
 .nfd-hc-modal__footer {
 
   position: fixed;
@@ -452,35 +481,6 @@ body:is(.page, .post-php, .post-new-php) {
           color: #196cdf;
         }
       }
-    }
-  }
-
-  .dislike-feedback {
-    font-size: 13px !important;
-    margin: 20px;
-    font-weight: 400;
-  
-    p {
-      font-size: 13px !important;
-      font-weight: 700;
-    }
-  
-    ul {
-      list-style-type: disc;
-      padding-left: 20px;
-    }
-  
-    a {
-      font-size: 13px !important;
-      text-decoration: none;
-      font-weight: 500;
-      color: #356cd8 !important;
-    }
-  
-    .dislike-feedback-icon {
-      margin: 30px;
-      display: flex;
-      justify-content: center;
     }
   }
 
