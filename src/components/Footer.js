@@ -26,9 +26,9 @@ const Footer = () => {
 					</p>
 				</div>
 			</div>
-			<div className="square">
-				<div className="footer-text">
-					<p className="footer-text__heading">
+			<div className="hc-banner">
+				<div className="hc-banner-content">
+					<p className="hc-banner-content__heading">
 						{ __(
 							`Your dream site is just a click away.`,
 							'wp-module-help-center'
@@ -39,22 +39,22 @@ const Footer = () => {
 							'wp-module-help-center'
 						) }
 					</p>
-					<p className="footer-text__body">
+					<p className="hc-banner-content__body">
 						{ __(
 							'With Pro Design Live, our expert team bring your vision to life. We help you to create and the site you’ve always dreamed of — tailored to your goals, ready to perform.',
 							'wp-module-help-center'
 						) }
 					</p>
-					<div className="startbutton">
+					<div className="hc-banner-content__cta">
 						<a
 							role="button"
 							href="https://www.bluehost.com/solutions/website-design?utm_source=wp-admin%2Findex.php&utm_medium=bluehost_plugin&channelid=P99C100S1N0B3003A151D115E0000V111"
-							className="cta-pro-design"
+							className="hc-banner-content__cta--button"
 						>
 							{ __( 'Start Now', 'wp-module-help-center' ) }
 						</a>
 					</div>
-					<div className="LaptopIcon">
+					<div className="hc-banner-content__LaptopIcon">
 						<LaptopIcon />
 					</div>
 				</div>

@@ -495,7 +495,7 @@ body:is(.page, .post-php, .post-new-php) {
     justify-content: center;
     align-items: center;
 
-    .footer-text {
+    .hc-banner-content {
       position: relative;
       padding-top: 18px;
 
@@ -511,10 +511,10 @@ body:is(.page, .post-php, .post-new-php) {
         margin: 0 0 15px 0;
       }
 
-      .startbutton {
+      &__cta {
         display: flex;
 
-        .cta-pro-design {
+        &--button {
           height: 30px;
           letter-spacing: 0;
           font-size: 12px;
@@ -529,7 +529,7 @@ body:is(.page, .post-php, .post-new-php) {
         }
       }
 
-      .LaptopIcon {
+      &__LaptopIcon {
         position: absolute;
         bottom: -20px;
         right: -15px;

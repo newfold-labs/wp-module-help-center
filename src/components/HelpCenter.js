@@ -65,7 +65,11 @@ const HelpCenter = ( props ) => {
 	}, [] );
 
 	useEffect( () => {
-		updateLayoutAndScroll();
+		checkFooterVisibility();
+		if ( state.initComplete ) {
+			adjustPadding( wrapper, suggestionsRef, state.showSuggestions );
+			scrollToBottom( wrapper, resultsContainer );
+		}
 		// If the wrapper is visible or we’ve just finished init, scroll
 	}, [ state.initComplete, state.disliked ] );
 
@@ -76,8 +80,10 @@ const HelpCenter = ( props ) => {
 				disliked: false,
 			} ) );
 			fetchInitialData();
+			checkFooterVisibility();
+			adjustPadding( wrapper, suggestionsRef, state.showSuggestions );
 			setTimeout( () => {
-				updateLayoutAndScroll();
+				scrollToBottom( wrapper, resultsContainer );
 			}, 500 );
 		}
 	}, [ state.visible ] );
@@ -91,12 +97,6 @@ const HelpCenter = ( props ) => {
 		props.setIsFooterVisible(
 			LocalStorageUtils.getResultInfo()?.length < 1 || state.disliked
 		);
-
-	const updateLayoutAndScroll = () => {
-		checkFooterVisibility();
-		adjustPadding( wrapper, suggestionsRef, state.showSuggestions );
-		scrollToBottom( wrapper, resultsContainer );
-	};
 
 	const getHelpStatus = async () => {
 		try {
