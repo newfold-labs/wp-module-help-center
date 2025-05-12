@@ -73,6 +73,7 @@ const HelpCenter = ( props ) => {
 
 	useEffect( () => {
 		if ( state.visible ) {
+			checkFooterVisibility();
 			fetchInitialData();
 		}
 	}, [ state.visible ] );
@@ -81,6 +82,27 @@ const HelpCenter = ( props ) => {
 		// Always adjust padding if any of these dependencies change
 		adjustPadding( wrapper, suggestionsRef, state.showSuggestions );
 	}, [ state.showSuggestions ] );
+
+	const checkFooterVisibility = () => {
+		if ( LocalStorageUtils.getResultInfo()?.length < 1 ) {
+			props.setIsFooterVisible( true );
+			const inputField = document.getElementById(
+				'nfdHelpcenterInputWrapper'
+			);
+			if ( inputField ) {
+				inputField.style.bottom = '340px';
+			}
+		} else {
+			debugger;
+			props.setIsFooterVisible( false );
+			const inputField = document.getElementById(
+				'nfdHelpcenterInputWrapper'
+			);
+			if ( inputField ) {
+				inputField.style.bottom = '0';
+			}
+		}
+	};
 
 	const getHelpStatus = async () => {
 		try {
@@ -133,6 +155,9 @@ const HelpCenter = ( props ) => {
 				search_source: searchSource,
 			} );
 		}
+		setTimeout( () => {
+			checkFooterVisibility();
+		}, 1000 );
 	};
 
 	const debouncedResults = useMemo( () => {

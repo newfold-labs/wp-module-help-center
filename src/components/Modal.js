@@ -1,14 +1,18 @@
-import { useEffect } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { ReactComponent as CloseIcon } from '../icons/close.svg';
 import { ReactComponent as Help } from '../icons/helpcenter-icon.svg';
-import HelpCenter from './HelpCenter';
 import Footer from './Footer';
+import HelpCenter from './HelpCenter';
 
 import { toggleHelp } from '..';
 import { LocalStorageUtils } from '../utils';
 
 const Modal = ( { onClose } ) => {
+	const [ isFooterVisible, setIsFooterVisible ] = useState(
+		LocalStorageUtils.getResultInfo()?.length < 1
+	);
+
 	useEffect( () => {
 		const helpVisible = window.newfoldHelpCenter?.closeOnLoad
 			? false
@@ -54,9 +58,12 @@ const Modal = ( { onClose } ) => {
 				id="helpcenter-modal-description"
 				className="nfd-hc-modal__content"
 			>
-				<HelpCenter />
+				<HelpCenter
+					isFooterVisible={ isFooterVisible }
+					setIsFooterVisible={ setIsFooterVisible }
+				/>
 			</div>
-			<Footer />
+			{ isFooterVisible && <Footer /> }
 		</div>
 	);
 };

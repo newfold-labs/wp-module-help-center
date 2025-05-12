@@ -79,10 +79,10 @@ $blue-night-sky: #7a889d;
 
   .helpcenter-input-wrapper {
     position: fixed;
-    bottom: 340px;
     width: 356px;
     background: #f3f7fa;
     z-index: 12;
+    bottom: 0;
 
     .search-container__wrapper {
       padding: 0 12px 12px 12px;
@@ -159,7 +159,7 @@ $blue-night-sky: #7a889d;
     padding: 0 12px;
     position: fixed;
     width: 356px;
-    bottom: 254px;
+    bottom: 100px;
     background: $white;
 
     .algolia-result {
