@@ -1,110 +1,105 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: newfold-labswp-module-staging\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/newfold-labs/wp-module-help-center/issues\n"
-"Last-Translator: \n"
-"Language-Team: French\n"
+"Last-Translator: Carlos Rodriguez <carlos.rodriguez@newfold.com>\n"
+"Language-Team: Spanish <es@tp.org.es>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2025-02-13T09:55:55+00:00\n"
-"PO-Revision-Date: 2025-02-19 16:04\n"
-"Language: fr_FR\n"
+"PO-Revision-Date: 2025-05-07 16:21+0100\n"
+"Language: es_MX\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wp-module-help-center\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Crowdin-Project: newfold-labswp-module-staging\n"
-"X-Crowdin-Project-ID: 764889\n"
-"X-Crowdin-Language: fr\n"
-"X-Crowdin-File: wp-module-help-center.pot\n"
-"X-Crowdin-File-ID: 44\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: includes/CapabilityController.php:76
 msgid "We could not find the brand"
-msgstr "Nous n'avons pas pu trouver la marque"
+msgstr "No pudimos encontrar la marca"
 
 #: includes/CapabilityController.php:93
 #: includes/MultiSearchController.php:128
 #: includes/UserInteractionController.php:81
 msgid "You must be authenticated to make this call"
-msgstr "Vous devez être authentifié pour passer cet appel"
+msgstr "Debes estar autenticado para realizar esta acción"
 
 #: includes/HelpCenter.php:133
 msgid "Help"
-msgstr "Aide"
-
-#: build/index.js:1
-msgid "Did this result help you?"
-msgstr "Ce résultat vous a-t-il aidé?"
-
-#: build/index.js:1
-msgid "Yes"
-msgstr "Oui"
-
-#: build/index.js:1
-msgid "No"
-msgstr "Non"
-
-#: build/index.js:1
-msgid "Thanks for the feedback!"
-msgstr "Merci pour vos commentaires!"
-
-#: build/index.js:1
-msgid "You can try searching our <a href=\"{link}\">Resource center.</a> though to see if there’s a helpful article or video on that subject."
-msgstr "Vous pouvez essayer de rechercher dans notre <a href=\"{link}\">Centre de ressources.</a> pour voir s'il y a un article ou une vidéo utile sur ce sujet."
-
-#: build/index.js:1
-msgid "Sorry, I don’t have any information on that topic yet."
-msgstr "Désolé, je n’ai pas encore d’informations sur ce sujet."
-
-#: build/index.js:1
-msgid "Hi! I’m your WordPress AI assistant. </br></br> Ask me how to do things in WordPress and I’ll provide step by step instructions.</br></br> I’m still learning so I don’t have all the answers just yet."
-msgstr "Bonjour ! Je suis votre assistant IA WordPress. </br></br> Demandez-moi comment faire des choses dans WordPress et je vais fournir des instructions étape par étape.</br></br> Je suis toujours en train d’apprendre pour que je n’aie pas encore toutes les réponses."
-
-#: build/index.js:1
-msgid "Search Help Center"
-msgstr "Centre d'aide à la recherche"
-
-#: build/index.js:1
-msgid "Ask about WordPress"
-msgstr "Demander à propos de WordPress"
-
-#: build/index.js:1
-msgid "submit text"
-msgstr "envoyer le texte"
-
-#: build/index.js:1
-msgid "Common Topics"
-msgstr "Sujets communs"
-
-#: build/index.js:1
-msgid "Please enter a specific search term to get results."
-msgstr "Veuillez entrer un terme de recherche spécifique pour obtenir des résultats."
-
-#: build/index.js:1
-msgid "Account Support"
-msgstr "Support du compte"
-
-#: build/index.js:1
-msgid "If you need help with your Bluehost account, contact our support team:"
-msgstr "Si vous avez besoin d’aide avec votre compte Bluehost, contactez notre équipe d’assistance :"
-
-#: build/index.js:1
-msgid "Chat with support"
-msgstr "Discuter avec le support"
-
-#: build/index.js:1
-msgid "Help with WordPress"
-msgstr "Aide sur WordPress"
-
-#: build/index.js:1
-msgid "Close Help Modal"
-msgstr "Fermer la fenêtre d'aide"
+msgstr "Ayuda"
 
 #: includes/MultiSearchController.php:107
 msgid "The request failed"
-msgstr ""
+msgstr "La solicitud falló"
 
 #: includes/MultiSearchController.php:113
 msgid "No data found"
-msgstr ""
+msgstr "No se encontraron datos"
+
+#: build/index.js:1
+msgid "Did this result help you?"
+msgstr "¿Este resultado te fue útil?"
+
+#: build/index.js:1
+msgid "Yes"
+msgstr "Sí"
+
+#: build/index.js:1
+msgid "No"
+msgstr "No"
+
+#: build/index.js:1
+msgid "Thanks for the feedback!"
+msgstr "¡Gracias por tus comentarios!"
+
+#: build/index.js:1
+msgid "You can try searching our <a href=\"{link}\">Resource center.</a> though to see if there’s a helpful article or video on that subject."
+msgstr "Puedes intentar buscar en nuestro <a href=\"{link}\">Centro de recursos</a> para ver si hay un artículo o video útil sobre ese tema."
+
+#: build/index.js:1
+msgid "Sorry, I don’t have any information on that topic yet."
+msgstr "Lo siento, aún no tengo información sobre ese tema."
+
+#: build/index.js:1
+msgid "Hi! I’m your WordPress AI assistant. </br></br> Ask me how to do things in WordPress and I’ll provide step by step instructions.</br></br> I’m still learning so I don’t have all the answers just yet."
+msgstr "¡Hola! Soy tu asistente de IA de WordPress. </br></br> Pregúntame cómo hacer cosas en WordPress y te daré instrucciones paso a paso.</br></br> Aún estoy aprendiendo, así que todavía no tengo todas las respuestas."
+
+#: build/index.js:1
+msgid "Search Help Center"
+msgstr "Buscar en el Centro de ayuda"
+
+#: build/index.js:1
+msgid "Ask about WordPress"
+msgstr "Pregunta sobre WordPress"
+
+#: build/index.js:1
+msgid "submit text"
+msgstr "enviar texto"
+
+#: build/index.js:1
+msgid "Common Topics"
+msgstr "Temas comunes"
+
+#: build/index.js:1
+msgid "Please enter a specific search term to get results."
+msgstr "Por favor, ingresa un término de búsqueda específico para obtener resultados."
+
+#: build/index.js:1
+msgid "Account Support"
+msgstr "Soporte de cuenta"
+
+#: build/index.js:1
+msgid "If you need help with your Bluehost account, contact our support team:"
+msgstr "Si necesitas ayuda con tu cuenta de Bluehost, contacta a nuestro equipo de soporte:"
+
+#: build/index.js:1
+msgid "Chat with support"
+msgstr "Chatear con soporte"
+
+#: build/index.js:1
+msgid "Help with WordPress"
+msgstr "Ayuda con WordPress"
+
+#: build/index.js:1
+msgid "Close Help Modal"
+msgstr "Cerrar el módulo de ayuda"
