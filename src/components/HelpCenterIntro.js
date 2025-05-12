@@ -2,9 +2,9 @@
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { ReactComponent as AIStars } from '../icons/ai-stars.svg';
-import { useRevealText, LocalStorageUtils } from '../utils';
+import { LocalStorageUtils, useRevealText } from '../utils';
 
-const HelpCenterIntro = ( { introRef } ) => {
+const HelpCenterIntro = () => {
 	const [ startReveal, setStartReveal ] = useState( false );
 
 	useEffect( () => {
@@ -26,12 +26,11 @@ const HelpCenterIntro = ( { introRef } ) => {
 			role="region"
 			aria-labelledby="helpcenter-intro-heading"
 			className="helpcenter-intro"
-			ref={ introRef }
 			style={ {
-				visibility:
+				display:
 					LocalStorageUtils.getResultInfo().length > 0
-						? 'hidden'
-						: 'visible',
+						? 'none'
+						: 'flex',
 			} }
 		>
 			<div>
