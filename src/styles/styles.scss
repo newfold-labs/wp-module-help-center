@@ -203,21 +203,24 @@ $blue-night-sky: #7a889d;
     padding: 15px 12px;
 
     .feedback-button {
-      padding-left: 13px;
-      padding-right: 13px;
-      padding-bottom: 6px;
-      padding-top: 6px;
-      flex-shrink: 0;
-      white-space: nowrap;
-      border-radius: 20px;
-      border-color: $border-color-button;
-      border-width: 1px;
+      width: 29px;
+      height: 29px;
+      background-size: cover;
+      background-position: center;
+      background-color: transparent;
+      border: none;
+      font-size: 18px;
       cursor: pointer;
       box-shadow: none;
 
       .feedback-button-emoji {
         margin-right: 5px;
       }
+
+      :hover{
+        filter: brightness(1.05);
+        transition: filter 0.3s linear;
+        }
     }
 
     .button-icon {
@@ -226,33 +229,11 @@ $blue-night-sky: #7a889d;
       margin-right: 4px;
     }
 
-    .yes {
-      border-bottom-right-radius: 0;
-      border-top-right-radius: 0;
-      border-right-width: 0;
-    }
-
-    .no {
-      border-bottom-left-radius: 0;
-      border-top-left-radius: 0;
-    }
-
-    .selected-yes {
-      background: $feedback-bg;
-      padding-bottom: 4.4px;
-      padding-top: 5.8px;
-    }
-
-    .selected-no {
-      background-color: $feedback-negative;
-      padding-bottom: 4.4px;
-      padding-top: 5.8px;
-    }
-
     .icon {
       cursor: pointer;
       display: flex;
       align-items: center;
+      gap: 8px;
     }
   }
 
@@ -471,6 +452,35 @@ body:is(.page, .post-php, .post-new-php) {
           color: #196cdf;
         }
       }
+    }
+  }
+
+  .dislike-feedback {
+    font-size: 13px !important;
+    margin: 20px;
+    font-weight: 400;
+  
+    p {
+      font-size: 13px !important;
+      font-weight: 700;
+    }
+  
+    ul {
+      list-style-type: disc;
+      padding-left: 20px;
+    }
+  
+    a {
+      font-size: 13px !important;
+      text-decoration: none;
+      font-weight: 500;
+      color: #356cd8 !important;
+    }
+  
+    .dislike-feedback-icon {
+      margin: 30px;
+      display: flex;
+      justify-content: center;
     }
   }
 

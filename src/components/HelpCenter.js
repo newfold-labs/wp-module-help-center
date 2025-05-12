@@ -12,6 +12,7 @@ import {
 	getResultMatches,
 	scrollToBottom,
 } from '../utils';
+import DislikeFeedbackPanel from './DislikeFeedbackPanel';
 import HelpCenterIntro from './HelpCenterIntro';
 import ResultList from './ResultList';
 import SearchInput from './SearchInput';
@@ -34,6 +35,8 @@ const HelpCenter = ( props ) => {
 		initComplete: false,
 		errorMsg: 'wrong input',
 	} );
+
+	const [ disliked, setDisliked ] = useState( false );
 
 	const suggestionsRef = useRef();
 	const resultsContainer = useRef();
@@ -76,7 +79,7 @@ const HelpCenter = ( props ) => {
 			checkFooterVisibility();
 			fetchInitialData();
 		}
-	}, [ state.visible ] );
+	}, [ state.visible, disliked ] );
 
 	useEffect( () => {
 		// Always adjust padding if any of these dependencies change
@@ -351,6 +354,7 @@ const HelpCenter = ( props ) => {
 	};
 
 	const handleSubmit = async () => {
+		setDisliked( false );
 		if ( validateInput() ) {
 			await getAIResult();
 		}
@@ -366,20 +370,27 @@ const HelpCenter = ( props ) => {
 			id="helpcenterResultsWrapper"
 			ref={ wrapper }
 		>
-			<HelpCenterIntro />
-			<ResultList
-				{ ...state }
-				wrapper={ wrapper }
-				resultsContainer={ resultsContainer }
-				suggestionsRef={ suggestionsRef }
-				{ ...props }
-			/>
-			{ state.showSuggestions && (
-				<SuggestionList
-					suggestionsRef={ suggestionsRef }
-					multiResults={ state.multiResults }
-					handleSuggestionsClick={ handleSuggestionsClick }
-				/>
+			{ disliked ? (
+				<DislikeFeedbackPanel />
+			) : (
+				<>
+					<HelpCenterIntro />
+					<ResultList
+						{ ...state }
+						wrapper={ wrapper }
+						resultsContainer={ resultsContainer }
+						suggestionsRef={ suggestionsRef }
+						{ ...props }
+						setDisliked={ setDisliked }
+					/>
+					{ state.showSuggestions && (
+						<SuggestionList
+							suggestionsRef={ suggestionsRef }
+							multiResults={ state.multiResults }
+							handleSuggestionsClick={ handleSuggestionsClick }
+						/>
+					) }
+				</>
 			) }
 			<SearchInput
 				searchInput={ state.searchInput }
