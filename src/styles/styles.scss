@@ -17,6 +17,7 @@ $gray-text: #394150;
 $blue-night-sky: #7a889d;
 
 #nfd-help-center {
+
   * {
     box-sizing: border-box;
   }
@@ -95,7 +96,6 @@ $blue-night-sky: #7a889d;
         background-color: $light-gray;
 
         input {
-          border: none;
           background-color: #fff;
           font-size: 13px;
           line-height: 19px;
@@ -258,6 +258,7 @@ $blue-night-sky: #7a889d;
   }
 
   .hc-results-container {
+
     .helpcenter-results {
       padding: 0 12px;
     }
@@ -321,7 +322,9 @@ $blue-night-sky: #7a889d;
 }
 
 .toplevel_page_bluehost {
+
   @media screen and (min-width: 1814px) {
+
     .wpcontent-container {
       display: flex;
 
@@ -341,14 +344,18 @@ $blue-night-sky: #7a889d;
 }
 
 body:is(.page, .post-php, .post-new-php) {
+
   #wp-admin-bar-help-center {
     display: none;
   }
 }
 
 .mobile {
+
   #wpadminbar {
+
     ul#wp-admin-bar-root-default {
+
       li {
         width: 40px !important;
       }
@@ -375,6 +382,7 @@ body:is(.page, .post-php, .post-new-php) {
 }
 
 @keyframes blip {
+
   0% {
     opacity: 1;
   }
@@ -401,13 +409,14 @@ body:is(.page, .post-php, .post-new-php) {
   z-index: 10;
   background-color: #f3f7fa;
 
-  .helpcenter-supportinfo__wrapper {
-    .breakline {
-      padding: 10px 15px;
-      border: none;
-      color: #e7e7e7;
-    }
+  &__breakline {
+    padding: 10px 15px;
+    border: none;
+    color: #e7e7e7;
+  }
 
+  .helpcenter-supportinfo__wrapper {
+    
     > div > p:first-of-type {
       padding: 0 15px;
       padding-bottom: 4px;
@@ -425,54 +434,6 @@ body:is(.page, .post-php, .post-new-php) {
     a {
       text-decoration: none;
       color: #356cd8 !important;
-    }
-
-    .square {
-      padding-top: 10px;
-      background-image: url('../icons/eclipse.png');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-
-      .footer-text {
-        padding-top: 20px;
-
-        > p:nth-of-type(1),
-        > p:nth-of-type(2) {
-          font-size: 13px;
-          font-weight: 590;
-        }
-        > p:nth-of-type(2) {
-          padding-bottom: 20px;
-        }
-      }
-
-      .startbutton {
-        padding: 0 15px;
-        padding-top: 10px;
-        display: flex;
-        justify-content: space-between;
-        width: calc(100% - 15px);
-
-        .LaptopIcon {
-          width: 50px;
-        }
-
-        button {
-          height: 40px;
-          letter-spacing: 0%;
-          background-color: #121212;
-          color: white;
-          border-radius: 8px;
-          border: none;
-          padding: 0px 20px;
-          font-weight: 700;
-        }
-      }
     }
 
     .helpcenter-supportinfo__text {
@@ -505,6 +466,53 @@ body:is(.page, .post-php, .post-new-php) {
         a {
           text-decoration: none;
           color: #196cdf;
+        }
+      }
+    }
+  }
+
+  .square {
+    padding: 10px 15px;
+    background-image: url(../icons/eclipse.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .footer-text {
+      position: relative;
+      padding-top: 20px;
+
+      &__heading {
+        font-size: 13px;
+        font-weight: 590;
+      }
+
+      &__body {
+        font-size: 12px;
+      }
+
+      .startbutton {
+        display: flex;
+        justify-content: space-between;
+        width: calc(100% - 15px);
+
+        .LaptopIcon {
+          width: 50px;
+        }
+
+        .cta-pro-design {
+          height: 40px;
+          letter-spacing: 0%;
+          background-color: #121212;
+          color: #fff;
+          border-radius: 8px;
+          border: none;
+          padding: 0 20px;
+          font-weight: 700;
         }
       }
     }
