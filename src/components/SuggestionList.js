@@ -1,12 +1,13 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { ReactComponent as Go } from '../icons/go.svg';
 import { __ } from '@wordpress/i18n';
+import { ReactComponent as Go } from '../icons/go.svg';
 
 export const SuggestionList = ( {
 	suggestionsRef,
 	multiResults,
 	handleSuggestionsClick,
+	isFooterVisible,
 } ) => {
 	// Handle the click for individual suggestions
 	const onSuggestionClick = ( result, postTitle ) => {
@@ -22,6 +23,7 @@ export const SuggestionList = ( {
 			className="suggestions-wrapper"
 			id="suggestionsWrapper"
 			ref={ suggestionsRef }
+			style={ { bottom: isFooterVisible ? '430px' : '90px' } }
 		>
 			{ multiResults.hits.length > 0 && (
 				<p>

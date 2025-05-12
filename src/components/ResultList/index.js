@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
-import { Result } from './Result';
 import NoResults from './NoResults';
+import { Result } from './Result';
 
 const ResultList = ( {
 	wrapper,

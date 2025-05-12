@@ -1,8 +1,8 @@
-import { useEffect, useState, useRef } from '@wordpress/element';
+import { useEffect, useRef, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { Analytics, InteractionAPIs, LocalStorageUtils } from '../../utils';
-import { ReactComponent as ThumbsUp } from '../../icons/thumb-up.svg';
 import { ReactComponent as ThumbsDown } from '../../icons/thumb-down.svg';
+import { ReactComponent as ThumbsUp } from '../../icons/thumb-up.svg';
+import { Analytics, InteractionAPIs, LocalStorageUtils } from '../../utils';
 
 const ResultFeedback = ( { postId, source, setDisliked } ) => {
 	const [ status, setStatus ] = useState( '' );
@@ -46,7 +46,9 @@ const ResultFeedback = ( { postId, source, setDisliked } ) => {
 	}, [ status ] );
 
 	const handleFeedback = ( feedback ) => {
-		if ( feedback === 'notHelpful' ) setDisliked( true );
+		if ( feedback === 'notHelpful' ) {
+			setDisliked( true );
+		}
 		setStatus( feedback );
 		LocalStorageUtils.updateFeedbackStatus( postId );
 	};

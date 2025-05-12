@@ -33,10 +33,9 @@ const HelpCenter = ( props ) => {
 		multiResults: {},
 		showSuggestions: false,
 		initComplete: false,
-		errorMsg: 'wrong input',
+		errorMsg: '',
+		disliked: false,
 	} );
-
-	const [ disliked, setDisliked ] = useState( false );
 
 	const suggestionsRef = useRef();
 	const resultsContainer = useRef();
@@ -66,45 +65,37 @@ const HelpCenter = ( props ) => {
 	}, [] );
 
 	useEffect( () => {
+		updateLayoutAndScroll();
 		// If the wrapper is visible or we’ve just finished init, scroll
-		if ( state.initComplete ) {
-			setTimeout( () => {
-				scrollToBottom( wrapper, resultsContainer );
-			}, 100 );
-		}
-	}, [ state.initComplete ] );
+	}, [ state.initComplete, state.disliked ] );
 
 	useEffect( () => {
 		if ( state.visible ) {
-			checkFooterVisibility();
+			setState( ( prev ) => ( {
+				...prev,
+				disliked: false,
+			} ) );
 			fetchInitialData();
+			setTimeout( () => {
+				updateLayoutAndScroll();
+			}, 500 );
 		}
-	}, [ state.visible, disliked ] );
+	}, [ state.visible ] );
 
 	useEffect( () => {
 		// Always adjust padding if any of these dependencies change
 		adjustPadding( wrapper, suggestionsRef, state.showSuggestions );
 	}, [ state.showSuggestions ] );
 
-	const checkFooterVisibility = () => {
-		if ( LocalStorageUtils.getResultInfo()?.length < 1 ) {
-			props.setIsFooterVisible( true );
-			const inputField = document.getElementById(
-				'nfdHelpcenterInputWrapper'
-			);
-			if ( inputField ) {
-				inputField.style.bottom = '340px';
-			}
-		} else {
-			debugger;
-			props.setIsFooterVisible( false );
-			const inputField = document.getElementById(
-				'nfdHelpcenterInputWrapper'
-			);
-			if ( inputField ) {
-				inputField.style.bottom = '0';
-			}
-		}
+	const checkFooterVisibility = () =>
+		props.setIsFooterVisible(
+			LocalStorageUtils.getResultInfo()?.length < 1 || state.disliked
+		);
+
+	const updateLayoutAndScroll = () => {
+		checkFooterVisibility();
+		adjustPadding( wrapper, suggestionsRef, state.showSuggestions );
+		scrollToBottom( wrapper, resultsContainer );
 	};
 
 	const getHelpStatus = async () => {
@@ -158,9 +149,6 @@ const HelpCenter = ( props ) => {
 				search_source: searchSource,
 			} );
 		}
-		setTimeout( () => {
-			checkFooterVisibility();
-		}, 1000 );
 	};
 
 	const debouncedResults = useMemo( () => {
@@ -272,12 +260,14 @@ const HelpCenter = ( props ) => {
 		setState( ( prev ) => ( {
 			...prev,
 			showSuggestions: false,
+			disliked: false,
 		} ) );
 		populateSearchResult(
 			result?.hits[ 0 ]?.document?.post_content,
 			result?.hits[ 0 ]?.document?.id,
 			postTitle
 		);
+		props.setIsFooterVisible( false );
 	};
 
 	const fetchInitialData = async () => {
@@ -354,8 +344,11 @@ const HelpCenter = ( props ) => {
 	};
 
 	const handleSubmit = async () => {
-		setDisliked( false );
 		if ( validateInput() ) {
+			setState( ( prev ) => ( {
+				...prev,
+				disliked: false,
+			} ) );
 			await getAIResult();
 		}
 	};
@@ -370,7 +363,7 @@ const HelpCenter = ( props ) => {
 			id="helpcenterResultsWrapper"
 			ref={ wrapper }
 		>
-			{ disliked ? (
+			{ state.disliked ? (
 				<DislikeFeedbackPanel />
 			) : (
 				<>
@@ -381,22 +374,29 @@ const HelpCenter = ( props ) => {
 						resultsContainer={ resultsContainer }
 						suggestionsRef={ suggestionsRef }
 						{ ...props }
-						setDisliked={ setDisliked }
+						setDisliked={ ( value ) =>
+							setState( ( prev ) => ( {
+								...prev,
+								disliked: value,
+							} ) )
+						}
 					/>
-					{ state.showSuggestions && (
-						<SuggestionList
-							suggestionsRef={ suggestionsRef }
-							multiResults={ state.multiResults }
-							handleSuggestionsClick={ handleSuggestionsClick }
-						/>
-					) }
 				</>
+			) }
+			{ state.showSuggestions && (
+				<SuggestionList
+					suggestionsRef={ suggestionsRef }
+					multiResults={ state.multiResults }
+					handleSuggestionsClick={ handleSuggestionsClick }
+					isFooterVisible={ props.isFooterVisible }
+				/>
 			) }
 			<SearchInput
 				searchInput={ state.searchInput }
 				handleOnChange={ handleOnChange }
 				handleSubmit={ handleSubmit }
 				errorMsg={ state.errorMsg }
+				isFooterVisible={ props.isFooterVisible }
 			/>
 		</div>
 	);

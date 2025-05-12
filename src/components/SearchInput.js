@@ -6,6 +6,7 @@ const SearchInput = ( {
 	handleOnChange,
 	handleSubmit,
 	errorMsg,
+	isFooterVisible,
 } ) => {
 	return (
 		<div
@@ -13,6 +14,7 @@ const SearchInput = ( {
 			id="nfdHelpcenterInputWrapper"
 			role="search"
 			aria-label={ __( 'Search Help Center', 'wp-module-help-center' ) }
+			style={ { bottom: isFooterVisible ? '340px' : '0px' } }
 		>
 			<div className="search-container__wrapper">
 				<div className="attribute">
@@ -47,7 +49,7 @@ const SearchInput = ( {
 						<GoSearchIcon />
 					</button>
 				</div>
-				{ true && (
+				{ errorMsg && (
 					<p className="hc-input-error-message">{ errorMsg }</p>
 				) }
 			</div>
