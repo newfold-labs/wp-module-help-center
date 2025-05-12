@@ -403,9 +403,9 @@ body:is(.page, .post-php, .post-new-php) {
 }
 
 .nfd-hc-modal__footer {
-  position: absolute;
-  bottom: 10;
-  right: 0;
+
+  position: fixed;
+  bottom: 0;
   z-index: 10;
   background-color: #f3f7fa;
 
@@ -472,9 +472,9 @@ body:is(.page, .post-php, .post-new-php) {
   }
 
   .square {
-    padding: 10px 15px;
+    padding: 10px 15px 20px 15px;
     background-image: url(../icons/eclipse.png);
-    background-size: cover;
+    background-size: 100% 100%;
     background-position: center;
     background-repeat: no-repeat;
     display: flex;
@@ -484,36 +484,40 @@ body:is(.page, .post-php, .post-new-php) {
 
     .footer-text {
       position: relative;
-      padding-top: 20px;
+      padding-top: 18px;
 
       &__heading {
         font-size: 13px;
         font-weight: 590;
+        margin: 0 0 15px 0;
       }
 
       &__body {
         font-size: 12px;
+        width: 88%;
+        margin: 0 0 15px 0;
       }
 
       .startbutton {
         display: flex;
-        justify-content: space-between;
-        width: calc(100% - 15px);
-
-        .LaptopIcon {
-          width: 50px;
-        }
 
         .cta-pro-design {
-          height: 40px;
-          letter-spacing: 0%;
+          height: 30px;
+          letter-spacing: 0;
+          font-size: 12px;
           background-color: #121212;
           color: #fff;
-          border-radius: 8px;
+          border-radius: 5px;
           border: none;
-          padding: 0 20px;
+          padding: 8px 10px;
           font-weight: 700;
         }
+      }
+
+      .LaptopIcon {
+        position: absolute;
+        bottom: -20px;
+        right: -15px;
       }
     }
   }

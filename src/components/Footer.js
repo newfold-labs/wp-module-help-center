@@ -54,9 +54,9 @@ const Footer = () => {
 						<button className="cta-pro-design">
 							{ __( 'Start Now', 'wp-module-help-center' ) }
 						</button>
-						<div className="LaptopIcon">
-							<LaptopIcon />
-						</div>
+					</div>
+					<div className="LaptopIcon">
+						<LaptopIcon />
 					</div>
 				</div>
 			</div>
