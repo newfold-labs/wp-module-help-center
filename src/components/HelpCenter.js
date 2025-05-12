@@ -32,7 +32,7 @@ const HelpCenter = ( props ) => {
 		multiResults: {},
 		showSuggestions: false,
 		initComplete: false,
-		errorMsg: '',
+		errorMsg: 'wrong input',
 	} );
 
 	const suggestionsRef = useRef();

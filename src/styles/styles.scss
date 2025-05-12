@@ -78,15 +78,14 @@ $blue-night-sky: #7a889d;
   }
 
   .helpcenter-input-wrapper {
-    height: 254px;
     position: fixed;
-    bottom: calc(100vh - 670px);
+    bottom: 340px;
     width: 356px;
     background: #f3f7fa;
-    z-index: 1;
+    z-index: 12;
 
     .search-container__wrapper {
-      padding: 0 12px;
+      padding: 0 12px 12px 12px;
 
       .search-container {
         display: flex;
@@ -410,9 +409,13 @@ body:is(.page, .post-php, .post-new-php) {
   background-color: #f3f7fa;
 
   &__breakline {
-    padding: 10px 15px;
+    padding: 0 15px;
     border: none;
     color: #e7e7e7;
+
+    hr {
+      margin : 0
+    }
   }
 
   .helpcenter-supportinfo__wrapper {
@@ -437,7 +440,7 @@ body:is(.page, .post-php, .post-new-php) {
     }
 
     .helpcenter-supportinfo__text {
-      padding: 8px 0;
+      padding: 20px 0;
     }
 
     .helpcenter-supportinfo__telephone {
