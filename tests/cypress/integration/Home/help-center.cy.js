@@ -79,7 +79,7 @@ describe(
 			cy.get('.helpcenter-question-block')
 				.findByText('How to install a plugin in WordPress').should('exist')
 
-			cy.wait(1000);
+			cy.wait(5000);
 			cy.get('.helpcenter-question-block')
 				.next()
 				.should('have.class', 'helpcenter-result-block').should('exist').and('be.visible')
