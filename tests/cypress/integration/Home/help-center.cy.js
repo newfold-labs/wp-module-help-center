@@ -57,11 +57,10 @@ describe(
 		});
 
 		it('Verify HelpCenter search response.', function() {
-
+			cy.viewport(1500, 1200);
 			if ( pluginId === 'hostgator' ) {
 				this.skip();
 			}
-
 			cy.get('#wp-admin-bar-help-center .ab-item.ab-empty-item', {
 				timeout: customCommandTimeout,
 			})
