@@ -17,7 +17,6 @@ $gray-text: #394150;
 $blue-night-sky: #7a889d;
 
 #nfd-help-center {
-
   * {
     box-sizing: border-box;
   }
@@ -217,10 +216,10 @@ $blue-night-sky: #7a889d;
         margin-right: 5px;
       }
 
-      :hover{
+      :hover {
         filter: brightness(1.05);
         transition: filter 0.3s linear;
-        }
+      }
     }
 
     .button-icon {
@@ -238,7 +237,6 @@ $blue-night-sky: #7a889d;
   }
 
   .hc-results-container {
-
     .helpcenter-results {
       padding: 0 12px;
     }
@@ -302,9 +300,7 @@ $blue-night-sky: #7a889d;
 }
 
 .toplevel_page_bluehost {
-
   @media screen and (min-width: 1814px) {
-
     .wpcontent-container {
       display: flex;
 
@@ -324,18 +320,14 @@ $blue-night-sky: #7a889d;
 }
 
 body:is(.page, .post-php, .post-new-php) {
-
   #wp-admin-bar-help-center {
     display: none;
   }
 }
 
 .mobile {
-
   #wpadminbar {
-
     ul#wp-admin-bar-root-default {
-
       li {
         width: 40px !important;
       }
@@ -362,7 +354,6 @@ body:is(.page, .post-php, .post-new-php) {
 }
 
 @keyframes blip {
-
   0% {
     opacity: 1;
   }
@@ -387,6 +378,20 @@ body:is(.page, .post-php, .post-new-php) {
   margin: 20px;
   font-weight: 400;
 
+  .back-arrow {
+    gap: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    cursor: pointer;
+
+    p {
+      font-weight: 510;
+      color: #356cd8;
+      margin: 0;
+    }
+  }
+
   p {
     font-size: 13px;
     font-weight: 700;
@@ -405,14 +410,13 @@ body:is(.page, .post-php, .post-new-php) {
   }
 
   .dislike-feedback-icon {
-    margin: 30px;
+    margin: 25px;
     display: flex;
     justify-content: center;
   }
 }
 
 .nfd-hc-modal__footer {
-
   position: fixed;
   bottom: 0;
   z-index: 10;
@@ -424,12 +428,11 @@ body:is(.page, .post-php, .post-new-php) {
     color: #e7e7e7;
 
     hr {
-      margin : 0
+      margin: 0;
     }
   }
 
   .helpcenter-supportinfo__wrapper {
-    
     > div > p:first-of-type {
       padding: 0 15px;
       padding-bottom: 4px;

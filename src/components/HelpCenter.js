@@ -19,8 +19,8 @@ import SearchInput from './SearchInput';
 
 import { SuggestionList } from './SuggestionList';
 
-const HelpCenter = ( props ) => {
-	const [ state, setState ] = useState( {
+const HelpCenter = (props) => {
+	const [state, setState] = useState({
 		visible: false,
 		helpEnabled: false,
 		noResult: false,
@@ -35,7 +35,7 @@ const HelpCenter = ( props ) => {
 		initComplete: false,
 		errorMsg: '',
 		disliked: false,
-	} );
+	});
 
 	const suggestionsRef = useRef();
 	const resultsContainer = useRef();
@@ -43,55 +43,55 @@ const HelpCenter = ( props ) => {
 
 	const brand = CapabilityAPI.getBrand();
 
-	useEffect( () => {
+	useEffect(() => {
 		getHelpStatus();
 
 		// Add event listener for localStorage changes
 		const updateVisibility = () => {
-			setState( ( prev ) => ( {
+			setState((prev) => ({
 				...prev,
 				visible: LocalStorageUtils.getHelpVisible(),
-			} ) );
+			}));
 		};
-		window.addEventListener( 'storage', updateVisibility );
+		window.addEventListener('storage', updateVisibility);
 
 		// Remove the event listener when the component unmounts
 		return () => {
 			// Cancel any debounced calls
 			debouncedResults.cancel();
 			// Remove the storage event listener
-			window.removeEventListener( 'storage', updateVisibility );
+			window.removeEventListener('storage', updateVisibility);
 		};
-	}, [] );
+	}, []);
 
-	useEffect( () => {
+	useEffect(() => {
 		checkFooterVisibility();
-		if ( state.initComplete ) {
-			adjustPadding( wrapper, suggestionsRef, state.showSuggestions );
-			scrollToBottom( wrapper, resultsContainer );
+		if (state.initComplete) {
+			adjustPadding(wrapper, suggestionsRef, state.showSuggestions);
+			scrollToBottom(wrapper, resultsContainer);
 		}
 		// If the wrapper is visible or we’ve just finished init, scroll
-	}, [ state.initComplete, state.disliked ] );
+	}, [state.initComplete, state.disliked]);
 
-	useEffect( () => {
-		if ( state.visible ) {
-			setState( ( prev ) => ( {
+	useEffect(() => {
+		if (state.visible) {
+			setState((prev) => ({
 				...prev,
 				disliked: false,
-			} ) );
+			}));
 			fetchInitialData();
 			checkFooterVisibility();
-			adjustPadding( wrapper, suggestionsRef, state.showSuggestions );
-			setTimeout( () => {
-				scrollToBottom( wrapper, resultsContainer );
-			}, 500 );
+			adjustPadding(wrapper, suggestionsRef, state.showSuggestions);
+			setTimeout(() => {
+				scrollToBottom(wrapper, resultsContainer);
+			}, 500);
 		}
-	}, [ state.visible ] );
+	}, [state.visible]);
 
-	useEffect( () => {
+	useEffect(() => {
 		// Always adjust padding if any of these dependencies change
-		adjustPadding( wrapper, suggestionsRef, state.showSuggestions );
-	}, [ state.showSuggestions ] );
+		adjustPadding(wrapper, suggestionsRef, state.showSuggestions);
+	}, [state.showSuggestions]);
 
 	const checkFooterVisibility = () =>
 		props.setIsFooterVisible(
@@ -101,15 +101,15 @@ const HelpCenter = ( props ) => {
 	const getHelpStatus = async () => {
 		try {
 			const response = await CapabilityAPI.getHelpCenterCapability();
-			setState( ( prev ) => ( {
+			setState((prev) => ({
 				...prev,
 				helpEnabled: response,
-			} ) );
-		} catch ( exception ) {
-			setState( ( prev ) => ( {
+			}));
+		} catch (exception) {
+			setState((prev) => ({
 				...prev,
 				helpEnabled: false,
-			} ) );
+			}));
 		}
 	};
 
@@ -120,7 +120,7 @@ const HelpCenter = ( props ) => {
 		searchSource = 'kb'
 	) => {
 		const resultContentFormatted = postContent
-			? formatPostContent( postContent )
+			? formatPostContent(postContent)
 			: '';
 		// Retrieve existing results from local storage and using the updated persistResult method to store the result
 		LocalStorageUtils.persistResult(
@@ -130,79 +130,75 @@ const HelpCenter = ( props ) => {
 		);
 
 		// Add new result to existing results and retrieve all results from local storage
-		setState( ( prev ) => ( {
+		setState((prev) => ({
 			...prev,
 			resultContent: LocalStorageUtils.getResultInfo(),
-		} ) );
+		}));
 
-		if ( postId ) {
-			setState( ( prev ) => ( {
+		if (postId) {
+			setState((prev) => ({
 				...prev,
-				isNewResult: !! postId,
+				isNewResult: !!postId,
 				searchInput: '',
-			} ) );
+			}));
 
-			Analytics.sendEvent( 'help_search', {
+			Analytics.sendEvent('help_search', {
 				label_key: 'term',
 				term: postTitle,
 				page: window.location.href.toString(),
 				search_source: searchSource,
-			} );
+			});
 		}
 	};
 
-	const debouncedResults = useMemo( () => {
-		return debounce( async ( query ) => {
-			if ( ! query ) {
-				setState( ( prev ) => ( {
+	const debouncedResults = useMemo(() => {
+		return debounce(async (query) => {
+			if (!query) {
+				setState((prev) => ({
 					...prev,
 					multiResults: {},
 					showSuggestions: false,
-				} ) );
+				}));
 				return;
 			}
 
 			try {
 				const multiSearchResults =
-					await MultiSearchAPI.fetchMultiSearchResults(
-						query,
-						brand
-					);
+					await MultiSearchAPI.fetchMultiSearchResults(query, brand);
 
-				const results =
-					multiSearchResults?.results?.[ 0 ]?.grouped_hits;
-				if ( results ) {
-					setState( ( prev ) => ( {
+				const results = multiSearchResults?.results?.[0]?.grouped_hits;
+				if (results) {
+					setState((prev) => ({
 						...prev,
 						multiResults: { hits: results },
-						showSuggestions: !! results,
-					} ) );
+						showSuggestions: !!results,
+					}));
 				}
-			} catch ( error ) {
+			} catch (error) {
 				// eslint-disable-next-line no-console
-				console.error( 'Error fetching debounced results:', error );
+				console.error('Error fetching debounced results:', error);
 			}
-		}, 500 );
+		}, 500);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [] );
+	}, []);
 
 	const getAIResult = async () => {
-		setState( ( prev ) => ( {
+		setState((prev) => ({
 			...prev,
 			isLoading: true,
 			showSuggestions: false,
 			loadingQuery: prev.searchInput,
 			loadingIndex: prev.resultContent.length,
-		} ) );
+		}));
 		try {
 			// Check existing multiResults
-			let hits = state.multiResults?.hits?.[ 0 ]?.hits;
+			let hits = state.multiResults?.hits?.[0]?.hits;
 			const lastQuery =
-				state.multiResults?.results?.[ 0 ]?.request_params?.q;
+				state.multiResults?.results?.[0]?.request_params?.q;
 
 			if (
 				state.searchInput === lastQuery &&
-				checkAndPopulateResult( hits )
+				checkAndPopulateResult(hits)
 			) {
 				return;
 			}
@@ -214,9 +210,8 @@ const HelpCenter = ( props ) => {
 					brand
 				);
 
-			hits =
-				multiSearchResults?.results?.[ 0 ]?.grouped_hits?.[ 0 ]?.hits;
-			if ( checkAndPopulateResult( hits ) ) {
+			hits = multiSearchResults?.results?.[0]?.grouped_hits?.[0]?.hits;
+			if (checkAndPopulateResult(hits)) {
 				return;
 			}
 
@@ -225,57 +220,57 @@ const HelpCenter = ( props ) => {
 				'helpcenter'
 			);
 
-			if ( result.result[ 0 ] ) {
+			if (result.result[0]) {
 				populateSearchResult(
-					result.result[ 0 ].text,
+					result.result[0].text,
 					result.post_id,
 					state.searchInput,
 					'ai'
 				);
 			} else {
-				setState( ( prev ) => ( { ...prev, noResult: true } ) );
+				setState((prev) => ({ ...prev, noResult: true }));
 			}
-		} catch ( exception ) {
+		} catch (exception) {
 			// eslint-disable-next-line no-console
-			console.error( 'An error occurred:', exception );
-			setState( ( prev ) => ( {
+			console.error('An error occurred:', exception);
+			setState((prev) => ({
 				...prev,
 				noResult: true,
 				isNewResult: true,
-			} ) );
+			}));
 		} finally {
-			setState( ( prev ) => ( {
+			setState((prev) => ({
 				...prev,
 				searchInput: '',
 				isLoading: false,
 				loadingIndex: null,
 				loadingQuery: null,
 				showSuggestions: false,
-			} ) );
-			LocalStorageUtils.persistSearchInput( state.searchInput );
+			}));
+			LocalStorageUtils.persistSearchInput(state.searchInput);
 		}
 	};
 
-	const handleSuggestionsClick = ( result, postTitle ) => {
-		setState( ( prev ) => ( {
+	const handleSuggestionsClick = (result, postTitle) => {
+		setState((prev) => ({
 			...prev,
 			showSuggestions: false,
 			disliked: false,
-		} ) );
+		}));
 		populateSearchResult(
-			result?.hits[ 0 ]?.document?.post_content,
-			result?.hits[ 0 ]?.document?.id,
+			result?.hits[0]?.document?.post_content,
+			result?.hits[0]?.document?.id,
 			postTitle
 		);
-		props.setIsFooterVisible( false );
+		props.setIsFooterVisible(false);
 	};
 
 	const fetchInitialData = async () => {
 		try {
 			// Populate the results from local storage if they exist
 			const resultContent = LocalStorageUtils.getResultInfo();
-			if ( resultContent ) {
-				setState( ( prev ) => ( { ...prev, resultContent } ) );
+			if (resultContent) {
+				setState((prev) => ({ ...prev, resultContent }));
 			}
 
 			const multiSearchResults =
@@ -284,31 +279,31 @@ const HelpCenter = ( props ) => {
 					brand
 				);
 
-			setState( ( prev ) => ( {
+			setState((prev) => ({
 				...prev,
 				showSuggestions: true,
 				initComplete: true,
 				multiResults: {
-					hits: multiSearchResults?.results?.[ 0 ]?.grouped_hits,
+					hits: multiSearchResults?.results?.[0]?.grouped_hits,
 				},
-			} ) );
-		} catch ( error ) {
+			}));
+		} catch (error) {
 			// eslint-disable-next-line no-console
-			console.error( 'Error fetching initial data:', error );
+			console.error('Error fetching initial data:', error);
 		}
 	};
 
-	const checkAndPopulateResult = ( hits ) => {
-		if ( hits?.length > 0 ) {
+	const checkAndPopulateResult = (hits) => {
+		if (hits?.length > 0) {
 			const resultMatches = getResultMatches(
 				state.searchInput,
-				hits[ 0 ]?.text_match_info?.tokens_matched,
-				hits[ 0 ]?.text_match_info?.fields_matched
+				hits[0]?.text_match_info?.tokens_matched,
+				hits[0]?.text_match_info?.fields_matched
 			);
-			if ( resultMatches ) {
+			if (resultMatches) {
 				populateSearchResult(
-					hits[ 0 ].document.post_content,
-					hits[ 0 ].document.post_id || hits[ 0 ].document.id,
+					hits[0].document.post_content,
+					hits[0].document.post_id || hits[0].document.id,
 					state.searchInput
 				);
 				return true;
@@ -319,41 +314,41 @@ const HelpCenter = ( props ) => {
 
 	const validateInput = () => {
 		const isValid = state.searchInput.trim().length > 0;
-		setState( ( prev ) => ( {
+		setState((prev) => ({
 			...prev,
 			errorMsg: isValid
 				? ''
 				: __(
 						'Please enter a specific search term to get results.',
 						'wp-module-help-center'
-				  ),
-		} ) );
+					),
+		}));
 
 		return isValid;
 	};
 
-	const handleOnChange = ( e ) => {
-		populateSearchResult( '', undefined, e.target.value );
-		debouncedResults( e.target.value );
-		setState( ( prev ) => ( {
+	const handleOnChange = (e) => {
+		populateSearchResult('', undefined, e.target.value);
+		debouncedResults(e.target.value);
+		setState((prev) => ({
 			...prev,
 			noResult: false,
 			errorMsg: '',
 			searchInput: e.target.value,
-		} ) );
+		}));
 	};
 
 	const handleSubmit = async () => {
-		if ( validateInput() ) {
-			setState( ( prev ) => ( {
+		if (validateInput()) {
+			setState((prev) => ({
 				...prev,
 				disliked: false,
-			} ) );
+			}));
 			await getAIResult();
 		}
 	};
 
-	if ( ! state.helpEnabled || ! state.visible ) {
+	if (!state.helpEnabled || !state.visible) {
 		return null;
 	}
 
@@ -361,42 +356,49 @@ const HelpCenter = ( props ) => {
 		<div
 			className="nfd-help-center"
 			id="helpcenterResultsWrapper"
-			ref={ wrapper }
+			ref={wrapper}
 		>
-			{ state.disliked ? (
-				<DislikeFeedbackPanel />
+			{state.disliked ? (
+				<DislikeFeedbackPanel
+					setDisliked={(value) =>
+						setState((prev) => ({
+							...prev,
+							disliked: value,
+						}))
+					}
+				/>
 			) : (
 				<>
 					<HelpCenterIntro />
 					<ResultList
-						{ ...state }
-						wrapper={ wrapper }
-						resultsContainer={ resultsContainer }
-						suggestionsRef={ suggestionsRef }
-						{ ...props }
-						setDisliked={ ( value ) =>
-							setState( ( prev ) => ( {
+						{...state}
+						wrapper={wrapper}
+						resultsContainer={resultsContainer}
+						suggestionsRef={suggestionsRef}
+						{...props}
+						setDisliked={(value) =>
+							setState((prev) => ({
 								...prev,
 								disliked: value,
-							} ) )
+							}))
 						}
 					/>
 				</>
-			) }
-			{ state.showSuggestions && (
+			)}
+			{state.showSuggestions && (
 				<SuggestionList
-					suggestionsRef={ suggestionsRef }
-					multiResults={ state.multiResults }
-					handleSuggestionsClick={ handleSuggestionsClick }
-					isFooterVisible={ props.isFooterVisible }
+					suggestionsRef={suggestionsRef}
+					multiResults={state.multiResults}
+					handleSuggestionsClick={handleSuggestionsClick}
+					isFooterVisible={props.isFooterVisible}
 				/>
-			) }
+			)}
 			<SearchInput
-				searchInput={ state.searchInput }
-				handleOnChange={ handleOnChange }
-				handleSubmit={ handleSubmit }
-				errorMsg={ state.errorMsg }
-				isFooterVisible={ props.isFooterVisible }
+				searchInput={state.searchInput}
+				handleOnChange={handleOnChange}
+				handleSubmit={handleSubmit}
+				errorMsg={state.errorMsg}
+				isFooterVisible={props.isFooterVisible}
 			/>
 		</div>
 	);
