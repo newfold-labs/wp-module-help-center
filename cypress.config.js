@@ -5,8 +5,6 @@ module.exports = defineConfig( {
 		wpUsername: 'admin',
 		wpPassword: 'admin',
 	},
-	viewportWidth: 1600,
-	viewportHeight: 1200,
 	fixturesFolder: 'tests/cypress/fixtures',
 	screenshotsFolder: 'tests/cypress/screenshots',
 	video: false,
