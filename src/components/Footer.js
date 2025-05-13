@@ -5,13 +5,13 @@ import { ReactComponent as FooterBackground } from '../icons/footer.svg';
 const Footer = () => {
 	return (
 		<div className="nfd-hc-modal__footer">
-			<div className="nfd-hc-modal__footer__breakline">
-				<hr />
-			</div>
 			<div className="helpcenter-supportinfo__wrapper">
+				<hr className="helpcenter-supportinfo__breakline" />
 				<div className="helpcenter-supportinfo__text">
-					<p>{ __( 'Account Support', 'wp-module-help-center' ) }</p>
-					<p>
+					<p className="helpcenter-supportinfo__text--heading">
+						{ __( 'Account Support', 'wp-module-help-center' ) }
+					</p>
+					<p className="helpcenter-supportinfo__text--body">
 						{ __(
 							'If you need help with your Bluehost account, give us a call at ',
 							'wp-module-help-center'

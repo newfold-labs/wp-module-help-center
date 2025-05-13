@@ -17,6 +17,7 @@ $gray-text: #394150;
 $blue-night-sky: #7a889d;
 
 #nfd-help-center {
+
   * {
     box-sizing: border-box;
   }
@@ -84,13 +85,12 @@ $blue-night-sky: #7a889d;
     bottom: 0;
 
     .search-container__wrapper {
-      padding: 0 12px 12px 12px;
+      padding: 0 23px 12px 23px;
 
       .search-container {
         display: flex;
         height: 42px;
         border-radius: 8px;
-        padding-right: 5px;
         background-color: $light-gray;
 
         input {
@@ -117,8 +117,9 @@ $blue-night-sky: #7a889d;
           background: transparent;
           cursor: pointer;
           position: absolute;
-          right: 20px;
-          top: 48px;
+          right: 25px;
+          top: 45px;
+          transform: rotate(-15deg);
         }
       }
 
@@ -133,7 +134,11 @@ $blue-night-sky: #7a889d;
 
         p {
           padding-top: 7px;
-          margin: 5px;
+          margin: 5px 0;
+        }
+
+        .hc-input-label{
+          color: #000;
         }
 
         .hc-input-counter {
@@ -199,7 +204,7 @@ $blue-night-sky: #7a889d;
   .feedback-container {
     display: flex;
     justify-content: space-between;
-    padding: 15px 12px;
+    padding: 15px 23px;
 
     .feedback-button {
       width: 29px;
@@ -237,6 +242,7 @@ $blue-night-sky: #7a889d;
   }
 
   .hc-results-container {
+
     .helpcenter-results {
       padding: 0 12px;
     }
@@ -300,7 +306,9 @@ $blue-night-sky: #7a889d;
 }
 
 .toplevel_page_bluehost {
+
   @media screen and (min-width: 1814px) {
+
     .wpcontent-container {
       display: flex;
 
@@ -320,14 +328,18 @@ $blue-night-sky: #7a889d;
 }
 
 body:is(.page, .post-php, .post-new-php) {
+
   #wp-admin-bar-help-center {
     display: none;
   }
 }
 
 .mobile {
+
   #wpadminbar {
+
     ul#wp-admin-bar-root-default {
+
       li {
         width: 40px !important;
       }
@@ -354,6 +366,7 @@ body:is(.page, .post-php, .post-new-php) {
 }
 
 @keyframes blip {
+
   0% {
     opacity: 1;
   }
@@ -421,9 +434,10 @@ body:is(.page, .post-php, .post-new-php) {
   bottom: 0;
   z-index: 10;
   background-color: #f3f7fa;
+  color:#000;
 
   &__breakline {
-    padding: 20px 15px 0 15px;
+    padding: 20px 23px 0 23px;
     border: none;
     color: #e7e7e7;
 
@@ -433,27 +447,31 @@ body:is(.page, .post-php, .post-new-php) {
   }
 
   .helpcenter-supportinfo__wrapper {
-    > div > p:first-of-type {
-      padding: 0 15px;
-      padding-bottom: 4px;
-      font-size: 13px;
-      font-weight: 510;
-    }
-
-    p {
-      padding: 0 15px;
-      font-size: 13px;
-      font-weight: 400;
+    padding: 15px 23px 0 23px;
+    
+    .helpcenter-supportinfo__breakline {
       margin: 0;
-    }
-
-    a {
-      text-decoration: none;
-      color: #356cd8 !important;
     }
 
     .helpcenter-supportinfo__text {
       padding: 15px 0 30px 0;
+
+      &--heading {
+        font-size: 13px;
+        font-weight: 500;
+      }
+  
+      &--body {
+        font-size: 13px;
+        font-weight: 400;
+        margin: 0;
+
+        a {
+          text-decoration: none;
+          color: #356cd8;
+        }
+
+      }
     }
 
     .helpcenter-supportinfo__telephone {
@@ -495,7 +513,7 @@ body:is(.page, .post-php, .post-new-php) {
       position: absolute;
       bottom: 0;
       z-index: 1;
-      padding: 10px 15px 20px 15px;
+      padding: 10px 23px 20px 23px;
       background-color: transparent;  
       display: flex;
       flex-direction: column;
@@ -506,13 +524,13 @@ body:is(.page, .post-php, .post-new-php) {
   
         &__heading {
           font-size: 13px;
-          font-weight: 590;
+          font-weight: 500;
           margin: 0 0 15px 0;
         }
   
         &__body {
           font-size: 12px;
-          width: 88%;
+          width: 90%;
           margin: 0 0 15px 0;
         }
   
@@ -520,17 +538,15 @@ body:is(.page, .post-php, .post-new-php) {
           display: flex;
   
           &--button {
-            height: 30px;
-            letter-spacing: 0;
+            height: 28px;
             font-size: 12px;
             background-color: #121212;
             color: #fff;
             border-radius: 5px;
             border: none;
-            padding: 8px 10px;
+            padding: 6px 10px;
             font-weight: 700;
             text-decoration: none;
-            line-height: 1;
           }
         }
       }

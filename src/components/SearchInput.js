@@ -14,12 +14,15 @@ const SearchInput = ( {
 			id="nfdHelpcenterInputWrapper"
 			role="search"
 			aria-label={ __( 'Search Help Center', 'wp-module-help-center' ) }
-			style={ { bottom: isFooterVisible ? '350px' : '0px' } }
+			style={ { bottom: isFooterVisible ? '375px' : '0px' } }
 		>
 			<div className="search-container__wrapper">
 				<div className="attribute">
-					<p>
-						{ __( 'Ask about WordPress', 'wp-module-help-center' ) }
+					<p className="hc-input-label">
+						{ __(
+							'Ask anything about WordPress',
+							'wp-module-help-center'
+						) }
 					</p>
 					<p className="hc-input-counter">
 						<span>
