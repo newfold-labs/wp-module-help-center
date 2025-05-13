@@ -1,13 +1,13 @@
-import { useEffect, useState, useRef, useMemo } from '@wordpress/element';
-import ResultFeedback from './ResultFeedback';
-import ResultContent from './ResultContent';
-import ResultHeader from './ResultHeader';
+import { useEffect, useMemo, useRef, useState } from '@wordpress/element';
+import { marked } from 'marked';
 import {
-	useRevealText,
 	LocalStorageUtils,
 	processContentForMarkdown,
+	useRevealText,
 } from '../../utils';
-import { marked } from 'marked';
+import ResultContent from './ResultContent';
+import ResultFeedback from './ResultFeedback';
+import ResultHeader from './ResultHeader';
 
 export const Result = ( {
 	content,
@@ -23,6 +23,7 @@ export const Result = ( {
 	isNewResult,
 	wrapper,
 	feedbackSubmitted,
+	setDisliked,
 } ) => {
 	const isNewEntry =
 		isNewResult && index === LocalStorageUtils.getResultInfo().length - 1;
@@ -37,7 +38,7 @@ export const Result = ( {
 
 	const adjustHeightAndScroll = () => {
 		const viewportHeight = window.innerHeight;
-		const minHeight = viewportHeight - 332;
+		const minHeight = viewportHeight - 170;
 		responseRef.current.style.minHeight = `${ minHeight }px`;
 		const scrollDistance = wrapper.current.scrollHeight;
 		wrapper.current.scrollBy( {
@@ -90,7 +91,11 @@ export const Result = ( {
 				source={ source }
 			/>
 			{ shouldShowFeedback() && (
-				<ResultFeedback postId={ postId } source={ source } />
+				<ResultFeedback
+					postId={ postId }
+					source={ source }
+					setDisliked={ setDisliked }
+				/>
 			) }
 		</div>
 	);

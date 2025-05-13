@@ -229,11 +229,9 @@ export function scrollToBottom( wrapperRef, resultsContainerRef ) {
 		behavior: 'auto',
 	} );
 
-	setTimeout( () => {
-		if ( resultsContainerRef?.current ) {
-			resultsContainerRef.current.style.visibility = 'visible';
-		}
-	}, 100 );
+	if ( resultsContainerRef?.current ) {
+		resultsContainerRef.current.style.visibility = 'visible';
+	}
 }
 
 export function adjustPadding( wrapperRef, suggestionsRef, showSuggestions ) {
