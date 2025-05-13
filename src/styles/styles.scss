@@ -423,7 +423,7 @@ body:is(.page, .post-php, .post-new-php) {
   background-color: #f3f7fa;
 
   &__breakline {
-    padding: 0 15px;
+    padding: 20px 15px 0 15px;
     border: none;
     color: #e7e7e7;
 
@@ -453,7 +453,7 @@ body:is(.page, .post-php, .post-new-php) {
     }
 
     .helpcenter-supportinfo__text {
-      padding: 20px 0;
+      padding: 15px 0 30px 0;
     }
 
     .helpcenter-supportinfo__telephone {
@@ -487,56 +487,59 @@ body:is(.page, .post-php, .post-new-php) {
     }
   }
 
-  .hc-banner {
-    padding: 10px 15px 20px 15px;
-    background-image: url(../icons/eclipse.png);
-    background-size: 100% 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  .hc-banner__wrapper{
+    position: relative;
+    height: 210px;
 
-    .hc-banner-content {
-      position: relative;
-      padding-top: 18px;
-
-      &__heading {
-        font-size: 13px;
-        font-weight: 590;
-        margin: 0 0 15px 0;
-      }
-
-      &__body {
-        font-size: 12px;
-        width: 88%;
-        margin: 0 0 15px 0;
-      }
-
-      &__cta {
-        display: flex;
-
-        &--button {
-          height: 30px;
-          letter-spacing: 0;
+    .hc-banner {
+      position: absolute;
+      bottom: 0;
+      z-index: 1;
+      padding: 10px 15px 20px 15px;
+      background-color: transparent;  
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+  
+      .hc-banner-content {
+  
+        &__heading {
+          font-size: 13px;
+          font-weight: 590;
+          margin: 0 0 15px 0;
+        }
+  
+        &__body {
           font-size: 12px;
-          background-color: #121212;
-          color: #fff;
-          border-radius: 5px;
-          border: none;
-          padding: 8px 10px;
-          font-weight: 700;
-          text-decoration: none;
-          line-height: 1;
+          width: 88%;
+          margin: 0 0 15px 0;
+        }
+  
+        &__cta {
+          display: flex;
+  
+          &--button {
+            height: 30px;
+            letter-spacing: 0;
+            font-size: 12px;
+            background-color: #121212;
+            color: #fff;
+            border-radius: 5px;
+            border: none;
+            padding: 8px 10px;
+            font-weight: 700;
+            text-decoration: none;
+            line-height: 1;
+          }
         }
       }
-
-      &__LaptopIcon {
-        position: absolute;
-        bottom: -20px;
-        right: -15px;
-      }
+    }
+  
+    .hc-banner-background {
+      position: absolute;
+      bottom: -5px;
+      width: 100%;
     }
   }
 }

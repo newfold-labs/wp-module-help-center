@@ -23,7 +23,7 @@ export const SuggestionList = ( {
 			className="suggestions-wrapper"
 			id="suggestionsWrapper"
 			ref={ suggestionsRef }
-			style={ { bottom: isFooterVisible ? '430px' : '90px' } }
+			style={ { bottom: isFooterVisible ? '440px' : '90px' } }
 		>
 			{ multiResults.hits.length > 0 && (
 				<p>

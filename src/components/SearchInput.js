@@ -14,7 +14,7 @@ const SearchInput = ( {
 			id="nfdHelpcenterInputWrapper"
 			role="search"
 			aria-label={ __( 'Search Help Center', 'wp-module-help-center' ) }
-			style={ { bottom: isFooterVisible ? '340px' : '0px' } }
+			style={ { bottom: isFooterVisible ? '350px' : '0px' } }
 		>
 			<div className="search-container__wrapper">
 				<div className="attribute">
