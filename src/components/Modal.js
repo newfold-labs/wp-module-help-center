@@ -54,6 +54,7 @@ const Modal = ( { onClose } ) => {
 					<CloseIcon aria-hidden="true" />
 				</button>
 			</div>
+			<hr className="nfd-hc-model__hr" />
 			<div
 				id="helpcenter-modal-description"
 				className="nfd-hc-modal__content"
