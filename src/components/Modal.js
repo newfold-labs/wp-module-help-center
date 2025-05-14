@@ -1,7 +1,7 @@
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { ReactComponent as CloseIcon } from '../icons/close.svg';
-import { ReactComponent as Help } from '../icons/helpcenter-icon.svg';
+import { ReactComponent as Help } from '../icons/helpcenter-chat-bubble-icon.svg';
 import Footer from './Footer';
 import HelpCenter from './HelpCenter';
 
