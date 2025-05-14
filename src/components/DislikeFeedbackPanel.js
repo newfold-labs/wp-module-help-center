@@ -38,18 +38,18 @@ const DislikeFeedbackPanel = ({ setDisliked }) => {
 							'wp-module-help-center'
 						)}
 						<br />
-						{__('Call at', 'wp-module-help-center')}
+						{__('Call at ', 'wp-module-help-center')}
 						<span>
 							<a href="tel:8884014678">888-401-4678</a>
 						</span>
-						{__('or', 'wp-module-help-center')}
+						{__(' or ', 'wp-module-help-center')}
 						<span>
 							<a href="https://www.bluehost.com/contact">
 								Chat Live
 							</a>
 						</span>
 						{__(
-							'with one of our support agents — we will assist you as soon as possible.',
+							' with one of our support agents — we will assist you as soon as possible.',
 							'wp-module-help-center'
 						)}
 					</li>

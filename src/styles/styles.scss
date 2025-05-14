@@ -389,7 +389,7 @@ body:is(.page, .post-php, .post-new-php) {
 
 .dislike-feedback {
   font-size: 13px;
-  margin: 20px;
+  margin: 0 20px 10px;
   font-weight: 400;
 
   .back-arrow {
@@ -424,7 +424,7 @@ body:is(.page, .post-php, .post-new-php) {
   }
 
   .dislike-feedback-icon {
-    margin: 25px;
+    margin: 10px 25px;
     display: flex;
     justify-content: center;
   }
