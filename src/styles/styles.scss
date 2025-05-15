@@ -1,3 +1,4 @@
+/* stylelint-disable at-rule-no-unknown */
 /* stylelint-disable selector-class-pattern */
 @use './modal';
 
@@ -5,16 +6,30 @@ $blue: #196bde;
 $white: #fff;
 $light-gray: #f0f3f5;
 $feedback-bg: #e6fff4;
-$hover-blue: rgba(57, 172, 229, 0.1);
+$hover-blue: rgb(57 172 229 / 10%);
 $dark-gray: #1d1d1f;
 $feedback-negative: #ffdcdc;
 $border-light-gray: #dcdcdc;
 $border-color-button: #b2bcc2;
 $box-shadow-hover: #3575d3;
 $box-shadow-light: #dddfe0;
-$box-shadow-dark: rgba(0, 0, 0, 0.25);
+$box-shadow-dark: rgb(0 0 0 / 25%);
 $gray-text: #394150;
 $blue-night-sky: #7a889d;
+
+%padding-x-23 {
+  padding-left: 23px;
+  padding-right: 23px;
+}
+
+.nfd-hc-seperator{
+
+  @extend %padding-x-23;
+  
+  hr{
+    margin: 0;
+  }
+}
 
 #nfd-help-center {
 
@@ -28,6 +43,7 @@ $blue-night-sky: #7a889d;
   height: calc(100vh - 170px);
   overflow-y: auto;
   z-index: 10;
+
 
   p {
     font-size: 14px;
@@ -85,7 +101,7 @@ $blue-night-sky: #7a889d;
     bottom: 0;
 
     .search-container__wrapper {
-      padding: 5px 23px 12px 23px;
+      padding: 5px 23px 12px;
 
       .search-container {
         position: relative;
@@ -161,7 +177,10 @@ $blue-night-sky: #7a889d;
   }
 
   .suggestions-wrapper {
-    padding: 0 12px;
+
+    @extend %padding-x-23;
+    padding-bottom: 15px;
+     
     position: fixed;
     width: 356px;
     bottom: 90px;
@@ -205,7 +224,7 @@ $blue-night-sky: #7a889d;
   .feedback-container {
     display: flex;
     justify-content: space-between;
-    padding: 15px 23px;
+    padding: 15px 0;
 
     .feedback-button {
       width: 29px;
@@ -244,29 +263,22 @@ $blue-night-sky: #7a889d;
 
   .hc-results-container {
 
+    @extend %padding-x-23;
+    
     .helpcenter-results {
-      padding: 0 12px;
+      padding: 0;
     }
 
     .helpcenter-question-block {
-      display: flex;
-      align-items: center;
-      font-size: 13px;
-      line-height: 19px;
-      padding: 8px 12px;
-      background: #f4f8fc;
-      gap: 8px;
-
-      .helpcenter-question__user-avatar {
-        height: 24px;
-      }
+      font-size: 16px;
+      line-height: 1.5;
+      font-weight: 600;
+      padding: 20px 0 5px 0;
     }
 
     .helpcenter-result-block {
-      display: flex;
-      align-items: stretch;
-      gap: 8px;
-      padding: 12px;
+      padding: 12px 0 0 0 ;
+      border-bottom: 1px solid rgba(231, 231, 231, 1);
 
       /* Reset default styles */
       ul,
@@ -281,10 +293,6 @@ $blue-night-sky: #7a889d;
         margin: 0;
         padding: 0;
       }
-
-      &__aistars {
-        padding-top: 12px;
-      }
     }
   }
 }
@@ -297,7 +305,7 @@ $blue-night-sky: #7a889d;
   right: 0;
   background: $white;
   display: block !important;
-  box-shadow: 0 4px 4px 8px rgba(95, 172, 234, 0.1);
+  box-shadow: 0 4px 4px 8px rgb(95 172 234 / 10%);
   z-index: 9999;
 }
 
@@ -307,7 +315,7 @@ $blue-night-sky: #7a889d;
 
 .toplevel_page_bluehost {
 
-  @media screen and (min-width: 1814px) {
+  @media screen and (width >= 1814px) {
 
     .wpcontent-container {
       display: flex;
@@ -381,9 +389,9 @@ body:is(.page, .post-php, .post-new-php) {
 }
 
 .hc-input-error-message {
-  color: rgb(255, 126, 126);
+  color: rgb(255 126 126);
   font-size: 12px;
-  margin: 5px 0 0 0;
+  margin: 5px 0 0;
 }
 
 .dislike-feedback {
@@ -437,7 +445,7 @@ body:is(.page, .post-php, .post-new-php) {
   color:#000;
 
   &__breakline {
-    padding: 20px 23px 0 23px;
+    padding: 20px 23px 0;
     border: none;
     color: #e7e7e7;
 
@@ -447,14 +455,14 @@ body:is(.page, .post-php, .post-new-php) {
   }
 
   .helpcenter-supportinfo__wrapper {
-    padding: 15px 23px 0 23px;
+    padding: 15px 23px 0;
     
     .helpcenter-supportinfo__breakline {
       margin: 0;
     }
 
     .helpcenter-supportinfo__text {
-      padding: 15px 0 30px 0;
+      padding: 15px 0 30px;
 
       &--heading {
         font-size: 13px;
@@ -513,7 +521,7 @@ body:is(.page, .post-php, .post-new-php) {
       position: absolute;
       bottom: 0;
       z-index: 1;
-      padding: 10px 23px 20px 23px;
+      padding: 10px 23px 20px;
       background-color: transparent;  
       display: flex;
       flex-direction: column;
@@ -521,17 +529,17 @@ body:is(.page, .post-php, .post-new-php) {
       align-items: center;
   
       .hc-banner-content {
-  
+
         &__heading {
           font-size: 13px;
           font-weight: 500;
-          margin: 0 0 15px 0;
+          margin: 0 0 15px;
         }
   
         &__body {
           font-size: 12px;
           width: 90%;
-          margin: 0 0 15px 0;
+          margin: 0 0 15px;
         }
   
         &__cta {

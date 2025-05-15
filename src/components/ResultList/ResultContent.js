@@ -1,4 +1,3 @@
-import { ReactComponent as AIStars } from '../../icons/ai-stars.svg';
 
 function ResultContent( {
 	isLoading,
@@ -37,9 +36,9 @@ function ResultContent( {
 
 	return (
 		<div className="helpcenter-result-block">
-			<div className="helpcenter-result-block__aistars">
+			{ /* <div className="helpcenter-result-block__aistars">
 				<AIStars />
-			</div>
+			</div> */ }
 			<div>{ renderContentOrLoading() }</div>
 		</div>
 	);

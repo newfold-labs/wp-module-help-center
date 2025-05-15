@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { ReactComponent as AIStars } from '../icons/ai-stars.svg';
 import { LocalStorageUtils, useRevealText } from '../utils';
 
 const HelpCenterIntro = () => {
@@ -33,9 +32,9 @@ const HelpCenterIntro = () => {
 						: 'flex',
 			} }
 		>
-			<div>
+			{ /* <div>
 				<AIStars />
-			</div>
+			</div> */ }
 			<div
 				className="helpcenter-intro__text"
 				dangerouslySetInnerHTML={ { __html: revealedIntro } }
