@@ -403,6 +403,7 @@ const HelpCenter = (props) => {
 				handleSubmit={handleSubmit}
 				errorMsg={state.errorMsg}
 				isFooterVisible={props.isFooterVisible}
+				disliked={state.disliked}
 			/>
 		</div>
 	);
