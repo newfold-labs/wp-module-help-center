@@ -225,21 +225,23 @@ $blue-night-sky: #7a889d;
     display: flex;
     justify-content: space-between;
     padding: 15px 0;
+    font-weight: 500;
+
+    .feedback-question {
+     
+      p{
+        margin: 3px 0;
+      }
+    }
 
     .feedback-button {
+      all: unset;
       width: 29px;
       height: 29px;
-      background-size: cover;
-      background-position: center;
-      background-color: transparent;
       border: none;
       font-size: 18px;
       cursor: pointer;
       box-shadow: none;
-
-      .feedback-button-emoji {
-        margin-right: 5px;
-      }
 
       :hover {
         filter: brightness(1.05);
@@ -273,11 +275,11 @@ $blue-night-sky: #7a889d;
       font-size: 16px;
       line-height: 1.5;
       font-weight: 600;
-      padding: 20px 0 5px 0;
+      padding: 25px 0 5px 0;
     }
 
     .helpcenter-result-block {
-      padding: 12px 0 0 0 ;
+      padding: 0 0 12px 0 ;
       border-bottom: 1px solid rgba(231, 231, 231, 1);
 
       /* Reset default styles */
