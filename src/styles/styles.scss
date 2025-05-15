@@ -424,7 +424,7 @@ body:is(.page, .post-php, .post-new-php) {
   }
 
   .dislike-feedback-icon {
-    margin: 10px 25px;
+    margin: 40px;
     display: flex;
     justify-content: center;
   }
@@ -509,6 +509,7 @@ body:is(.page, .post-php, .post-new-php) {
   .hc-banner__wrapper{
     position: relative;
     height: 210px;
+    width: 360px;
 
     .hc-banner {
       position: absolute;
