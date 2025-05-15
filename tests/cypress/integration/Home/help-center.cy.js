@@ -52,7 +52,7 @@ describe(
 				.and('be.visible')
 				.click()
 
-			cy.get('.nfd-help-center').should('exist').and('be.visible')
+			cy.get('#nfd-help-center').should('exist').and('be.visible')
 
 		});
 
@@ -125,12 +125,12 @@ describe(
 				.and('be.visible')
 				.click()
 
-			cy.get('.nfd-help-center').should('exist').and('be.visible')
+			cy.get('#nfd-help-center').should('exist').and('be.visible')
 			cy.get('.nfd-hc-modal__header__close-button')
 				.should('be.visible')
 				.click()
 
-			cy.get('.nfd-help-center').should('not.exist')
+			cy.get('#nfd-help-center').should('not.be.visible')
 
 		});
 
