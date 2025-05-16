@@ -44,6 +44,10 @@ const HelpCenter = ( props ) => {
 	const brand = CapabilityAPI.getBrand();
 
 	useEffect( () => {
+		props.setDisliked( state.disliked );
+	}, [ state.disliked ] );
+
+	useEffect( () => {
 		getHelpStatus();
 
 		// Add event listener for localStorage changes
@@ -413,6 +417,7 @@ const HelpCenter = ( props ) => {
 				handleSubmit={ handleSubmit }
 				errorMsg={ state.errorMsg }
 				isFooterVisible={ props.isFooterVisible }
+				disliked={ state.disliked }
 			/>
 		</div>
 	);

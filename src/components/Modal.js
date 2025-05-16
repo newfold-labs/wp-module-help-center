@@ -13,6 +13,8 @@ const Modal = ( { onClose } ) => {
 		LocalStorageUtils.getResultInfo()?.length < 1
 	);
 
+	const [ disliked, setDisliked ] = useState( false );
+
 	useEffect( () => {
 		const helpVisible = window.newfoldHelpCenter?.closeOnLoad
 			? false
@@ -64,9 +66,10 @@ const Modal = ( { onClose } ) => {
 				<HelpCenter
 					isFooterVisible={ isFooterVisible }
 					setIsFooterVisible={ setIsFooterVisible }
+					setDisliked={ setDisliked }
 				/>
 			</div>
-			{ isFooterVisible && <Footer /> }
+			{ isFooterVisible && <Footer disliked={ disliked } /> }
 		</div>
 	);
 };

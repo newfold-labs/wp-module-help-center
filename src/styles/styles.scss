@@ -402,7 +402,7 @@ body:is(.page, .post-php, .post-new-php) {
 
 .dislike-feedback {
   font-size: 13px;
-  margin: 20px;
+  margin: 0 20px 10px;
   font-weight: 400;
 
   .back-arrow {
@@ -413,7 +413,7 @@ body:is(.page, .post-php, .post-new-php) {
     cursor: pointer;
 
     p {
-      font-weight: 510;
+      font-weight: 500;
       color: #356cd8;
       margin: 0;
     }
@@ -437,7 +437,7 @@ body:is(.page, .post-php, .post-new-php) {
   }
 
   .dislike-feedback-icon {
-    margin: 25px;
+    margin: 40px;
     display: flex;
     justify-content: center;
   }
@@ -522,6 +522,7 @@ body:is(.page, .post-php, .post-new-php) {
   .hc-banner__wrapper{
     position: relative;
     height: 210px;
+    width: 360px;
 
     .hc-banner {
       position: absolute;
