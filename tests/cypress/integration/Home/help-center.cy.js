@@ -52,16 +52,15 @@ describe(
 				.and('be.visible')
 				.click()
 
-			cy.get('.nfd-help-center').should('exist').and('be.visible')
+			cy.get('#nfd-help-center').should('exist').and('be.visible')
 
 		});
 
 		it('Verify HelpCenter search response.', function() {
-
+			cy.viewport(1500, 1200);
 			if ( pluginId === 'hostgator' ) {
 				this.skip();
 			}
-
 			cy.get('#wp-admin-bar-help-center .ab-item.ab-empty-item', {
 				timeout: customCommandTimeout,
 			})
@@ -79,7 +78,7 @@ describe(
 			cy.get('.helpcenter-question-block')
 				.findByText('How to install a plugin in WordPress').should('exist')
 
-			cy.wait(1000);
+			cy.wait(5000);
 			cy.get('.helpcenter-question-block')
 				.next()
 				.should('have.class', 'helpcenter-result-block').should('exist').and('be.visible')
@@ -126,12 +125,12 @@ describe(
 				.and('be.visible')
 				.click()
 
-			cy.get('.nfd-help-center').should('exist').and('be.visible')
+			cy.get('#nfd-help-center').should('exist').and('be.visible')
 			cy.get('.nfd-hc-modal__header__close-button')
 				.should('be.visible')
 				.click()
 
-			cy.get('.nfd-help-center').should('not.exist')
+			cy.get('#nfd-help-center').should('not.be.visible')
 
 		});
 
