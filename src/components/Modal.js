@@ -8,19 +8,19 @@ import HelpCenter from './HelpCenter';
 import { toggleHelp } from '..';
 import { LocalStorageUtils } from '../utils';
 
-const Modal = ({ onClose }) => {
-	const [isFooterVisible, setIsFooterVisible] = useState(
+const Modal = ( { onClose } ) => {
+	const [ isFooterVisible, setIsFooterVisible ] = useState(
 		LocalStorageUtils.getResultInfo()?.length < 1
 	);
 
-	const [disliked, setDisliked] = useState(false);
+	const [ disliked, setDisliked ] = useState( false );
 
-	useEffect(() => {
+	useEffect( () => {
 		const helpVisible = window.newfoldHelpCenter?.closeOnLoad
 			? false
 			: LocalStorageUtils.getHelpVisible();
-		toggleHelp(helpVisible);
-	}, []);
+		toggleHelp( helpVisible );
+	}, [] );
 
 	return (
 		<div
@@ -39,32 +39,34 @@ const Modal = ({ onClose }) => {
 						<Help />
 					</span>
 					<span>
-						{__('Help with WordPress', 'wp-module-help-center')}
+						{ __( 'Help with WordPress', 'wp-module-help-center' ) }
 					</span>
 				</h3>
 				<button
-					aria-label={__('Close Help Modal', 'wp-module-help-center')}
-					title={__('Close Help Modal', 'wp-module-help-center')}
+					aria-label={ __(
+						'Close Help Modal',
+						'wp-module-help-center'
+					) }
+					title={ __( 'Close Help Modal', 'wp-module-help-center' ) }
 					className="nfd-hc-modal__header__close-button"
-					onClick={() => {
+					onClick={ () => {
 						onClose();
-					}}
+					} }
 				>
 					<CloseIcon aria-hidden="true" />
 				</button>
 			</div>
-			<hr className="nfd-hc-modal__hr" />
 			<div
 				id="helpcenter-modal-description"
 				className="nfd-hc-modal__content"
 			>
 				<HelpCenter
-					isFooterVisible={isFooterVisible}
-					setIsFooterVisible={setIsFooterVisible}
-					setDisliked={setDisliked}
+					isFooterVisible={ isFooterVisible }
+					setIsFooterVisible={ setIsFooterVisible }
+					setDisliked={ setDisliked }
 				/>
 			</div>
-			{isFooterVisible && <Footer disliked={disliked} />}
+			{ isFooterVisible && <Footer disliked={ disliked } /> }
 		</div>
 	);
 };
