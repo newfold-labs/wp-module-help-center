@@ -36,9 +36,6 @@ function ResultContent( {
 
 	return (
 		<div className="helpcenter-result-block">
-			{ /* <div className="helpcenter-result-block__aistars">
-				<AIStars />
-			</div> */ }
 			<div>{ renderContentOrLoading() }</div>
 		</div>
 	);

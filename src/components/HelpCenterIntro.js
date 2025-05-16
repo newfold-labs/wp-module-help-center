@@ -32,9 +32,6 @@ const HelpCenterIntro = () => {
 						: 'flex',
 			} }
 		>
-			{ /* <div>
-				<AIStars />
-			</div> */ }
 			<div
 				className="helpcenter-intro__text"
 				dangerouslySetInnerHTML={ { __html: revealedIntro } }

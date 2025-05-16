@@ -19,9 +19,6 @@ const NoResults = ( { isNewResult } ) => {
 		<div ref={ responseRef } className="helpcenter-response-block">
 			<ResultHeader noResult={ true } isNewEntry={ isNewResult } />
 			<div className="helpcenter-result-block">
-				{ /* <div className="helpcenter-result-block__aistars">
-					<AIStars />
-				</div> */ }
 				<div>
 					<p>
 						{ __(
