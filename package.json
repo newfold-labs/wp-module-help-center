@@ -37,7 +37,6 @@
 		"cypress": "^14.3.1",
 		"cypress-axe": "^1.5.0",
 		"stylelint": "16.18.0",
-		"stylelint-config-standard-scss": "15.0.0",
 		"stylelint-scss": "6.12.0"
 	}
 }

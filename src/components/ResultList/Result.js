@@ -38,7 +38,7 @@ export const Result = ( {
 
 	const adjustHeightAndScroll = () => {
 		const viewportHeight = window.innerHeight;
-		const minHeight = viewportHeight - 170;
+		const minHeight = viewportHeight - 185;
 		responseRef.current.style.minHeight = `${ minHeight }px`;
 		const scrollDistance = wrapper.current.scrollHeight;
 		wrapper.current.scrollBy( {
