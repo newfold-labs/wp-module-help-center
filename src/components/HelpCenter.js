@@ -278,6 +278,15 @@ const HelpCenter = ( props ) => {
 				setState( ( prev ) => ( { ...prev, resultContent } ) );
 			}
 
+			if ( ! state.searchInput ) {
+				// If no input, just mark init as complete
+				setState( ( prev ) => ( {
+					...prev,
+					initComplete: true,
+				} ) );
+				return;
+			}
+
 			const multiSearchResults =
 				await MultiSearchAPI.fetchMultiSearchResults(
 					state.searchInput,
