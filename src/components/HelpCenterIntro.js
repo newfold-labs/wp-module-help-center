@@ -11,7 +11,7 @@ const HelpCenterIntro = () => {
 	}, [] );
 
 	const introText = __(
-		'Hi! I’m your WordPress AI assistant. </br></br> Ask me how to do things in WordPress and I’ll provide step by step instructions.</br></br> I’m still learning so I don’t have all the answers just yet.',
+		'Hey there! I’m here to help you find your way around WordPress. </br></br> If you’re not sure how to do something, just ask — I’ll walk you through it step by step. I’m still learning, so I might not have every answer, but I’ll do my best to help!',
 		'wp-module-help-center'
 	);
 
