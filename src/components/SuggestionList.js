@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { ReactComponent as Go } from '../icons/go.svg';
 
@@ -9,6 +10,26 @@ export const SuggestionList = ( {
 	handleSuggestionsClick,
 	isFooterVisible,
 } ) => {
+	const [ bottomOffset, setBottomOffset ] = useState( '95px' );
+
+	useEffect( () => {
+		const calculateBottom = () => {
+			const inputWrapper = document.getElementById(
+				'nfdHelpcenterInputWrapper'
+			);
+			const footer = document.querySelector( '.nfd-hc-modal__footer' );
+
+			const inputHeight = inputWrapper?.offsetHeight || 0;
+			const footerHeight = isFooterVisible
+				? footer?.offsetHeight || 0
+				: 0;
+
+			setBottomOffset( `${ inputHeight + footerHeight }px` );
+		};
+
+		calculateBottom();
+	}, [ isFooterVisible ] );
+
 	// Handle the click for individual suggestions
 	const onSuggestionClick = ( result, postTitle ) => {
 		handleSuggestionsClick( result, postTitle );
@@ -23,7 +44,7 @@ export const SuggestionList = ( {
 			className="suggestions-wrapper"
 			id="suggestionsWrapper"
 			ref={ suggestionsRef }
-			style={ { bottom: isFooterVisible ? '465px' : '90px' } }
+			style={ { bottom: bottomOffset } }
 		>
 			{ multiResults.hits.length > 0 && (
 				<p>
