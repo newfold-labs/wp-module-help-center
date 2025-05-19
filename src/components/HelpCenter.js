@@ -358,6 +358,7 @@ const HelpCenter = ( props ) => {
 
 	const handleSubmit = async () => {
 		if ( validateInput() ) {
+			props.setIsFooterVisible( false );
 			setState( ( prev ) => ( {
 				...prev,
 				disliked: false,
