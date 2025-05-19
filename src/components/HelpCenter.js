@@ -12,6 +12,7 @@ import {
 	getResultMatches,
 	scrollToBottom,
 } from '../utils';
+import DislikeFeedbackPanel from './DislikeFeedbackPanel';
 import HelpCenterIntro from './HelpCenterIntro';
 import ResultList from './ResultList';
 import SearchInput from './SearchInput';
@@ -33,6 +34,7 @@ const HelpCenter = ( props ) => {
 		showSuggestions: false,
 		initComplete: false,
 		errorMsg: '',
+		disliked: false,
 	} );
 
 	const suggestionsRef = useRef();
@@ -40,6 +42,10 @@ const HelpCenter = ( props ) => {
 	const wrapper = useRef();
 
 	const brand = CapabilityAPI.getBrand();
+
+	useEffect( () => {
+		props.setDisliked( state.disliked );
+	}, [ state.disliked ] );
 
 	useEffect( () => {
 		getHelpStatus();
@@ -63,17 +69,26 @@ const HelpCenter = ( props ) => {
 	}, [] );
 
 	useEffect( () => {
-		// If the wrapper is visible or we’ve just finished init, scroll
+		checkFooterVisibility();
 		if ( state.initComplete ) {
-			setTimeout( () => {
-				scrollToBottom( wrapper, resultsContainer );
-			}, 100 );
+			adjustPadding( wrapper, suggestionsRef, state.showSuggestions );
+			scrollToBottom( wrapper, resultsContainer );
 		}
-	}, [ state.initComplete ] );
+		// If the wrapper is visible or we’ve just finished init, scroll
+	}, [ state.initComplete, state.disliked ] );
 
 	useEffect( () => {
 		if ( state.visible ) {
+			setState( ( prev ) => ( {
+				...prev,
+				disliked: false,
+			} ) );
 			fetchInitialData();
+			checkFooterVisibility();
+			adjustPadding( wrapper, suggestionsRef, state.showSuggestions );
+			setTimeout( () => {
+				scrollToBottom( wrapper, resultsContainer );
+			}, 500 );
 		}
 	}, [ state.visible ] );
 
@@ -81,6 +96,11 @@ const HelpCenter = ( props ) => {
 		// Always adjust padding if any of these dependencies change
 		adjustPadding( wrapper, suggestionsRef, state.showSuggestions );
 	}, [ state.showSuggestions ] );
+
+	const checkFooterVisibility = () =>
+		props.setIsFooterVisible(
+			LocalStorageUtils.getResultInfo()?.length < 1 || state.disliked
+		);
 
 	const getHelpStatus = async () => {
 		try {
@@ -244,12 +264,14 @@ const HelpCenter = ( props ) => {
 		setState( ( prev ) => ( {
 			...prev,
 			showSuggestions: false,
+			disliked: false,
 		} ) );
 		populateSearchResult(
 			result?.hits[ 0 ]?.document?.post_content,
 			result?.hits[ 0 ]?.document?.id,
 			postTitle
 		);
+		props.setIsFooterVisible( false );
 	};
 
 	const fetchInitialData = async () => {
@@ -258,6 +280,15 @@ const HelpCenter = ( props ) => {
 			const resultContent = LocalStorageUtils.getResultInfo();
 			if ( resultContent ) {
 				setState( ( prev ) => ( { ...prev, resultContent } ) );
+			}
+
+			if ( ! state.searchInput ) {
+				// If no input, just mark init as complete
+				setState( ( prev ) => ( {
+					...prev,
+					initComplete: true,
+				} ) );
+				return;
 			}
 
 			const multiSearchResults =
@@ -327,6 +358,11 @@ const HelpCenter = ( props ) => {
 
 	const handleSubmit = async () => {
 		if ( validateInput() ) {
+			props.setIsFooterVisible( false );
+			setState( ( prev ) => ( {
+				...prev,
+				disliked: false,
+			} ) );
 			await getAIResult();
 		}
 	};
@@ -341,19 +377,39 @@ const HelpCenter = ( props ) => {
 			id="helpcenterResultsWrapper"
 			ref={ wrapper }
 		>
-			<HelpCenterIntro />
-			<ResultList
-				{ ...state }
-				wrapper={ wrapper }
-				resultsContainer={ resultsContainer }
-				suggestionsRef={ suggestionsRef }
-				{ ...props }
-			/>
+			{ state.disliked ? (
+				<DislikeFeedbackPanel
+					setDisliked={ ( value ) =>
+						setState( ( prev ) => ( {
+							...prev,
+							disliked: value,
+						} ) )
+					}
+				/>
+			) : (
+				<>
+					<HelpCenterIntro />
+					<ResultList
+						{ ...state }
+						wrapper={ wrapper }
+						resultsContainer={ resultsContainer }
+						suggestionsRef={ suggestionsRef }
+						{ ...props }
+						setDisliked={ ( value ) =>
+							setState( ( prev ) => ( {
+								...prev,
+								disliked: value,
+							} ) )
+						}
+					/>
+				</>
+			) }
 			{ state.showSuggestions && (
 				<SuggestionList
 					suggestionsRef={ suggestionsRef }
 					multiResults={ state.multiResults }
 					handleSuggestionsClick={ handleSuggestionsClick }
+					isFooterVisible={ props.isFooterVisible }
 				/>
 			) }
 			<SearchInput
@@ -361,6 +417,8 @@ const HelpCenter = ( props ) => {
 				handleOnChange={ handleOnChange }
 				handleSubmit={ handleSubmit }
 				errorMsg={ state.errorMsg }
+				isFooterVisible={ props.isFooterVisible }
+				disliked={ state.disliked }
 			/>
 		</div>
 	);
