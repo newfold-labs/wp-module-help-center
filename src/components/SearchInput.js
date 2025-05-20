@@ -1,21 +1,199 @@
+import moduleAI from '@newfold-labs/wp-module-ai';
+import { useMemo, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { debounce } from 'lodash';
+import { useDispatch, useSelector } from 'react-redux';
+import { helpcenterActions } from '../../store/helpcenterSlice';
 import { ReactComponent as GoSearchIcon } from '../icons/paper-airplane.svg';
+import {
+	Analytics,
+	CapabilityAPI,
+	formatPostContent,
+	getResultMatches,
+	LocalStorageUtils,
+	MultiSearchAPI,
+} from '../utils';
 
-const SearchInput = ({
-	searchInput,
-	handleOnChange,
-	handleSubmit,
-	errorMsg,
-	isFooterVisible,
-	disliked,
-}) => {
+const SearchInput = () => {
+	const brand = CapabilityAPI.getBrand();
+	const dispatch = useDispatch();
+
+	const [errorMsg, setErrorMsg] = useState('');
+	const searchData = useSelector((state) => state.helpcenter);
 	let bottomValue = '0px';
 
-	if (isFooterVisible && disliked) {
+	if (searchData.isFooterVisible && searchData.disliked) {
 		bottomValue = '222px';
-	} else if (isFooterVisible) {
+	} else if (searchData.isFooterVisible) {
 		bottomValue = '375px';
 	}
+
+	const populateSearchResult = (
+		postContent,
+		postId,
+		postTitle,
+		searchSource = 'kb'
+	) => {
+		const resultContentFormatted = postContent
+			? formatPostContent(postContent)
+			: '';
+		// Retrieve existing results from local storage and using the updated persistResult method to store the result
+		LocalStorageUtils.persistResult(
+			resultContentFormatted,
+			postId,
+			postTitle
+		);
+
+		// Add new result to existing results and retrieve all results from local storage
+		dispatch(
+			helpcenterActions.updateResultContent(
+				LocalStorageUtils.getResultInfo()
+			)
+		);
+
+		if (postId) {
+			dispatch(helpcenterActions.setNewSearchResult(!!postId));
+
+			Analytics.sendEvent('help_search', {
+				label_key: 'term',
+				term: postTitle,
+				page: window.location.href.toString(),
+				search_source: searchSource,
+			});
+		}
+	};
+
+	const debouncedResults = useMemo(() => {
+		return debounce(async (query) => {
+			if (!query) {
+				dispatch(
+					helpcenterActions.updateMultiResults({
+						results: {},
+						suggestions: false,
+					})
+				);
+				return;
+			}
+
+			try {
+				const multiSearchResults =
+					await MultiSearchAPI.fetchMultiSearchResults(query, brand);
+
+				const results = multiSearchResults?.results?.[0]?.grouped_hits;
+				if (results) {
+					dispatch(
+						helpcenterActions.updateMultiResults({
+							results: { hits: results },
+							suggestions: !!results,
+						})
+					);
+				}
+			} catch (error) {
+				// eslint-disable-next-line no-console
+				console.error('Error fetching debounced results:', error);
+			}
+		}, 500);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	const checkAndPopulateResult = (hits) => {
+		if (hits?.length > 0) {
+			const resultMatches = getResultMatches(
+				searchData.searchInput,
+				hits[0]?.text_match_info?.tokens_matched,
+				hits[0]?.text_match_info?.fields_matched
+			);
+			if (resultMatches) {
+				populateSearchResult(
+					hits[0].document.post_content,
+					hits[0].document.post_id || hits[0].document.id,
+					searchData.searchInput
+				);
+				return true;
+			}
+		}
+		return false;
+	};
+
+	const getAIResult = async () => {
+		dispatch(helpcenterActions.setAIResultLoading());
+		try {
+			let hits = searchData.multiResults?.hits?.[0]?.hits;
+			const lastQuery =
+				searchData.multiResults?.results?.[0]?.request_params?.q;
+
+			if (
+				searchData.searchInput === lastQuery &&
+				checkAndPopulateResult(hits)
+			) {
+				return;
+			}
+
+			// Make a new multi-search API call if no match is found
+			const multiSearchResults =
+				await MultiSearchAPI.fetchMultiSearchResults(
+					searchData.searchInput,
+					brand
+				);
+
+			hits = multiSearchResults?.results?.[0]?.grouped_hits?.[0]?.hits;
+			if (checkAndPopulateResult(hits)) {
+				return;
+			}
+
+			const result = await moduleAI.search.getSearchResult(
+				searchData.searchInput,
+				'helpcenter'
+			);
+
+			if (result.result[0]) {
+				populateSearchResult(
+					result.result[0].text,
+					result.post_id,
+					searchData.searchInput,
+					'ai'
+				);
+			} else {
+				dispatch(helpcenterActions.setNoResult());
+			}
+		} catch (exception) {
+			// eslint-disable-next-line no-console
+			console.error('An error occurred:', exception);
+			dispatch(helpcenterActions.searchInputCatch());
+		} finally {
+			dispatch(helpcenterActions.searchInputFinally());
+			LocalStorageUtils.persistSearchInput(searchData.searchInput);
+		}
+	};
+
+	const validateInput = () => {
+		const isValid = searchData.searchInput.trim().length > 0;
+		setErrorMsg(
+			isValid
+				? ''
+				: __(
+						'Please enter a specific search term to get results.',
+						'wp-module-help-center'
+					)
+		);
+
+		return isValid;
+	};
+
+	const handleSubmit = async () => {
+		if (validateInput()) {
+			dispatch(helpcenterActions.setIsFooterVisible(false));
+			dispatch(helpcenterActions.setDisliked(false));
+			await getAIResult();
+		}
+	};
+
+	const handleOnChange = (e) => {
+		populateSearchResult('', undefined, e.target.value);
+		debouncedResults(e.target.value);
+		dispatch(helpcenterActions.updateSearchInput(e.target.value));
+	};
+
 	return (
 		<div
 			className="helpcenter-input-wrapper"
@@ -33,14 +211,19 @@ const SearchInput = ({
 						)}
 					</p>
 					<p className="hc-input-counter">
-						<span>{searchInput ? searchInput.length : 0}/144</span>
+						<span>
+							{searchData.searchInput
+								? searchData.searchInput.length
+								: 0}
+							/144
+						</span>
 					</p>
 				</div>
 				<div className="search-container">
 					<input
 						type="text"
 						id="search-input-box"
-						value={searchInput}
+						value={searchData.searchInput}
 						maxLength="144"
 						onChange={(e) => handleOnChange(e)}
 						onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}

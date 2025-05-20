@@ -1,20 +1,10 @@
 /* eslint-disable no-shadow */
+import { useSelector } from 'react-redux';
 import NoResults from './NoResults';
 import { Result } from './Result';
 
-const ResultList = ( {
-	wrapper,
-	noResult,
-	loadingQuery,
-	loadingIndex,
-	isNewResult,
-	isLoading,
-	source,
-	resultContent,
-	resultsContainer,
-	searchInput,
-	setDisliked,
-} ) => {
+const ResultList = ({ wrapper, resultsContainer }) => {
+	const hcData = useSelector)
 	return (
 		<>
 			<div
