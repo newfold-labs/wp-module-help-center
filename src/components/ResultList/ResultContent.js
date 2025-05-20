@@ -1,3 +1,4 @@
+import { useEffect, useRef } from '@wordpress/element';
 
 function ResultContent( {
 	isLoading,
@@ -8,8 +9,31 @@ function ResultContent( {
 	questionBlock,
 	content,
 } ) {
+	const resultBlockRef = useRef();
+	useEffect( () => {
+		const resultBlock = resultBlockRef.current;
+
+		if ( ! resultBlock ) {
+			return;
+		}
+
+		const handleClick = ( e ) => {
+			const anchor = e.target.closest( 'a[href*="bhmultisite.com/"]' );
+			if ( anchor && resultBlock.contains( anchor ) ) {
+				e.preventDefault();
+				const clickedText = anchor.textContent.trim();
+				console.log( 'Clicked text:', clickedText );
+			}
+		};
+
+		resultBlock.addEventListener( 'click', handleClick );
+
+		return () => {
+			resultBlock.removeEventListener( 'click', handleClick );
+		};
+	}, [ content ] );
+
 	function renderContentOrLoading() {
-		// 2) Check loading scenario
 		const isAISourceLoading =
 			isLoading &&
 			source === 'ai' &&
@@ -20,7 +44,6 @@ function ResultContent( {
 			return <div className="loading-cursor"></div>;
 		}
 
-		// 3) If there's actual content
 		if ( content && content.length > 0 ) {
 			return (
 				<p
@@ -30,12 +53,11 @@ function ResultContent( {
 			);
 		}
 
-		// 4) Otherwise, render nothing or handle other edge cases
 		return null;
 	}
 
 	return (
-		<div className="helpcenter-result-block">
+		<div className="helpcenter-result-block" ref={ resultBlockRef }>
 			<div>{ renderContentOrLoading() }</div>
 		</div>
 	);
