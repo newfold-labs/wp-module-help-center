@@ -18,13 +18,13 @@ const SearchInput = () => {
 	const brand = CapabilityAPI.getBrand();
 	const dispatch = useDispatch();
 
-	const [errorMsg, setErrorMsg] = useState('');
-	const searchData = useSelector((state) => state.helpcenter);
+	const [ errorMsg, setErrorMsg ] = useState( '' );
+	const searchData = useSelector( ( state ) => state.helpcenter );
 	let bottomValue = '0px';
 
-	if (searchData.isFooterVisible && searchData.disliked) {
+	if ( searchData.isFooterVisible && searchData.disliked ) {
 		bottomValue = '222px';
-	} else if (searchData.isFooterVisible) {
+	} else if ( searchData.isFooterVisible ) {
 		bottomValue = '375px';
 	}
 
@@ -35,7 +35,7 @@ const SearchInput = () => {
 		searchSource = 'kb'
 	) => {
 		const resultContentFormatted = postContent
-			? formatPostContent(postContent)
+			? formatPostContent( postContent )
 			: '';
 		// Retrieve existing results from local storage and using the updated persistResult method to store the result
 		const result = {
@@ -44,69 +44,75 @@ const SearchInput = () => {
 			searchInput: postTitle,
 		};
 
-		dispatch(helpcenterActions.updateHelpResultHistory(result));
+		dispatch( helpcenterActions.updateHelpResultHistory( result ) );
 
 		// Add new result to existing results and retrieve all results from local storage
 		dispatch(
-			helpcenterActions.updateResultContent(searchData.helpResultHistory)
+			helpcenterActions.updateResultContent(
+				searchData.helpResultHistory
+			)
 		);
 
-		if (postId) {
-			dispatch(helpcenterActions.setNewSearchResult(!!postId));
+		if ( postId ) {
+			dispatch( helpcenterActions.setNewSearchResult( !! postId ) );
 
-			Analytics.sendEvent('help_search', {
+			Analytics.sendEvent( 'help_search', {
 				label_key: 'term',
 				term: postTitle,
 				page: window.location.href.toString(),
 				search_source: searchSource,
-			});
+			} );
 		}
 	};
 
-	const debouncedResults = useMemo(() => {
-		return debounce(async (query) => {
-			if (!query) {
+	const debouncedResults = useMemo( () => {
+		return debounce( async ( query ) => {
+			if ( ! query ) {
 				dispatch(
-					helpcenterActions.updateMultiResults({
+					helpcenterActions.updateMultiResults( {
 						results: {},
 						suggestions: false,
-					})
+					} )
 				);
 				return;
 			}
 
 			try {
 				const multiSearchResults =
-					await MultiSearchAPI.fetchMultiSearchResults(query, brand);
+					await MultiSearchAPI.fetchMultiSearchResults(
+						query,
+						brand
+					);
 
-				const results = multiSearchResults?.results?.[0]?.grouped_hits;
-				if (results) {
+				const results =
+					multiSearchResults?.results?.[ 0 ]?.grouped_hits;
+				if ( results ) {
 					dispatch(
-						helpcenterActions.updateMultiResults({
+						helpcenterActions.updateMultiResults( {
 							results: { hits: results },
-							suggestions: !!results,
-						})
+							suggestions: !! results,
+						} )
 					);
 				}
-			} catch (error) {
+			} catch ( error ) {
 				// eslint-disable-next-line no-console
-				console.error('Error fetching debounced results:', error);
+				console.error( 'Error fetching debounced results:', error );
 			}
-		}, 500);
+		}, 500 );
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [] );
 
-	const checkAndPopulateResult = (hits) => {
-		if (hits?.length > 0) {
+	const checkAndPopulateResult = ( hits ) => {
+		if ( hits?.length > 0 ) {
 			const resultMatches = getResultMatches(
 				searchData.searchInput,
-				hits[0]?.text_match_info?.tokens_matched,
-				hits[0]?.text_match_info?.fields_matched
+				hits[ 0 ]?.text_match_info?.tokens_matched,
+				hits[ 0 ]?.text_match_info?.fields_matched
 			);
-			if (resultMatches) {
+			if ( resultMatches ) {
 				populateSearchResult(
-					hits[0].document.post_content,
-					hits[0].document.post_id || hits[0].document.id,
+					hits[ 0 ].document.post_content,
+					hits[ 0 ].document.post_id || hits[ 0 ].document.id,
 					searchData.searchInput
 				);
 				return true;
@@ -116,15 +122,16 @@ const SearchInput = () => {
 	};
 
 	const getAIResult = async () => {
-		dispatch(helpcenterActions.setAIResultLoading());
+		dispatch( helpcenterActions.setAIResultLoading() );
 		try {
-			let hits = searchData.multiResults?.hits?.[0]?.hits;
+			let hits = searchData.multiResults?.hits?.[ 0 ]?.hits;
+			console.log( 'hits 1 ', hits );
 			const lastQuery =
-				searchData.multiResults?.results?.[0]?.request_params?.q;
+				searchData.multiResults?.results?.[ 0 ]?.request_params?.q;
 
 			if (
 				searchData.searchInput === lastQuery &&
-				checkAndPopulateResult(hits)
+				checkAndPopulateResult( hits )
 			) {
 				return;
 			}
@@ -135,9 +142,11 @@ const SearchInput = () => {
 					searchData.searchInput,
 					brand
 				);
+			console.log( 'multisearch result', multiSearchResults );
+			hits =
+				multiSearchResults?.results?.[ 0 ]?.grouped_hits?.[ 0 ]?.hits;
 
-			hits = multiSearchResults?.results?.[0]?.grouped_hits?.[0]?.hits;
-			if (checkAndPopulateResult(hits)) {
+			if ( checkAndPopulateResult( hits ) ) {
 				return;
 			}
 
@@ -146,23 +155,23 @@ const SearchInput = () => {
 				'helpcenter'
 			);
 
-			if (result.result[0]) {
+			if ( result.result[ 0 ] ) {
 				populateSearchResult(
-					result.result[0].text,
+					result.result[ 0 ].text,
 					result.post_id,
 					searchData.searchInput,
 					'ai'
 				);
 			} else {
-				dispatch(helpcenterActions.setNoResult());
+				dispatch( helpcenterActions.setNoResult() );
 			}
-		} catch (exception) {
+		} catch ( exception ) {
 			// eslint-disable-next-line no-console
-			console.error('An error occurred:', exception);
-			dispatch(helpcenterActions.searchInputCatch());
+			console.error( 'An error occurred:', exception );
+			dispatch( helpcenterActions.searchInputCatch() );
 		} finally {
-			dispatch(helpcenterActions.searchInputFinally());
-			LocalStorageUtils.persistSearchInput(searchData.searchInput);
+			dispatch( helpcenterActions.searchInputFinally() );
+			LocalStorageUtils.persistSearchInput( searchData.searchInput );
 		}
 	};
 
@@ -174,24 +183,24 @@ const SearchInput = () => {
 				: __(
 						'Please enter a specific search term to get results.',
 						'wp-module-help-center'
-					)
+				  )
 		);
 
 		return isValid;
 	};
 
 	const handleSubmit = async () => {
-		if (validateInput()) {
-			dispatch(helpcenterActions.setIsFooterVisible(false));
-			dispatch(helpcenterActions.setDisliked(false));
+		if ( validateInput() ) {
+			dispatch( helpcenterActions.setIsFooterVisible( false ) );
+			dispatch( helpcenterActions.setDisliked( false ) );
 			await getAIResult();
 		}
 	};
 
-	const handleOnChange = (e) => {
+	const handleOnChange = ( e ) => {
 		// populateSearchResult('', undefined, e.target.value);
-		debouncedResults(e.target.value);
-		dispatch(helpcenterActions.updateSearchInput(e.target.value));
+		debouncedResults( e.target.value );
+		dispatch( helpcenterActions.updateSearchInput( e.target.value ) );
 	};
 
 	return (
@@ -199,22 +208,22 @@ const SearchInput = () => {
 			className="helpcenter-input-wrapper"
 			id="nfdHelpcenterInputWrapper"
 			role="search"
-			aria-label={__('Search Help Center', 'wp-module-help-center')}
-			style={{ bottom: bottomValue }}
+			aria-label={ __( 'Search Help Center', 'wp-module-help-center' ) }
+			style={ { bottom: bottomValue } }
 		>
 			<div className="search-container__wrapper">
 				<div className="attribute">
 					<p className="hc-input-label">
-						{__(
+						{ __(
 							'Ask anything about WordPress',
 							'wp-module-help-center'
-						)}
+						) }
 					</p>
 					<p className="hc-input-counter">
 						<span>
-							{searchData.searchInput
+							{ searchData.searchInput
 								? searchData.searchInput.length
-								: 0}
+								: 0 }
 							/144
 						</span>
 					</p>
@@ -223,22 +232,27 @@ const SearchInput = () => {
 					<input
 						type="text"
 						id="search-input-box"
-						value={searchData.searchInput}
+						value={ searchData.searchInput }
 						maxLength="144"
-						onChange={(e) => handleOnChange(e)}
-						onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
+						onChange={ ( e ) => handleOnChange( e ) }
+						onKeyDown={ ( e ) =>
+							e.key === 'Enter' && handleSubmit()
+						}
 					/>
 					<button
-						aria-label={__('submit text', 'wp-module-help-center')}
-						title={__('submit text', 'wp-module-help-center')}
-						onClick={() => handleSubmit()}
+						aria-label={ __(
+							'submit text',
+							'wp-module-help-center'
+						) }
+						title={ __( 'submit text', 'wp-module-help-center' ) }
+						onClick={ () => handleSubmit() }
 					>
 						<GoSearchIcon />
 					</button>
 				</div>
-				{errorMsg && (
-					<p className="hc-input-error-message">{errorMsg}</p>
-				)}
+				{ errorMsg && (
+					<p className="hc-input-error-message">{ errorMsg }</p>
+				) }
 			</div>
 		</div>
 	);

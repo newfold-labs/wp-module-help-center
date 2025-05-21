@@ -1,10 +1,12 @@
 /* eslint-disable no-shadow */
+import { useSelector } from 'react-redux';
 import { Result } from './Result';
 
 const ResultList = ( { wrapper, resultsContainer } ) => {
 	const { resultContent, isLoading } = useSelector(
 		( state ) => state.helpcenter
 	);
+	console.log( 'resultContent', resultContent );
 	return (
 		<>
 			<div
