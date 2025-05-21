@@ -39,9 +39,9 @@ const SearchInput = () => {
 			: '';
 		// Retrieve existing results from local storage and using the updated persistResult method to store the result
 		const result = {
-			resultContentFormatted,
+			resultContent: resultContentFormatted,
 			postId,
-			postTitle,
+			searchInput: postTitle,
 		};
 
 		dispatch(helpcenterActions.updateHelpResultHistory(result));

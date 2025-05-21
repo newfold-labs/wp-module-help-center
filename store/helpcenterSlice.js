@@ -15,7 +15,7 @@ const initialState = {
 	initComplete: false,
 	disliked: false,
 	isFooterVisible: true,
-	helpResultHistory: new Array(3),
+	helpResultHistory: [],
 };
 
 const helpcenterSlice = createSlice({
@@ -27,7 +27,9 @@ const helpcenterSlice = createSlice({
 			state.searchInput = action.payload.SearchInput;
 		},
 		updateHelpResultHistory: (state, action) => {
-			state.helpResultHistory.shift();
+			if (state.helpResultHistory.length === 3) {
+				state.helpResultHistory.shift();
+			}
 			state.helpResultHistory.push(action.payload);
 		},
 		setDisliked: (state, action) => {
