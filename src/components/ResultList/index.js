@@ -3,8 +3,10 @@ import { useSelector } from 'react-redux';
 import NoResults from './NoResults';
 import { Result } from './Result';
 
-const ResultList = ({ wrapper, resultsContainer }) => {
-	const hcData = useSelector)
+const ResultList = ( { wrapper, resultsContainer } ) => {
+	const { resultContent, isLoading, isNewResult, noResult } = useSelector(
+		( state ) => state.helpcenter
+	);
 	return (
 		<>
 			<div
@@ -18,26 +20,18 @@ const ResultList = ({ wrapper, resultsContainer }) => {
 						<Result
 							key={ index }
 							content={ result.resultContent }
-							noResult={ noResult }
 							postId={ result.postId }
-							source={ source }
 							showFeedbackSection={
 								! result.resultContent.includes(
 									'do not possess the answer'
 								)
 							}
 							questionBlock={ result.searchInput }
-							isLoading={ isLoading }
-							loadingQuery={ loadingQuery }
-							loadingIndex={ loadingIndex }
 							index={ index }
-							isNewResult={ isNewResult }
-							searchInput={ searchInput }
 							wrapper={ wrapper }
 							feedbackSubmitted={
 								result.feedbackSubmitted || false
 							}
-							setDisliked={ setDisliked }
 						/>
 					) ) }
 				{ /* Render a placeholder for the loading state if isLoading is true */ }
@@ -49,21 +43,12 @@ const ResultList = ({ wrapper, resultsContainer }) => {
 						postId={ null }
 						source="ai"
 						showFeedbackSection={ false }
-						questionBlock={ loadingQuery }
-						isLoading={ isLoading }
-						loadingQuery={ loadingQuery }
-						loadingIndex={ loadingIndex }
 						index={ resultContent.length }
-						isNewResult={ isNewResult }
-						searchInput={ searchInput }
 						wrapper={ wrapper }
 						feedbackSubmitted={ false }
-						setDisliked={ setDisliked }
 					/>
 				) }
-				{ noResult && isNewResult && (
-					<NoResults isNewResult={ isNewResult } />
-				) }
+				{ noResult && isNewResult && <NoResults /> }
 			</div>
 		</>
 	);

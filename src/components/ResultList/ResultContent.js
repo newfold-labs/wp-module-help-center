@@ -1,12 +1,8 @@
-function ResultContent({
-	isLoading,
-	loadingQuery,
-	loadingIndex,
-	source,
-	index,
-	questionBlock,
-	content,
-}) {
+import { useSelector } from 'react-redux';
+function ResultContent( { source, index, questionBlock, content } ) {
+	const { isLoading, loadingQuery, loadingIndex } = useSelector(
+		( state ) => state.helpcenter
+	);
 	function renderContentOrLoading() {
 		// 2) Check loading scenario
 		const isAISourceLoading =
@@ -15,16 +11,16 @@ function ResultContent({
 			loadingQuery === questionBlock &&
 			loadingIndex === index;
 
-		if (isAISourceLoading) {
+		if ( isAISourceLoading ) {
 			return <div className="loading-cursor"></div>;
 		}
 
 		// 3) If there's actual content
-		if (content && content.length > 0) {
+		if ( content && content.length > 0 ) {
 			return (
 				<p
 					className="helpcenter-results"
-					dangerouslySetInnerHTML={{ __html: content }}
+					dangerouslySetInnerHTML={ { __html: content } }
 				/>
 			);
 		}
@@ -35,7 +31,7 @@ function ResultContent({
 
 	return (
 		<div className="helpcenter-result-block">
-			<div>{renderContentOrLoading()}</div>
+			<div>{ renderContentOrLoading() }</div>
 		</div>
 	);
 }
