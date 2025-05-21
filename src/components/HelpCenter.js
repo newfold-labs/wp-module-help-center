@@ -15,9 +15,8 @@ import {
 import DislikeFeedbackPanel from './DislikeFeedbackPanel';
 import HelpCenterIntro from './HelpCenterIntro';
 import ResultList from './ResultList';
+import NoResults from './ResultList/NoResults';
 import SearchInput from './SearchInput';
-
-import { SuggestionList } from './SuggestionList';
 
 const HelpCenter = ( props ) => {
 	const [ state, setState ] = useState( {
@@ -377,41 +376,48 @@ const HelpCenter = ( props ) => {
 			id="helpcenterResultsWrapper"
 			ref={ wrapper }
 		>
-			{ state.disliked ? (
-				<DislikeFeedbackPanel
-					setDisliked={ ( value ) =>
-						setState( ( prev ) => ( {
-							...prev,
-							disliked: value,
-						} ) )
-					}
-				/>
+			{ state.noResult ? (
+				<NoResults />
 			) : (
 				<>
-					<HelpCenterIntro />
-					<ResultList
-						{ ...state }
-						wrapper={ wrapper }
-						resultsContainer={ resultsContainer }
-						suggestionsRef={ suggestionsRef }
-						{ ...props }
-						setDisliked={ ( value ) =>
-							setState( ( prev ) => ( {
-								...prev,
-								disliked: value,
-							} ) )
-						}
-					/>
+					{ state.disliked ? (
+						<DislikeFeedbackPanel
+							setDisliked={ ( value ) =>
+								setState( ( prev ) => ( {
+									...prev,
+									disliked: value,
+								} ) )
+							}
+						/>
+					) : (
+						<>
+							<HelpCenterIntro />
+							<ResultList
+								{ ...state }
+								wrapper={ wrapper }
+								resultsContainer={ resultsContainer }
+								suggestionsRef={ suggestionsRef }
+								{ ...props }
+								setDisliked={ ( value ) =>
+									setState( ( prev ) => ( {
+										...prev,
+										disliked: value,
+									} ) )
+								}
+							/>
+						</>
+					) }{ ' ' }
 				</>
 			) }
-			{ state.showSuggestions && (
+
+			{ /* { state.showSuggestions && (
 				<SuggestionList
 					suggestionsRef={ suggestionsRef }
 					multiResults={ state.multiResults }
 					handleSuggestionsClick={ handleSuggestionsClick }
 					isFooterVisible={ props.isFooterVisible }
 				/>
-			) }
+			) } */ }
 			<SearchInput
 				searchInput={ state.searchInput }
 				handleOnChange={ handleOnChange }

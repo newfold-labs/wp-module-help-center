@@ -16,6 +16,7 @@ $box-shadow-light: #dddfe0;
 $box-shadow-dark: rgb(0 0 0 / 25%);
 $gray-text: #394150;
 $blue-night-sky: #7a889d;
+$blue-links-color: #356CD8;
 
 %padding-x-23 {
   padding-left: 23px;
@@ -185,7 +186,7 @@ $blue-night-sky: #7a889d;
     width: 356px;
     bottom: 90px;
     background: $white;
-    box-shadow: 2px -1px 3px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px -1px 3px 0 rgba(0, 0, 0, 0.1);
 
     .algolia-result {
       border-radius: 5px;
@@ -415,7 +416,7 @@ body:is(.page, .post-php, .post-new-php) {
 
     p {
       font-weight: 500;
-      color: #356cd8;
+      color: $blue-links-color;
       margin: 0;
     }
   }
@@ -434,7 +435,7 @@ body:is(.page, .post-php, .post-new-php) {
     font-size: 13px;
     text-decoration: none;
     font-weight: 500;
-    color: #356cd8;
+    color: $blue-links-color;
   }
 
   .dislike-feedback-icon {
@@ -483,7 +484,7 @@ body:is(.page, .post-php, .post-new-php) {
 
         a {
           text-decoration: none;
-          color: #356cd8;
+          color: $blue-links-color;
         }
 
       }
@@ -573,5 +574,32 @@ body:is(.page, .post-php, .post-new-php) {
       bottom: -5px;
       width: 100%;
     }
+  }
+}
+
+.helpcenter-noresult-wrapper {
+
+   @extend %padding-x-23;
+   
+  .helpcenter-noresult-block {
+    padding-top: 18px;
+    color:#000;
+
+      .helpcenter-noresult-icon {
+        text-align: center;
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
+
+      ul{
+        list-style: disc;
+        padding-left: 20px;
+
+        a{
+          color : $blue-links-color;
+          text-decoration: none;
+          font-weight: 400;
+        }
+      }
   }
 }

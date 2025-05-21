@@ -7,9 +7,6 @@ export default function ResultHeader( {
 } ) {
 	return (
 		<div className="helpcenter-question-block">
-			{ /* <div className="helpcenter-question__user-avatar">
-				<UserAvatar />
-			</div> */ }
 			<div>
 				{ noResult && isNewEntry
 					? LocalStorageUtils.getSearchInput()

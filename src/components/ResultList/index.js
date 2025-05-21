@@ -1,5 +1,4 @@
 /* eslint-disable no-shadow */
-import NoResults from './NoResults';
 import { Result } from './Result';
 
 const ResultList = ( {
@@ -71,9 +70,9 @@ const ResultList = ( {
 						setDisliked={ setDisliked }
 					/>
 				) }
-				{ noResult && isNewResult && (
+				{ /* { noResult && isNewResult && (
 					<NoResults isNewResult={ isNewResult } />
-				) }
+				) } */ }
 			</div>
 		</>
 	);
