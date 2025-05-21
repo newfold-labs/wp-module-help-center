@@ -1,70 +1,63 @@
 import { useEffect, useMemo, useRef, useState } from '@wordpress/element';
 import { marked } from 'marked';
-import {
-	LocalStorageUtils,
-	processContentForMarkdown,
-	useRevealText,
-} from '../../utils';
+import { useSelector } from 'react-redux';
+import { processContentForMarkdown, useRevealText } from '../../utils';
 import ResultContent from './ResultContent';
 import ResultFeedback from './ResultFeedback';
 import ResultHeader from './ResultHeader';
 
-export const Result = ( {
+export const Result = ({
 	content,
-	noResult,
 	postId,
 	source,
 	showFeedbackSection,
 	questionBlock,
-	isLoading,
-	loadingQuery,
-	loadingIndex,
 	index,
-	isNewResult,
 	wrapper,
 	feedbackSubmitted,
-	setDisliked,
-} ) => {
-	const isNewEntry =
-		isNewResult && index === LocalStorageUtils.getResultInfo().length - 1;
-	const responseRef = useRef( null );
-	const [ shouldReveal, setShouldReveal ] = useState( false );
+}) => {
+	const { isLoading, isNewResult, noResult, helpResultHistory } = useSelector(
+		(state) => state.helpcenter
+	);
+	const isNewEntry = isNewResult && index === helpResultHistory.length - 1;
+	const responseRef = useRef(null);
+	const [shouldReveal, setShouldReveal] = useState(false);
 
-	useEffect( () => {
-		if ( ( isNewEntry && responseRef.current ) || isLoading ) {
+	useEffect(() => {
+		if ((isNewEntry && responseRef.current) || isLoading) {
 			adjustHeightAndScroll();
 		}
-	}, [ isNewEntry, isLoading ] );
+	}, [isNewEntry, isLoading]);
 
 	const adjustHeightAndScroll = () => {
 		const viewportHeight = window.innerHeight;
 		const minHeight = viewportHeight - 185;
-		responseRef.current.style.minHeight = `${ minHeight }px`;
+		responseRef.current.style.minHeight = `${minHeight}px`;
 		const scrollDistance = wrapper.current.scrollHeight;
-		wrapper.current.scrollBy( {
+		wrapper.current.scrollBy({
 			top: scrollDistance,
 			left: 0,
 			behavior: 'smooth',
-		} );
+		});
 
-		setShouldReveal( true );
+		setShouldReveal(true);
 	};
 
 	const { displayedText: textToDisplay, isComplete: revealComplete } =
-		useRevealText( content || '', 50, shouldReveal );
+		useRevealText(content || '', 50, shouldReveal);
 
-	const htmlContent = useMemo( () => {
-		const processedHTMLContent = processContentForMarkdown( textToDisplay );
+	const htmlContent = useMemo(() => {
+		const processedHTMLContent = processContentForMarkdown(textToDisplay);
 		const markedContent = processedHTMLContent
-			? marked( processedHTMLContent )
+			? marked(processedHTMLContent)
 			: '';
 		return markedContent;
-	}, [ textToDisplay ] );
+	}, [textToDisplay]);
 
 	function shouldShowFeedback() {
 		return (
-			! noResult &&
-			! feedbackSubmitted &&
+			!noResult &&
+			!feedbackSubmitted &&
 			showFeedbackSection &&
 			content &&
 			revealComplete &&
@@ -73,30 +66,17 @@ export const Result = ( {
 	}
 
 	return (
-		<div ref={ responseRef } className="helpcenter-response-block">
-			<ResultHeader
-				noResult={ noResult }
-				isNewEntry={ isNewEntry }
-				questionBlock={ questionBlock }
-			/>
+		<div ref={responseRef} className="helpcenter-response-block">
+			<ResultHeader noResult={noResult} questionBlock={questionBlock} />
 			<ResultContent
-				noResult={ noResult }
-				isNewEntry={ isNewEntry }
-				content={ htmlContent }
-				isLoading={ isLoading }
-				loadingQuery={ loadingQuery }
-				loadingIndex={ loadingIndex }
-				index={ index }
-				questionBlock={ questionBlock }
-				source={ source }
+				content={htmlContent}
+				index={index}
+				questionBlock={questionBlock}
+				source={source}
 			/>
-			{ shouldShowFeedback() && (
-				<ResultFeedback
-					postId={ postId }
-					source={ source }
-					setDisliked={ setDisliked }
-				/>
-			) }
+			{shouldShowFeedback() && (
+				<ResultFeedback postId={postId} source={source} />
+			)}
 		</div>
 	);
 };

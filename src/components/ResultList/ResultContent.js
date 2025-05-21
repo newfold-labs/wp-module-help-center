@@ -1,14 +1,9 @@
 import { useEffect, useRef } from '@wordpress/element';
-
-function ResultContent( {
-	isLoading,
-	loadingQuery,
-	loadingIndex,
-	source,
-	index,
-	questionBlock,
-	content,
-} ) {
+import { useSelector } from 'react-redux';
+function ResultContent( { source, index, questionBlock, content } ) {
+	const { isLoading, loadingQuery, loadingIndex } = useSelector(
+		( state ) => state.helpcenter
+	);
 	const resultBlockRef = useRef();
 	useEffect( () => {
 		const resultBlock = resultBlockRef.current;
@@ -32,7 +27,6 @@ function ResultContent( {
 			resultBlock.removeEventListener( 'click', handleClick );
 		};
 	}, [ content ] );
-
 	function renderContentOrLoading() {
 		const isAISourceLoading =
 			isLoading &&

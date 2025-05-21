@@ -1,19 +1,10 @@
 /* eslint-disable no-shadow */
 import { Result } from './Result';
 
-const ResultList = ( {
-	wrapper,
-	noResult,
-	loadingQuery,
-	loadingIndex,
-	isNewResult,
-	isLoading,
-	source,
-	resultContent,
-	resultsContainer,
-	searchInput,
-	setDisliked,
-} ) => {
+const ResultList = ( { wrapper, resultsContainer } ) => {
+	const { resultContent, isLoading } = useSelector(
+		( state ) => state.helpcenter
+	);
 	return (
 		<>
 			<div
@@ -27,26 +18,18 @@ const ResultList = ( {
 						<Result
 							key={ index }
 							content={ result.resultContent }
-							noResult={ noResult }
 							postId={ result.postId }
-							source={ source }
 							showFeedbackSection={
 								! result.resultContent.includes(
 									'do not possess the answer'
 								)
 							}
 							questionBlock={ result.searchInput }
-							isLoading={ isLoading }
-							loadingQuery={ loadingQuery }
-							loadingIndex={ loadingIndex }
 							index={ index }
-							isNewResult={ isNewResult }
-							searchInput={ searchInput }
 							wrapper={ wrapper }
 							feedbackSubmitted={
 								result.feedbackSubmitted || false
 							}
-							setDisliked={ setDisliked }
 						/>
 					) ) }
 				{ /* Render a placeholder for the loading state if isLoading is true */ }
@@ -58,21 +41,11 @@ const ResultList = ( {
 						postId={ null }
 						source="ai"
 						showFeedbackSection={ false }
-						questionBlock={ loadingQuery }
-						isLoading={ isLoading }
-						loadingQuery={ loadingQuery }
-						loadingIndex={ loadingIndex }
 						index={ resultContent.length }
-						isNewResult={ isNewResult }
-						searchInput={ searchInput }
 						wrapper={ wrapper }
 						feedbackSubmitted={ false }
-						setDisliked={ setDisliked }
 					/>
 				) }
-				{ /* { noResult && isNewResult && (
-					<NoResults isNewResult={ isNewResult } />
-				) } */ }
 			</div>
 		</>
 	);
