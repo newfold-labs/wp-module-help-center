@@ -5,15 +5,25 @@ import { ReactComponent as Help } from '../icons/helpcenter-chat-bubble-icon.svg
 import Footer from './Footer';
 import HelpCenter from './HelpCenter';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toggleHelp } from '..';
+import { helpcenterActions } from '../../store/helpcenterSlice';
 import { LocalStorageUtils } from '../utils';
 
 const Modal = ({ onClose }) => {
+	const dispatch = useDispatch();
 	const isFooterVisible = useSelector(
 		(state) => state.helpcenter.isFooterVisible
 	);
 	useEffect(() => {
+
+		///// this need to update form db
+		dispatch(
+			helpcenterActions.initialDataSet({
+				isFooterVisible: LocalStorageUtils.getResultInfo()?.length < 1,
+				SearchInput: LocalStorageUtils.getSearchInput() || '',
+			})
+		);
 		const helpVisible = window.newfoldHelpCenter?.closeOnLoad
 			? false
 			: LocalStorageUtils.getHelpVisible();

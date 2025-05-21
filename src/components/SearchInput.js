@@ -38,17 +38,17 @@ const SearchInput = () => {
 			? formatPostContent(postContent)
 			: '';
 		// Retrieve existing results from local storage and using the updated persistResult method to store the result
-		LocalStorageUtils.persistResult(
+		const result = {
 			resultContentFormatted,
 			postId,
-			postTitle
-		);
+			postTitle,
+		};
+
+		dispatch(helpcenterActions.updateHelpResultHistory(result));
 
 		// Add new result to existing results and retrieve all results from local storage
 		dispatch(
-			helpcenterActions.updateResultContent(
-				LocalStorageUtils.getResultInfo()
-			)
+			helpcenterActions.updateResultContent(searchData.helpResultHistory)
 		);
 
 		if (postId) {
@@ -189,7 +189,7 @@ const SearchInput = () => {
 	};
 
 	const handleOnChange = (e) => {
-		populateSearchResult('', undefined, e.target.value);
+		// populateSearchResult('', undefined, e.target.value);
 		debouncedResults(e.target.value);
 		dispatch(helpcenterActions.updateSearchInput(e.target.value));
 	};

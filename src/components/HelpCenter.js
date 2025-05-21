@@ -15,16 +15,16 @@ import SearchInput from './SearchInput';
 
 // import { SuggestionList } from './SuggestionList';
 
-const HelpCenter = ( props ) => {
+const HelpCenter = () => {
 	const dispatch = useDispatch();
-	const initialState = useSelector( ( state ) => state.helpcenter );
+	const initialState = useSelector((state) => state.helpcenter);
 	const brand = CapabilityAPI.getBrand();
 
 	const suggestionsRef = useRef();
 	const resultsContainer = useRef();
 	const wrapper = useRef();
 
-	useEffect( () => {
+	useEffect(() => {
 		getHelpStatus();
 
 		// Add event listener for localStorage changes
@@ -35,32 +35,32 @@ const HelpCenter = ( props ) => {
 				)
 			);
 		};
-		window.addEventListener( 'storage', updateVisibility );
+		window.addEventListener('storage', updateVisibility);
 
 		// Remove the event listener when the component unmounts
 		return () => {
 			// Cancel any debounced calls
 			// debouncedResults.cancel();---------
 			// Remove the storage event listener
-			window.removeEventListener( 'storage', updateVisibility );
+			window.removeEventListener('storage', updateVisibility);
 		};
-	}, [] );
+	}, []);
 
-	useEffect( () => {
+	useEffect(() => {
 		checkFooterVisibility();
-		if ( initialState.initComplete ) {
+		if (initialState.initComplete) {
 			adjustPadding(
 				wrapper,
 				suggestionsRef,
 				initialState.showSuggestions
 			);
-			scrollToBottom( wrapper, resultsContainer );
+			scrollToBottom(wrapper, resultsContainer);
 		}
 		// If the wrapper is visible or we’ve just finished init, scroll
-	}, [ initialState.initComplete, initialState.disliked ] );
+	}, [initialState.initComplete, initialState.disliked]);
 
-	useEffect( () => {
-		if ( initialState.visible ) {
+	useEffect(() => {
+		if (initialState.visible) {
 			fetchInitialData();
 			checkFooterVisibility();
 			adjustPadding(
@@ -68,21 +68,21 @@ const HelpCenter = ( props ) => {
 				suggestionsRef,
 				initialState.showSuggestions
 			);
-			setTimeout( () => {
-				scrollToBottom( wrapper, resultsContainer );
-			}, 500 );
+			setTimeout(() => {
+				scrollToBottom(wrapper, resultsContainer);
+			}, 500);
 		}
-	}, [ initialState.visible ] );
+	}, [initialState.visible]);
 
-	useEffect( () => {
+	useEffect(() => {
 		// Always adjust padding if any of these dependencies change
-		adjustPadding( wrapper, suggestionsRef, initialState.showSuggestions );
-	}, [ initialState.showSuggestions ] );
+		adjustPadding(wrapper, suggestionsRef, initialState.showSuggestions);
+	}, [initialState.showSuggestions]);
 
 	const checkFooterVisibility = () =>
 		dispatch(
 			helpcenterActions.setIsFooterVisible(
-				LocalStorageUtils.getResultInfo()?.length < 1 ||
+				initialState.helpResultHistory.length < 1 ||
 					initialState.disliked
 			)
 		);
@@ -90,9 +90,9 @@ const HelpCenter = ( props ) => {
 	const getHelpStatus = async () => {
 		try {
 			const response = await CapabilityAPI.getHelpCenterCapability();
-			dispatch( helpcenterActions.updateHelpEnabled( response ) );
-		} catch ( exception ) {
-			dispatch( helpcenterActions.updateHelpEnabled( false ) );
+			dispatch(helpcenterActions.updateHelpEnabled(response));
+		} catch (exception) {
+			dispatch(helpcenterActions.updateHelpEnabled(false));
 		}
 	};
 
@@ -113,16 +113,14 @@ const HelpCenter = ( props ) => {
 	const fetchInitialData = async () => {
 		try {
 			// Populate the results from local storage if they exist
-			const resultContent = LocalStorageUtils.getResultInfo();
-			if ( resultContent ) {
-				dispatch(
-					helpcenterActions.updateResultContent( resultContent )
-				);
+			const resultContent = initialState.helpResultHistory;
+			if (resultContent) {
+				dispatch(helpcenterActions.updateResultContent(resultContent));
 			}
 
-			if ( ! initialState.searchInput ) {
+			if (!initialState.searchInput) {
 				// If no input, just mark init as complete
-				dispatch( helpcenterActions.updateInitComplete( true ) );
+				dispatch(helpcenterActions.updateInitComplete(true));
 				return;
 			}
 
@@ -132,21 +130,21 @@ const HelpCenter = ( props ) => {
 					brand
 				);
 			dispatch(
-				helpcenterActions.updateMultiResults( {
+				helpcenterActions.updateMultiResults({
 					results: {
-						hits: multiSearchResults?.results?.[ 0 ]?.grouped_hits,
+						hits: multiSearchResults?.results?.[0]?.grouped_hits,
 					},
 					suggestions: true,
-				} )
+				})
 			);
-			dispatch( helpcenterActions.updateInitComplete( true ) );
-		} catch ( error ) {
+			dispatch(helpcenterActions.updateInitComplete(true));
+		} catch (error) {
 			// eslint-disable-next-line no-console
-			console.error( 'Error fetching initial data:', error );
+			console.error('Error fetching initial data:', error);
 		}
 	};
 
-	if ( ! initialState.helpEnabled || ! initialState.visible ) {
+	if (!initialState.helpEnabled || !initialState.visible) {
 		return null;
 	}
 
@@ -154,27 +152,27 @@ const HelpCenter = ( props ) => {
 		<div
 			className="nfd-help-center"
 			id="helpcenterResultsWrapper"
-			ref={ wrapper }
+			ref={wrapper}
 		>
-			{ initialState.disliked ? (
+			{initialState.disliked ? (
 				<DislikeFeedbackPanel />
 			) : (
 				<>
 					<HelpCenterIntro />
 					<ResultList
-						wrapper={ wrapper }
-						resultsContainer={ resultsContainer }
+						wrapper={wrapper}
+						resultsContainer={resultsContainer}
 					/>
 				</>
-			) }
-			{ /* { initialState.showSuggestions && (
+			)}
+			{/* { initialState.showSuggestions && (
 				<SuggestionList
 					suggestionsRef={ suggestionsRef }
 					multiResults={ initialState.multiResults }
 					handleSuggestionsClick={ handleSuggestionsClick }
 					isFooterVisible={ props.isFooterVisible }
 				/>
-			) } */ }
+			) } */}
 			<SearchInput />
 		</div>
 	);
