@@ -131,8 +131,10 @@ class HelpCenter {
 							'searchInput' => array(
 								'type' => 'string',
 							),
+							'feedbackSubmitted' => array(
+								'type' => 'boolean',
+							),
 						),
-						'required' => array( 'resultContent', 'postId', 'searchInput' ),
 					),
 				),
 			),

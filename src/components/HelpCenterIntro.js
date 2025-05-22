@@ -1,22 +1,14 @@
-import { __ } from '@wordpress/i18n';
 import { useEffect, useState } from '@wordpress/element';
-import { useDispatch, useSelector } from 'react-redux';
-import { helpcenterActions } from '../../store/helpcenterSlice';
-import { getHelpcenterOption, useRevealText } from '../utils';
+import { __ } from '@wordpress/i18n';
+import { useSelector } from 'react-redux';
+import { useRevealText } from '../utils';
 
 const HelpCenterIntro = () => {
 	const hcData = useSelector((state) => state.helpcenter);
 	const [startReveal, setStartReveal] = useState(false);
-	const dispatch = useDispatch();
 
 	useEffect(() => {
 		setStartReveal(hcData.helpResultHistory.length <= 0);
-		let data = [];
-		async function fetchData() {
-			data = await getHelpcenterOption();
-			dispatch(helpcenterActions.updateHelpResultHistory(data));
-		}
-		fetchData();
 	}, []);
 
 	const introText = __(

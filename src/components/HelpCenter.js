@@ -83,7 +83,7 @@ const HelpCenter = () => {
 		dispatch(
 			helpcenterActions.setIsFooterVisible(
 				initialState.helpResultHistory.length < 1 ||
-					initialState.disliked
+				initialState.disliked
 			)
 		);
 
@@ -113,10 +113,10 @@ const HelpCenter = () => {
 	const fetchInitialData = async () => {
 		try {
 			// Populate the results from local storage if they exist
-			const resultContent = initialState.helpResultHistory;
-			if (resultContent) {
-				dispatch(helpcenterActions.updateResultContent(resultContent));
-			}
+			// const resultContent = initialState.helpResultHistory;
+			// if (resultContent) {
+			// 	dispatch(helpcenterActions.updateResultContent(resultContent));
+			// }
 
 			if (!initialState.searchInput) {
 				// If no input, just mark init as complete
@@ -159,10 +159,12 @@ const HelpCenter = () => {
 			) : (
 				<>
 					<HelpCenterIntro />
-					<ResultList
-						wrapper={wrapper}
-						resultsContainer={resultsContainer}
-					/>
+					{initialState.resultContent?.length > 0 && (
+						<ResultList
+							wrapper={wrapper}
+							resultsContainer={resultsContainer}
+						/>
+					)}
 				</>
 			)}
 			{/* { initialState.showSuggestions && (
