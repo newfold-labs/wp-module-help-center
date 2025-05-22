@@ -14,7 +14,7 @@ const ResultList = ({ wrapper, resultsContainer }) => {
 				ref={resultsContainer}
 				style={{ visibility: 'hidden' }}
 			>
-				{resultContent && (
+				{
 					<Result
 						content={resultContent.resultContent}
 						postId={resultContent.postId}
@@ -24,7 +24,7 @@ const ResultList = ({ wrapper, resultsContainer }) => {
 							resultContent.feedbackSubmitted || false
 						}
 					/>
-				)}
+				}
 				{/* Render a placeholder for the loading state if isLoading is true */}
 				{isLoading && (
 					<Result

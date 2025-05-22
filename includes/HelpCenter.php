@@ -114,31 +114,10 @@ class HelpCenter {
 
 	public function register_settings() {
 		$option = array(
-			'type'        => 'array',
+			'type'        => 'string',
 			'description' => __( 'NFD helpcenter data', 'wp-module-helpcenter' ),
-			'show_in_rest' => array(
-				'schema' => array(
-					'type'  => 'array',
-					'items' => array(
-						'type'       => 'object',
-						'properties' => array(
-							'resultContent' => array(
-								'type' => 'string',
-							),
-							'postId' => array(
-								'type' => 'string',
-							),
-							'searchInput' => array(
-								'type' => 'string',
-							),
-							'feedbackSubmitted' => array(
-								'type' => 'boolean',
-							),
-						),
-					),
-				),
-			),
-			'default' => array(), // Set default to empty array
+			'show_in_rest' => true, 
+			'default'     => '', 
 		);
 		
 

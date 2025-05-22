@@ -16,10 +16,10 @@ export const Result = ({
 	wrapper,
 	feedbackSubmitted,
 }) => {
-	const { isLoading, isNewResult, noResult, helpResultHistory } = useSelector(
+	const { isLoading, isNewResult, noResult } = useSelector(
 		(state) => state.helpcenter
 	);
-	const isNewEntry = isNewResult && index === helpResultHistory.length - 1;
+	const isNewEntry = isNewResult;
 	const responseRef = useRef(null);
 	const [shouldReveal, setShouldReveal] = useState(false);
 
@@ -57,7 +57,7 @@ export const Result = ({
 	function shouldShowFeedback() {
 		return (
 			!noResult &&
-			!feedbackSubmitted &&
+			feedbackSubmitted &&
 			showFeedbackSection &&
 			content &&
 			revealComplete &&

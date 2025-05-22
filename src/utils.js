@@ -287,7 +287,7 @@ export const saveHelpcenterOption = async (result) => {
 		await apiFetch({
 			url: apiUrl,
 			method: 'POST',
-			data: { nfd_helpcenter_data: result },
+			data: { nfd_helpcenter_data: JSON.stringify(result) },
 		});
 	} catch (err) {
 		// console.log(err);
@@ -298,9 +298,10 @@ export const getHelpcenterOption = async () => {
 	const apiUrl = NewfoldRuntime.createApiUrl('/wp/v2/settings');
 	try {
 		const response = await apiFetch({ url: apiUrl, method: 'GET' });
+		const responseData = JSON.parse(response.nfd_helpcenter_data);
 
-		if (response.nfd_helpcenter_data.length > 0) {
-			return response.nfd_helpcenter_data;
+		if (responseData.length > 1) {
+			return responseData;
 		}
 	} catch (err) {
 		// console.error('Failed to fetch Helpcenter option:', err);

@@ -159,12 +159,11 @@ const HelpCenter = () => {
 			) : (
 				<>
 					<HelpCenterIntro />
-					{initialState.resultContent?.length > 0 && (
-						<ResultList
-							wrapper={wrapper}
-							resultsContainer={resultsContainer}
-						/>
-					)}
+
+					<ResultList
+						wrapper={wrapper}
+						resultsContainer={resultsContainer}
+					/>
 				</>
 			)}
 			{/* { initialState.showSuggestions && (

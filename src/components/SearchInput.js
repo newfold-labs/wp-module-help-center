@@ -56,7 +56,7 @@ const SearchInput = () => {
 			searchInput: postTitle,
 			feedbackSubmitted: false,
 		};
-
+		dispatch(helpcenterActions.updateResultContent(result));
 		dispatch(helpcenterActions.updateHelpResultHistory(result));
 
 		if (postId) {

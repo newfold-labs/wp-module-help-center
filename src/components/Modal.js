@@ -28,14 +28,14 @@ const Modal = ({ onClose }) => {
 		toggleHelp(helpVisible);
 	}, []);
 
-	// useEffect(() => {
-	// 	let data = [];
-	// 	async function fetchData() {
-	// 		data = await getHelpcenterOption();
-	// 		dispatch(helpcenterActions.updateHelpResultHistory(data));
-	// 	}
-	// 	fetchData();
-	// }, []);
+	useEffect(() => {
+		let data = [];
+		async function fetchData() {
+			data = await getHelpcenterOption();
+			dispatch(helpcenterActions.updateHelpResultHistory(data));
+		}
+		fetchData();
+	}, []);
 
 	return (
 		<div
