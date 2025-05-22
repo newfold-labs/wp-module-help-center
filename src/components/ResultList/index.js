@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Result } from './Result';
 
 const ResultList = ( { wrapper, resultsContainer } ) => {
-	const { helpResultHistory, isLoading } = useSelector(
+	const { resultContent, isLoading } = useSelector(
 		( state ) => state.helpcenter
 	);
 	console.log( 'resultContent', resultContent );
@@ -14,26 +14,17 @@ const ResultList = ( { wrapper, resultsContainer } ) => {
 				ref={ resultsContainer }
 				style={ { visibility: 'hidden' } }
 			>
-				{ /* Render existing results */ }
-				{ helpResultHistory?.length > 0 &&
-					helpResultHistory.map( ( result, index ) => (
-						<Result
-							key={ index }
-							content={ result.resultContent }
-							postId={ result.postId }
-							showFeedbackSection={
-								! result.resultContent.includes(
-									'do not possess the answer'
-								)
-							}
-							questionBlock={ result.searchInput }
-							index={ index }
-							wrapper={ wrapper }
-							feedbackSubmitted={
-								result.feedbackSubmitted || false
-							}
-						/>
-					) ) }
+				{
+					<Result
+						content={ resultContent.resultContent }
+						postId={ resultContent.postId }
+						questionBlock={ resultContent.searchInput }
+						wrapper={ wrapper }
+						feedbackSubmitted={
+							resultContent.feedbackSubmitted || false
+						}
+					/>
+				}
 				{ /* Render a placeholder for the loading state if isLoading is true */ }
 				{ isLoading && (
 					<Result
@@ -43,7 +34,6 @@ const ResultList = ( { wrapper, resultsContainer } ) => {
 						postId={ null }
 						source="ai"
 						showFeedbackSection={ false }
-						index={ helpResultHistory.length }
 						wrapper={ wrapper }
 						feedbackSubmitted={ false }
 					/>

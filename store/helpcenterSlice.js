@@ -80,7 +80,6 @@ const helpcenterSlice = createSlice( {
 			state.isLoading = true;
 			state.showSuggestions = false;
 			state.loadingQuery = state.searchInput;
-			state.loadingIndex = state.resultContent.length;
 		},
 	},
 } );

@@ -8,7 +8,7 @@ import HelpCenter from './HelpCenter';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleHelp } from '..';
 import { helpcenterActions } from '../../store/helpcenterSlice';
-import { LocalStorageUtils } from '../utils';
+import { getHelpcenterOption, LocalStorageUtils } from '../utils';
 
 const Modal = ({ onClose }) => {
 	const dispatch = useDispatch();
@@ -16,8 +16,6 @@ const Modal = ({ onClose }) => {
 		(state) => state.helpcenter.isFooterVisible
 	);
 	useEffect(() => {
-
-		///// this need to update form db
 		dispatch(
 			helpcenterActions.initialDataSet({
 				isFooterVisible: LocalStorageUtils.getResultInfo()?.length < 1,
@@ -28,6 +26,15 @@ const Modal = ({ onClose }) => {
 			? false
 			: LocalStorageUtils.getHelpVisible();
 		toggleHelp(helpVisible);
+	}, []);
+
+	useEffect(() => {
+		let data = [];
+		async function fetchData() {
+			data = await getHelpcenterOption();
+			dispatch(helpcenterActions.updateHelpResultHistory(data));
+		}
+		fetchData();
 	}, []);
 
 	return (

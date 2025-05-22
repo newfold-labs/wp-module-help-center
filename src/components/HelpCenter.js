@@ -114,12 +114,10 @@ const HelpCenter = () => {
 	const fetchInitialData = async () => {
 		try {
 			// Populate the results from local storage if they exist
-			const resultContent = initialState.helpResultHistory;
-			if ( resultContent ) {
-				dispatch(
-					helpcenterActions.updateResultContent( resultContent )
-				);
-			}
+			// const resultContent = initialState.helpResultHistory;
+			// if (resultContent) {
+			// 	dispatch(helpcenterActions.updateResultContent(resultContent));
+			// }
 
 			if ( ! initialState.searchInput ) {
 				// If no input, just mark init as complete

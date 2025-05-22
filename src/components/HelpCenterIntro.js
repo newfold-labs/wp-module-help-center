@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { useSelector } from 'react-redux';
@@ -9,7 +8,7 @@ const HelpCenterIntro = () => {
 	const [startReveal, setStartReveal] = useState(false);
 
 	useEffect(() => {
-		setStartReveal(hcData.helpResultHistory.length <= 0);
+		setStartReveal(hcData.resultContent.length <= 0);
 	}, []);
 
 	const introText = __(
@@ -28,7 +27,7 @@ const HelpCenterIntro = () => {
 			aria-labelledby="helpcenter-intro-heading"
 			className="helpcenter-intro"
 			style={{
-				display: hcData.helpResultHistory.length > 0 ? 'none' : 'flex',
+				display: hcData.resultContent.length > 0 ? 'none' : 'flex',
 			}}
 		>
 			<div
