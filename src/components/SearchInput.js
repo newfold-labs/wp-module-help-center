@@ -47,9 +47,9 @@ const SearchInput = () => {
 		dispatch(helpcenterActions.updateHelpResultHistory(result));
 
 		// Add new result to existing results and retrieve all results from local storage
-		dispatch(
-			helpcenterActions.updateResultContent(searchData.helpResultHistory)
-		);
+		// dispatch(
+		// 	helpcenterActions.updateResultContent(searchData.helpResultHistory)
+		// );
 
 		if (postId) {
 			dispatch(helpcenterActions.setNewSearchResult(!!postId));
