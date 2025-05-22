@@ -1,32 +1,25 @@
 import { useEffect, useMemo, useRef, useState } from '@wordpress/element';
 import { marked } from 'marked';
-import {
-	LocalStorageUtils,
-	processContentForMarkdown,
-	useRevealText,
-} from '../../utils';
+import { useSelector } from 'react-redux';
+import { processContentForMarkdown, useRevealText } from '../../utils';
 import ResultContent from './ResultContent';
 import ResultFeedback from './ResultFeedback';
 import ResultHeader from './ResultHeader';
 
 export const Result = ( {
 	content,
-	noResult,
 	postId,
 	source,
 	showFeedbackSection,
 	questionBlock,
-	isLoading,
-	loadingQuery,
-	loadingIndex,
 	index,
-	isNewResult,
 	wrapper,
 	feedbackSubmitted,
-	setDisliked,
 } ) => {
-	const isNewEntry =
-		isNewResult && index === LocalStorageUtils.getResultInfo().length - 1;
+	const { isLoading, isNewResult, noResult } = useSelector(
+		( state ) => state.helpcenter
+	);
+	const isNewEntry = isNewResult;
 	const responseRef = useRef( null );
 	const [ shouldReveal, setShouldReveal ] = useState( false );
 
@@ -64,7 +57,7 @@ export const Result = ( {
 	function shouldShowFeedback() {
 		return (
 			! noResult &&
-			! feedbackSubmitted &&
+			feedbackSubmitted &&
 			showFeedbackSection &&
 			content &&
 			revealComplete &&
@@ -76,26 +69,16 @@ export const Result = ( {
 		<div ref={ responseRef } className="helpcenter-response-block">
 			<ResultHeader
 				noResult={ noResult }
-				isNewEntry={ isNewEntry }
 				questionBlock={ questionBlock }
 			/>
 			<ResultContent
-				noResult={ noResult }
-				isNewEntry={ isNewEntry }
 				content={ htmlContent }
-				isLoading={ isLoading }
-				loadingQuery={ loadingQuery }
-				loadingIndex={ loadingIndex }
 				index={ index }
 				questionBlock={ questionBlock }
 				source={ source }
 			/>
 			{ shouldShowFeedback() && (
-				<ResultFeedback
-					postId={ postId }
-					source={ source }
-					setDisliked={ setDisliked }
-				/>
+				<ResultFeedback postId={ postId } source={ source } />
 			) }
 		</div>
 	);

@@ -4,38 +4,38 @@ import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { ReactComponent as Go } from '../icons/go.svg';
 
-export const SuggestionList = ( {
+export const SuggestionList = ({
 	suggestionsRef,
 	multiResults,
 	handleSuggestionsClick,
 	isFooterVisible,
-} ) => {
-	const [ bottomOffset, setBottomOffset ] = useState( '95px' );
+}) => {
+	const [bottomOffset, setBottomOffset] = useState('95px');
 
-	useEffect( () => {
+	useEffect(() => {
 		const calculateBottom = () => {
 			const inputWrapper = document.getElementById(
 				'nfdHelpcenterInputWrapper'
 			);
-			const footer = document.querySelector( '.nfd-hc-modal__footer' );
+			const footer = document.querySelector('.nfd-hc-modal__footer');
 
 			const inputHeight = inputWrapper?.offsetHeight || 0;
 			const footerHeight = isFooterVisible
 				? footer?.offsetHeight || 0
 				: 0;
 
-			setBottomOffset( `${ inputHeight + footerHeight }px` );
+			setBottomOffset(`${inputHeight + footerHeight}px`);
 		};
 
 		calculateBottom();
-	}, [ isFooterVisible ] );
+	}, [isFooterVisible]);
 
 	// Handle the click for individual suggestions
-	const onSuggestionClick = ( result, postTitle ) => {
-		handleSuggestionsClick( result, postTitle );
+	const onSuggestionClick = (result, postTitle) => {
+		handleSuggestionsClick(result, postTitle);
 	};
 
-	if ( ! multiResults?.hits?.length ) {
+	if (!multiResults?.hits?.length) {
 		return null;
 	}
 
@@ -43,30 +43,30 @@ export const SuggestionList = ( {
 		<div
 			className="suggestions-wrapper"
 			id="suggestionsWrapper"
-			ref={ suggestionsRef }
-			style={ { bottom: bottomOffset } }
+			ref={suggestionsRef}
+			style={{ bottom: bottomOffset }}
 		>
-			{ multiResults.hits.length > 0 && (
+			{multiResults.hits.length > 0 && (
 				<p>
-					<b>{ __( 'Common Topics', 'wp-module-help-center' ) }</b>
+					<b>{__('Common Topics', 'wp-module-help-center')}</b>
 				</p>
-			) }
+			)}
 
-			{ multiResults.hits.map( ( result, index ) => {
-				const postTitle = result?.group_key?.[ 0 ] ?? '';
+			{multiResults.hits.map((result, index) => {
+				const postTitle = result?.group_key?.[0] ?? '';
 				return (
 					<div
 						className="algolia-result"
-						key={ index }
-						onClick={ () => onSuggestionClick( result, postTitle ) }
+						key={index}
+						onClick={() => onSuggestionClick(result, postTitle)}
 					>
-						<p>{ postTitle }</p>
+						<p>{postTitle}</p>
 						<div className="svg">
 							<Go />
 						</div>
 					</div>
 				);
-			} ) }
+			})}
 		</div>
 	);
 };

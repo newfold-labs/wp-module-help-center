@@ -1,8 +1,10 @@
 /* eslint-disable @wordpress/i18n-no-flanking-whitespace */
 import { __ } from '@wordpress/i18n';
+import { useSelector } from 'react-redux';
 import { ReactComponent as FooterBackground } from '../icons/footer.svg';
 
-const Footer = ({ disliked }) => {
+const Footer = () => {
+	const disliked = useSelector((state) => state.helpcenter.disliked);
 	return (
 		<div className="nfd-hc-modal__footer">
 			<div className="helpcenter-supportinfo__wrapper">

@@ -1,20 +1,12 @@
 /* eslint-disable no-shadow */
-import NoResults from './NoResults';
+import { useSelector } from 'react-redux';
 import { Result } from './Result';
 
-const ResultList = ( {
-	wrapper,
-	noResult,
-	loadingQuery,
-	loadingIndex,
-	isNewResult,
-	isLoading,
-	source,
-	resultContent,
-	resultsContainer,
-	searchInput,
-	setDisliked,
-} ) => {
+const ResultList = ( { wrapper, resultsContainer } ) => {
+	const { resultContent, isLoading } = useSelector(
+		( state ) => state.helpcenter
+	);
+	console.log( 'resultContent', resultContent );
 	return (
 		<>
 			<div
@@ -22,34 +14,17 @@ const ResultList = ( {
 				ref={ resultsContainer }
 				style={ { visibility: 'hidden' } }
 			>
-				{ /* Render existing results */ }
-				{ resultContent?.length > 0 &&
-					resultContent.map( ( result, index ) => (
-						<Result
-							key={ index }
-							content={ result.resultContent }
-							noResult={ noResult }
-							postId={ result.postId }
-							source={ source }
-							showFeedbackSection={
-								! result.resultContent.includes(
-									'do not possess the answer'
-								)
-							}
-							questionBlock={ result.searchInput }
-							isLoading={ isLoading }
-							loadingQuery={ loadingQuery }
-							loadingIndex={ loadingIndex }
-							index={ index }
-							isNewResult={ isNewResult }
-							searchInput={ searchInput }
-							wrapper={ wrapper }
-							feedbackSubmitted={
-								result.feedbackSubmitted || false
-							}
-							setDisliked={ setDisliked }
-						/>
-					) ) }
+				{
+					<Result
+						content={ resultContent.resultContent }
+						postId={ resultContent.postId }
+						questionBlock={ resultContent.searchInput }
+						wrapper={ wrapper }
+						feedbackSubmitted={
+							resultContent.feedbackSubmitted || false
+						}
+					/>
+				}
 				{ /* Render a placeholder for the loading state if isLoading is true */ }
 				{ isLoading && (
 					<Result
@@ -59,20 +34,9 @@ const ResultList = ( {
 						postId={ null }
 						source="ai"
 						showFeedbackSection={ false }
-						questionBlock={ loadingQuery }
-						isLoading={ isLoading }
-						loadingQuery={ loadingQuery }
-						loadingIndex={ loadingIndex }
-						index={ resultContent.length }
-						isNewResult={ isNewResult }
-						searchInput={ searchInput }
 						wrapper={ wrapper }
 						feedbackSubmitted={ false }
-						setDisliked={ setDisliked }
 					/>
-				) }
-				{ noResult && isNewResult && (
-					<NoResults isNewResult={ isNewResult } />
 				) }
 			</div>
 		</>
