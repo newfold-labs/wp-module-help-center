@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Result } from './Result';
 
 const ResultList = ( { wrapper, resultsContainer } ) => {
-	const { resultContent, isLoading } = useSelector(
+	const { helpResultHistory, isLoading } = useSelector(
 		( state ) => state.helpcenter
 	);
 	console.log( 'resultContent', resultContent );
@@ -15,8 +15,8 @@ const ResultList = ( { wrapper, resultsContainer } ) => {
 				style={ { visibility: 'hidden' } }
 			>
 				{ /* Render existing results */ }
-				{ resultContent?.length > 0 &&
-					resultContent.map( ( result, index ) => (
+				{ helpResultHistory?.length > 0 &&
+					helpResultHistory.map( ( result, index ) => (
 						<Result
 							key={ index }
 							content={ result.resultContent }
@@ -43,7 +43,7 @@ const ResultList = ( { wrapper, resultsContainer } ) => {
 						postId={ null }
 						source="ai"
 						showFeedbackSection={ false }
-						index={ resultContent.length }
+						index={ helpResultHistory.length }
 						wrapper={ wrapper }
 						feedbackSubmitted={ false }
 					/>
