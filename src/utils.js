@@ -279,3 +279,27 @@ export const processContentForMarkdown = ( textToDisplay ) => {
 	}
 	return '';
 };
+
+export const saveHelpcenterOption = async (result) => {
+	const apiUrl = NewfoldRuntime.createApiUrl('/wp/v2/settings');
+	try {
+		await apiFetch({
+			url: apiUrl,
+			method: 'POST',
+			data: { nfd_helpcenter_data: result },
+		});
+	} catch (err) {
+		// console.log(err);
+	}
+};
+
+export const getHelpcenterOption = async () => {
+	const apiUrl = NewfoldRuntime.createApiUrl('/wp/v2/settings');
+	try {
+		const response = await apiFetch({ url: apiUrl, method: 'GET' });
+		return response.nfd_helpcenter_data;
+	} catch (err) {
+		// console.error('Failed to fetch Helpcenter option:', err);
+		return [];
+	}
+};

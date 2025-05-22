@@ -109,7 +109,39 @@ class HelpCenter {
 			$instance = new $controller();
 			$instance->register_routes();
 		}
+		$this->register_settings();
 	}
+
+	public function register_settings() {
+		$option = array(
+			'type'        => 'array',
+			'description' => __( 'NFD helpcenter data', 'wp-module-helpcenter' ),
+			'show_in_rest' => array(
+				'schema' => array(
+					'type'  => 'array',
+					'items' => array(
+						'type'       => 'object',
+						'properties' => array(
+							'resultContent' => array(
+								'type' => 'string',
+							),
+							'postId' => array(
+								'type' => 'string',
+							),
+							'searchInput' => array(
+								'type' => 'string',
+							),
+						),
+						'required' => array( 'resultContent', 'postId', 'searchInput' ),
+					),
+				),
+			),
+			'default' => array(), // Set default to empty array
+		);
+		
+
+		\register_setting( 'general', 'nfd_helpcenter_data', $option );
+}
 
 	/**
 	 * Adds the Help Center icon to the WordPress admin bar.

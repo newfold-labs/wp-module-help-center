@@ -22,7 +22,7 @@ const ResultList = ({ wrapper, resultsContainer }) => {
 							content={result.resultContent}
 							postId={result.postId}
 							showFeedbackSection={
-								!result.resultContent.includes(
+								!result.resultContent?.includes(
 									'do not possess the answer'
 								)
 							}

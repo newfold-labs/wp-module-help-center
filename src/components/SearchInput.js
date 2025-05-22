@@ -1,5 +1,5 @@
 import moduleAI from '@newfold-labs/wp-module-ai';
-import { useMemo, useState } from '@wordpress/element';
+import { useEffect, useMemo, useRef, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { debounce } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,9 +12,11 @@ import {
 	getResultMatches,
 	LocalStorageUtils,
 	MultiSearchAPI,
+	saveHelpcenterOption,
 } from '../utils';
 
 const SearchInput = () => {
+	const isFirstRender = useRef(true);
 	const brand = CapabilityAPI.getBrand();
 	const dispatch = useDispatch();
 
@@ -28,7 +30,17 @@ const SearchInput = () => {
 		bottomValue = '375px';
 	}
 
-	const populateSearchResult = (
+	useEffect(() => {
+		if (isFirstRender.current) {
+			isFirstRender.current = false;
+			return; // skip on initial render
+		}
+		if (searchData.helpResultHistory) {
+			saveHelpcenterOption(searchData.helpResultHistory);
+		}
+	}, [searchData.helpResultHistory]);
+
+	const populateSearchResult = async (
 		postContent,
 		postId,
 		postTitle,
@@ -42,14 +54,10 @@ const SearchInput = () => {
 			resultContent: resultContentFormatted,
 			postId,
 			searchInput: postTitle,
+			feedbackSubmitted: false,
 		};
 
 		dispatch(helpcenterActions.updateHelpResultHistory(result));
-
-		// Add new result to existing results and retrieve all results from local storage
-		// dispatch(
-		// 	helpcenterActions.updateResultContent(searchData.helpResultHistory)
-		// );
 
 		if (postId) {
 			dispatch(helpcenterActions.setNewSearchResult(!!postId));
@@ -172,9 +180,9 @@ const SearchInput = () => {
 			isValid
 				? ''
 				: __(
-						'Please enter a specific search term to get results.',
-						'wp-module-help-center'
-					)
+					'Please enter a specific search term to get results.',
+					'wp-module-help-center'
+				)
 		);
 
 		return isValid;
