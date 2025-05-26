@@ -28,10 +28,24 @@ const helpcenterSlice = createSlice( {
 			state.searchInput = action.payload.SearchInput;
 		},
 		updateHelpResultHistory: ( state, action ) => {
+			if (
+				! action.payload ||
+				typeof action.payload !== 'object' ||
+				Array.isArray( action.payload )
+			) {
+				console.warn(
+					'Skipped pushing to helpResultHistory: Invalid payload',
+					action.payload
+				);
+				return;
+			}
 			if ( state.helpResultHistory.length === 3 ) {
 				state.helpResultHistory.shift();
 			}
 			state.helpResultHistory.push( action.payload );
+		},
+		setHelpResultHistory: ( state, action ) => {
+			state.helpResultHistory = action.payload;
 		},
 		setDisliked: ( state, action ) => {
 			state.disliked = action.payload;

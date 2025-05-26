@@ -296,15 +296,29 @@ export const saveHelpcenterOption = async ( result ) => {
 
 export const getHelpcenterOption = async () => {
 	const apiUrl = NewfoldRuntime.createApiUrl( '/wp/v2/settings' );
+
 	try {
 		const response = await apiFetch( { url: apiUrl, method: 'GET' } );
-		const responseData = JSON.parse( response.nfd_helpcenter_data );
+		const rawStringData = response?.nfd_helpcenter_data;
 
-		if ( responseData.length > 1 ) {
-			return responseData;
+		if ( ! rawStringData || typeof rawStringData !== 'string' ) {
+			return [];
 		}
+
+		const parsedData = JSON.parse( rawStringData );
+
+		// To ensure it's a valid array of objects
+		if (
+			Array.isArray( parsedData ) &&
+			parsed.every( ( item ) => typeof item === 'object' )
+		) {
+			return parsedData;
+		}
+
+		console.error( 'Invalid shape of parsed helpcenter data:', parsedData );
+		return [];
 	} catch ( err ) {
-		// console.error('Failed to fetch Helpcenter option:', err);
+		console.error( 'Failed to fetch Helpcenter option:', err );
 		return [];
 	}
 };

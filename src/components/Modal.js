@@ -32,7 +32,7 @@ const Modal = ( { onClose } ) => {
 		let data = [];
 		async function fetchData() {
 			data = await getHelpcenterOption();
-			dispatch( helpcenterActions.updateHelpResultHistory( data ) );
+			dispatch( helpcenterActions.setHelpResultHistory( data ) );
 		}
 		fetchData();
 	}, [] );
