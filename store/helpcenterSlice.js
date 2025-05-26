@@ -100,26 +100,26 @@ const helpcenterSlice = createSlice( {
 			state.triggerSearch = action.payload;
 		},
 		goBackInHistory: ( state ) => {
-			if ( state.helpResultHistory.length > 0 ) {
-				const previous =
-					state.helpResultHistory[
-						state.helpResultHistory.length - 1
-					];
+			const history = state.helpResultHistory;
 
-				// Clone the history (immutably)
-				state.helpResultHistory = [
-					...state.helpResultHistory.slice( 0, -1 ),
-				];
-				console.log( 'PREVIOuS::', previous.resultContent );
-				// Set new state from a shallow copy
-				state.resultContent = Array.isArray( previous.resultContent )
-					? [ ...previous.resultContent ]
-					: [];
+			if ( history.length > 1 ) {
+				// Remove the latest clicked result (e.g., bhmultisite)
+				history.pop();
+
+				// Get the one before it
+				const previous = history[ history.length - 1 ];
+
+				// Assign to resultContent — ensure clone for re-render
+				state.resultContent = {
+					...previous,
+					resultContent: Array.isArray( previous.resultContent )
+						? [ ...previous.resultContent ]
+						: previous.resultContent,
+				};
 
 				state.searchInput = previous.searchInput || '';
-				state.multiResults = previous.multiResults || {};
-				state.initComplete = true;
 				state.isLoading = false;
+				state.initComplete = true;
 				state.showSuggestions = true;
 			}
 		},
