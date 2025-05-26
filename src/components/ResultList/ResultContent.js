@@ -2,14 +2,8 @@ import { useEffect, useRef } from '@wordpress/element';
 import { useDispatch, useSelector } from 'react-redux';
 import { helpcenterActions } from '../../../store/helpcenterSlice';
 function ResultContent( { source, index, questionBlock, content } ) {
-	const {
-		isLoading,
-		loadingQuery,
-		loadingIndex,
-		resultContent,
-		multiResults,
-		helpResultHistory,
-	} = useSelector( ( state ) => state.helpcenter );
+	const { isLoading, loadingQuery, loadingIndex, resultContent } =
+		useSelector( ( state ) => state.helpcenter );
 	const resultBlockRef = useRef();
 	const dispatch = useDispatch();
 
@@ -38,12 +32,6 @@ function ResultContent( { source, index, questionBlock, content } ) {
 			if ( anchor && resultBlock.contains( anchor ) ) {
 				e.preventDefault();
 				const clickedText = anchor.textContent.trim();
-				console.log( 'Clicked text:', clickedText );
-				// Make a new multi-search API call if no match is found
-				// Push current content into history before changing
-				console.log( 'resultContent :', resultContent );
-				console.log( 'multiResults: ', multiResults );
-				console.log( 'helpResultHistory: ', helpResultHistory );
 				dispatch(
 					helpcenterActions.updateHelpResultHistory( resultContent )
 				);
@@ -62,6 +50,7 @@ function ResultContent( { source, index, questionBlock, content } ) {
 			resultBlock.removeEventListener( 'click', handleClick );
 		};
 	}, [ content ] );
+
 	function renderContentOrLoading() {
 		const isAISourceLoading =
 			isLoading &&

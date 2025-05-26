@@ -1,6 +1,8 @@
 import { useEffect, useRef } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 import { useDispatch, useSelector } from 'react-redux';
 import { helpcenterActions } from '../../store/helpcenterSlice';
+import { ReactComponent as BackArrow } from '../icons/arrow-long-left.svg';
 import {
 	CapabilityAPI,
 	LocalStorageUtils,
@@ -164,6 +166,26 @@ const HelpCenter = () => {
 					) : (
 						<>
 							<HelpCenterIntro />
+							<div
+								className="back-arrow"
+								role="button"
+								tabIndex={ 0 }
+								onClick={ () =>
+									dispatch(
+										helpcenterActions.goBackInHistory()
+									)
+								}
+								onKeyDown={ ( e ) => {
+									if ( e.key === 'Enter' || e.key === ' ' ) {
+										dispatch(
+											helpcenterActions.goBackInHistory()
+										);
+									}
+								} }
+							>
+								<BackArrow />
+								<p>{ __( 'Back', 'wp-module-help-center' ) }</p>
+							</div>
 							<ResultList
 								wrapper={ wrapper }
 								resultsContainer={ resultsContainer }
