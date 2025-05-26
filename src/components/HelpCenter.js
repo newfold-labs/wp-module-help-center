@@ -83,7 +83,7 @@ const HelpCenter = () => {
 	const checkFooterVisibility = () =>
 		dispatch(
 			helpcenterActions.setIsFooterVisible(
-				initialState.helpResultHistory.length < 1 ||
+				initialState.resultContent.length < 1 ||
 					initialState.disliked
 			)
 		);
