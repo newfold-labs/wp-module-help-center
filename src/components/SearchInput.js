@@ -40,6 +40,13 @@ const SearchInput = () => {
 		}
 	}, [ searchData.helpResultHistory ] );
 
+	useEffect( () => {
+		if ( searchData.triggerSearch ) {
+			handleSubmit();
+			dispatch( helpcenterActions.setTriggerSearch( false ) );
+		}
+	}, [ searchData.triggerSearch ] );
+
 	const populateSearchResult = async (
 		postContent,
 		postId,
@@ -131,7 +138,6 @@ const SearchInput = () => {
 		dispatch( helpcenterActions.setAIResultLoading() );
 		try {
 			let hits = searchData.multiResults?.hits?.[ 0 ]?.hits;
-			console.log( 'hits 1 ', hits );
 			const lastQuery =
 				searchData.multiResults?.results?.[ 0 ]?.request_params?.q;
 
@@ -148,7 +154,6 @@ const SearchInput = () => {
 					searchData.searchInput,
 					brand
 				);
-			console.log( 'multisearch result', multiSearchResults );
 			hits =
 				multiSearchResults?.results?.[ 0 ]?.grouped_hits?.[ 0 ]?.hits;
 

@@ -16,6 +16,7 @@ const initialState = {
 	disliked: false,
 	isFooterVisible: true,
 	helpResultHistory: [],
+	triggerSearch: false,
 };
 
 const helpcenterSlice = createSlice( {
@@ -80,6 +81,9 @@ const helpcenterSlice = createSlice( {
 			state.isLoading = true;
 			state.showSuggestions = false;
 			state.loadingQuery = state.searchInput;
+		},
+		setTriggerSearch: ( state, action ) => {
+			state.triggerSearch = action.payload;
 		},
 	},
 } );

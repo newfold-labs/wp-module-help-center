@@ -1,10 +1,31 @@
 import { useEffect, useRef } from '@wordpress/element';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { helpcenterActions } from '../../../store/helpcenterSlice';
 function ResultContent( { source, index, questionBlock, content } ) {
-	const { isLoading, loadingQuery, loadingIndex } = useSelector(
-		( state ) => state.helpcenter
-	);
+	const {
+		isLoading,
+		loadingQuery,
+		loadingIndex,
+		resultContent,
+		multiResults,
+		helpResultHistory,
+	} = useSelector( ( state ) => state.helpcenter );
 	const resultBlockRef = useRef();
+	const dispatch = useDispatch();
+
+	/* const getMultiSearchResponse = async ( query, brand ) => {
+		const multiSearchResults = await MultiSearchAPI.fetchMultiSearchResults(
+			query,
+			brand
+		);
+		console.log( 'multisearch result', multiSearchResults );
+		const hits =
+			multiSearchResults?.results?.[ 0 ]?.grouped_hits?.[ 0 ]?.hits;
+
+		if ( checkAndPopulateResult( hits ) ) {
+		}
+	}; */
+
 	useEffect( () => {
 		const resultBlock = resultBlockRef.current;
 
@@ -18,6 +39,20 @@ function ResultContent( { source, index, questionBlock, content } ) {
 				e.preventDefault();
 				const clickedText = anchor.textContent.trim();
 				console.log( 'Clicked text:', clickedText );
+				// Make a new multi-search API call if no match is found
+				// Push current content into history before changing
+				console.log( 'resultContent :', resultContent );
+				console.log( 'multiResults: ', multiResults );
+				console.log( 'helpResultHistory: ', helpResultHistory );
+				dispatch(
+					helpcenterActions.updateHelpResultHistory( resultContent )
+				);
+
+				dispatch( helpcenterActions.updateSearchInput( clickedText ) );
+				dispatch( helpcenterActions.setAIResultLoading() );
+
+				// set a flag like "triggerSubmit" in the store
+				dispatch( helpcenterActions.setTriggerSearch( true ) );
 			}
 		};
 
