@@ -5,7 +5,6 @@ import { debounce } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { helpcenterActions } from '../../store/helpcenterSlice';
 import { ReactComponent as GoSearchIcon } from '../icons/paper-airplane.svg';
-import { ReactComponent as HistoryIcon } from '../icons/reload.svg';
 import {
 	Analytics,
 	CapabilityAPI,
@@ -15,7 +14,7 @@ import {
 	MultiSearchAPI,
 	saveHelpcenterOption,
 } from '../utils';
-
+import HistoryList from './HistoryList';
 const SearchInput = () => {
 	const isFirstRender = useRef(true);
 	const brand = CapabilityAPI.getBrand();
@@ -204,15 +203,6 @@ const SearchInput = () => {
 		}
 	};
 
-	const handleHistory = (index) => {
-		dispatch(helpcenterActions.setIsFooterVisible(false));
-		dispatch(
-			helpcenterActions.updateResultContent(
-				searchData.helpResultHistory[index]
-			)
-		);
-	};
-
 	const handleOnChange = (e) => {
 		// populateSearchResult('', undefined, e.target.value);
 		debouncedResults(e.target.value);
@@ -265,21 +255,7 @@ const SearchInput = () => {
 					<p className="hc-input-error-message">{errorMsg}</p>
 				)}
 				<p></p>
-				{searchData.helpResultHistory.map((history, index) => (
-					<div
-						style={{
-							display: 'flex',
-							alignItems: 'center',
-							gap: '4px',
-							cursor: 'pointer',
-						}}
-					>
-						<HistoryIcon />
-						<div key={index} onClick={() => handleHistory(index)}>
-							{history.searchInput}
-						</div>
-					</div>
-				))}
+				<HistoryList />
 			</div>
 		</div>
 	);

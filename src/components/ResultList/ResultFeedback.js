@@ -51,6 +51,8 @@ const ResultFeedback = ({ postId, source }) => {
 	const handleFeedback = (feedback) => {
 		if (feedback === 'notHelpful') {
 			dispatch(helpcenterActions.setDisliked(true));
+		} else if (feedback === 'helpful') {
+			dispatch(helpcenterActions.setLiked(true));
 		}
 		setStatus(feedback);
 		LocalStorageUtils.updateFeedbackStatus(postId);

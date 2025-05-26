@@ -94,6 +94,13 @@ $blue-links-color: #356CD8;
     }
   }
 
+  .HistoryList {
+    gap: 6px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
   .helpcenter-input-wrapper {
     position: fixed;
     width: 356px;
