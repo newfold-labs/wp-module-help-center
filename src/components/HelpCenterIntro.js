@@ -27,7 +27,7 @@ const HelpCenterIntro = () => {
 			aria-labelledby="helpcenter-intro-heading"
 			className="helpcenter-intro"
 			style={{
-				display: hcData.resultContent.length > 0 ? 'none' : 'flex',
+				display: hcData.resultContent?.postId ? 'none' : 'flex',
 			}}
 		>
 			<div
