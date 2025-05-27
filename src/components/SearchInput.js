@@ -34,10 +34,10 @@ const SearchInput = () => {
 	useEffect( () => {
 		if ( isFirstRender.current ) {
 			isFirstRender.current = false;
-			return; // skip on initial render
+			return;
 		}
-		if ( searchData.helpResultHistory?.length > 0 ) {
-			saveHelpcenterOption( searchData.helpResultHistory );
+		if ( searchData.recentSearches?.length > 0 ) {
+			saveHelpcenterOption( searchData.recentSearches );
 		}
 	}, [ searchData.helpResultHistory ] );
 
@@ -66,6 +66,7 @@ const SearchInput = () => {
 		};
 		dispatch( helpcenterActions.updateResultContent( result ) );
 		dispatch( helpcenterActions.updateHelpResultHistory( result ) );
+		dispatch( helpcenterActions.addRecentSearchesEntry( result ) );
 
 		if ( postId ) {
 			dispatch( helpcenterActions.setNewSearchResult( !! postId ) );

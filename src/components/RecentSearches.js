@@ -3,24 +3,24 @@ import { helpcenterActions } from '../../store/helpcenterSlice';
 import { ReactComponent as HistoryIcon } from '../icons/reload.svg';
 
 const RecentSearches = () => {
-	const helpResultHistory = useSelector(
-		( state ) => state.helpcenter.helpResultHistory
+	const dispatch = useDispatch();
+	const recentSearches = useSelector(
+		( state ) => state.helpcenter.recentSearches
 	);
 
-	if ( ! helpResultHistory || helpResultHistory.length === 0 ) {
+	if ( ! recentSearches || recentSearches.length === 0 ) {
 		return null;
 	}
-	const dispatch = useDispatch;
 	const handleHistory = ( index ) => {
 		dispatch( helpcenterActions.setIsFooterVisible( false ) );
 		dispatch(
-			helpcenterActions.updateResultContent( helpResultHistory[ index ] )
+			helpcenterActions.updateResultContent( recentSearches[ index ] )
 		);
 	};
 
 	return (
 		<div className="helpcenter-recent-search">
-			{ helpResultHistory.map( ( history, index ) => (
+			{ recentSearches.map( ( history, index ) => (
 				<div
 					key={ index }
 					className="helpcenter-recent-search--item"

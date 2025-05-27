@@ -18,6 +18,7 @@ const initialState = {
 	helpResultHistory: [],
 	triggerSearch: false,
 	showBackButton: false,
+	recentSearches: [],
 };
 
 const helpcenterSlice = createSlice( {
@@ -28,8 +29,8 @@ const helpcenterSlice = createSlice( {
 			state.isFooterVisible = action.payload.isFooterVisible;
 			state.searchInput = action.payload.SearchInput;
 		},
-		updateHelpResultHistoryFromDB: ( state, action ) => {
-			state.helpResultHistory = action.payload;
+		setRecentSearchesFromDB: ( state, action ) => {
+			state.recentSearches = action.payload;
 		},
 		updateHelpResultHistory: ( state, action ) => {
 			if (
@@ -43,10 +44,15 @@ const helpcenterSlice = createSlice( {
 				);
 				return;
 			}
-			if ( state.helpResultHistory.length === 3 ) {
+
+			state.helpResultHistory.push( action.payload );
+
+			// Cap navigation history to last 10 entries
+			if ( state.helpResultHistory.length > 10 ) {
 				state.helpResultHistory.shift();
 			}
-			state.helpResultHistory.push( action.payload );
+
+			state.showBackButton = state.helpResultHistory.length > 1;
 		},
 		setDisliked: ( state, action ) => {
 			state.disliked = action.payload;
@@ -128,6 +134,32 @@ const helpcenterSlice = createSlice( {
 		},
 		setShowBackButton: ( state, action ) => {
 			state.showBackButton = action.payload;
+		},
+		addRecentSearchesEntry: ( state, action ) => {
+			const result = action.payload;
+
+			if (
+				! result ||
+				typeof result !== 'object' ||
+				Array.isArray( result ) ||
+				! result.postId
+			) {
+				console.warn( 'Invalid recent search entry:', result );
+				return;
+			}
+
+			// Remove existing entry with same postId (if any)
+			state.recentSearches = state.recentSearches.filter(
+				( entry ) => entry.postId !== result.postId
+			);
+
+			// Add the new result to the beginning
+			state.recentSearches.unshift( result );
+
+			// Trim to the latest 3
+			if ( state.recentSearches.length > 3 ) {
+				state.recentSearches.pop(); // Remove the oldest (last)
+			}
 		},
 	},
 } );

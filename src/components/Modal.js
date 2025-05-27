@@ -33,9 +33,7 @@ const Modal = ( { onClose } ) => {
 		async function fetchData() {
 			data = await getHelpcenterOption();
 			data &&
-				dispatch(
-					helpcenterActions.updateHelpResultHistoryFromDB( data )
-				);
+				dispatch( helpcenterActions.setRecentSearchesFromDB( data ) );
 		}
 		fetchData();
 	}, [] );
