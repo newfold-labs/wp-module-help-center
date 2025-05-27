@@ -41,7 +41,7 @@ $blue-links-color: #356CD8;
 
 .nfd-help-center {
   position: relative;
-  height: calc(100vh - 185px);
+  height: calc(100vh - 255px);
   overflow-y: auto;
   z-index: 10;
 
@@ -240,6 +240,7 @@ $blue-links-color: #356CD8;
     justify-content: space-between;
     padding: 15px 0;
     font-weight: 500;
+    border-top: 1px solid rgba(231, 231, 231, 1);
 
     .feedback-question {
      
@@ -294,7 +295,6 @@ $blue-links-color: #356CD8;
 
     .helpcenter-result-block {
       padding: 0 0 12px 0 ;
-      border-bottom: 1px solid rgba(231, 231, 231, 1);
 
       /* Reset default styles */
       ul,
@@ -415,20 +415,6 @@ body:is(.page, .post-php, .post-new-php) {
   margin: 20px 20px 10px;
   font-weight: 400;
   padding-top: 15px;
-
-  .back-arrow {
-    gap: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    cursor: pointer;
-
-    p {
-      font-weight: 500;
-      color: $blue-links-color;
-      margin: 0;
-    }
-  }
 
   p {
     font-size: 13px;
@@ -612,3 +598,11 @@ body:is(.page, .post-php, .post-new-php) {
       }
   }
 }
+
+.helpcenter-back-arrow {
+    cursor: pointer;
+    color : $blue-links-color;
+    display: inline-flex;
+    gap: 6px;
+    padding-top: 10px;
+  }

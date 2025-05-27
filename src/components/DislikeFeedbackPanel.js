@@ -1,21 +1,17 @@
 import { __ } from '@wordpress/i18n';
 import { useDispatch } from 'react-redux';
 import { helpcenterActions } from '../../store/helpcenterSlice';
-import { ReactComponent as BackArrow } from '../icons/arrow-long-left.svg';
 import { ReactComponent as DislikeFeedback } from '../icons/dislike-help.svg';
+import BackButton from './BackButton';
 const DislikeFeedbackPanel = () => {
 	const dispatch = useDispatch();
 	return (
 		<div className="dislike-feedback">
-			<div
-				className="back-arrow"
-				onClick={ () =>
-					dispatch( helpcenterActions.setDisliked( false ) )
-				}
-			>
-				<BackArrow />
-				<p>{ __( 'Back', 'wp-module-help-center' ) }</p>
-			</div>
+			<BackButton
+				handleBackClick={ () => {
+					dispatch( helpcenterActions.setDisliked( false ) );
+				} }
+			/>
 
 			<div className="dislike-feedback-icon">
 				<DislikeFeedback />

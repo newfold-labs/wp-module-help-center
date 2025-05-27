@@ -41,6 +41,7 @@ function ResultContent( { source, index, questionBlock, content } ) {
 
 				// set a flag like "triggerSubmit" in the store
 				dispatch( helpcenterActions.setTriggerSearch( true ) );
+				dispatch( helpcenterActions.setShowBackButton( true ) );
 			}
 		};
 

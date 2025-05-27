@@ -8,11 +8,7 @@ const ResultList = ( { wrapper, resultsContainer } ) => {
 	);
 	return (
 		<>
-			<div
-				className="hc-results-container"
-				ref={ resultsContainer }
-				style={ { visibility: 'hidden' } }
-			>
+			<div className="hc-results-container" ref={ resultsContainer }>
 				{
 					<Result
 						content={ resultContent.resultContent }

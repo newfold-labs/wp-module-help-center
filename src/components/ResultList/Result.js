@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from '@wordpress/element';
 import { marked } from 'marked';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { helpcenterActions } from '../../../store/helpcenterSlice';
 import { processContentForMarkdown, useRevealText } from '../../utils';
+import BackButton from '../BackButton';
 import ResultContent from './ResultContent';
 import ResultFeedback from './ResultFeedback';
 import ResultHeader from './ResultHeader';
@@ -15,13 +17,13 @@ export const Result = ( {
 	wrapper,
 	feedbackSubmitted,
 } ) => {
-	const { isLoading, isNewResult, noResult } = useSelector(
+	const { isLoading, isNewResult, noResult, showBackButton } = useSelector(
 		( state ) => state.helpcenter
 	);
 	const isNewEntry = isNewResult;
 	const responseRef = useRef( null );
 	const [ shouldReveal, setShouldReveal ] = useState( false );
-
+	const dispatch = useDispatch();
 	useEffect( () => {
 		if ( ( isNewEntry && responseRef.current ) || isLoading ) {
 			adjustHeightAndScroll();
@@ -30,7 +32,7 @@ export const Result = ( {
 
 	const adjustHeightAndScroll = () => {
 		const viewportHeight = window.innerHeight;
-		const minHeight = viewportHeight - 185;
+		const minHeight = viewportHeight - 255;
 		responseRef.current.style.minHeight = `${ minHeight }px`;
 		const scrollDistance = wrapper.current.scrollHeight;
 		wrapper.current.scrollBy( {
@@ -64,20 +66,30 @@ export const Result = ( {
 	}
 
 	return (
-		<div ref={ responseRef } className="helpcenter-response-block">
-			<ResultHeader
-				noResult={ noResult }
-				questionBlock={ questionBlock }
-			/>
-			<ResultContent
-				content={ htmlContent }
-				index={ index }
-				questionBlock={ questionBlock }
-				source={ source }
-			/>
-			{ shouldShowFeedback() && (
-				<ResultFeedback postId={ postId } source={ source } />
+		<>
+			{ showBackButton && (
+				<BackButton
+					handleBackClick={ () => {
+						dispatch( helpcenterActions.goBackInHistory() );
+					} }
+				/>
 			) }
-		</div>
+
+			<div ref={ responseRef } className="helpcenter-response-block">
+				<ResultHeader
+					noResult={ noResult }
+					questionBlock={ questionBlock }
+				/>
+				<ResultContent
+					content={ htmlContent }
+					index={ index }
+					questionBlock={ questionBlock }
+					source={ source }
+				/>
+				{ shouldShowFeedback() && (
+					<ResultFeedback postId={ postId } source={ source } />
+				) }
+			</div>
+		</>
 	);
 };
