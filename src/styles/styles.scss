@@ -174,6 +174,20 @@ $blue-links-color: #356CD8;
         display: flex;
         justify-content: center;
       }
+
+      .helpcenter-recent-search{
+        padding-top:15px;
+
+        &--item{
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          cursor: pointer;
+          color: $blue-links-color;
+          margin-bottom: 8px;
+        }
+      }
+
     }
   }
 
