@@ -17,6 +17,7 @@ const initialState = {
 	isFooterVisible: true,
 	helpResultHistory: [],
 	triggerSearch: false,
+	showBackButton: false,
 };
 
 const helpcenterSlice = createSlice( {
@@ -100,6 +101,8 @@ const helpcenterSlice = createSlice( {
 			state.triggerSearch = action.payload;
 		},
 		goBackInHistory: ( state ) => {
+			console.log( 'go back' );
+			debugger;
 			const history = state.helpResultHistory;
 
 			if ( history.length > 1 ) {
@@ -122,6 +125,9 @@ const helpcenterSlice = createSlice( {
 				state.initComplete = true;
 				state.showSuggestions = true;
 			}
+		},
+		setShowBackButton: ( state, action ) => {
+			state.showBackButton = action.payload;
 		},
 	},
 } );

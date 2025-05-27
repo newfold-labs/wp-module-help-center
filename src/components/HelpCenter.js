@@ -1,155 +1,141 @@
 import { useEffect, useRef } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
 import { useDispatch, useSelector } from 'react-redux';
-import { helpcenterActions } from '../../store/helpcenterSlice';
-import { ReactComponent as BackArrow } from '../icons/arrow-long-left.svg';
+
 import {
 	CapabilityAPI,
 	LocalStorageUtils,
 	MultiSearchAPI,
 	adjustPadding,
-	scrollToBottom,
 } from '../utils';
+
+import { helpcenterActions } from '../../store/helpcenterSlice';
+
 import DislikeFeedbackPanel from './DislikeFeedbackPanel';
 import HelpCenterIntro from './HelpCenterIntro';
 import ResultList from './ResultList';
 import NoResults from './ResultList/NoResults';
 import SearchInput from './SearchInput';
 
-// import { SuggestionList } from './SuggestionList';
-
 const HelpCenter = () => {
 	const dispatch = useDispatch();
-	const initialState = useSelector( ( state ) => state.helpcenter );
-	const brand = CapabilityAPI.getBrand();
+	const {
+		visible,
+		helpEnabled,
+		searchInput,
+		disliked,
+		noResult,
+		initComplete,
+		showSuggestions,
+		resultContent,
+		helpResultHistory,
+	} = useSelector( ( state ) => state.helpcenter );
 
+	const wrapper = useRef();
 	const suggestionsRef = useRef();
 	const resultsContainer = useRef();
-	const wrapper = useRef();
 
+	// === useEffect: on mount ===
 	useEffect( () => {
 		getHelpStatus();
-
-		// Add event listener for localStorage changes
-		const updateVisibility = () => {
+		const updateVisibility = () =>
 			dispatch(
 				helpcenterActions.updateVisibility(
 					LocalStorageUtils.getHelpVisible()
 				)
 			);
-		};
 		window.addEventListener( 'storage', updateVisibility );
 
-		// Remove the event listener when the component unmounts
 		return () => {
-			// Cancel any debounced calls
-			// debouncedResults.cancel();---------
-			// Remove the storage event listener
 			window.removeEventListener( 'storage', updateVisibility );
 		};
 	}, [] );
 
+	// === useEffect: on visible ===
 	useEffect( () => {
-		checkFooterVisibility();
-		if ( initialState.initComplete ) {
-			adjustPadding(
-				wrapper,
-				suggestionsRef,
-				initialState.showSuggestions
-			);
-			scrollToBottom( wrapper, resultsContainer );
-		}
-		// If the wrapper is visible or we’ve just finished init, scroll
-	}, [ initialState.initComplete, initialState.disliked ] );
-
-	useEffect( () => {
-		if ( initialState.visible ) {
+		if ( visible ) {
 			fetchInitialData();
 			checkFooterVisibility();
-			adjustPadding(
-				wrapper,
-				suggestionsRef,
-				initialState.showSuggestions
-			);
-			setTimeout( () => {
+			adjustPadding( wrapper, suggestionsRef, showSuggestions );
+			/* setTimeout( () => {
 				scrollToBottom( wrapper, resultsContainer );
-			}, 500 );
+			}, 500 ); */
 		}
-	}, [ initialState.visible ] );
+	}, [ visible ] );
 
+	// === useEffect: on initComplete / disliked ===
 	useEffect( () => {
-		// Always adjust padding if any of these dependencies change
-		adjustPadding( wrapper, suggestionsRef, initialState.showSuggestions );
-	}, [ initialState.showSuggestions ] );
-
-	const checkFooterVisibility = () =>
-		dispatch(
-			helpcenterActions.setIsFooterVisible(
-				initialState.resultContent.length < 1 ||
-					initialState.disliked
-			)
-		);
+		if ( initComplete ) {
+			checkFooterVisibility();
+			adjustPadding( wrapper, suggestionsRef, showSuggestions );
+			/* scrollToBottom( wrapper, resultsContainer ); */
+		}
+	}, [ initComplete, disliked ] );
 
 	const getHelpStatus = async () => {
 		try {
 			const response = await CapabilityAPI.getHelpCenterCapability();
 			dispatch( helpcenterActions.updateHelpEnabled( response ) );
-		} catch ( exception ) {
+		} catch {
 			dispatch( helpcenterActions.updateHelpEnabled( false ) );
 		}
 	};
 
-	// const handleSuggestionsClick = ( result, postTitle ) => {
-	// 	setState( ( prev ) => ( {
-	// 		...prev,
-	// 		showSuggestions: false,
-	// 		disliked: false,
-	// 	} ) );
-	// 	populateSearchResult(
-	// 		result?.hits[ 0 ]?.document?.post_content,
-	// 		result?.hits[ 0 ]?.document?.id,
-	// 		postTitle
-	// 	);
-	// 	props.setIsFooterVisible( false );
-	// };
-
 	const fetchInitialData = async () => {
+		if ( ! searchInput ) {
+			dispatch( helpcenterActions.updateInitComplete( true ) );
+			return;
+		}
+
 		try {
-			// Populate the results from local storage if they exist
-			// const resultContent = initialState.helpResultHistory;
-			// if (resultContent) {
-			// 	dispatch(helpcenterActions.updateResultContent(resultContent));
-			// }
+			const results = await MultiSearchAPI.fetchMultiSearchResults(
+				searchInput,
+				CapabilityAPI.getBrand()
+			);
 
-			if ( ! initialState.searchInput ) {
-				// If no input, just mark init as complete
-				dispatch( helpcenterActions.updateInitComplete( true ) );
-				return;
-			}
-
-			const multiSearchResults =
-				await MultiSearchAPI.fetchMultiSearchResults(
-					initialState.searchInput,
-					brand
-				);
 			dispatch(
 				helpcenterActions.updateMultiResults( {
 					results: {
-						hits: multiSearchResults?.results?.[ 0 ]?.grouped_hits,
+						hits: results?.results?.[ 0 ]?.grouped_hits || [],
 					},
 					suggestions: true,
 				} )
 			);
+
 			dispatch( helpcenterActions.updateInitComplete( true ) );
 		} catch ( error ) {
-			// eslint-disable-next-line no-console
 			console.error( 'Error fetching initial data:', error );
 		}
 	};
 
-	if ( ! initialState.helpEnabled || ! initialState.visible ) {
+	const checkFooterVisibility = () => {
+		dispatch(
+			helpcenterActions.setIsFooterVisible(
+				resultContent.length < 1 || disliked
+			)
+		);
+	};
+
+	if ( ! helpEnabled || ! visible ) {
 		return null;
 	}
+
+	const renderResultContainer = () => {
+		if ( noResult ) {
+			return <NoResults />;
+		}
+		if ( disliked ) {
+			return <DislikeFeedbackPanel />;
+		}
+		return (
+			<>
+				{ resultContent.length < 1 && <HelpCenterIntro /> }
+				<ResultList
+					wrapper={ wrapper }
+					resultsContainer={ resultsContainer }
+				/>
+			</>
+		);
+	};
 
 	return (
 		<div
@@ -157,52 +143,7 @@ const HelpCenter = () => {
 			id="helpcenterResultsWrapper"
 			ref={ wrapper }
 		>
-			{ initialState.noResult ? (
-				<NoResults />
-			) : (
-				<>
-					{ initialState.disliked ? (
-						<DislikeFeedbackPanel />
-					) : (
-						<>
-							<HelpCenterIntro />
-							<div
-								className="back-arrow"
-								role="button"
-								tabIndex={ 0 }
-								onClick={ () =>
-									dispatch(
-										helpcenterActions.goBackInHistory()
-									)
-								}
-								onKeyDown={ ( e ) => {
-									if ( e.key === 'Enter' || e.key === ' ' ) {
-										dispatch(
-											helpcenterActions.goBackInHistory()
-										);
-									}
-								} }
-							>
-								<BackArrow />
-								<p>{ __( 'Back', 'wp-module-help-center' ) }</p>
-							</div>
-							<ResultList
-								wrapper={ wrapper }
-								resultsContainer={ resultsContainer }
-							/>
-						</>
-					) }
-				</>
-			) }
-			{ /* { initialState.showSuggestions && (
-				{/* { initialState.showSuggestions && (
-					<SuggestionList
-					suggestionsRef={ suggestionsRef }
-					multiResults={ initialState.multiResults }
-					handleSuggestionsClick={ handleSuggestionsClick }
-					isFooterVisible={ props.isFooterVisible }
-				/>
-			) } */ }
+			{ renderResultContainer() }
 			<SearchInput />
 		</div>
 	);

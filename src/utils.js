@@ -8,41 +8,41 @@ const base = 'nfd-help-center/v1';
 const onboardingBase = 'newfold-onboarding/v1';
 
 export const InteractionAPIs = {
-	postFeedback: (postId, status) =>
-		apiFetch({
+	postFeedback: ( postId, status ) =>
+		apiFetch( {
 			path: base + '/feedback',
 			method: 'POST',
 			data: {
 				post_id: postId,
 				status,
 			},
-		}),
+		} ),
 };
 
 export const OnboardingAPIs = {
 	getFlowData: () =>
-		apiFetch({
+		apiFetch( {
 			path: onboardingBase + '/flow',
 			method: 'GET',
-		}),
+		} ),
 };
 
 export const MultiSearchAPI = {
-	fetchMultiSearchResults: async (query, brand) => {
+	fetchMultiSearchResults: async ( query, brand ) => {
 		try {
-			const response = await apiFetch({
+			const response = await apiFetch( {
 				path: '/newfold-multi-search/v1/multi_search',
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ query, brand }),
-			});
+				body: JSON.stringify( { query, brand } ),
+			} );
 
 			return response;
-		} catch (error) {
+		} catch ( error ) {
 			// eslint-disable-next-line no-console
-			console.error('Error in getMultiSearchResults:', error);
+			console.error( 'Error in getMultiSearchResults:', error );
 			return {};
 		}
 	},
@@ -60,7 +60,7 @@ export const CapabilityAPI = {
 		const brand = window.NewfoldRuntime?.plugin?.brand || 'wordpress';
 		// add region if HostGator
 		if (
-			brand.includes('hostgator') &&
+			brand.includes( 'hostgator' ) &&
 			window.NewfoldRuntime?.plugin?.region
 		) {
 			return brand + '-' + window.NewfoldRuntime?.plugin?.region;
@@ -71,15 +71,15 @@ export const CapabilityAPI = {
 
 // A wrapper to get and set things more easily
 export const LocalStorageUtils = {
-	updateHelpVisible: (visible) => {
-		localStorage.setItem('helpVisible', visible ? 'true' : 'false');
+	updateHelpVisible: ( visible ) => {
+		localStorage.setItem( 'helpVisible', visible ? 'true' : 'false' );
 	},
 	getHelpVisible: () => {
-		return localStorage.getItem('helpVisible') === 'true';
+		return localStorage.getItem( 'helpVisible' ) === 'true';
 	},
-	persistResult: (resultContent, postId, searchInput) => {
+	persistResult: ( resultContent, postId, searchInput ) => {
 		// Only store the result if resultContent has a value
-		if (!resultContent || resultContent.trim() === '') {
+		if ( ! resultContent || resultContent.trim() === '' ) {
 			return;
 		}
 
@@ -94,186 +94,186 @@ export const LocalStorageUtils = {
 		};
 
 		// Add new result to the array
-		existingResults.push(newResult);
+		existingResults.push( newResult );
 
 		// Store the updated array back in local storage
 		localStorage.setItem(
 			'helpResultContent',
-			JSON.stringify(existingResults)
+			JSON.stringify( existingResults )
 		);
 	},
 
-	persistSearchInput: (searchInput) => {
-		localStorage.setItem('searchInput', searchInput);
+	persistSearchInput: ( searchInput ) => {
+		localStorage.setItem( 'searchInput', searchInput );
 	},
 	clear: () => {
-		localStorage.removeItem('helpResultContent');
-		localStorage.removeItem('helpPostId');
-		localStorage.removeItem('searchInput');
+		localStorage.removeItem( 'helpResultContent' );
+		localStorage.removeItem( 'helpPostId' );
+		localStorage.removeItem( 'searchInput' );
 	},
 	// Update getResultInfo to retrieve all results
 	getResultInfo: () => {
-		const results = localStorage.getItem('helpResultContent');
-		return results && isValidJSON(results) ? JSON.parse(results) : [];
+		const results = localStorage.getItem( 'helpResultContent' );
+		return results && isValidJSON( results ) ? JSON.parse( results ) : [];
 	},
 	getSearchInput: () => {
-		return localStorage.getItem('searchInput');
+		return localStorage.getItem( 'searchInput' );
 	},
-	getFeatureFlag(flagName) {
-		return localStorage.getItem(flagName);
+	getFeatureFlag( flagName ) {
+		return localStorage.getItem( flagName );
 	},
 	clearSearchInput() {
-		localStorage.removeItem('searchInput');
+		localStorage.removeItem( 'searchInput' );
 	},
-	setFeatureFlag(flagName, value) {
-		localStorage.setItem(flagName, value);
+	setFeatureFlag( flagName, value ) {
+		localStorage.setItem( flagName, value );
 	},
-	updateFeedbackStatus: (postId) => {
+	updateFeedbackStatus: ( postId ) => {
 		const savedResults = LocalStorageUtils.getResultInfo();
-		const updatedResults = savedResults.map((result) =>
+		const updatedResults = savedResults.map( ( result ) =>
 			result.postId === postId
 				? { ...result, feedbackSubmitted: true }
 				: result
 		);
 		localStorage.setItem(
 			'helpResultContent',
-			JSON.stringify(updatedResults)
+			JSON.stringify( updatedResults )
 		);
 	},
 };
 
 export const Analytics = {
-	sendEvent: (action, data) => {
+	sendEvent: ( action, data ) => {
 		const hiiveEvent = new HiiveEvent(
 			'wonder_help',
 			action,
 			data,
 			'wonder_help'
 		);
-		HiiveAnalytics.send(hiiveEvent);
+		HiiveAnalytics.send( hiiveEvent );
 	},
 };
 
-export const useRevealText = (text, speed = 100, startReveal = false) => {
-	const [displayedText, setDisplayedText] = useState('');
-	const [isComplete, setIsComplete] = useState(false);
+export const useRevealText = ( text, speed = 100, startReveal = false ) => {
+	const [ displayedText, setDisplayedText ] = useState( '' );
+	const [ isComplete, setIsComplete ] = useState( false );
 
-	useEffect(() => {
-		if (!text) {
-			setDisplayedText('');
-			setIsComplete(false);
+	useEffect( () => {
+		if ( ! text ) {
+			setDisplayedText( '' );
+			setIsComplete( false );
 			return;
 		}
 
 		// Only trigger the reveal effect if startReveal is true
-		if (startReveal) {
+		if ( startReveal ) {
 			// Split text and filter out empty strings
-			const words = text.trim().split(' ').filter(Boolean);
+			const words = text.trim().split( ' ' ).filter( Boolean );
 			let index = 0;
 
 			// Initialize with the first word
-			setDisplayedText(words[0]);
-			setIsComplete(false);
+			setDisplayedText( words[ 0 ] );
+			setIsComplete( false );
 
-			const intervalId = setInterval(() => {
-				if (index < words.length - 1) {
+			const intervalId = setInterval( () => {
+				if ( index < words.length - 1 ) {
 					index++;
-					setDisplayedText((prev) => prev + ' ' + words[index]);
+					setDisplayedText( ( prev ) => prev + ' ' + words[ index ] );
 				} else {
-					clearInterval(intervalId);
-					setIsComplete(true);
+					clearInterval( intervalId );
+					setIsComplete( true );
 				}
-			}, speed);
+			}, speed );
 
-			return () => clearInterval(intervalId);
+			return () => clearInterval( intervalId );
 		}
 
-		setDisplayedText(text);
-		setIsComplete(true);
-	}, [text, speed, startReveal]);
+		setDisplayedText( text );
+		setIsComplete( true );
+	}, [ text, speed, startReveal ] );
 
 	return { displayedText, isComplete };
 };
 
-export const isValidJSON = (json) => {
+export const isValidJSON = ( json ) => {
 	try {
-		JSON.parse(json);
+		JSON.parse( json );
 		return true;
-	} catch (e) {
+	} catch ( e ) {
 		return false;
 	}
 };
 
-export function formatPostContent(postContent = '') {
-	return postContent.replace(/\n/g, '<br />');
+export function formatPostContent( postContent = '' ) {
+	return postContent.replace( /\n/g, '<br />' );
 }
 
-export function getResultMatches(query, tokensMatched, fieldsMatched) {
+export function getResultMatches( query, tokensMatched, fieldsMatched ) {
 	const clearedQuery = query
-		.replace(/[^\w\s]|_/g, '')
-		.replace(/\s{2,}/g, ' ')
+		.replace( /[^\w\s]|_/g, '' )
+		.replace( /\s{2,}/g, ' ' )
 		.trim();
 
-	const tokensPerQuery = tokensMatched / clearedQuery.split(/\s+/).length;
+	const tokensPerQuery = tokensMatched / clearedQuery.split( /\s+/ ).length;
 	return fieldsMatched >= 1 && tokensPerQuery >= 0.99;
 }
 
-export function scrollToBottom(wrapperRef, resultsContainerRef) {
-	if (!wrapperRef?.current) {
+export function scrollToBottom( wrapperRef, resultsContainerRef ) {
+	if ( ! wrapperRef?.current ) {
 		return;
 	}
 	const scrollDistance = wrapperRef.current.scrollHeight;
 
-	wrapperRef.current.scrollBy({
+	wrapperRef.current.scrollBy( {
 		top: scrollDistance,
 		left: 0,
 		behavior: 'auto',
-	});
+	} );
 
-	if (resultsContainerRef?.current) {
+	if ( resultsContainerRef?.current ) {
 		resultsContainerRef.current.style.visibility = 'visible';
 	}
 }
 
-export function adjustPadding(wrapperRef, suggestionsRef, showSuggestions) {
+export function adjustPadding( wrapperRef, suggestionsRef, showSuggestions ) {
 	let paddingBottom = 0;
-	if (showSuggestions && suggestionsRef?.current) {
+	if ( showSuggestions && suggestionsRef?.current ) {
 		const suggestionsHeight =
 			suggestionsRef.current.getBoundingClientRect().height;
-		paddingBottom = `${suggestionsHeight}px`;
+		paddingBottom = `${ suggestionsHeight }px`;
 	}
 
-	if (wrapperRef?.current) {
+	if ( wrapperRef?.current ) {
 		wrapperRef.current.style.paddingBottom = paddingBottom;
 	}
 }
 
 /* Parse the html in string to a document node, replace the <p>  tags with a fragment and line break */
-export const processContentForMarkdown = (textToDisplay) => {
-	if (textToDisplay) {
+export const processContentForMarkdown = ( textToDisplay ) => {
+	if ( textToDisplay ) {
 		// eslint-disable-next-line no-undef
 		const parser = new DOMParser();
-		const doc = parser.parseFromString(textToDisplay, 'text/html');
+		const doc = parser.parseFromString( textToDisplay, 'text/html' );
 
-		const paragraphElements = doc.querySelectorAll('p');
+		const paragraphElements = doc.querySelectorAll( 'p' );
 
-		paragraphElements.forEach((p) => {
+		paragraphElements.forEach( ( p ) => {
 			// Create a DocumentFragment to hold the content and <br> tags
 			const fragment = document.createDocumentFragment();
 
 			// Append all child nodes of the <p> to the fragment
-			while (p.firstChild) {
-				fragment.appendChild(p.firstChild);
+			while ( p.firstChild ) {
+				fragment.appendChild( p.firstChild );
 			}
 
-			const br1 = document.createElement('br');
-			const br2 = document.createElement('br');
-			fragment.appendChild(br1);
-			fragment.appendChild(br2);
+			const br1 = document.createElement( 'br' );
+			const br2 = document.createElement( 'br' );
+			fragment.appendChild( br1 );
+			fragment.appendChild( br2 );
 
 			// Replace the <p> element with the fragment
-			p.parentNode.replaceChild(fragment, p);
-		});
+			p.parentNode.replaceChild( fragment, p );
+		} );
 
 		const updatedContent = doc.body.innerHTML;
 		return updatedContent;
@@ -281,49 +281,49 @@ export const processContentForMarkdown = (textToDisplay) => {
 	return '';
 };
 
-export const saveHelpcenterOption = async (result) => {
-	const apiUrl = NewfoldRuntime.createApiUrl('/wp/v2/settings');
+export const saveHelpcenterOption = async ( result ) => {
+	const apiUrl = NewfoldRuntime.createApiUrl( '/wp/v2/settings' );
 	try {
-		await apiFetch({
+		await apiFetch( {
 			url: apiUrl,
 			method: 'POST',
-			data: { nfd_helpcenter_data: JSON.stringify(result) },
-		});
-	} catch (err) {
+			data: { nfd_helpcenter_data: JSON.stringify( result ) },
+		} );
+	} catch ( err ) {
 		// console.log(err);
 	}
 };
 
 export const getHelpcenterOption = async () => {
-	const apiUrl = NewfoldRuntime.createApiUrl('/wp/v2/settings');
+	const apiUrl = NewfoldRuntime.createApiUrl( '/wp/v2/settings' );
 	try {
-		const response = await apiFetch({ url: apiUrl, method: 'GET' });
+		const response = await apiFetch( { url: apiUrl, method: 'GET' } );
 		const responseData =
 			response.nfd_helpcenter_data &&
-			JSON.parse(response.nfd_helpcenter_data);
+			JSON.parse( response.nfd_helpcenter_data );
 
-		if (responseData?.length > 0) {
+		if ( responseData?.length > 0 ) {
 			return responseData;
 		}
-	} catch (err) { }
+	} catch ( err ) {}
 };
 
-export const getMultiSearchResponse = async (query, brand) => {
+export const getMultiSearchResponse = async ( query, brand ) => {
 	try {
 		const multiSearchResults = await MultiSearchAPI.fetchMultiSearchResults(
 			query,
 			brand
 		);
 		const hits =
-			multiSearchResults?.results?.[0]?.grouped_hits?.[0]?.hits || [];
+			multiSearchResults?.results?.[ 0 ]?.grouped_hits?.[ 0 ]?.hits || [];
 
 		return {
 			hits,
 			fullResponse: multiSearchResults,
-			lastQuery: multiSearchResults?.results?.[0]?.request_params?.q,
+			lastQuery: multiSearchResults?.results?.[ 0 ]?.request_params?.q,
 		};
-	} catch (error) {
-		console.error('Multi-search failed:', error);
+	} catch ( error ) {
+		console.error( 'Multi-search failed:', error );
 		throw error;
 	}
 };
