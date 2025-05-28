@@ -5,24 +5,24 @@ import { ReactComponent as HistoryIcon } from '../icons/reload.svg';
 const HistoryList = () => {
 	const dispatch = useDispatch();
 	const { helpResultHistory } = useSelector( ( state ) => state.helpcenter );
-	const handleHistory = ( index ) => {
+	const handleHistory = ( historyItem ) => {
 		dispatch( helpcenterActions.clearViaLinkSearch() );
 		dispatch( helpcenterActions.setIsFooterVisible( false ) );
-		dispatch(
-			helpcenterActions.updateResultContent( helpResultHistory[ index ] )
-		);
+		dispatch( helpcenterActions.updateResultContent( historyItem ) );
 	};
 
-	return [ ...helpResultHistory ].reverse().map( ( history, index ) => (
+	const reversedHistory = [ ...helpResultHistory ].reverse();
+
+	return reversedHistory.map( ( history, index ) => (
 		<div
 			className="HistoryList"
-			key={ index }
+			key={ history.searchInput + index }
 			role="button"
 			tabIndex={ 0 }
-			onClick={ () => handleHistory( index ) }
+			onClick={ () => handleHistory( history ) }
 			onKeyDown={ ( e ) => {
 				if ( e.key === 'Enter' || e.key === ' ' ) {
-					handleHistory( index );
+					handleHistory( history );
 				}
 			} }
 		>
