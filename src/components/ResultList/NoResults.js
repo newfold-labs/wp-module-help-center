@@ -1,9 +1,10 @@
-import { __ } from '@wordpress/i18n';
-import ResultHeader from './ResultHeader';
+/* eslint-disable @wordpress/i18n-translator-comments */
 import { useRef } from '@wordpress/element';
-import { ReactComponent as AIStars } from '../../icons/ai-stars.svg';
+import { __, sprintf } from '@wordpress/i18n';
+import { LocalStorageUtils } from '../../utils';
+import { ReactComponent as NoResultIcon } from './../../icons/noresults-icon.svg';
 
-const NoResults = ( { isNewResult } ) => {
+const NoResults = () => {
 	const responseRef = useRef( null );
 	const resourceLink = window?.nfdHelpCenter?.resourceLink || '#'; // Fallback if resourceLink is not defined
 
@@ -15,26 +16,70 @@ const NoResults = ( { isNewResult } ) => {
 
 	// Replace the {link} placeholder with the actual link
 	const formattedContent = contentWithLink.replace( '{link}', resourceLink );
-
+	const query = LocalStorageUtils.getSearchInput();
 	return (
 		<div ref={ responseRef } className="helpcenter-response-block">
-			<ResultHeader noResult={ true } isNewEntry={ isNewResult } />
-			<div className="helpcenter-result-block">
-				<div className="helpcenter-result-block__aistars">
-					<AIStars />
-				</div>
-				<div>
+			<div className="helpcenter-noresult-wrapper">
+				<div className="helpcenter-noresult-block">
+					<div className="helpcenter-noresult-icon">
+						<NoResultIcon />
+					</div>
 					<p>
-						{ __(
-							'Sorry, I don’t have any information on that topic yet.',
-							'wp-module-help-center'
+						{ sprintf(
+							__(
+								'Sorry, I don’t have any information on “%s” yet.',
+								'wp-module-help-center'
+							),
+							query
 						) }
 					</p>
-					<p
-						dangerouslySetInnerHTML={ {
-							__html: formattedContent,
-						} }
-					/>
+					<div>
+						<h4>{ __( 'Try to:', 'wp-module-help-center' ) }</h4>
+						<ul>
+							<li>
+								<p
+									dangerouslySetInnerHTML={ {
+										__html: formattedContent,
+									} }
+								/>
+							</li>
+							<li>
+								<p>
+									{ __(
+										`Use different keywords in the search field.`,
+										'wp-module-help-center'
+									) }
+									<br />
+									{ __(
+										`A clear, short prompt can make the difference.`,
+										'wp-module-help-center'
+									) }
+								</p>
+							</li>
+							<li>
+								<p>
+									{ __(
+										'Reach out to our customer support.',
+										'wp-module-help-center'
+									) }
+									<br />
+									{ __(
+										'Call at',
+										'wp-module-help-center'
+									) }{ ' ' }
+									<a href="tel:8884014678">888-401-4678</a>{ ' ' }
+									{ __( 'or', 'wp-module-help-center' ) }{ ' ' }
+									<a href="https://www.bluehost.com/contact">
+										Chat Live
+									</a>{ ' ' }
+									{ __(
+										'with one of our support agents — we will assist you as soon as possible.',
+										'wp-module-help-center'
+									) }
+								</p>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>

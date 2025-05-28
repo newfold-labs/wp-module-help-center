@@ -1,6 +1,10 @@
-import { useEffect, useState, useRef } from '@wordpress/element';
+import { useEffect, useRef, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { Analytics, InteractionAPIs, LocalStorageUtils } from '../../utils';
+import { useDispatch } from 'react-redux';
+import { helpcenterActions } from '../../../store/helpcenterSlice';
+import { ReactComponent as ThumbsDown } from '../../icons/thumb-down.svg';
+import { ReactComponent as ThumbsUp } from '../../icons/thumb-up.svg';
+import { Analytics, InteractionAPIs } from '../../utils';
 
 const ResultFeedback = ( { postId, source } ) => {
 	const [ status, setStatus ] = useState( '' );
@@ -8,6 +12,7 @@ const ResultFeedback = ( { postId, source } ) => {
 	const [ showThanksMessage, setShowThanksMessage ] = useState( false );
 	const yesButtonRef = useRef( null );
 	const noButtonRef = useRef( null );
+	const dispatch = useDispatch();
 
 	const postFeedback = async () => {
 		if ( status === 'helpful' || status === 'notHelpful' ) {
@@ -44,8 +49,12 @@ const ResultFeedback = ( { postId, source } ) => {
 	}, [ status ] );
 
 	const handleFeedback = ( feedback ) => {
+		if ( feedback === 'notHelpful' ) {
+			dispatch( helpcenterActions.setDisliked( true ) );
+		} else if ( feedback === 'helpful' ) {
+			dispatch( helpcenterActions.setLiked( true ) );
+		}
 		setStatus( feedback );
-		LocalStorageUtils.updateFeedbackStatus( postId );
 	};
 
 	return (
@@ -65,16 +74,14 @@ const ResultFeedback = ( { postId, source } ) => {
 						<button
 							ref={ yesButtonRef }
 							onClick={ () => handleFeedback( 'helpful' ) }
-							className="feedback-button yes"
 						>
-							{ __( 'Yes', 'wp-module-help-center' ) }
+							<ThumbsUp />
 						</button>
 						<button
 							onClick={ () => handleFeedback( 'notHelpful' ) }
 							ref={ noButtonRef }
-							className="feedback-button no"
 						>
-							{ __( 'No', 'wp-module-help-center' ) }
+							<ThumbsDown />
 						</button>
 					</div>
 				</>
