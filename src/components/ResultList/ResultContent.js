@@ -20,8 +20,6 @@ function ResultContent( { source, index, questionBlock, content } ) {
 				e.preventDefault();
 				const clickedText = anchor.textContent.trim();
 
-				dispatch( helpcenterActions.setViaMultisiteLink( true ) );
-
 				dispatch( helpcenterActions.updateSearchInput( clickedText ) );
 				dispatch( helpcenterActions.setAIResultLoading() );
 				dispatch( helpcenterActions.setTriggerSearch( true ) );
