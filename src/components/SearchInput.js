@@ -108,7 +108,6 @@ const SearchInput = () => {
 				console.error('Error fetching debounced results:', error);
 			}
 		}, 500);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const checkAndPopulateResult = (hits) => {
@@ -204,7 +203,6 @@ const SearchInput = () => {
 	};
 
 	const handleOnChange = (e) => {
-		// populateSearchResult('', undefined, e.target.value);
 		debouncedResults(e.target.value);
 		dispatch(helpcenterActions.updateSearchInput(e.target.value));
 	};

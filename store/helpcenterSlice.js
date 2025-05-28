@@ -64,6 +64,7 @@ const helpcenterSlice = createSlice({
 			state.visible = action.payload;
 		},
 		updateResultContent: (state, action) => {
+			state.noResult = false;
 			state.resultContent = action.payload;
 		},
 		setNewSearchResult: (state, action) => {

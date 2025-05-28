@@ -56,9 +56,6 @@ const HelpCenter = () => {
 			fetchInitialData();
 			checkFooterVisibility();
 			adjustPadding( wrapper, suggestionsRef, showSuggestions );
-			/* setTimeout( () => {
-				scrollToBottom( wrapper, resultsContainer );
-			}, 500 ); */
 		}
 	}, [ visible ] );
 
@@ -67,7 +64,6 @@ const HelpCenter = () => {
 		if ( initComplete ) {
 			checkFooterVisibility();
 			adjustPadding( wrapper, suggestionsRef, showSuggestions );
-			/* scrollToBottom( wrapper, resultsContainer ); */
 		}
 	}, [ initComplete, disliked ] );
 

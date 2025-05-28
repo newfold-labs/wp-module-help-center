@@ -55,7 +55,6 @@ const ResultFeedback = ({ postId, source }) => {
 			dispatch(helpcenterActions.setLiked(true));
 		}
 		setStatus(feedback);
-		// LocalStorageUtils.updateFeedbackStatus(postId);
 	};
 
 	return (
