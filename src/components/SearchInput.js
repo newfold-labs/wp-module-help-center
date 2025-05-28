@@ -1,7 +1,6 @@
 import moduleAI from '@newfold-labs/wp-module-ai';
-import { useEffect, useMemo, useRef, useState } from '@wordpress/element';
+import { useEffect, useRef, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { debounce } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { helpcenterActions } from '../../store/helpcenterSlice';
 import { ReactComponent as GoSearchIcon } from '../icons/paper-airplane.svg';
@@ -14,7 +13,8 @@ import {
 	MultiSearchAPI,
 	saveHelpcenterOption,
 } from '../utils';
-import HistoryList from './HistoryList';
+import RecentSearches from './RecentSearches';
+
 const SearchInput = () => {
 	const isFirstRender = useRef(true);
 	const brand = CapabilityAPI.getBrand();
@@ -33,10 +33,10 @@ const SearchInput = () => {
 	useEffect(() => {
 		if (isFirstRender.current) {
 			isFirstRender.current = false;
-			return; // skip on initial render
+			return;
 		}
-		if (searchData.helpResultHistory?.length > 0) {
-			saveHelpcenterOption(searchData.helpResultHistory);
+		if (searchData.recentSearches?.length > 0) {
+			saveHelpcenterOption(searchData.recentSearches);
 		}
 	}, [searchData.helpResultHistory]);
 
@@ -62,9 +62,11 @@ const SearchInput = () => {
 			postId,
 			searchInput: postTitle,
 			feedbackSubmitted: false,
+			viaMultisiteLink: searchData.triggerSearch ? true : false,
 		};
 		dispatch(helpcenterActions.updateResultContent(result));
 		dispatch(helpcenterActions.updateHelpResultHistory(result));
+		dispatch(helpcenterActions.addRecentSearchesEntry(result));
 
 		if (postId) {
 			dispatch(helpcenterActions.setNewSearchResult(!!postId));
@@ -100,14 +102,14 @@ const SearchInput = () => {
 	const getAIResult = async () => {
 		dispatch(helpcenterActions.setAIResultLoading());
 		try {
-
 			// Make a new multi-search API call if no match is found
 			const multiSearchResults =
 				await MultiSearchAPI.fetchMultiSearchResults(
 					searchData.searchInput,
 					brand
 				);
-			const hits = multiSearchResults?.results?.[0]?.grouped_hits?.[0]?.hits;
+			const hits =
+				multiSearchResults?.results?.[0]?.grouped_hits?.[0]?.hits;
 
 			if (checkAndPopulateResult(hits)) {
 				return;
@@ -209,8 +211,7 @@ const SearchInput = () => {
 				{errorMsg && (
 					<p className="hc-input-error-message">{errorMsg}</p>
 				)}
-				<p></p>
-				<HistoryList />
+				<RecentSearches />
 			</div>
 		</div>
 	);

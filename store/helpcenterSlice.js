@@ -18,6 +18,7 @@ const initialState = {
 	helpResultHistory: [],
 	triggerSearch: false,
 	showBackButton: false,
+	recentSearches: [],
 };
 
 const helpcenterSlice = createSlice({
@@ -28,21 +29,45 @@ const helpcenterSlice = createSlice({
 			state.isFooterVisible = action.payload.isFooterVisible;
 			state.searchInput = action.payload.SearchInput;
 		},
-		updateHelpResultHistoryFromDB: (state, action) => {
-			state.helpResultHistory = action.payload;
+		setRecentSearchesFromDB: (state, action) => {
+			state.recentSearches = action.payload;
 		},
 		updateHelpResultHistory: (state, action) => {
-			const isAlreadyInHistory = state.helpResultHistory.some(
-				(item) => item.postId === action.payload.postId
-			);
+			const payload = action.payload;
 
-			if (!isAlreadyInHistory) {
-				if (state.helpResultHistory.length === 3) {
-					state.helpResultHistory.shift();
-				}
-				state.helpResultHistory.push(action.payload);
+			if (
+				!payload ||
+				typeof payload !== 'object' ||
+				Array.isArray(payload)
+			) {
+				console.warn(
+					'Skipped updateHelpResultHistory due to invalid payload:',
+					payload
+				);
+				return;
 			}
+
+			const alreadyExists = state.helpResultHistory.some(
+				(entry) =>
+					entry.searchInput === payload.searchInput &&
+					entry.postId === payload.postId
+			);
+			if (alreadyExists) {
+				return;
+			}
+
+			state.helpResultHistory.push(payload);
+
+			if (state.helpResultHistory.length > 10) {
+				state.helpResultHistory.shift();
+			}
+
+			// Update back button visibility based on presence of any link-driven entries
+			state.showBackButton = state.helpResultHistory.some(
+				(entry) => entry.viaMultisiteLink
+			);
 		},
+
 		setDisliked: (state, action) => {
 			state.disliked = action.payload;
 		},
@@ -64,11 +89,29 @@ const helpcenterSlice = createSlice({
 			state.visible = action.payload;
 		},
 		updateResultContent: (state, action) => {
-			state.noResult = false;
-			state.resultContent = action.payload;
+			const result = action.payload;
+			state.resultContent = result;
+
+			if (state.viaMultisiteLink) {
+				state.helpResultHistory.push({
+					...result,
+					viaMultisiteLink: true,
+				});
+
+				if (state.helpResultHistory.length > 10) {
+					state.helpResultHistory.shift();
+				}
+
+				state.showBackButton = state.helpResultHistory.length > 1;
+				state.viaMultisiteLink = false; // Reset only after pushing
+			} else {
+				// This is a manual search — clear history
+				state.helpResultHistory = [];
+				state.showBackButton = false;
+			}
 		},
-		setNewSearchResult: (state, action) => {
-			state.isNewResult = action.payload;
+		setNewSearchResult: (state) => {
+			state.isNewResult = true;
 			state.searchInput = '';
 		},
 		updateMultiResults: (state, action) => {
@@ -102,33 +145,61 @@ const helpcenterSlice = createSlice({
 			state.triggerSearch = action.payload;
 		},
 		goBackInHistory: (state) => {
-			console.log('go back');
-			debugger;
 			const history = state.helpResultHistory;
+			if (history.length > 0) {
+				const last = history[history.length - 1];
 
-			if (history.length > 1) {
-				// Remove the latest clicked result (e.g., bhmultisite)
-				history.pop();
+				// Removing only if it was a multisite link clicked result
+				if (last.viaMultisiteLink) {
+					history.pop();
+				}
 
-				// Get the one before it
-				const previous = history[history.length - 1];
+				const previous = history[history.length - 1] || last; // fallback
 
-				// Assign to resultContent — ensure clone for re-render
-				state.resultContent = {
-					...previous,
-					resultContent: Array.isArray(previous.resultContent)
-						? [...previous.resultContent]
-						: previous.resultContent,
-				};
+				if (previous && previous.resultContent) {
+					state.resultContent = {
+						...previous,
+						resultContent: Array.isArray(previous.resultContent)
+							? [...previous.resultContent]
+							: previous.resultContent,
+					};
 
-				state.searchInput = previous.searchInput || '';
-				state.isLoading = false;
-				state.initComplete = true;
-				state.showSuggestions = true;
+					state.searchInput = previous.searchInput || '';
+					state.isLoading = false;
+					state.initComplete = true;
+					state.showSuggestions = true;
+				}
+
+				// Hide back button if only one left or none
+				state.showBackButton = history.length > 1;
 			}
 		},
 		setShowBackButton: (state, action) => {
 			state.showBackButton = action.payload;
+		},
+		addRecentSearchesEntry: (state, action) => {
+			const result = action.payload;
+
+			if (!result || typeof result !== 'object' || !result.postId) {
+				console.warn('Invalid recent search entry:', result);
+				return;
+			}
+
+			// no double entries
+			state.recentSearches = state.recentSearches.filter(
+				(entry) => entry.postId !== result.postId
+			);
+
+			// recent first
+			state.recentSearches.unshift(result);
+
+			// showing only 3 for now
+			if (state.recentSearches.length > 3) {
+				state.recentSearches.pop(); // Remove the oldest (last)
+			}
+		},
+		setViaMultisiteLink: (state, action) => {
+			state.viaMultisiteLink = action.payload;
 		},
 	},
 });

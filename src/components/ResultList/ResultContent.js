@@ -19,16 +19,12 @@ function ResultContent( { source, index, questionBlock, content } ) {
 			if ( anchor && resultBlock.contains( anchor ) ) {
 				e.preventDefault();
 				const clickedText = anchor.textContent.trim();
-				dispatch(
-					helpcenterActions.updateHelpResultHistory( resultContent )
-				);
+
+				dispatch( helpcenterActions.setViaMultisiteLink( true ) );
 
 				dispatch( helpcenterActions.updateSearchInput( clickedText ) );
 				dispatch( helpcenterActions.setAIResultLoading() );
-
-				// set a flag like "triggerSubmit" in the store
 				dispatch( helpcenterActions.setTriggerSearch( true ) );
-				dispatch( helpcenterActions.setShowBackButton( true ) );
 			}
 		};
 
