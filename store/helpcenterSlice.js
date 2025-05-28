@@ -57,10 +57,14 @@ const helpcenterSlice = createSlice({
 		setDisliked: (state, action) => {
 			state.disliked = action.payload;
 		},
-		setLiked: (state, action) => {
-			state.helpResultHistory[
-				state.helpResultHistory.length - 1
-			].feedbackSubmitted = action.payload;
+		setFeeback: (state, action) => {
+			const index = state.helpResultHistory.findIndex(
+				(item) => item.postId === action.payload.postId
+			);
+			if (index >= 0) {
+				state.helpResultHistory[index].feedbackSubmitted =
+					action.payload.feedbackStatus;
+			}
 		},
 		setIsFooterVisible: (state, action) => {
 			state.isFooterVisible = action.payload;

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { helpcenterActions } from '../../../store/helpcenterSlice';
 import { ReactComponent as ThumbsDown } from '../../icons/thumb-down.svg';
 import { ReactComponent as ThumbsUp } from '../../icons/thumb-up.svg';
-import { Analytics, InteractionAPIs, LocalStorageUtils } from '../../utils';
+import { Analytics, InteractionAPIs } from '../../utils';
 
 const ResultFeedback = ({ postId, source }) => {
 	const [status, setStatus] = useState('');
@@ -51,9 +51,13 @@ const ResultFeedback = ({ postId, source }) => {
 	const handleFeedback = (feedback) => {
 		if (feedback === 'notHelpful') {
 			dispatch(helpcenterActions.setDisliked(true));
-		} else if (feedback === 'helpful') {
-			dispatch(helpcenterActions.setLiked(true));
 		}
+		dispatch(
+			helpcenterActions.setFeeback({
+				feedbackStatus: feedback === 'helpful' ? true : false,
+				postId,
+			})
+		);
 		setStatus(feedback);
 	};
 

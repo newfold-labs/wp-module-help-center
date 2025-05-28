@@ -35,9 +35,7 @@ const ResultList = ({ wrapper, resultsContainer }) => {
 						postId={resultContent.postId}
 						questionBlock={resultContent.searchInput}
 						wrapper={wrapper}
-						feedbackSubmitted={
-							resultContent.feedbackSubmitted || false
-						}
+						feedbackSubmitted={resultContent.feedbackSubmitted}
 					/>
 				)}
 			</div>
