@@ -1,17 +1,19 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import 'regenerator-runtime/runtime';
 import { createRoot, render } from '@wordpress/element';
+import 'regenerator-runtime/runtime';
 
-import { subscribe, default as wpData } from '@wordpress/data';
 import { default as wpApiFetch } from '@wordpress/api-fetch';
+import { subscribe, default as wpData } from '@wordpress/data';
 //
-import domReady from '@wordpress/dom-ready';
 import { HiiveAnalytics } from '@newfold/js-utility-ui-analytics';
+import domReady from '@wordpress/dom-ready';
 //
+import { Provider } from 'react-redux';
+import { store } from '../store';
 import Modal from './components/Modal';
 import { ReactComponent as Help } from './icons/help-plugin-sidebar-icon.svg';
-import { Analytics, LocalStorageUtils } from './utils';
 import './styles/styles.scss';
+import { Analytics, LocalStorageUtils } from './utils';
 
 domReady( () => {
 	// Run only once DOM is ready, else this won't work.
@@ -74,19 +76,23 @@ window.newfoldEmbeddedHelp = {
 			if ( 'undefined' !== createRoot ) {
 				// WP 6.2+ only
 				createRoot( DOM_TARGET ).render(
-					<Modal
-						onClose={ () => {
-							toggleHelp( false );
-						} }
-					/>
+					<Provider store={ store }>
+						<Modal
+							onClose={ () => {
+								toggleHelp( false );
+							} }
+						/>
+					</Provider>
 				);
 			} else if ( 'undefined' !== render ) {
 				render(
-					<Modal
-						onClose={ () => {
-							toggleHelp( false );
-						} }
-					/>,
+					<Provider store={ store }>
+						<Modal
+							onClose={ () => {
+								toggleHelp( false );
+							} }
+						/>
+					</Provider>,
 					DOM_TARGET
 				);
 			}

@@ -1,13 +1,14 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { LocalStorageUtils, useRevealText } from '../utils';
+import { useSelector } from 'react-redux';
+import { useRevealText } from '../utils';
 
 const HelpCenterIntro = () => {
+	const hcData = useSelector( ( state ) => state.helpcenter );
 	const [ startReveal, setStartReveal ] = useState( false );
 
 	useEffect( () => {
-		setStartReveal( LocalStorageUtils.getResultInfo().length <= 0 );
+		setStartReveal( hcData.resultContent.length <= 0 );
 	}, [] );
 
 	const introText = __(
@@ -26,10 +27,7 @@ const HelpCenterIntro = () => {
 			aria-labelledby="helpcenter-intro-heading"
 			className="helpcenter-intro"
 			style={ {
-				display:
-					LocalStorageUtils.getResultInfo().length > 0
-						? 'none'
-						: 'flex',
+				display: hcData.resultContent?.postId ? 'none' : 'flex',
 			} }
 		>
 			<div

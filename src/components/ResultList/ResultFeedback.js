@@ -1,15 +1,18 @@
 import { useEffect, useRef, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { useDispatch } from 'react-redux';
+import { helpcenterActions } from '../../../store/helpcenterSlice';
 import { ReactComponent as ThumbsDown } from '../../icons/thumb-down.svg';
 import { ReactComponent as ThumbsUp } from '../../icons/thumb-up.svg';
-import { Analytics, InteractionAPIs, LocalStorageUtils } from '../../utils';
+import { Analytics, InteractionAPIs } from '../../utils';
 
-const ResultFeedback = ( { postId, source, setDisliked } ) => {
+const ResultFeedback = ( { postId, source } ) => {
 	const [ status, setStatus ] = useState( '' );
 	const [ hasSubmitted, setHasSubmitted ] = useState( false );
 	const [ showThanksMessage, setShowThanksMessage ] = useState( false );
 	const yesButtonRef = useRef( null );
 	const noButtonRef = useRef( null );
+	const dispatch = useDispatch();
 
 	const postFeedback = async () => {
 		if ( status === 'helpful' || status === 'notHelpful' ) {
@@ -47,10 +50,11 @@ const ResultFeedback = ( { postId, source, setDisliked } ) => {
 
 	const handleFeedback = ( feedback ) => {
 		if ( feedback === 'notHelpful' ) {
-			setDisliked( true );
+			dispatch( helpcenterActions.setDisliked( true ) );
+		} else if ( feedback === 'helpful' ) {
+			dispatch( helpcenterActions.setLiked( true ) );
 		}
 		setStatus( feedback );
-		LocalStorageUtils.updateFeedbackStatus( postId );
 	};
 
 	return (

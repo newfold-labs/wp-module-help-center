@@ -1,25 +1,44 @@
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { ReactComponent as CloseIcon } from '../icons/close.svg';
 import { ReactComponent as Help } from '../icons/helpcenter-chat-bubble-icon.svg';
 import Footer from './Footer';
 import HelpCenter from './HelpCenter';
 
+import { useDispatch, useSelector } from 'react-redux';
 import { toggleHelp } from '..';
-import { LocalStorageUtils } from '../utils';
+import { helpcenterActions } from '../../store/helpcenterSlice';
+import { getHelpcenterOption, LocalStorageUtils } from '../utils';
 
 const Modal = ( { onClose } ) => {
-	const [ isFooterVisible, setIsFooterVisible ] = useState(
-		LocalStorageUtils.getResultInfo()?.length < 1
+	const dispatch = useDispatch();
+	const isFooterVisible = useSelector(
+		( state ) => state.helpcenter.isFooterVisible
 	);
-
-	const [ disliked, setDisliked ] = useState( false );
-
 	useEffect( () => {
+		dispatch(
+			helpcenterActions.initialDataSet( {
+				isFooterVisible: LocalStorageUtils.getResultInfo()?.length < 1,
+				SearchInput: LocalStorageUtils.getSearchInput() || '',
+			} )
+		);
 		const helpVisible = window.newfoldHelpCenter?.closeOnLoad
 			? false
 			: LocalStorageUtils.getHelpVisible();
 		toggleHelp( helpVisible );
+	}, [] );
+
+	useEffect( () => {
+		let data = [];
+		async function fetchData() {
+			data = await getHelpcenterOption();
+			if ( data ) {
+				dispatch(
+					helpcenterActions.updateHelpResultHistoryFromDB( data )
+				);
+			}
+		}
+		fetchData();
 	}, [] );
 
 	return (
@@ -63,13 +82,9 @@ const Modal = ( { onClose } ) => {
 				id="helpcenter-modal-description"
 				className="nfd-hc-modal__content"
 			>
-				<HelpCenter
-					isFooterVisible={ isFooterVisible }
-					setIsFooterVisible={ setIsFooterVisible }
-					setDisliked={ setDisliked }
-				/>
+				<HelpCenter />
 			</div>
-			{ isFooterVisible && <Footer disliked={ disliked } /> }
+			{ isFooterVisible && <Footer /> }
 		</div>
 	);
 };
