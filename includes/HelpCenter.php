@@ -111,18 +111,21 @@ class HelpCenter {
 		}
 		$this->register_settings();
 	}
-
+	/**
+	 * Register the helpcenter settings in the WordPress options API for last three searches.
+	 *
+	 * @return void
+	 */
 	public function register_settings() {
 		$option = array(
-			'type'        => 'string',
-			'description' => __( 'NFD helpcenter data', 'wp-module-helpcenter' ),
-			'show_in_rest' => true, 
-			'default'     => '', 
+			'type'         => 'string',
+			'description'  => __( 'NFD helpcenter data', 'wp-module-help-center' ),
+			'show_in_rest' => true,
+			'default'      => '',
 		);
-		
 
 		\register_setting( 'general', 'nfd_helpcenter_data', $option );
-}
+	}
 
 	/**
 	 * Adds the Help Center icon to the WordPress admin bar.
