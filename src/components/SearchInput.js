@@ -156,6 +156,7 @@ const SearchInput = () => {
 
 	const handleSubmit = async () => {
 		if (validateInput()) {
+			!searchData.triggerSearch && dispatch(helpcenterActions.clearViaLinkSearch());
 			dispatch(helpcenterActions.setIsFooterVisible(false));
 			dispatch(helpcenterActions.setDisliked(false));
 			await getAIResult();
