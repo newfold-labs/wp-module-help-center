@@ -63,6 +63,7 @@ const SearchInput = () => {
 			postId,
 			searchInput: postTitle,
 			feedbackSubmitted: false,
+			viaMultisiteLink: searchData.triggerSearch ? true : false,
 		};
 		dispatch( helpcenterActions.updateResultContent( result ) );
 		dispatch( helpcenterActions.updateHelpResultHistory( result ) );

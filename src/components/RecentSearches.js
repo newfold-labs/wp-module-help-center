@@ -16,6 +16,9 @@ const RecentSearches = () => {
 		dispatch(
 			helpcenterActions.updateResultContent( recentSearches[ index ] )
 		);
+		dispatch(
+			helpcenterActions.updateHelpResultHistory( recentSearches[ index ] )
+		);
 	};
 
 	return (

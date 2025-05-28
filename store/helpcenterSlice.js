@@ -33,27 +33,41 @@ const helpcenterSlice = createSlice( {
 			state.recentSearches = action.payload;
 		},
 		updateHelpResultHistory: ( state, action ) => {
+			const payload = action.payload;
+
 			if (
-				! action.payload ||
-				typeof action.payload !== 'object' ||
-				Array.isArray( action.payload )
+				! payload ||
+				typeof payload !== 'object' ||
+				Array.isArray( payload )
 			) {
 				console.warn(
-					'Skipped pushing to helpResultHistory: Invalid payload',
-					action.payload
+					'Skipped updateHelpResultHistory due to invalid payload:',
+					payload
 				);
 				return;
 			}
 
-			state.helpResultHistory.push( action.payload );
+			const alreadyExists = state.helpResultHistory.some(
+				( entry ) =>
+					entry.searchInput === payload.searchInput &&
+					entry.postId === payload.postId
+			);
+			if ( alreadyExists ) {
+				return;
+			}
 
-			// Cap navigation history to last 10 entries
+			state.helpResultHistory.push( payload );
+
 			if ( state.helpResultHistory.length > 10 ) {
 				state.helpResultHistory.shift();
 			}
 
-			state.showBackButton = state.helpResultHistory.length > 1;
+			// Update back button visibility based on presence of any link-driven entries
+			state.showBackButton = state.helpResultHistory.some(
+				( entry ) => entry.viaMultisiteLink
+			);
 		},
+
 		setDisliked: ( state, action ) => {
 			state.disliked = action.payload;
 		},
@@ -70,10 +84,29 @@ const helpcenterSlice = createSlice( {
 			state.visible = action.payload;
 		},
 		updateResultContent: ( state, action ) => {
-			state.resultContent = action.payload;
+			const result = action.payload;
+			state.resultContent = result;
+
+			if ( state.viaMultisiteLink ) {
+				state.helpResultHistory.push( {
+					...result,
+					viaMultisiteLink: true,
+				} );
+
+				if ( state.helpResultHistory.length > 10 ) {
+					state.helpResultHistory.shift();
+				}
+
+				state.showBackButton = state.helpResultHistory.length > 1;
+				state.viaMultisiteLink = false; // Reset only after pushing
+			} else {
+				// This is a manual search — clear history
+				state.helpResultHistory = [];
+				state.showBackButton = false;
+			}
 		},
-		setNewSearchResult: ( state, action ) => {
-			state.isNewResult = action.payload;
+		setNewSearchResult: ( state ) => {
+			state.isNewResult = true;
 			state.searchInput = '';
 		},
 		updateMultiResults: ( state, action ) => {
@@ -107,29 +140,33 @@ const helpcenterSlice = createSlice( {
 			state.triggerSearch = action.payload;
 		},
 		goBackInHistory: ( state ) => {
-			console.log( 'go back' );
-			debugger;
 			const history = state.helpResultHistory;
+			if ( history.length > 0 ) {
+				const last = history[ history.length - 1 ];
 
-			if ( history.length > 1 ) {
-				// Remove the latest clicked result (e.g., bhmultisite)
-				history.pop();
+				// Removing only if it was a multisite link clicked result
+				if ( last.viaMultisiteLink ) {
+					history.pop();
+				}
 
-				// Get the one before it
-				const previous = history[ history.length - 1 ];
+				const previous = history[ history.length - 1 ] || last; // fallback
 
-				// Assign to resultContent — ensure clone for re-render
-				state.resultContent = {
-					...previous,
-					resultContent: Array.isArray( previous.resultContent )
-						? [ ...previous.resultContent ]
-						: previous.resultContent,
-				};
+				if ( previous && previous.resultContent ) {
+					state.resultContent = {
+						...previous,
+						resultContent: Array.isArray( previous.resultContent )
+							? [ ...previous.resultContent ]
+							: previous.resultContent,
+					};
 
-				state.searchInput = previous.searchInput || '';
-				state.isLoading = false;
-				state.initComplete = true;
-				state.showSuggestions = true;
+					state.searchInput = previous.searchInput || '';
+					state.isLoading = false;
+					state.initComplete = true;
+					state.showSuggestions = true;
+				}
+
+				// Hide back button if only one left or none
+				state.showBackButton = history.length > 1;
 			}
 		},
 		setShowBackButton: ( state, action ) => {
@@ -138,28 +175,26 @@ const helpcenterSlice = createSlice( {
 		addRecentSearchesEntry: ( state, action ) => {
 			const result = action.payload;
 
-			if (
-				! result ||
-				typeof result !== 'object' ||
-				Array.isArray( result ) ||
-				! result.postId
-			) {
+			if ( ! result || typeof result !== 'object' || ! result.postId ) {
 				console.warn( 'Invalid recent search entry:', result );
 				return;
 			}
 
-			// Remove existing entry with same postId (if any)
+			// no double entries
 			state.recentSearches = state.recentSearches.filter(
 				( entry ) => entry.postId !== result.postId
 			);
 
-			// Add the new result to the beginning
+			// recent first
 			state.recentSearches.unshift( result );
 
-			// Trim to the latest 3
+			// showing only 3 for now
 			if ( state.recentSearches.length > 3 ) {
 				state.recentSearches.pop(); // Remove the oldest (last)
 			}
+		},
+		setViaMultisiteLink: ( state, action ) => {
+			state.viaMultisiteLink = action.payload;
 		},
 	},
 } );
