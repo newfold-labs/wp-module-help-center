@@ -21,40 +21,40 @@ const initialState = {
 	viaLinkSearch: [],
 };
 
-const helpcenterSlice = createSlice({
+const helpcenterSlice = createSlice( {
 	name: 'helpcenter',
 	initialState,
 	reducers: {
-		clearViaLinkSearch: (state) => {
+		clearViaLinkSearch: ( state ) => {
 			state.showBackButton = false;
 			state.viaLinkSearch = [];
 		},
-		initialDataSet: (state, action) => {
+		initialDataSet: ( state, action ) => {
 			state.isFooterVisible = action.payload.isFooterVisible;
 			state.searchInput = action.payload.SearchInput;
 		},
-		updateHelpResultHistoryFromDB: (state, action) => {
+		updateHelpResultHistoryFromDB: ( state, action ) => {
 			state.helpResultHistory = action.payload;
 		},
-		updateHelpResultHistory: (state, action) => {
+		updateHelpResultHistory: ( state, action ) => {
 			const isAlreadyInHistory = state.helpResultHistory.some(
-				(item) => item.postId === action.payload.postId
+				( item ) => item.postId === action.payload.postId
 			);
 
-			if (!isAlreadyInHistory) {
-				if (state.helpResultHistory.length === 3) {
+			if ( ! isAlreadyInHistory ) {
+				if ( state.helpResultHistory.length === 3 ) {
 					state.helpResultHistory.shift();
 				}
-				state.helpResultHistory.push(action.payload);
+				state.helpResultHistory.push( action.payload );
 			}
-			if (!state.searchInput) {
-				if (state.viaLinkSearch.length === 10) {
+			if ( ! state.searchInput ) {
+				if ( state.viaLinkSearch.length === 10 ) {
 					state.viaLinkSearch.shift();
 				}
-				state.viaLinkSearch.push(action.payload);
+				state.viaLinkSearch.push( action.payload );
 			}
 		},
-		setDisliked: (state, action) => {
+		setDisliked: ( state, action ) => {
 			state.disliked = action.payload;
 		},
 		setFeeback: (state, action) => {
@@ -66,73 +66,73 @@ const helpcenterSlice = createSlice({
 					action.payload.feedbackStatus;
 			}
 		},
-		setIsFooterVisible: (state, action) => {
+		setIsFooterVisible: ( state, action ) => {
 			state.isFooterVisible = action.payload;
 		},
-		setNoResult: (state) => {
+		setNoResult: ( state ) => {
 			state.noResult = true;
 		},
-		updateHelpEnabled: (state, action) => {
+		updateHelpEnabled: ( state, action ) => {
 			state.helpEnabled = action.payload;
 		},
-		updateVisibility: (state, action) => {
+		updateVisibility: ( state, action ) => {
 			state.visible = action.payload;
 		},
-		updateResultContent: (state, action) => {
+		updateResultContent: ( state, action ) => {
 			state.noResult = false;
 			state.resultContent = action.payload;
-			state.viaLinkSearch.push(action.payload);
+			state.viaLinkSearch.push( action.payload );
 		},
-		setNewSearchResult: (state, action) => {
+		setNewSearchResult: ( state, action ) => {
 			state.isNewResult = action.payload;
 			state.searchInput = '';
 		},
-		updateMultiResults: (state, action) => {
+		updateMultiResults: ( state, action ) => {
 			state.multiResults = action.payload.results;
 			state.showSuggestions = action.payload.suggestions;
 		},
-		updateInitComplete: (state, action) => {
+		updateInitComplete: ( state, action ) => {
 			state.initComplete = action.payload;
 		},
-		updateSearchInput: (state, action) => {
+		updateSearchInput: ( state, action ) => {
 			state.noResult = false;
 			state.errorMsg = '';
 			state.searchInput = action.payload;
 		},
-		searchInputCatch: (state) => {
+		searchInputCatch: ( state ) => {
 			state.noResult = true;
 			state.isNewResult = true;
 		},
-		searchInputFinally: (state) => {
+		searchInputFinally: ( state ) => {
 			state.searchInput = '';
 			state.isLoading = false;
 			state.loadingIndex = null;
 			state.showSuggestions = false;
 		},
-		setAIResultLoading: (state) => {
+		setAIResultLoading: ( state ) => {
 			state.isLoading = true;
 			state.showSuggestions = false;
 			state.loadingQuery = state.searchInput;
 		},
-		setTriggerSearch: (state, action) => {
+		setTriggerSearch: ( state, action ) => {
 			state.triggerSearch = action.payload;
 		},
-		goBackInHistory: (state) => {
-			if (state.viaLinkSearch.length >= 1) {
+		goBackInHistory: ( state ) => {
+			if ( state.viaLinkSearch.length >= 1 ) {
 				state.viaLinkSearch.pop();
 				state.resultContent =
-					state.viaLinkSearch[state.viaLinkSearch.length - 1];
+					state.viaLinkSearch[ state.viaLinkSearch.length - 1 ];
 			}
 
-			if (state.viaLinkSearch.length === 1) {
+			if ( state.viaLinkSearch.length === 1 ) {
 				state.showBackButton = false;
 			}
 		},
-		setShowBackButton: (state, action) => {
+		setShowBackButton: ( state, action ) => {
 			state.showBackButton = action.payload;
 		},
 	},
-});
+} );
 
 export const helpcenterActions = helpcenterSlice.actions;
 

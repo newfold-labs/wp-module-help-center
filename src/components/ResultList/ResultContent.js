@@ -2,8 +2,9 @@ import { useEffect, useRef } from '@wordpress/element';
 import { useDispatch, useSelector } from 'react-redux';
 import { helpcenterActions } from '../../../store/helpcenterSlice';
 function ResultContent( { source, index, questionBlock, content } ) {
-	const { isLoading, loadingQuery, loadingIndex, resultContent } =
-		useSelector( ( state ) => state.helpcenter );
+	const { isLoading, loadingQuery, loadingIndex } = useSelector(
+		( state ) => state.helpcenter
+	);
 	const resultBlockRef = useRef();
 	const dispatch = useDispatch();
 

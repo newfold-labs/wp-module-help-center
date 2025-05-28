@@ -235,16 +235,20 @@ export function scrollToBottom( wrapperRef, resultsContainerRef ) {
 	}
 }
 
-export function adjustPadding( wrapperRef, suggestionsRef, showSuggestions ) {
-	let paddingBottom = 0;
-	if ( showSuggestions && suggestionsRef?.current ) {
-		const suggestionsHeight =
-			suggestionsRef.current.getBoundingClientRect().height;
-		paddingBottom = `${ suggestionsHeight }px`;
+export function adjustPadding( wrapperRef ) {
+	let availableHeight;
+	const header = document.querySelector( '.nfd-hc-modal__header' );
+	const inputWrapper = document.querySelector( '#nfdHelpcenterInputWrapper' );
+
+	if ( header && inputWrapper ) {
+		const totalUsedHeight =
+			header.offsetHeight + inputWrapper.offsetHeight + 32;
+
+		availableHeight = window.innerHeight - totalUsedHeight;
 	}
 
 	if ( wrapperRef?.current ) {
-		wrapperRef.current.style.paddingBottom = paddingBottom;
+		wrapperRef.current.style.height = `${ availableHeight }px`;
 	}
 }
 
@@ -323,6 +327,7 @@ export const getMultiSearchResponse = async ( query, brand ) => {
 			lastQuery: multiSearchResults?.results?.[ 0 ]?.request_params?.q,
 		};
 	} catch ( error ) {
+		// eslint-disable-next-line no-console
 		console.error( 'Multi-search failed:', error );
 		throw error;
 	}

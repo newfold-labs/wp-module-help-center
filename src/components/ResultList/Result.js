@@ -66,7 +66,7 @@ export const Result = ({
 	}
 
 	return (
-		<>
+		<div ref={responseRef} className="helpcenter-response-block">
 			{showBackButton && (
 				<BackButton
 					handleBackClick={() => {
@@ -74,22 +74,16 @@ export const Result = ({
 					}}
 				/>
 			)}
-
-			<div ref={responseRef} className="helpcenter-response-block">
-				<ResultHeader
-					noResult={noResult}
-					questionBlock={questionBlock}
-				/>
-				<ResultContent
-					content={htmlContent}
-					index={index}
-					questionBlock={questionBlock}
-					source={source}
-				/>
-				{shouldShowFeedback() && (
-					<ResultFeedback postId={postId} source={source} />
-				)}
-			</div>
-		</>
+			<ResultHeader noResult={noResult} questionBlock={questionBlock} />
+			<ResultContent
+				content={htmlContent}
+				index={index}
+				questionBlock={questionBlock}
+				source={source}
+			/>
+			{shouldShowFeedback() && (
+				<ResultFeedback postId={postId} source={source} />
+			)}
+		</div>
 	);
 };
