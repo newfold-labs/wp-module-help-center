@@ -20,6 +20,7 @@ const HelpCenter = () => {
 		noResult,
 		initComplete,
 		resultContent,
+		isLoading,
 	} = useSelector( ( state ) => state.helpcenter );
 
 	const wrapper = useRef();
@@ -92,7 +93,9 @@ const HelpCenter = () => {
 		}
 		return (
 			<>
-				{ resultContent.length < 1 && <HelpCenterIntro /> }
+				{ resultContent.length < 1 && ! isLoading && (
+					<HelpCenterIntro />
+				) }
 				<ResultList
 					wrapper={ wrapper }
 					resultsContainer={ resultsContainer }
