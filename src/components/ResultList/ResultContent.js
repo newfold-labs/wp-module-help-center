@@ -7,19 +7,6 @@ function ResultContent( { source, index, questionBlock, content } ) {
 	const resultBlockRef = useRef();
 	const dispatch = useDispatch();
 
-	/* const getMultiSearchResponse = async ( query, brand ) => {
-		const multiSearchResults = await MultiSearchAPI.fetchMultiSearchResults(
-			query,
-			brand
-		);
-		console.log( 'multisearch result', multiSearchResults );
-		const hits =
-			multiSearchResults?.results?.[ 0 ]?.grouped_hits?.[ 0 ]?.hits;
-
-		if ( checkAndPopulateResult( hits ) ) {
-		}
-	}; */
-
 	useEffect( () => {
 		const resultBlock = resultBlockRef.current;
 

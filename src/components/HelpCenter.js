@@ -1,12 +1,7 @@
 import { useEffect, useRef } from '@wordpress/element';
 import { useDispatch, useSelector } from 'react-redux';
 
-import {
-	CapabilityAPI,
-	LocalStorageUtils,
-	MultiSearchAPI,
-	adjustPadding,
-} from '../utils';
+import { CapabilityAPI, LocalStorageUtils, adjustPadding } from '../utils';
 
 import { helpcenterActions } from '../../store/helpcenterSlice';
 
@@ -21,16 +16,13 @@ const HelpCenter = () => {
 	const {
 		visible,
 		helpEnabled,
-		searchInput,
 		disliked,
 		noResult,
 		initComplete,
-		showSuggestions,
 		resultContent,
 	} = useSelector( ( state ) => state.helpcenter );
 
 	const wrapper = useRef();
-	const suggestionsRef = useRef();
 	const resultsContainer = useRef();
 
 	// === useEffect: on mount ===
@@ -52,7 +44,7 @@ const HelpCenter = () => {
 	// === useEffect: on visible ===
 	useEffect( () => {
 		if ( visible ) {
-			fetchInitialData();
+			dispatch( helpcenterActions.updateInitComplete( true ) );
 			checkFooterVisibility();
 			adjustPadding( wrapper );
 			/* setTimeout( () => {
@@ -76,33 +68,6 @@ const HelpCenter = () => {
 			dispatch( helpcenterActions.updateHelpEnabled( response ) );
 		} catch {
 			dispatch( helpcenterActions.updateHelpEnabled( false ) );
-		}
-	};
-
-	const fetchInitialData = async () => {
-		if ( ! searchInput ) {
-			dispatch( helpcenterActions.updateInitComplete( true ) );
-			return;
-		}
-
-		try {
-			const results = await MultiSearchAPI.fetchMultiSearchResults(
-				searchInput,
-				CapabilityAPI.getBrand()
-			);
-
-			dispatch(
-				helpcenterActions.updateMultiResults( {
-					results: {
-						hits: results?.results?.[ 0 ]?.grouped_hits || [],
-					},
-					suggestions: true,
-				} )
-			);
-
-			dispatch( helpcenterActions.updateInitComplete( true ) );
-		} catch ( error ) {
-			console.error( 'Error fetching initial data:', error );
 		}
 	};
 
