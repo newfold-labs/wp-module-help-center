@@ -3,24 +3,33 @@ import { helpcenterActions } from '../../store/helpcenterSlice';
 import { ReactComponent as HistoryIcon } from '../icons/reload.svg';
 
 const HistoryList = () => {
-  const dispatch = useDispatch();
-  const { helpResultHistory } = useSelector((state) => state.helpcenter);
-  const handleHistory = (index) => {
-    dispatch(helpcenterActions.clearViaLinkSearch());
-    dispatch(helpcenterActions.setIsFooterVisible(false));
-    dispatch(
-      helpcenterActions.updateResultContent(helpResultHistory[index])
-    );
-  };
+	const dispatch = useDispatch();
+	const { helpResultHistory } = useSelector( ( state ) => state.helpcenter );
+	const handleHistory = ( index ) => {
+		dispatch( helpcenterActions.clearViaLinkSearch() );
+		dispatch( helpcenterActions.setIsFooterVisible( false ) );
+		dispatch(
+			helpcenterActions.updateResultContent( helpResultHistory[ index ] )
+		);
+	};
 
-  return [...helpResultHistory].reverse().map((history, index) => (
-    <div className="HistoryList">
-      <HistoryIcon />
-      <div key={index} onClick={() => handleHistory(index)}>
-        {history.searchInput}
-      </div>
-    </div>
-  ));
+	return [ ...helpResultHistory ].reverse().map( ( history, index ) => (
+		<div
+			className="HistoryList"
+			key={ index }
+			role="button"
+			tabIndex={ 0 }
+			onClick={ () => handleHistory( index ) }
+			onKeyDown={ ( e ) => {
+				if ( e.key === 'Enter' || e.key === ' ' ) {
+					handleHistory( index );
+				}
+			} }
+		>
+			<HistoryIcon />
+			<div>{ history.searchInput }</div>
+		</div>
+	) );
 };
 
 export default HistoryList;
