@@ -327,6 +327,7 @@ export const getMultiSearchResponse = async ( query, brand ) => {
 			lastQuery: multiSearchResults?.results?.[ 0 ]?.request_params?.q,
 		};
 	} catch ( error ) {
+		// eslint-disable-next-line no-console
 		console.error( 'Multi-search failed:', error );
 		throw error;
 	}
