@@ -19,9 +19,6 @@ function ResultContent( { source, index, questionBlock, content } ) {
 			if ( anchor && resultBlock.contains( anchor ) ) {
 				e.preventDefault();
 				const clickedText = anchor.textContent.trim();
-				dispatch(
-					helpcenterActions.updateHelpResultHistory( resultContent )
-				);
 
 				dispatch( helpcenterActions.updateSearchInput( clickedText ) );
 				dispatch( helpcenterActions.setAIResultLoading() );

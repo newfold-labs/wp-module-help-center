@@ -1,7 +1,6 @@
 import moduleAI from '@newfold-labs/wp-module-ai';
-import { useEffect, useMemo, useRef, useState } from '@wordpress/element';
+import { useEffect, useRef, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { debounce } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { helpcenterActions } from '../../store/helpcenterSlice';
 import { ReactComponent as GoSearchIcon } from '../icons/paper-airplane.svg';
@@ -100,14 +99,14 @@ const SearchInput = () => {
 	const getAIResult = async () => {
 		dispatch(helpcenterActions.setAIResultLoading());
 		try {
-
 			// Make a new multi-search API call if no match is found
 			const multiSearchResults =
 				await MultiSearchAPI.fetchMultiSearchResults(
 					searchData.searchInput,
 					brand
 				);
-			const hits = multiSearchResults?.results?.[0]?.grouped_hits?.[0]?.hits;
+			const hits =
+				multiSearchResults?.results?.[0]?.grouped_hits?.[0]?.hits;
 
 			if (checkAndPopulateResult(hits)) {
 				return;
@@ -154,6 +153,7 @@ const SearchInput = () => {
 
 	const handleSubmit = async () => {
 		if (validateInput()) {
+			!searchData.triggerSearch && dispatch(helpcenterActions.clearViaLinkSearch());
 			dispatch(helpcenterActions.setIsFooterVisible(false));
 			dispatch(helpcenterActions.setDisliked(false));
 			await getAIResult();

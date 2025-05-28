@@ -18,12 +18,17 @@ const initialState = {
 	helpResultHistory: [],
 	triggerSearch: false,
 	showBackButton: false,
+	viaLinkSearch: [],
 };
 
 const helpcenterSlice = createSlice({
 	name: 'helpcenter',
 	initialState,
 	reducers: {
+		clearViaLinkSearch: (state) => {
+			state.showBackButton = false;
+			state.viaLinkSearch = [];
+		},
 		initialDataSet: (state, action) => {
 			state.isFooterVisible = action.payload.isFooterVisible;
 			state.searchInput = action.payload.SearchInput;
@@ -41,6 +46,12 @@ const helpcenterSlice = createSlice({
 					state.helpResultHistory.shift();
 				}
 				state.helpResultHistory.push(action.payload);
+			}
+			if (!state.searchInput) {
+				if (state.viaLinkSearch.length === 10) {
+					state.viaLinkSearch.shift();
+				}
+				state.viaLinkSearch.push(action.payload);
 			}
 		},
 		setDisliked: (state, action) => {
@@ -66,6 +77,7 @@ const helpcenterSlice = createSlice({
 		updateResultContent: (state, action) => {
 			state.noResult = false;
 			state.resultContent = action.payload;
+			state.viaLinkSearch.push(action.payload);
 		},
 		setNewSearchResult: (state, action) => {
 			state.isNewResult = action.payload;
@@ -102,29 +114,14 @@ const helpcenterSlice = createSlice({
 			state.triggerSearch = action.payload;
 		},
 		goBackInHistory: (state) => {
-			console.log('go back');
-			debugger;
-			const history = state.helpResultHistory;
+			if (state.viaLinkSearch.length >= 1) {
+				state.viaLinkSearch.pop();
+				state.resultContent =
+					state.viaLinkSearch[state.viaLinkSearch.length - 1];
+			}
 
-			if (history.length > 1) {
-				// Remove the latest clicked result (e.g., bhmultisite)
-				history.pop();
-
-				// Get the one before it
-				const previous = history[history.length - 1];
-
-				// Assign to resultContent — ensure clone for re-render
-				state.resultContent = {
-					...previous,
-					resultContent: Array.isArray(previous.resultContent)
-						? [...previous.resultContent]
-						: previous.resultContent,
-				};
-
-				state.searchInput = previous.searchInput || '';
-				state.isLoading = false;
-				state.initComplete = true;
-				state.showSuggestions = true;
+			if (state.viaLinkSearch.length === 1) {
+				state.showBackButton = false;
 			}
 		},
 		setShowBackButton: (state, action) => {
