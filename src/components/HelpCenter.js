@@ -21,17 +21,13 @@ const HelpCenter = () => {
 	const {
 		visible,
 		helpEnabled,
-		searchInput,
 		disliked,
 		noResult,
 		initComplete,
-		showSuggestions,
 		resultContent,
-		helpResultHistory,
 	} = useSelector( ( state ) => state.helpcenter );
 
 	const wrapper = useRef();
-	const suggestionsRef = useRef();
 	const resultsContainer = useRef();
 
 	// === useEffect: on mount ===
@@ -53,9 +49,8 @@ const HelpCenter = () => {
 	// === useEffect: on visible ===
 	useEffect( () => {
 		if ( visible ) {
-			fetchInitialData();
+			dispatch( helpcenterActions.updateInitComplete( true ) );
 			checkFooterVisibility();
-			adjustPadding( wrapper, suggestionsRef, showSuggestions );
 		}
 	}, [ visible ] );
 
@@ -63,7 +58,6 @@ const HelpCenter = () => {
 	useEffect( () => {
 		if ( initComplete ) {
 			checkFooterVisibility();
-			adjustPadding( wrapper, suggestionsRef, showSuggestions );
 		}
 	}, [ initComplete, disliked ] );
 
@@ -73,33 +67,6 @@ const HelpCenter = () => {
 			dispatch( helpcenterActions.updateHelpEnabled( response ) );
 		} catch {
 			dispatch( helpcenterActions.updateHelpEnabled( false ) );
-		}
-	};
-
-	const fetchInitialData = async () => {
-		if ( ! searchInput ) {
-			dispatch( helpcenterActions.updateInitComplete( true ) );
-			return;
-		}
-
-		try {
-			const results = await MultiSearchAPI.fetchMultiSearchResults(
-				searchInput,
-				CapabilityAPI.getBrand()
-			);
-
-			dispatch(
-				helpcenterActions.updateMultiResults( {
-					results: {
-						hits: results?.results?.[ 0 ]?.grouped_hits || [],
-					},
-					suggestions: true,
-				} )
-			);
-
-			dispatch( helpcenterActions.updateInitComplete( true ) );
-		} catch ( error ) {
-			console.error( 'Error fetching initial data:', error );
 		}
 	};
 

@@ -78,38 +78,6 @@ const SearchInput = () => {
 		}
 	};
 
-	const debouncedResults = useMemo(() => {
-		return debounce(async (query) => {
-			if (!query) {
-				dispatch(
-					helpcenterActions.updateMultiResults({
-						results: {},
-						suggestions: false,
-					})
-				);
-				return;
-			}
-
-			try {
-				const multiSearchResults =
-					await MultiSearchAPI.fetchMultiSearchResults(query, brand);
-
-				const results = multiSearchResults?.results?.[0]?.grouped_hits;
-				if (results) {
-					dispatch(
-						helpcenterActions.updateMultiResults({
-							results: { hits: results },
-							suggestions: !!results,
-						})
-					);
-				}
-			} catch (error) {
-				// eslint-disable-next-line no-console
-				console.error('Error fetching debounced results:', error);
-			}
-		}, 500);
-	}, []);
-
 	const checkAndPopulateResult = (hits) => {
 		if (hits?.length > 0) {
 			const resultMatches = getResultMatches(
@@ -132,16 +100,6 @@ const SearchInput = () => {
 	const getAIResult = async () => {
 		dispatch(helpcenterActions.setAIResultLoading());
 		try {
-			let hits = searchData.multiResults?.hits?.[0]?.hits;
-			const lastQuery =
-				searchData.multiResults?.results?.[0]?.request_params?.q;
-
-			if (
-				searchData.searchInput === lastQuery &&
-				checkAndPopulateResult(hits)
-			) {
-				return;
-			}
 
 			// Make a new multi-search API call if no match is found
 			const multiSearchResults =
@@ -149,7 +107,7 @@ const SearchInput = () => {
 					searchData.searchInput,
 					brand
 				);
-			hits = multiSearchResults?.results?.[0]?.grouped_hits?.[0]?.hits;
+			const hits = multiSearchResults?.results?.[0]?.grouped_hits?.[0]?.hits;
 
 			if (checkAndPopulateResult(hits)) {
 				return;
@@ -203,7 +161,6 @@ const SearchInput = () => {
 	};
 
 	const handleOnChange = (e) => {
-		debouncedResults(e.target.value);
 		dispatch(helpcenterActions.updateSearchInput(e.target.value));
 	};
 
