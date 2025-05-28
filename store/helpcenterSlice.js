@@ -33,22 +33,19 @@ const helpcenterSlice = createSlice( {
 			state.isFooterVisible = action.payload.isFooterVisible;
 			state.searchInput = action.payload.SearchInput;
 		},
-		setRecentSearchesFromDB: ( state, action ) => {
-			state.recentSearches = action.payload;
+		updateHelpResultHistoryFromDB: ( state, action ) => {
+			state.helpResultHistory = action.payload;
 		},
 		updateHelpResultHistory: ( state, action ) => {
-			const payload = action.payload;
+			const isAlreadyInHistory = state.helpResultHistory.some(
+				( item ) => item.postId === action.payload.postId
+			);
 
-			if (
-				! payload ||
-				typeof payload !== 'object' ||
-				Array.isArray( payload )
-			) {
-				console.warn(
-					'Skipped updateHelpResultHistory due to invalid payload:',
-					payload
-				);
-				return;
+			if ( ! isAlreadyInHistory ) {
+				if ( state.helpResultHistory.length === 3 ) {
+					state.helpResultHistory.shift();
+				}
+				state.helpResultHistory.push( action.payload );
 			}
 			if ( ! state.searchInput ) {
 				if ( state.viaLinkSearch.length === 10 ) {
@@ -57,7 +54,6 @@ const helpcenterSlice = createSlice( {
 				state.viaLinkSearch.push( action.payload );
 			}
 		},
-
 		setDisliked: ( state, action ) => {
 			state.disliked = action.payload;
 		},
@@ -83,8 +79,8 @@ const helpcenterSlice = createSlice( {
 			state.resultContent = action.payload;
 			state.viaLinkSearch.push( action.payload );
 		},
-		setNewSearchResult: ( state ) => {
-			state.isNewResult = true;
+		setNewSearchResult: ( state, action ) => {
+			state.isNewResult = action.payload;
 			state.searchInput = '';
 		},
 		updateMultiResults: ( state, action ) => {
@@ -130,30 +126,6 @@ const helpcenterSlice = createSlice( {
 		},
 		setShowBackButton: ( state, action ) => {
 			state.showBackButton = action.payload;
-		},
-		addRecentSearchesEntry: ( state, action ) => {
-			const result = action.payload;
-
-			if ( ! result || typeof result !== 'object' || ! result.postId ) {
-				console.warn( 'Invalid recent search entry:', result );
-				return;
-			}
-
-			// no double entries
-			state.recentSearches = state.recentSearches.filter(
-				( entry ) => entry.postId !== result.postId
-			);
-
-			// recent first
-			state.recentSearches.unshift( result );
-
-			// showing only 3 for now
-			if ( state.recentSearches.length > 3 ) {
-				state.recentSearches.pop(); // Remove the oldest (last)
-			}
-		},
-		setViaMultisiteLink: ( state, action ) => {
-			state.viaMultisiteLink = action.payload;
 		},
 	},
 } );
