@@ -27,7 +27,6 @@ const HelpCenter = () => {
 		initComplete,
 		showSuggestions,
 		resultContent,
-		helpResultHistory,
 	} = useSelector( ( state ) => state.helpcenter );
 
 	const wrapper = useRef();
@@ -55,7 +54,7 @@ const HelpCenter = () => {
 		if ( visible ) {
 			fetchInitialData();
 			checkFooterVisibility();
-			adjustPadding( wrapper, suggestionsRef, showSuggestions );
+			adjustPadding( wrapper );
 			/* setTimeout( () => {
 				scrollToBottom( wrapper, resultsContainer );
 			}, 500 ); */
@@ -66,7 +65,7 @@ const HelpCenter = () => {
 	useEffect( () => {
 		if ( initComplete ) {
 			checkFooterVisibility();
-			adjustPadding( wrapper, suggestionsRef, showSuggestions );
+			adjustPadding( wrapper );
 			/* scrollToBottom( wrapper, resultsContainer ); */
 		}
 	}, [ initComplete, disliked ] );
