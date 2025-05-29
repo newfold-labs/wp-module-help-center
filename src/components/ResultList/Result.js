@@ -8,7 +8,7 @@ import ResultContent from './ResultContent';
 import ResultFeedback from './ResultFeedback';
 import ResultHeader from './ResultHeader';
 
-export const Result = ( {
+export const Result = ({
 	content,
 	postId,
 	source,
@@ -16,49 +16,49 @@ export const Result = ( {
 	index,
 	wrapper,
 	feedbackSubmitted,
-} ) => {
+}) => {
 	const { isLoading, isNewResult, noResult, showBackButton } = useSelector(
-		( state ) => state.helpcenter
+		(state) => state.helpcenter
 	);
 	const isNewEntry = isNewResult;
-	const responseRef = useRef( null );
-	const [ shouldReveal, setShouldReveal ] = useState( false );
+	const responseRef = useRef(null);
+	const [shouldReveal, setShouldReveal] = useState(false);
 	const dispatch = useDispatch();
-	useEffect( () => {
-		if ( ( isNewEntry && responseRef.current ) || isLoading ) {
+	useEffect(() => {
+		if ((isNewEntry && responseRef.current) || isLoading) {
 			adjustHeightAndScroll();
 		}
-	}, [ isNewEntry, isLoading ] );
+	}, [isNewEntry, isLoading]);
 
 	const adjustHeightAndScroll = () => {
 		const viewportHeight = window.innerHeight;
 		const minHeight = viewportHeight - 255;
-		responseRef.current.style.minHeight = `${ minHeight }px`;
+		responseRef.current.style.minHeight = `${minHeight}px`;
 		const scrollDistance = wrapper.current.scrollHeight;
-		wrapper.current.scrollBy( {
+		wrapper.current.scrollBy({
 			top: scrollDistance,
 			left: 0,
 			behavior: 'smooth',
-		} );
+		});
 
-		setShouldReveal( true );
+		setShouldReveal(true);
 	};
 
 	const { displayedText: textToDisplay, isComplete: revealComplete } =
-		useRevealText( content || '', 50, shouldReveal );
+		useRevealText(content || '', 50, shouldReveal);
 
-	const htmlContent = useMemo( () => {
-		const processedHTMLContent = processContentForMarkdown( textToDisplay );
+	const htmlContent = useMemo(() => {
+		const processedHTMLContent = processContentForMarkdown(textToDisplay);
 		const markedContent = processedHTMLContent
-			? marked( processedHTMLContent )
+			? marked(processedHTMLContent)
 			: '';
 		return markedContent;
-	}, [ textToDisplay ] );
+	}, [textToDisplay]);
 
 	function shouldShowFeedback() {
 		return (
-			! noResult &&
-			! feedbackSubmitted &&
+			!noResult &&
+			feedbackSubmitted === null &&
 			content &&
 			revealComplete &&
 			content.length > 0
@@ -66,27 +66,24 @@ export const Result = ( {
 	}
 
 	return (
-		<div ref={ responseRef } className="helpcenter-response-block">
-			{ showBackButton && (
+		<div ref={responseRef} className="helpcenter-response-block">
+			{showBackButton && (
 				<BackButton
-					handleBackClick={ () => {
-						dispatch( helpcenterActions.goBackInHistory() );
-					} }
+					handleBackClick={() => {
+						dispatch(helpcenterActions.goBackInHistory());
+					}}
 				/>
-			) }
-			<ResultHeader
-				noResult={ noResult }
-				questionBlock={ questionBlock }
-			/>
+			)}
+			<ResultHeader noResult={noResult} questionBlock={questionBlock} />
 			<ResultContent
-				content={ htmlContent }
-				index={ index }
-				questionBlock={ questionBlock }
-				source={ source }
+				content={htmlContent}
+				index={index}
+				questionBlock={questionBlock}
+				source={source}
 			/>
-			{ shouldShowFeedback() && (
-				<ResultFeedback postId={ postId } source={ source } />
-			) }
+			{shouldShowFeedback() && (
+				<ResultFeedback postId={postId} source={source} />
+			)}
 		</div>
 	);
 };

@@ -31,13 +31,11 @@ const ResultList = ( { wrapper, resultsContainer } ) => {
 					</div>
 				) : (
 					<Result
-						content={ resultContent.resultContent }
-						postId={ resultContent.postId }
-						questionBlock={ resultContent.searchInput }
-						wrapper={ wrapper }
-						feedbackSubmitted={
-							resultContent.feedbackSubmitted || false
-						}
+						content={resultContent.resultContent}
+						postId={resultContent.postId}
+						questionBlock={resultContent.searchInput}
+						wrapper={wrapper}
+						feedbackSubmitted={resultContent.feedbackSubmitted}
 					/>
 				) }
 			</div>

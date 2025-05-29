@@ -48,13 +48,17 @@ const ResultFeedback = ( { postId, source } ) => {
 		}
 	}, [ status ] );
 
-	const handleFeedback = ( feedback ) => {
-		if ( feedback === 'notHelpful' ) {
-			dispatch( helpcenterActions.setDisliked( true ) );
-		} else if ( feedback === 'helpful' ) {
-			dispatch( helpcenterActions.setLiked( true ) );
+	const handleFeedback = (feedback) => {
+		if (feedback === 'notHelpful') {
+			dispatch(helpcenterActions.setDisliked(true));
 		}
-		setStatus( feedback );
+		dispatch(
+			helpcenterActions.setFeeback({
+				feedbackStatus: feedback === 'helpful' ? true : false,
+				postId,
+			})
+		);
+		setStatus(feedback);
 	};
 
 	return (

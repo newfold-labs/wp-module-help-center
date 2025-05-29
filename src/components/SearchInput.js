@@ -60,7 +60,7 @@ const SearchInput = () => {
 			resultContent: resultContentFormatted,
 			postId,
 			searchInput: postTitle,
-			feedbackSubmitted: false,
+			feedbackSubmitted: null,
 		};
 		dispatch( helpcenterActions.updateResultContent( result ) );
 		dispatch( helpcenterActions.updateHelpResultHistory( result ) );
