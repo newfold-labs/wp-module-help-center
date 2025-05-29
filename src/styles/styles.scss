@@ -47,7 +47,7 @@ $blue-links-color: #356CD8;
 
 
   p {
-    font-size: 14px;
+    font-size: 13px;
 
     br {
       content: '';
@@ -161,7 +161,7 @@ $blue-links-color: #356CD8;
 
         p {
           padding-top: 7px;
-          margin: 5px 0;
+          margin: 5px 0 10px;
         }
 
         .hc-input-label{
@@ -169,7 +169,7 @@ $blue-links-color: #356CD8;
         }
 
         .hc-input-counter {
-          margin: 5px 0;
+          margin: 5px 0 10px;
         }
 
         span {
@@ -295,6 +295,10 @@ $blue-links-color: #356CD8;
   .hc-results-container {
 
     @extend %padding-x-23;
+
+    h2 {
+      font-size: 1.1em;
+    }
     
     .helpcenter-results {
       padding: 0;
