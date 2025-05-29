@@ -345,6 +345,10 @@ $blue-links-color: #356CD8;
 
 .wpcontent-container {
   display: flex;
+
+  #wpbody {
+    flex: 1;
+  }
 }
 
 .toplevel_page_bluehost {
@@ -355,7 +359,6 @@ $blue-links-color: #356CD8;
       display: flex;
 
       #wpbody {
-        flex: 1;
 
         #bwa-app {
           margin-left: 20px !important;
