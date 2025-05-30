@@ -93,7 +93,7 @@ const HelpCenter = () => {
 		}
 		return (
 			<>
-				{ resultContent.length < 1 && ! isLoading && (
+				{ resultContent?.length < 1 && ! isLoading && (
 					<HelpCenterIntro />
 				) }
 				<ResultList
