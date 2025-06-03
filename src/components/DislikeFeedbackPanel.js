@@ -47,9 +47,13 @@ const DislikeFeedbackPanel = () => {
 						</span>{' '}
 						{__('or', 'wp-module-help-center')}{' '}
 						<span>
-							<a href="https://www.bluehost.com/contact">
+							<a
+								href="https://www.bluehost.com/contact"
+								target="_blank"
+								rel="noreferrer"
+							>
 								Chat Live
-							</a>
+							</a>{' '}
 						</span>
 						{__(
 							'with one of our support agents — we will assist you as soon as possible.',

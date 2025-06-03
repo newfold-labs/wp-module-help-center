@@ -5,7 +5,7 @@ import { LocalStorageUtils } from '../../utils';
 import { ReactComponent as NoResultIcon } from './../../icons/noresults-icon.svg';
 
 const NoResults = () => {
-	const responseRef = useRef( null );
+	const responseRef = useRef(null);
 	const resourceLink = window?.nfdHelpCenter?.resourceLink || '#'; // Fallback if resourceLink is not defined
 
 	// Define the content with a placeholder for the link
@@ -15,67 +15,71 @@ const NoResults = () => {
 	);
 
 	// Replace the {link} placeholder with the actual link
-	const formattedContent = contentWithLink.replace( '{link}', resourceLink );
+	const formattedContent = contentWithLink.replace('{link}', resourceLink);
 	const query = LocalStorageUtils.getSearchInput();
 	return (
-		<div ref={ responseRef } className="helpcenter-response-block">
+		<div ref={responseRef} className="helpcenter-response-block">
 			<div className="helpcenter-noresult-wrapper">
 				<div className="helpcenter-noresult-block">
 					<div className="helpcenter-noresult-icon">
 						<NoResultIcon />
 					</div>
 					<p>
-						{ sprintf(
+						{sprintf(
 							__(
 								'Sorry, I don’t have any information on “%s” yet.',
 								'wp-module-help-center'
 							),
 							query
-						) }
+						)}
 					</p>
 					<div>
-						<h4>{ __( 'Try to:', 'wp-module-help-center' ) }</h4>
+						<h4>{__('Try to:', 'wp-module-help-center')}</h4>
 						<ul>
 							<li>
 								<p
-									dangerouslySetInnerHTML={ {
+									dangerouslySetInnerHTML={{
 										__html: formattedContent,
-									} }
+									}}
 								/>
 							</li>
 							<li>
 								<p>
-									{ __(
+									{__(
 										`Use different keywords in the search field.`,
 										'wp-module-help-center'
-									) }
+									)}
 									<br />
-									{ __(
+									{__(
 										`A clear, short prompt can make the difference.`,
 										'wp-module-help-center'
-									) }
+									)}
 								</p>
 							</li>
 							<li>
 								<p>
-									{ __(
+									{__(
 										'Reach out to our customer support.',
 										'wp-module-help-center'
-									) }
+									)}
 									<br />
-									{ __(
+									{__(
 										'Call at',
 										'wp-module-help-center'
-									) }{ ' ' }
-									<a href="tel:8884014678">888-401-4678</a>{ ' ' }
-									{ __( 'or', 'wp-module-help-center' ) }{ ' ' }
-									<a href="https://www.bluehost.com/contact">
+									)}{' '}
+									<a href="tel:8884014678">888-401-4678</a>{' '}
+									{__('or', 'wp-module-help-center')}{' '}
+									<a
+										href="https://www.bluehost.com/contact"
+										target="_blank"
+										rel="noreferrer"
+									>
 										Chat Live
-									</a>{ ' ' }
-									{ __(
+									</a>{' '}
+									{__(
 										'with one of our support agents — we will assist you as soon as possible.',
 										'wp-module-help-center'
-									) }
+									)}
 								</p>
 							</li>
 						</ul>
