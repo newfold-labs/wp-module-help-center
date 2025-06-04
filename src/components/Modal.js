@@ -10,36 +10,34 @@ import { toggleHelp } from '..';
 import { helpcenterActions } from '../../store/helpcenterSlice';
 import { getHelpcenterOption, LocalStorageUtils } from '../utils';
 
-const Modal = ( { onClose } ) => {
+const Modal = ({ onClose }) => {
 	const dispatch = useDispatch();
 	const isFooterVisible = useSelector(
-		( state ) => state.helpcenter.isFooterVisible
+		(state) => state.helpcenter.isFooterVisible
 	);
-	useEffect( () => {
+	useEffect(() => {
 		dispatch(
-			helpcenterActions.initialDataSet( {
+			helpcenterActions.initialDataSet({
 				isFooterVisible: LocalStorageUtils.getResultInfo()?.length < 1,
 				SearchInput: LocalStorageUtils.getSearchInput() || '',
-			} )
+			})
 		);
 		const helpVisible = window.newfoldHelpCenter?.closeOnLoad
 			? false
 			: LocalStorageUtils.getHelpVisible();
-		toggleHelp( helpVisible );
-	}, [] );
+		toggleHelp(helpVisible);
+	}, []);
 
-	useEffect( () => {
+	useEffect(() => {
 		let data = [];
 		async function fetchData() {
 			data = await getHelpcenterOption();
-			if ( data ) {
-				dispatch(
-					helpcenterActions.updateHelpResultHistoryFromDB( data )
-				);
+			if (data) {
+				dispatch(helpcenterActions.updateHelpResultHistoryFromDB(data));
 			}
 		}
 		fetchData();
-	}, [] );
+	}, []);
 
 	return (
 		<div
@@ -58,19 +56,17 @@ const Modal = ( { onClose } ) => {
 						<Help />
 					</span>
 					<span>
-						{ __( 'Help with WordPress', 'wp-module-help-center' ) }
+						{__('Help with WordPress', 'wp-module-help-center')}
 					</span>
 				</h3>
 				<button
-					aria-label={ __(
-						'Close Help Modal',
-						'wp-module-help-center'
-					) }
-					title={ __( 'Close Help Modal', 'wp-module-help-center' ) }
+					aria-label={__('Close Help Modal', 'wp-module-help-center')}
+					title={__('Close Help Modal', 'wp-module-help-center')}
 					className="nfd-hc-modal__header__close-button"
-					onClick={ () => {
+					onClick={() => {
+						dispatch(helpcenterActions.resetState());
 						onClose();
-					} }
+					}}
 				>
 					<CloseIcon aria-hidden="true" />
 				</button>
@@ -84,7 +80,7 @@ const Modal = ( { onClose } ) => {
 			>
 				<HelpCenter />
 			</div>
-			{ isFooterVisible && <Footer /> }
+			{isFooterVisible && <Footer />}
 		</div>
 	);
 };
