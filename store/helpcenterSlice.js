@@ -129,6 +129,7 @@ const helpcenterSlice = createSlice({
 				state.viaLinkSearch.pop();
 				state.resultContent =
 					state.viaLinkSearch[state.viaLinkSearch.length - 1];
+				state.isNewResult = false;
 			}
 
 			if (state.viaLinkSearch.length < 1) {
