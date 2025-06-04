@@ -89,6 +89,7 @@ const helpcenterSlice = createSlice({
 			state.disliked = false;
 			state.noResult = false;
 			state.viaLinkSearch = [];
+			state.showBackButton = false;
 		},
 		setNewSearchResult: (state, action) => {
 			state.isNewResult = action.payload;
