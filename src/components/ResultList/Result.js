@@ -40,12 +40,12 @@ export const Result = ({
 			left: 0,
 			behavior: 'smooth',
 		});
-
 		setShouldReveal(true);
 	};
 
+	const startReveal = isNewResult ? shouldReveal : false;
 	const { displayedText: textToDisplay, isComplete: revealComplete } =
-		useRevealText(content || '', 50, shouldReveal);
+		useRevealText(content || '', 50, startReveal);
 
 	const htmlContent = useMemo(() => {
 		const processedHTMLContent = processContentForMarkdown(textToDisplay);
