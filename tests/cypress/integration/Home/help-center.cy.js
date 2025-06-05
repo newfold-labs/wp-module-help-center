@@ -56,55 +56,59 @@ describe(
 
 		});
 
-		it('Verify HelpCenter footer and CTA button visible and clickable.', () => {
+		it('Verify HelpCenter search response.', function () {
+			cy.viewport(1500, 1200);
+			if (pluginId === 'hostgator') {
+				this.skip();
+			}
 			cy.get('#wp-admin-bar-help-center .ab-item.ab-empty-item', {
 				timeout: customCommandTimeout,
 			})
 				.find('svg')
 				.should('exist')
 				.and('be.visible')
-				.click();
+				.click()
 
-			cy.get('#nfd-help-center').should('exist').and('be.visible');
-
-			cy.get('.nfd-hc-modal__footer').should('be.visible');
-
-			cy.get('.hc-banner-content__cta').should('exist').and('be.visible');
-
-			cy.get('.hc-banner-content__cta--button')
+			cy.get('.nfd-help-center')
 				.should('exist')
 				.and('be.visible')
-				.and('have.attr', 'href')
-				.and('not.be.empty');
+				.find('#search-input-box')
+				.should('exist')
+				.type('How to install a plugin in WordPress{enter}')
+			cy.get('.helpcenter-question-block')
+				.findByText('"How to install a plugin in WordPress"').should('exist')
+
+			cy.wait(5000);
+			cy.get('.helpcenter-question-block')
+				.next()
+				.should('have.class', 'helpcenter-result-block').should('exist').and('be.visible')
 		});
 
-		// it('Verify HelpCenter search response.', function() {
-		// 	cy.viewport(1500, 1200);
-		// 	if ( pluginId === 'hostgator' ) {
-		// 		this.skip();
-		// 	}
-		// 	cy.get('#wp-admin-bar-help-center .ab-item.ab-empty-item', {
-		// 		timeout: customCommandTimeout,
-		// 	})
-		// 		.find('svg')
-		// 		.should('exist')
-		// 		.and('be.visible')
-		// 		.click()
+		it('Verify HelpCenter dislike screen.', function () {
+			cy.viewport(1500, 1200);
+			if (pluginId === 'hostgator') {
+				this.skip();
+			}
+			cy.get('#wp-admin-bar-help-center .ab-item.ab-empty-item', {
+				timeout: customCommandTimeout,
+			})
+				.find('svg')
+				.should('exist')
+				.and('be.visible')
+				.click()
 
-		// 	cy.get('.nfd-help-center')
-		// 		.should('exist')
-		// 		.and('be.visible')
-		// 		.find('#search-input-box')
-		// 		.should('exist')
-		// 		.type('How to install a plugin in WordPress{enter}')
-		// 	cy.get('.helpcenter-question-block')
-		// 		.findByText('How to install a plugin in WordPress').should('exist')
+			cy.get('.nfd-help-center')
+				.should('exist')
+				.and('be.visible')
+				.find('#search-input-box')
+				.should('exist')
+				.type('How to install a plugin in WordPress{enter}')
 
-		// 	cy.wait(5000);
-		// 	cy.get('.helpcenter-question-block')
-		// 		.next()
-		// 		.should('have.class', 'helpcenter-result-block').should('exist').and('be.visible')
-		// });
+			cy.wait(5000);
+			cy.get('button.feedback-button.no').click();
+			cy.wait(500);
+			cy.get('.dislike-feedback').should('exist');
+		});
 
 		//TODO : Need to fix Accessibility in Help Center
 		//
