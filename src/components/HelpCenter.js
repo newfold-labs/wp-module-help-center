@@ -1,19 +1,19 @@
-import { useEffect, useState, useMemo, useRef } from '@wordpress/element';
+import moduleAI from '@newfold-labs/wp-module-ai';
+import { useEffect, useMemo, useRef, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { debounce } from 'lodash';
-import moduleAI from '@newfold-labs/wp-module-ai';
-import ResultList from './ResultList';
 import {
+	Analytics,
 	CapabilityAPI,
 	LocalStorageUtils,
-	Analytics,
 	MultiSearchAPI,
+	adjustPadding,
 	formatPostContent,
 	getResultMatches,
 	scrollToBottom,
-	adjustPadding,
 } from '../utils';
 import HelpCenterIntro from './HelpCenterIntro';
+import ResultList from './ResultList';
 import SearchInput from './SearchInput';
 
 import { SuggestionList } from './SuggestionList';
@@ -24,7 +24,6 @@ const HelpCenter = ( props ) => {
 		helpEnabled: false,
 		noResult: false,
 		isNewResult: false,
-		source: 'kb',
 		searchInput: LocalStorageUtils.getSearchInput() || '',
 		isLoading: false,
 		loadingQuery: null,
@@ -39,13 +38,11 @@ const HelpCenter = ( props ) => {
 	const suggestionsRef = useRef();
 	const resultsContainer = useRef();
 	const wrapper = useRef();
-	const introRef = useRef();
 
 	const brand = CapabilityAPI.getBrand();
 
 	useEffect( () => {
 		getHelpStatus();
-		fetchInitialData();
 
 		// Add event listener for localStorage changes
 		const updateVisibility = () => {
@@ -67,12 +64,18 @@ const HelpCenter = ( props ) => {
 
 	useEffect( () => {
 		// If the wrapper is visible or we’ve just finished init, scroll
-		if ( state.initComplete || state.visible ) {
+		if ( state.initComplete ) {
 			setTimeout( () => {
-				scrollToBottom( wrapper, introRef, resultsContainer );
+				scrollToBottom( wrapper, resultsContainer );
 			}, 100 );
 		}
-	}, [ state.initComplete, state.visible ] );
+	}, [ state.initComplete ] );
+
+	useEffect( () => {
+		if ( state.visible ) {
+			fetchInitialData();
+		}
+	}, [ state.visible ] );
 
 	useEffect( () => {
 		// Always adjust padding if any of these dependencies change
@@ -94,7 +97,12 @@ const HelpCenter = ( props ) => {
 		}
 	};
 
-	const populateSearchResult = ( postContent, postId, postTitle ) => {
+	const populateSearchResult = (
+		postContent,
+		postId,
+		postTitle,
+		searchSource = 'kb'
+	) => {
 		const resultContentFormatted = postContent
 			? formatPostContent( postContent )
 			: '';
@@ -122,6 +130,7 @@ const HelpCenter = ( props ) => {
 				label_key: 'term',
 				term: postTitle,
 				page: window.location.href.toString(),
+				search_source: searchSource,
 			} );
 		}
 	};
@@ -178,8 +187,9 @@ const HelpCenter = ( props ) => {
 			if (
 				state.searchInput === lastQuery &&
 				checkAndPopulateResult( hits )
-			)
+			) {
 				return;
+			}
 
 			// Make a new multi-search API call if no match is found
 			const multiSearchResults =
@@ -190,7 +200,9 @@ const HelpCenter = ( props ) => {
 
 			hits =
 				multiSearchResults?.results?.[ 0 ]?.grouped_hits?.[ 0 ]?.hits;
-			if ( checkAndPopulateResult( hits ) ) return;
+			if ( checkAndPopulateResult( hits ) ) {
+				return;
+			}
 
 			const result = await moduleAI.search.getSearchResult(
 				state.searchInput,
@@ -198,11 +210,11 @@ const HelpCenter = ( props ) => {
 			);
 
 			if ( result.result[ 0 ] ) {
-				setState( ( prevState ) => ( { ...prevState, source: 'ai' } ) );
 				populateSearchResult(
 					result.result[ 0 ].text,
 					result.post_id,
-					state.searchInput
+					state.searchInput,
+					'ai'
 				);
 			} else {
 				setState( ( prev ) => ( { ...prev, noResult: true } ) );
@@ -319,7 +331,9 @@ const HelpCenter = ( props ) => {
 		}
 	};
 
-	if ( ! state.helpEnabled || ! state.visible ) return null;
+	if ( ! state.helpEnabled || ! state.visible ) {
+		return null;
+	}
 
 	return (
 		<div
@@ -327,11 +341,10 @@ const HelpCenter = ( props ) => {
 			id="helpcenterResultsWrapper"
 			ref={ wrapper }
 		>
-			<HelpCenterIntro introRef={ introRef } />
+			<HelpCenterIntro />
 			<ResultList
 				{ ...state }
 				wrapper={ wrapper }
-				introRef={ introRef }
 				resultsContainer={ resultsContainer }
 				suggestionsRef={ suggestionsRef }
 				{ ...props }

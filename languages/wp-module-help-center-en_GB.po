@@ -24,7 +24,7 @@ msgstr "We could not find the brand"
 msgid "You must be authenticated to make this call"
 msgstr "You must be authenticated to make this call"
 
-#: includes/HelpCenter.php:91
+#: includes/HelpCenter.php:133
 msgid "Help"
 msgstr "Help"
 
