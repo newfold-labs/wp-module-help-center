@@ -9,14 +9,14 @@ const customCommandTimeout = 20000;
 const pluginId = GetPluginId();
 
 export const HCTrue = JSON.stringify({
-	"canAccessAI": true,
-	"hasAISiteGen": true,
-	"canAccessHelpCenter": true,
-	"canAccessGlobalCTB": true,
-	"hasEcomdash": true,
-	"hasYithExtended": true,
-	"isEcommerce": true,
-	"isJarvis": true,
+  canAccessAI: true,
+  hasAISiteGen: true,
+  canAccessHelpCenter: true,
+  canAccessGlobalCTB: true,
+  hasEcomdash: true,
+  hasYithExtended: true,
+  isEcommerce: true,
+  isJarvis: true,
 });
 
 describe(
@@ -56,6 +56,28 @@ describe(
 
 		});
 
+		it('Verify HelpCenter footer and CTA button visible and clickable.', () => {
+			cy.get('#wp-admin-bar-help-center .ab-item.ab-empty-item', {
+				timeout: customCommandTimeout,
+			})
+				.find('svg')
+				.should('exist')
+				.and('be.visible')
+				.click();
+
+			cy.get('#nfd-help-center').should('exist').and('be.visible');
+
+			cy.get('.nfd-hc-modal__footer').should('be.visible');
+
+			cy.get('.hc-banner-content__cta').should('exist').and('be.visible');
+
+			cy.get('.hc-banner-content__cta--button')
+				.should('exist')
+				.and('be.visible')
+				.and('have.attr', 'href')
+				.and('not.be.empty');
+		});
+
 		// it('Verify HelpCenter search response.', function() {
 		// 	cy.viewport(1500, 1200);
 		// 	if ( pluginId === 'hostgator' ) {
@@ -85,7 +107,7 @@ describe(
 		// });
 
 		//TODO : Need to fix Accessibility in Help Center
-		// 
+		//
 		// it('Accessibility Test for Help Center.', () => {
 		// 	cy.injectAxe();
 		// 	cy.configureAxe({
