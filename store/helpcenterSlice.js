@@ -82,12 +82,14 @@ const helpcenterSlice = createSlice({
 			state.noResult = false;
 			state.resultContent = action.payload;
 			state.viaLinkSearch.push(action.payload);
+			state.showBackButton = true;
 		},
 		resetState: (state) => {
 			state.resultContent = [];
 			state.disliked = false;
 			state.noResult = false;
 			state.viaLinkSearch = [];
+			state.showBackButton = false;
 		},
 		setNewSearchResult: (state, action) => {
 			state.isNewResult = action.payload;
@@ -128,10 +130,16 @@ const helpcenterSlice = createSlice({
 				state.viaLinkSearch.pop();
 				state.resultContent =
 					state.viaLinkSearch[state.viaLinkSearch.length - 1];
+				state.isNewResult = false;
 			}
 
-			if (state.viaLinkSearch.length === 1) {
+			if (state.viaLinkSearch.length < 1) {
 				state.showBackButton = false;
+				state.resultContent = [];
+				state.disliked = false;
+				state.noResult = false;
+				state.viaLinkSearch = [];
+				state.isFooterVisible = true;
 			}
 		},
 		setShowBackButton: (state, action) => {
