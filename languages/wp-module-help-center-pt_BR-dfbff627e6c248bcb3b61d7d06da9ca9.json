@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2025-04-25 14:32+0100",
+    "translation-revision-date": "2025-05-07 16:20+0100",
     "generator": "WP-CLI\/2.11.0",
     "source": "build\/index.js",
     "domain": "messages",
@@ -7,59 +7,59 @@
         "messages": {
             "": {
                 "domain": "messages",
-                "lang": "es_ES",
-                "plural-forms": "nplurals=2; plural=(n != 1);"
+                "lang": "pt_BR",
+                "plural-forms": "nplurals=2; plural=(n > 1);"
             },
             "Did this result help you?": [
-                "\u00bfTe ha sido \u00fatil este resultado?"
+                "Esse resultado foi \u00fatil para voc\u00ea?"
             ],
             "Yes": [
-                "S\u00ed"
+                "Sim"
             ],
             "No": [
-                "No"
+                "N\u00e3o"
             ],
             "Thanks for the feedback!": [
-                "\u00a1Gracias por tus comentarios!"
+                "Obrigado pelo feedback!"
             ],
             "You can try searching our <a href=\"{link}\">Resource center.<\/a> though to see if there\u2019s a helpful article or video on that subject.": [
-                "Puedes intentar buscar en nuestro <a href=\"{link}\">centro de recursos.<\/a> para ver si hay un art\u00edculo o v\u00eddeo \u00fatil sobre este tema."
+                "Voc\u00ea pode tentar procurar no nosso <a href=\"{link}\">Centro de Recursos<\/a> para ver se h\u00e1 um artigo ou v\u00eddeo \u00fatil sobre esse assunto."
             ],
             "Sorry, I don\u2019t have any information on that topic yet.": [
-                "Lo siento, todav\u00eda no tengo informaci\u00f3n sobre ese tema."
+                "Desculpe, ainda n\u00e3o tenho informa\u00e7\u00f5es sobre esse assunto."
             ],
             "Hi! I\u2019m your WordPress AI assistant. <\/br><\/br> Ask me how to do things in WordPress and I\u2019ll provide step by step instructions.<\/br><\/br> I\u2019m still learning so I don\u2019t have all the answers just yet.": [
-                "\u00a1Hola! Soy tu asistente de IA de WordPress. <\/br><\/br> Preg\u00fantame c\u00f3mo hacer cosas en WordPress y te proporcionar\u00e9 instrucciones paso a paso.<\/br><\/br> A\u00fan estoy aprendiendo, as\u00ed que todav\u00eda no tengo todas las respuestas."
+                "Oi! Eu sou seu assistente de IA do WordPress. <\/br><\/br> Pergunte como fazer coisas no WordPress e eu fornecerei instru\u00e7\u00f5es passo a passo.<\/br><\/br> Ainda estou aprendendo, ent\u00e3o ainda n\u00e3o tenho todas as respostas."
             ],
             "Search Help Center": [
-                "Buscar Centro de Ayuda"
+                "Buscar no Centro de Ajuda"
             ],
             "Ask about WordPress": [
-                "Pregunta sobre WordPress"
+                "Pergunte sobre o WordPress"
             ],
             "submit text": [
                 "enviar texto"
             ],
             "Common Topics": [
-                "Temas comunes"
+                "T\u00f3picos comuns"
             ],
             "Please enter a specific search term to get results.": [
-                "Por favor, introduce un t\u00e9rmino de b\u00fasqueda espec\u00edfico para obtener resultados."
+                "Por favor, insira um termo de pesquisa espec\u00edfico para obter resultados."
             ],
             "Account Support": [
-                "Soporte de cuenta"
+                "Suporte de conta"
             ],
             "If you need help with your Bluehost account, contact our support team:": [
-                "Si necesitas ayuda con tu cuenta Bluehost, contacta con nuestro equipo de soporte:"
+                "Se voc\u00ea precisar de ajuda com sua conta da Bluehost, entre em contato com nossa equipe de suporte:"
             ],
             "Chat with support": [
-                "Chatea con soporte"
+                "Conversar com o suporte"
             ],
             "Help with WordPress": [
-                "Ayuda con WordPress"
+                "Ajuda com o WordPress"
             ],
             "Close Help Modal": [
-                "Cerrar ventana de ayuda"
+                "Fechar janela de ajuda"
             ]
         }
     }
