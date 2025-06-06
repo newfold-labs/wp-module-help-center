@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import { HiiveAnalytics, HiiveEvent } from '@newfold/js-utility-ui-analytics';
+import { NewfoldRuntime } from '@newfold/wp-module-runtime';
 import apiFetch from '@wordpress/api-fetch';
 import { useEffect, useState } from '@wordpress/element';
 
@@ -229,23 +230,25 @@ export function scrollToBottom( wrapperRef, resultsContainerRef ) {
 		behavior: 'auto',
 	} );
 
-	setTimeout( () => {
-		if ( resultsContainerRef?.current ) {
-			resultsContainerRef.current.style.visibility = 'visible';
-		}
-	}, 100 );
+	if ( resultsContainerRef?.current ) {
+		resultsContainerRef.current.style.visibility = 'visible';
+	}
 }
 
-export function adjustPadding( wrapperRef, suggestionsRef, showSuggestions ) {
-	let paddingBottom = 0;
-	if ( showSuggestions && suggestionsRef?.current ) {
-		const suggestionsHeight =
-			suggestionsRef.current.getBoundingClientRect().height;
-		paddingBottom = `${ suggestionsHeight }px`;
+export function adjustPadding( wrapperRef ) {
+	let availableHeight;
+	const header = document.querySelector( '.nfd-hc-modal__header' );
+	const inputWrapper = document.querySelector( '#nfdHelpcenterInputWrapper' );
+
+	if ( header && inputWrapper ) {
+		const totalUsedHeight =
+			header.offsetHeight + inputWrapper.offsetHeight + 32;
+
+		availableHeight = window.innerHeight - totalUsedHeight;
 	}
 
 	if ( wrapperRef?.current ) {
-		wrapperRef.current.style.paddingBottom = paddingBottom;
+		wrapperRef.current.style.height = `${ availableHeight }px`;
 	}
 }
 
@@ -280,4 +283,52 @@ export const processContentForMarkdown = ( textToDisplay ) => {
 		return updatedContent;
 	}
 	return '';
+};
+
+export const saveHelpcenterOption = async ( result ) => {
+	const apiUrl = NewfoldRuntime.createApiUrl( '/wp/v2/settings' );
+	try {
+		await apiFetch( {
+			url: apiUrl,
+			method: 'POST',
+			data: { nfd_helpcenter_data: JSON.stringify( result ) },
+		} );
+	} catch ( err ) {
+		// console.log(err);
+	}
+};
+
+export const getHelpcenterOption = async () => {
+	const apiUrl = NewfoldRuntime.createApiUrl( '/wp/v2/settings' );
+	try {
+		const response = await apiFetch( { url: apiUrl, method: 'GET' } );
+		const responseData =
+			response.nfd_helpcenter_data &&
+			JSON.parse( response.nfd_helpcenter_data );
+
+		if ( responseData?.length > 0 ) {
+			return responseData;
+		}
+	} catch ( err ) {}
+};
+
+export const getMultiSearchResponse = async ( query, brand ) => {
+	try {
+		const multiSearchResults = await MultiSearchAPI.fetchMultiSearchResults(
+			query,
+			brand
+		);
+		const hits =
+			multiSearchResults?.results?.[ 0 ]?.grouped_hits?.[ 0 ]?.hits || [];
+
+		return {
+			hits,
+			fullResponse: multiSearchResults,
+			lastQuery: multiSearchResults?.results?.[ 0 ]?.request_params?.q,
+		};
+	} catch ( error ) {
+		// eslint-disable-next-line no-console
+		console.error( 'Multi-search failed:', error );
+		throw error;
+	}
 };

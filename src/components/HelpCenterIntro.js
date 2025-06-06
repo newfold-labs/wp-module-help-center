@@ -1,18 +1,18 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { ReactComponent as AIStars } from '../icons/ai-stars.svg';
-import { LocalStorageUtils, useRevealText } from '../utils';
+import { useSelector } from 'react-redux';
+import { useRevealText } from '../utils';
 
 const HelpCenterIntro = () => {
+	const hcData = useSelector( ( state ) => state.helpcenter );
 	const [ startReveal, setStartReveal ] = useState( false );
 
 	useEffect( () => {
-		setStartReveal( LocalStorageUtils.getResultInfo().length <= 0 );
+		setStartReveal( hcData.resultContent.length <= 0 );
 	}, [] );
 
 	const introText = __(
-		'Hi! I’m your WordPress AI assistant. </br></br> Ask me how to do things in WordPress and I’ll provide step by step instructions.</br></br> I’m still learning so I don’t have all the answers just yet.',
+		'Hey there! I’m here to help you find your way around WordPress. </br></br> If you’re not sure how to do something, just ask — I’ll walk you through it step by step. I’m still learning, so I might not have every answer, but I’ll do my best to help!',
 		'wp-module-help-center'
 	);
 
@@ -27,15 +27,9 @@ const HelpCenterIntro = () => {
 			aria-labelledby="helpcenter-intro-heading"
 			className="helpcenter-intro"
 			style={ {
-				display:
-					LocalStorageUtils.getResultInfo().length > 0
-						? 'none'
-						: 'flex',
+				display: hcData.resultContent?.postId ? 'none' : 'flex',
 			} }
 		>
-			<div>
-				<AIStars />
-			</div>
 			<div
 				className="helpcenter-intro__text"
 				dangerouslySetInnerHTML={ { __html: revealedIntro } }
