@@ -4,11 +4,12 @@ import { useSelector } from 'react-redux';
 import { ReactComponent as FooterBackground } from '../icons/footer.svg';
 
 const Footer = () => {
-	const disliked = useSelector((state) => state.helpcenter.disliked);
+	const { disliked, noResult } = useSelector((state) => state.helpcenter);
+
 	return (
 		<div className="nfd-hc-modal__footer">
 			<div className="helpcenter-supportinfo__wrapper">
-				{!disliked && (
+				{!disliked && !noResult && (
 					<>
 						<hr className="helpcenter-supportinfo__breakline" />
 						<div className="helpcenter-supportinfo__text">

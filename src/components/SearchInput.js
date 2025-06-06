@@ -15,36 +15,39 @@ import {
 } from '../utils';
 import HistoryList from './HistoryList';
 const SearchInput = () => {
-	const isFirstRender = useRef( true );
+	const isFirstRender = useRef(true);
 	const brand = CapabilityAPI.getBrand();
 	const dispatch = useDispatch();
 
-	const [ errorMsg, setErrorMsg ] = useState( '' );
-	const searchData = useSelector( ( state ) => state.helpcenter );
-	let bottomValue = '0px';
+	const [errorMsg, setErrorMsg] = useState('');
+	const searchData = useSelector((state) => state.helpcenter);
 
-	if ( searchData.isFooterVisible && searchData.disliked ) {
-		bottomValue = '222px';
-	} else if ( searchData.isFooterVisible ) {
-		bottomValue = '375px';
-	}
+	const getInputBoxBottomPosition = (data) => {
+		if (data.isFooterVisible && (data.disliked || data.noResult)) {
+			return '222px';
+		}
+		if (data.isFooterVisible) {
+			return '375px';
+		}
+		return '0px';
+	};
 
-	useEffect( () => {
-		if ( isFirstRender.current ) {
+	useEffect(() => {
+		if (isFirstRender.current) {
 			isFirstRender.current = false;
 			return; // skip on initial render
 		}
-		if ( searchData.helpResultHistory?.length > 0 ) {
-			saveHelpcenterOption( searchData.helpResultHistory );
+		if (searchData.helpResultHistory?.length > 0) {
+			saveHelpcenterOption(searchData.helpResultHistory);
 		}
-	}, [ searchData.helpResultHistory ] );
+	}, [searchData.helpResultHistory]);
 
-	useEffect( () => {
-		if ( searchData.triggerSearch ) {
+	useEffect(() => {
+		if (searchData.triggerSearch) {
 			handleSubmit();
-			dispatch( helpcenterActions.setTriggerSearch( false ) );
+			dispatch(helpcenterActions.setTriggerSearch(false));
 		}
-	}, [ searchData.triggerSearch ] );
+	}, [searchData.triggerSearch]);
 
 	const populateSearchResult = async (
 		postContent,
@@ -53,7 +56,7 @@ const SearchInput = () => {
 		searchSource = 'kb'
 	) => {
 		const resultContentFormatted = postContent
-			? formatPostContent( postContent )
+			? formatPostContent(postContent)
 			: '';
 		// Retrieve existing results from local storage and using the updated persistResult method to store the result
 		const result = {
@@ -62,32 +65,32 @@ const SearchInput = () => {
 			searchInput: postTitle,
 			feedbackSubmitted: null,
 		};
-		dispatch( helpcenterActions.updateResultContent( result ) );
-		dispatch( helpcenterActions.updateHelpResultHistory( result ) );
+		dispatch(helpcenterActions.updateResultContent(result));
+		dispatch(helpcenterActions.updateHelpResultHistory(result));
 
-		if ( postId ) {
-			dispatch( helpcenterActions.setNewSearchResult( !! postId ) );
+		if (postId) {
+			dispatch(helpcenterActions.setNewSearchResult(!!postId));
 
-			Analytics.sendEvent( 'help_search', {
+			Analytics.sendEvent('help_search', {
 				label_key: 'term',
 				term: postTitle,
 				page: window.location.href.toString(),
 				search_source: searchSource,
-			} );
+			});
 		}
 	};
 
-	const checkAndPopulateResult = ( hits ) => {
-		if ( hits?.length > 0 ) {
+	const checkAndPopulateResult = (hits) => {
+		if (hits?.length > 0) {
 			const resultMatches = getResultMatches(
 				searchData.searchInput,
-				hits[ 0 ]?.text_match_info?.tokens_matched,
-				hits[ 0 ]?.text_match_info?.fields_matched
+				hits[0]?.text_match_info?.tokens_matched,
+				hits[0]?.text_match_info?.fields_matched
 			);
-			if ( resultMatches ) {
+			if (resultMatches) {
 				populateSearchResult(
-					hits[ 0 ].document.post_content,
-					hits[ 0 ].document.post_id || hits[ 0 ].document.id,
+					hits[0].document.post_content,
+					hits[0].document.post_id || hits[0].document.id,
 					searchData.searchInput
 				);
 				return true;
@@ -97,7 +100,7 @@ const SearchInput = () => {
 	};
 
 	const getAIResult = async () => {
-		dispatch( helpcenterActions.setAIResultLoading() );
+		dispatch(helpcenterActions.setAIResultLoading());
 		try {
 			// Make a new multi-search API call if no match is found
 			const multiSearchResults =
@@ -106,9 +109,9 @@ const SearchInput = () => {
 					brand
 				);
 			const hits =
-				multiSearchResults?.results?.[ 0 ]?.grouped_hits?.[ 0 ]?.hits;
+				multiSearchResults?.results?.[0]?.grouped_hits?.[0]?.hits;
 
-			if ( checkAndPopulateResult( hits ) ) {
+			if (checkAndPopulateResult(hits)) {
 				return;
 			}
 
@@ -117,23 +120,23 @@ const SearchInput = () => {
 				'helpcenter'
 			);
 
-			if ( result.result[ 0 ] ) {
+			if (result.result[0]) {
 				populateSearchResult(
-					result.result[ 0 ].text,
+					result.result[0].text,
 					result.post_id,
 					searchData.searchInput,
 					'ai'
 				);
 			} else {
-				dispatch( helpcenterActions.setNoResult() );
+				dispatch(helpcenterActions.setNoResult());
 			}
-		} catch ( exception ) {
+		} catch (exception) {
 			// eslint-disable-next-line no-console
-			console.error( 'An error occurred:', exception );
-			dispatch( helpcenterActions.searchInputCatch() );
+			console.error('An error occurred:', exception);
+			dispatch(helpcenterActions.searchInputCatch());
 		} finally {
-			dispatch( helpcenterActions.searchInputFinally() );
-			LocalStorageUtils.persistSearchInput( searchData.searchInput );
+			dispatch(helpcenterActions.searchInputFinally());
+			LocalStorageUtils.persistSearchInput(searchData.searchInput);
 		}
 	};
 
@@ -145,25 +148,25 @@ const SearchInput = () => {
 				: __(
 						'Please enter a specific search term to get results.',
 						'wp-module-help-center'
-				  )
+					)
 		);
 
 		return isValid;
 	};
 
 	const handleSubmit = async () => {
-		if ( validateInput() ) {
-			if ( ! searchData.triggerSearch ) {
-				dispatch( helpcenterActions.clearViaLinkSearch() );
+		if (validateInput()) {
+			if (!searchData.triggerSearch) {
+				dispatch(helpcenterActions.clearViaLinkSearch());
 			}
-			dispatch( helpcenterActions.setIsFooterVisible( false ) );
-			dispatch( helpcenterActions.setDisliked( false ) );
+			dispatch(helpcenterActions.setIsFooterVisible(false));
+			dispatch(helpcenterActions.setDisliked(false));
 			await getAIResult();
 		}
 	};
 
-	const handleOnChange = ( e ) => {
-		dispatch( helpcenterActions.updateSearchInput( e.target.value ) );
+	const handleOnChange = (e) => {
+		dispatch(helpcenterActions.updateSearchInput(e.target.value));
 	};
 
 	return (
@@ -171,22 +174,22 @@ const SearchInput = () => {
 			className="helpcenter-input-wrapper"
 			id="nfdHelpcenterInputWrapper"
 			role="search"
-			aria-label={ __( 'Search Help Center', 'wp-module-help-center' ) }
-			style={ { bottom: bottomValue } }
+			aria-label={__('Search Help Center', 'wp-module-help-center')}
+			style={{ bottom: getInputBoxBottomPosition(searchData) }}
 		>
 			<div className="search-container__wrapper">
 				<div className="attribute">
 					<p className="hc-input-label">
-						{ __(
+						{__(
 							'Ask anything about WordPress',
 							'wp-module-help-center'
-						) }
+						)}
 					</p>
 					<p className="hc-input-counter">
 						<span>
-							{ searchData.searchInput
+							{searchData.searchInput
 								? searchData.searchInput.length
-								: 0 }
+								: 0}
 							/144
 						</span>
 					</p>
@@ -195,27 +198,22 @@ const SearchInput = () => {
 					<input
 						type="text"
 						id="search-input-box"
-						value={ searchData.searchInput }
+						value={searchData.searchInput}
 						maxLength="144"
-						onChange={ ( e ) => handleOnChange( e ) }
-						onKeyDown={ ( e ) =>
-							e.key === 'Enter' && handleSubmit()
-						}
+						onChange={(e) => handleOnChange(e)}
+						onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
 					/>
 					<button
-						aria-label={ __(
-							'submit text',
-							'wp-module-help-center'
-						) }
-						title={ __( 'submit text', 'wp-module-help-center' ) }
-						onClick={ () => handleSubmit() }
+						aria-label={__('submit text', 'wp-module-help-center')}
+						title={__('submit text', 'wp-module-help-center')}
+						onClick={() => handleSubmit()}
 					>
 						<GoSearchIcon />
 					</button>
 				</div>
-				{ errorMsg && (
-					<p className="hc-input-error-message">{ errorMsg }</p>
-				) }
+				{errorMsg && (
+					<p className="hc-input-error-message">{errorMsg}</p>
+				)}
 				<p></p>
 				<HistoryList />
 			</div>

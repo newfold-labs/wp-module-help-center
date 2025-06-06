@@ -71,6 +71,7 @@ const helpcenterSlice = createSlice({
 		},
 		setNoResult: (state) => {
 			state.noResult = true;
+			state.isFooterVisible = true;
 		},
 		updateHelpEnabled: (state, action) => {
 			state.helpEnabled = action.payload;
@@ -110,6 +111,7 @@ const helpcenterSlice = createSlice({
 		searchInputCatch: (state) => {
 			state.noResult = true;
 			state.isNewResult = true;
+			state.isFooterVisible = true;
 		},
 		searchInputFinally: (state) => {
 			state.searchInput = '';
