@@ -19,11 +19,11 @@ msgstr ""
 "X-Crowdin-File: wp-module-help-center.pot\n"
 "X-Crowdin-File-ID: 44\n"
 
-#: includes/CapabilityController.php:75
+#: includes/CapabilityController.php:76
 msgid "We could not find the brand"
 msgstr "We konden het merk niet vinden"
 
-#: includes/CapabilityController.php:92
+#: includes/CapabilityController.php:93
 #: includes/MultiSearchController.php:128
 #: includes/UserInteractionController.php:81
 msgid "You must be authenticated to make this call"
@@ -100,3 +100,11 @@ msgstr "Help met WordPress"
 #: build/index.js:1
 msgid "Close Help Modal"
 msgstr "Help Modal sluiten"
+
+#: includes/MultiSearchController.php:107
+msgid "The request failed"
+msgstr ""
+
+#: includes/MultiSearchController.php:113
+msgid "No data found"
+msgstr ""
