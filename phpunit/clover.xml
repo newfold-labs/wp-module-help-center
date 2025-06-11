@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1749248298">
-  <project timestamp="1749248298">
+<coverage generated="1749654589">
+  <project timestamp="1749654589">
     <file name="/home/runner/work/wp-module-help-center/wp-module-help-center/includes/CapabilityController.php">
       <class name="NewfoldLabs\WP\Module\HelpCenter\CapabilityController" namespace="global">
         <metrics complexity="6" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="40" coveredstatements="0" elements="44" coveredelements="0"/>
@@ -95,7 +95,7 @@
     </file>
     <file name="/home/runner/work/wp-module-help-center/wp-module-help-center/includes/HelpCenter.php">
       <class name="NewfoldLabs\WP\Module\HelpCenter\HelpCenter" namespace="global">
-        <metrics complexity="17" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="96" coveredstatements="0" elements="102" coveredelements="0"/>
+        <metrics complexity="18" methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="104" coveredstatements="0" elements="111" coveredelements="0"/>
       </class>
       <line num="41" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
       <line num="42" type="stmt" count="0"/>
@@ -135,39 +135,36 @@
       <line num="108" type="stmt" count="0"/>
       <line num="109" type="stmt" count="0"/>
       <line num="110" type="stmt" count="0"/>
-      <line num="119" type="method" name="newfold_help_center" visibility="public" complexity="4" crap="20" count="0"/>
+      <line num="112" type="stmt" count="0"/>
+      <line num="119" type="method" name="register_settings" visibility="public" complexity="1" crap="2" count="0"/>
       <line num="120" type="stmt" count="0"/>
       <line num="121" type="stmt" count="0"/>
       <line num="122" type="stmt" count="0"/>
-      <line num="126" type="stmt" count="0"/>
+      <line num="123" type="stmt" count="0"/>
+      <line num="124" type="stmt" count="0"/>
+      <line num="125" type="stmt" count="0"/>
       <line num="127" type="stmt" count="0"/>
-      <line num="128" type="stmt" count="0"/>
-      <line num="129" type="stmt" count="0"/>
-      <line num="130" type="stmt" count="0"/>
-      <line num="131" type="stmt" count="0"/>
-      <line num="132" type="stmt" count="0"/>
-      <line num="133" type="stmt" count="0"/>
-      <line num="134" type="stmt" count="0"/>
-      <line num="135" type="stmt" count="0"/>
+      <line num="135" type="method" name="newfold_help_center" visibility="public" complexity="4" crap="20" count="0"/>
       <line num="136" type="stmt" count="0"/>
       <line num="137" type="stmt" count="0"/>
       <line num="138" type="stmt" count="0"/>
-      <line num="139" type="stmt" count="0"/>
       <line num="140" type="stmt" count="0"/>
       <line num="141" type="stmt" count="0"/>
-      <line num="149" type="method" name="assets" visibility="public" complexity="6" crap="42" count="0"/>
+      <line num="142" type="stmt" count="0"/>
+      <line num="143" type="stmt" count="0"/>
+      <line num="144" type="stmt" count="0"/>
+      <line num="145" type="stmt" count="0"/>
+      <line num="146" type="stmt" count="0"/>
+      <line num="147" type="stmt" count="0"/>
+      <line num="148" type="stmt" count="0"/>
+      <line num="149" type="stmt" count="0"/>
       <line num="150" type="stmt" count="0"/>
       <line num="151" type="stmt" count="0"/>
       <line num="152" type="stmt" count="0"/>
       <line num="153" type="stmt" count="0"/>
       <line num="154" type="stmt" count="0"/>
-      <line num="156" type="stmt" count="0"/>
-      <line num="157" type="stmt" count="0"/>
-      <line num="158" type="stmt" count="0"/>
-      <line num="159" type="stmt" count="0"/>
-      <line num="160" type="stmt" count="0"/>
-      <line num="161" type="stmt" count="0"/>
-      <line num="162" type="stmt" count="0"/>
+      <line num="155" type="stmt" count="0"/>
+      <line num="163" type="method" name="assets" visibility="public" complexity="6" crap="42" count="0"/>
       <line num="164" type="stmt" count="0"/>
       <line num="165" type="stmt" count="0"/>
       <line num="166" type="stmt" count="0"/>
@@ -175,31 +172,43 @@
       <line num="168" type="stmt" count="0"/>
       <line num="170" type="stmt" count="0"/>
       <line num="171" type="stmt" count="0"/>
+      <line num="172" type="stmt" count="0"/>
       <line num="173" type="stmt" count="0"/>
       <line num="174" type="stmt" count="0"/>
       <line num="175" type="stmt" count="0"/>
       <line num="176" type="stmt" count="0"/>
-      <line num="177" type="stmt" count="0"/>
       <line num="178" type="stmt" count="0"/>
       <line num="179" type="stmt" count="0"/>
+      <line num="180" type="stmt" count="0"/>
       <line num="181" type="stmt" count="0"/>
       <line num="182" type="stmt" count="0"/>
-      <line num="183" type="stmt" count="0"/>
       <line num="184" type="stmt" count="0"/>
       <line num="185" type="stmt" count="0"/>
-      <line num="186" type="stmt" count="0"/>
       <line num="187" type="stmt" count="0"/>
       <line num="188" type="stmt" count="0"/>
       <line num="189" type="stmt" count="0"/>
       <line num="190" type="stmt" count="0"/>
+      <line num="191" type="stmt" count="0"/>
+      <line num="192" type="stmt" count="0"/>
       <line num="193" type="stmt" count="0"/>
+      <line num="195" type="stmt" count="0"/>
       <line num="196" type="stmt" count="0"/>
+      <line num="197" type="stmt" count="0"/>
+      <line num="198" type="stmt" count="0"/>
+      <line num="199" type="stmt" count="0"/>
+      <line num="200" type="stmt" count="0"/>
+      <line num="201" type="stmt" count="0"/>
+      <line num="202" type="stmt" count="0"/>
+      <line num="203" type="stmt" count="0"/>
       <line num="204" type="stmt" count="0"/>
-      <line num="206" type="stmt" count="0"/>
-      <line num="209" type="stmt" count="0"/>
-      <line num="217" type="stmt" count="0"/>
-      <line num="219" type="stmt" count="0"/>
-      <metrics loc="224" ncloc="170" classes="1" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="96" coveredstatements="0" elements="102" coveredelements="0"/>
+      <line num="207" type="stmt" count="0"/>
+      <line num="210" type="stmt" count="0"/>
+      <line num="218" type="stmt" count="0"/>
+      <line num="220" type="stmt" count="0"/>
+      <line num="223" type="stmt" count="0"/>
+      <line num="231" type="stmt" count="0"/>
+      <line num="233" type="stmt" count="0"/>
+      <metrics loc="238" ncloc="179" classes="1" methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="104" coveredstatements="0" elements="111" coveredelements="0"/>
     </file>
     <file name="/home/runner/work/wp-module-help-center/wp-module-help-center/includes/HelpCenterFeature.php">
       <class name="NewfoldLabs\WP\Module\HelpCenter\HelpCenterFeature" namespace="global">
@@ -392,6 +401,6 @@
       <line num="43" type="stmt" count="0"/>
       <metrics loc="46" ncloc="36" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="21" coveredstatements="0" elements="22" coveredelements="0"/>
     </file>
-    <metrics files="8" loc="800" ncloc="569" classes="8" methods="27" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="316" coveredstatements="0" elements="343" coveredelements="0"/>
+    <metrics files="8" loc="814" ncloc="578" classes="8" methods="28" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="324" coveredstatements="0" elements="352" coveredelements="0"/>
   </project>
 </coverage>
