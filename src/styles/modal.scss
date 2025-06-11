@@ -18,36 +18,36 @@ $container-width: 350px;
 			justify-content: space-between;
 			align-items: center;
 			position: sticky;
-			width: $container-width;
-			height: 48px;
 			top: 0;
 			left: 0;
-			border-bottom: 1px solid #dddfe0;
+			padding: 17px 23px 10px;
 
 			&__heading {
-				font-size: 20px;
+				font-size: 16px;
 				line-height: 24px;
-				font-weight: 400;
-				color: $gray-text;
-				padding-top: 4px;
+				font-weight: 500;
+				color: #000;
 
 				&__icon {
 					margin-right: 12px;
-					margin-left: 12px;
 					vertical-align: middle;
 				}
 			}
 
 			&__close-button {
-				border: 0;
-				background: none;
-				margin-right: 1px;
+				all: unset;
+  			cursor: pointer;
+				position: absolute;
+				top: 6px;
+				right: 7px;
+				width: 17px;
+				height: 17px;
 			}
 		}
 	}
 
 	.helpcenter-intro {
-		padding: 12px;
+		padding: 12px 23px;
 		display: flex;
 		justify-content: flex-start;
 		align-items: stretch;

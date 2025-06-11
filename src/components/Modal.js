@@ -1,20 +1,43 @@
 import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { ReactComponent as CloseIcon } from '../icons/close.svg';
-import { ReactComponent as Help } from '../icons/helpcenter-icon.svg';
-import HelpCenter from './HelpCenter';
+import { ReactComponent as Help } from '../icons/helpcenter-chat-bubble-icon.svg';
 import Footer from './Footer';
+import HelpCenter from './HelpCenter';
 
+import { useDispatch, useSelector } from 'react-redux';
 import { toggleHelp } from '..';
-import { LocalStorageUtils } from '../utils';
+import { helpcenterActions } from '../../store/helpcenterSlice';
+import { getHelpcenterOption, LocalStorageUtils } from '../utils';
 
-const Modal = ( { onClose } ) => {
-	useEffect( () => {
+const Modal = ({ onClose }) => {
+	const dispatch = useDispatch();
+	const isFooterVisible = useSelector(
+		(state) => state.helpcenter.isFooterVisible
+	);
+	useEffect(() => {
+		dispatch(
+			helpcenterActions.initialDataSet({
+				isFooterVisible: LocalStorageUtils.getResultInfo()?.length < 1,
+				SearchInput: LocalStorageUtils.getSearchInput() || '',
+			})
+		);
 		const helpVisible = window.newfoldHelpCenter?.closeOnLoad
 			? false
 			: LocalStorageUtils.getHelpVisible();
-		toggleHelp( helpVisible );
-	}, [] );
+		toggleHelp(helpVisible);
+	}, []);
+
+	useEffect(() => {
+		let data = [];
+		async function fetchData() {
+			data = await getHelpcenterOption();
+			if (data) {
+				dispatch(helpcenterActions.updateHelpResultHistoryFromDB(data));
+			}
+		}
+		fetchData();
+	}, []);
 
 	return (
 		<div
@@ -33,22 +56,23 @@ const Modal = ( { onClose } ) => {
 						<Help />
 					</span>
 					<span>
-						{ __( 'Help with WordPress', 'wp-module-help-center' ) }
+						{__('Help with WordPress', 'wp-module-help-center')}
 					</span>
 				</h3>
 				<button
-					aria-label={ __(
-						'Close Help Modal',
-						'wp-module-help-center'
-					) }
-					title={ __( 'Close Help Modal', 'wp-module-help-center' ) }
+					aria-label={__('Close Help Modal', 'wp-module-help-center')}
+					title={__('Close Help Modal', 'wp-module-help-center')}
 					className="nfd-hc-modal__header__close-button"
-					onClick={ () => {
+					onClick={() => {
+						dispatch(helpcenterActions.resetState());
 						onClose();
-					} }
+					}}
 				>
 					<CloseIcon aria-hidden="true" />
 				</button>
+			</div>
+			<div className="nfd-hc-seperator">
+				<hr />
 			</div>
 			<div
 				id="helpcenter-modal-description"
@@ -56,7 +80,7 @@ const Modal = ( { onClose } ) => {
 			>
 				<HelpCenter />
 			</div>
-			<Footer />
+			{isFooterVisible && <Footer />}
 		</div>
 	);
 };

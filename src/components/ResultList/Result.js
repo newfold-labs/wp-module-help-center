@@ -1,70 +1,64 @@
-import { useEffect, useState, useRef, useMemo } from '@wordpress/element';
-import ResultFeedback from './ResultFeedback';
-import ResultContent from './ResultContent';
-import ResultHeader from './ResultHeader';
-import {
-	useRevealText,
-	LocalStorageUtils,
-	processContentForMarkdown,
-} from '../../utils';
+import { useEffect, useMemo, useRef, useState } from '@wordpress/element';
 import { marked } from 'marked';
+import { useDispatch, useSelector } from 'react-redux';
+import { helpcenterActions } from '../../../store/helpcenterSlice';
+import { processContentForMarkdown, useRevealText } from '../../utils';
+import BackButton from '../BackButton';
+import ResultContent from './ResultContent';
+import ResultFeedback from './ResultFeedback';
+import ResultHeader from './ResultHeader';
 
-export const Result = ( {
+export const Result = ({
 	content,
-	noResult,
 	postId,
 	source,
-	showFeedbackSection,
 	questionBlock,
-	isLoading,
-	loadingQuery,
-	loadingIndex,
 	index,
-	isNewResult,
 	wrapper,
 	feedbackSubmitted,
-} ) => {
-	const isNewEntry =
-		isNewResult && index === LocalStorageUtils.getResultInfo().length - 1;
-	const responseRef = useRef( null );
-	const [ shouldReveal, setShouldReveal ] = useState( false );
-
-	useEffect( () => {
-		if ( ( isNewEntry && responseRef.current ) || isLoading ) {
+}) => {
+	const { isLoading, isNewResult, noResult, showBackButton } = useSelector(
+		(state) => state.helpcenter
+	);
+	const isNewEntry = isNewResult;
+	const responseRef = useRef(null);
+	const [shouldReveal, setShouldReveal] = useState(false);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		if ((isNewEntry && responseRef.current) || isLoading) {
 			adjustHeightAndScroll();
 		}
-	}, [ isNewEntry, isLoading ] );
+	}, [isNewEntry, isLoading]);
 
 	const adjustHeightAndScroll = () => {
 		const viewportHeight = window.innerHeight;
-		const minHeight = viewportHeight - 332;
-		responseRef.current.style.minHeight = `${ minHeight }px`;
+		const minHeight = viewportHeight - 255;
+		responseRef.current.style.minHeight = `${minHeight}px`;
 		const scrollDistance = wrapper.current.scrollHeight;
-		wrapper.current.scrollBy( {
+		wrapper.current.scrollBy({
 			top: scrollDistance,
 			left: 0,
 			behavior: 'smooth',
-		} );
-
-		setShouldReveal( true );
+		});
+		setShouldReveal(true);
 	};
 
+	const startReveal = isNewResult ? shouldReveal : false;
 	const { displayedText: textToDisplay, isComplete: revealComplete } =
-		useRevealText( content || '', 50, shouldReveal );
+		useRevealText(content || '', 50, startReveal);
 
-	const htmlContent = useMemo( () => {
-		const processedHTMLContent = processContentForMarkdown( textToDisplay );
+	const htmlContent = useMemo(() => {
+		const processedHTMLContent = processContentForMarkdown(textToDisplay);
 		const markedContent = processedHTMLContent
-			? marked( processedHTMLContent )
+			? marked(processedHTMLContent)
 			: '';
 		return markedContent;
-	}, [ textToDisplay ] );
+	}, [textToDisplay]);
 
 	function shouldShowFeedback() {
 		return (
-			! noResult &&
-			! feedbackSubmitted &&
-			showFeedbackSection &&
+			!noResult &&
+			feedbackSubmitted === null &&
 			content &&
 			revealComplete &&
 			content.length > 0
@@ -72,26 +66,24 @@ export const Result = ( {
 	}
 
 	return (
-		<div ref={ responseRef } className="helpcenter-response-block">
-			<ResultHeader
-				noResult={ noResult }
-				isNewEntry={ isNewEntry }
-				questionBlock={ questionBlock }
-			/>
+		<div ref={responseRef} className="helpcenter-response-block">
+			{showBackButton && (
+				<BackButton
+					handleBackClick={() => {
+						dispatch(helpcenterActions.goBackInHistory());
+					}}
+				/>
+			)}
+			<ResultHeader noResult={noResult} questionBlock={questionBlock} />
 			<ResultContent
-				noResult={ noResult }
-				isNewEntry={ isNewEntry }
-				content={ htmlContent }
-				isLoading={ isLoading }
-				loadingQuery={ loadingQuery }
-				loadingIndex={ loadingIndex }
-				index={ index }
-				questionBlock={ questionBlock }
-				source={ source }
+				content={htmlContent}
+				index={index}
+				questionBlock={questionBlock}
+				source={source}
 			/>
-			{ shouldShowFeedback() && (
-				<ResultFeedback postId={ postId } source={ source } />
-			) }
+			{shouldShowFeedback() && (
+				<ResultFeedback postId={postId} source={source} />
+			)}
 		</div>
 	);
 };

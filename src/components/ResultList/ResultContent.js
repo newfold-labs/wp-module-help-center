@@ -1,16 +1,43 @@
-import { ReactComponent as AIStars } from '../../icons/ai-stars.svg';
+import { useEffect, useRef } from '@wordpress/element';
+import { useDispatch, useSelector } from 'react-redux';
+import { helpcenterActions } from '../../../store/helpcenterSlice';
+function ResultContent( { source, index, questionBlock, content } ) {
+	const { isLoading, loadingQuery, loadingIndex } = useSelector(
+		( state ) => state.helpcenter
+	);
+	const resultBlockRef = useRef();
+	const dispatch = useDispatch();
 
-function ResultContent( {
-	isLoading,
-	loadingQuery,
-	loadingIndex,
-	source,
-	index,
-	questionBlock,
-	content,
-} ) {
+	useEffect( () => {
+		const resultBlock = resultBlockRef.current;
+
+		if ( ! resultBlock ) {
+			return;
+		}
+
+		const handleClick = ( e ) => {
+			const anchor = e.target.closest( 'a[href*="bhmultisite.com/"]' );
+			if ( anchor && resultBlock.contains( anchor ) ) {
+				e.preventDefault();
+				const clickedText = anchor.textContent.trim();
+
+				dispatch( helpcenterActions.updateSearchInput( clickedText ) );
+				dispatch( helpcenterActions.setAIResultLoading() );
+
+				// set a flag like "triggerSubmit" in the store
+				dispatch( helpcenterActions.setTriggerSearch( true ) );
+				dispatch( helpcenterActions.setShowBackButton( true ) );
+			}
+		};
+
+		resultBlock.addEventListener( 'click', handleClick );
+
+		return () => {
+			resultBlock.removeEventListener( 'click', handleClick );
+		};
+	}, [ content ] );
+
 	function renderContentOrLoading() {
-		// 2) Check loading scenario
 		const isAISourceLoading =
 			isLoading &&
 			source === 'ai' &&
@@ -21,7 +48,6 @@ function ResultContent( {
 			return <div className="loading-cursor"></div>;
 		}
 
-		// 3) If there's actual content
 		if ( content && content.length > 0 ) {
 			return (
 				<p
@@ -31,15 +57,11 @@ function ResultContent( {
 			);
 		}
 
-		// 4) Otherwise, render nothing or handle other edge cases
 		return null;
 	}
 
 	return (
-		<div className="helpcenter-result-block">
-			<div className="helpcenter-result-block__aistars">
-				<AIStars />
-			</div>
+		<div className="helpcenter-result-block" ref={ resultBlockRef }>
 			<div>{ renderContentOrLoading() }</div>
 		</div>
 	);
