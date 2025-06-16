@@ -24,7 +24,7 @@ msgstr "Não conseguimos encontrar a marca"
 msgid "You must be authenticated to make this call"
 msgstr "Você precisa estar autenticado para fazer essa solicitação"
 
-#: includes/HelpCenter.php:133
+#: includes/HelpCenter.php:147
 msgid "Help"
 msgstr "Ajuda"
 
@@ -41,14 +41,6 @@ msgid "Did this result help you?"
 msgstr "Esse resultado foi útil para você?"
 
 #: build/index.js:1
-msgid "Yes"
-msgstr "Sim"
-
-#: build/index.js:1
-msgid "No"
-msgstr "Não"
-
-#: build/index.js:1
 msgid "Thanks for the feedback!"
 msgstr "Obrigado pelo feedback!"
 
@@ -57,28 +49,12 @@ msgid "You can try searching our <a href=\"{link}\">Resource center.</a> though 
 msgstr "Você pode tentar procurar no nosso <a href=\"{link}\">Centro de Recursos</a> para ver se há um artigo ou vídeo útil sobre esse assunto."
 
 #: build/index.js:1
-msgid "Sorry, I don’t have any information on that topic yet."
-msgstr "Desculpe, ainda não tenho informações sobre esse assunto."
-
-#: build/index.js:1
-msgid "Hi! I’m your WordPress AI assistant. </br></br> Ask me how to do things in WordPress and I’ll provide step by step instructions.</br></br> I’m still learning so I don’t have all the answers just yet."
-msgstr "Oi! Eu sou seu assistente de IA do WordPress. </br></br> Pergunte como fazer coisas no WordPress e eu fornecerei instruções passo a passo.</br></br> Ainda estou aprendendo, então ainda não tenho todas as respostas."
-
-#: build/index.js:1
 msgid "Search Help Center"
 msgstr "Buscar no Centro de Ajuda"
 
 #: build/index.js:1
-msgid "Ask about WordPress"
-msgstr "Pergunte sobre o WordPress"
-
-#: build/index.js:1
 msgid "submit text"
 msgstr "enviar texto"
-
-#: build/index.js:1
-msgid "Common Topics"
-msgstr "Tópicos comuns"
 
 #: build/index.js:1
 msgid "Please enter a specific search term to get results."
@@ -89,17 +65,494 @@ msgid "Account Support"
 msgstr "Suporte de conta"
 
 #: build/index.js:1
-msgid "If you need help with your Bluehost account, contact our support team:"
-msgstr "Se você precisar de ajuda com sua conta da Bluehost, entre em contato com nossa equipe de suporte:"
-
-#: build/index.js:1
-msgid "Chat with support"
-msgstr "Conversar com o suporte"
-
-#: build/index.js:1
 msgid "Help with WordPress"
 msgstr "Ajuda com o WordPress"
 
 #: build/index.js:1
 msgid "Close Help Modal"
 msgstr "Fechar janela de ajuda"
+
+#: includes/HelpCenter.php:122
+msgid "NFD helpcenter data"
+msgstr ""
+
+#: build/index.js:1
+msgid "If you need help with your Bluehost account, give us a call at "
+msgstr ""
+
+#: build/index.js:1
+msgid " with one of our support agents — we're here for you!"
+msgstr ""
+
+#: build/index.js:1
+msgid "Your dream site is just a click away."
+msgstr ""
+
+#: build/index.js:1
+msgid "Let's build a site you love, together."
+msgstr ""
+
+#: build/index.js:1
+msgid "With Pro Design Live, our expert team bring your vision to life. We help you to create and the site you’ve always dreamed of — tailored to your goals, ready to perform."
+msgstr ""
+
+#: build/index.js:1
+msgid "Start Now"
+msgstr ""
+
+#: build/index.js:1
+msgid "Back"
+msgstr ""
+
+#: build/index.js:1
+msgid "We're sorry the suggestions didn’t help."
+msgstr ""
+
+#: build/index.js:1
+msgid "Try to:"
+msgstr ""
+
+#: build/index.js:1
+msgid "Use different keywords in the search field."
+msgstr ""
+
+#: build/index.js:1
+msgid "A clear, short prompt can make the difference."
+msgstr ""
+
+#: build/index.js:1
+msgid "Reach out to our customer support."
+msgstr ""
+
+#: build/index.js:1
+msgid "Call at"
+msgstr ""
+
+#: build/index.js:1
+msgid "or"
+msgstr ""
+
+#: build/index.js:1
+msgid "with one of our support agents — we will assist you as soon as possible."
+msgstr ""
+
+#: build/index.js:1
+msgid "Hey there! I’m here to help you find your way around WordPress. </br></br> If you’re not sure how to do something, just ask — I’ll walk you through it step by step. I’m still learning, so I might not have every answer, but I’ll do my best to help!"
+msgstr ""
+
+#: build/index.js:1
+#, js-format
+msgid "Sorry, I don’t have any information on “%s” yet."
+msgstr ""
+
+#: build/index.js:1
+msgid "Ask anything about WordPress"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentythree/theme.json
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Custom template name"
+msgid "Blank"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentythree/theme.json
+msgctxt "Custom template name"
+msgid "Blog (Alternative)"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentythree/theme.json
+msgctxt "Custom template name"
+msgid "404"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentythree/theme.json
+msgctxt "Color name"
+msgid "Base"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentythree/theme.json
+msgctxt "Color name"
+msgid "Contrast"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentythree/theme.json
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Color name"
+msgid "Primary"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentythree/theme.json
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Color name"
+msgid "Secondary"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentythree/theme.json
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Color name"
+msgid "Tertiary"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentythree/theme.json
+msgctxt "Space size name"
+msgid "1"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentythree/theme.json
+msgctxt "Space size name"
+msgid "2"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentythree/theme.json
+msgctxt "Space size name"
+msgid "3"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentythree/theme.json
+msgctxt "Space size name"
+msgid "4"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentythree/theme.json
+msgctxt "Space size name"
+msgid "5"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentythree/theme.json
+msgctxt "Space size name"
+msgid "6"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentythree/theme.json
+msgctxt "Font family name"
+msgid "DM Sans"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentythree/theme.json
+msgctxt "Font family name"
+msgid "IBM Plex Mono"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentythree/theme.json
+msgctxt "Font family name"
+msgid "Inter"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentythree/theme.json
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Font family name"
+msgid "System Font"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentythree/theme.json
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Font family name"
+msgid "Source Serif Pro"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentythree/theme.json
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Template part name"
+msgid "Header"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentythree/theme.json
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Template part name"
+msgid "Footer"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentythree/theme.json
+msgctxt "Template part name"
+msgid "Comments"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentythree/theme.json
+msgctxt "Template part name"
+msgid "Post Meta"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Custom template name"
+msgid "Page (Large Header)"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Custom template name"
+msgid "Single Post (No Separators)"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Custom template name"
+msgid "Page (No Separators)"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Duotone name"
+msgid "Foreground and background"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Duotone name"
+msgid "Foreground and secondary"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Duotone name"
+msgid "Foreground and tertiary"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Duotone name"
+msgid "Primary and background"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Duotone name"
+msgid "Primary and secondary"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Duotone name"
+msgid "Primary and tertiary"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Gradient name"
+msgid "Vertical secondary to tertiary"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Gradient name"
+msgid "Vertical secondary to background"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Gradient name"
+msgid "Vertical tertiary to background"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Gradient name"
+msgid "Diagonal primary to foreground"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Gradient name"
+msgid "Diagonal secondary to background"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Gradient name"
+msgid "Diagonal background to secondary"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Gradient name"
+msgid "Diagonal tertiary to background"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Gradient name"
+msgid "Diagonal background to tertiary"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Color name"
+msgid "Foreground"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Color name"
+msgid "Background"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Template part name"
+msgid "Header (Dark, large)"
+msgstr ""
+
+#: wordpress/wp-content/themes/twentytwentytwo/theme.json
+msgctxt "Template part name"
+msgid "Header (Dark, small)"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Duotone name"
+msgid "Dark grayscale"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Duotone name"
+msgid "Grayscale"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Duotone name"
+msgid "Purple and yellow"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Duotone name"
+msgid "Blue and red"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Duotone name"
+msgid "Midnight"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Duotone name"
+msgid "Magenta and yellow"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Duotone name"
+msgid "Purple and green"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Duotone name"
+msgid "Blue and orange"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Gradient name"
+msgid "Vivid cyan blue to vivid purple"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Gradient name"
+msgid "Light green cyan to vivid green cyan"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Gradient name"
+msgid "Luminous vivid amber to luminous vivid orange"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Gradient name"
+msgid "Luminous vivid orange to vivid red"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Gradient name"
+msgid "Very light gray to cyan bluish gray"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Gradient name"
+msgid "Cool to warm spectrum"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Gradient name"
+msgid "Blush light purple"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Gradient name"
+msgid "Blush bordeaux"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Gradient name"
+msgid "Luminous dusk"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Gradient name"
+msgid "Pale ocean"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Gradient name"
+msgid "Electric grass"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Gradient name"
+msgid "Midnight"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Color name"
+msgid "Black"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Color name"
+msgid "Cyan bluish gray"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Color name"
+msgid "White"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Color name"
+msgid "Pale pink"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Color name"
+msgid "Vivid red"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Color name"
+msgid "Luminous vivid orange"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Color name"
+msgid "Luminous vivid amber"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Color name"
+msgid "Light green cyan"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Color name"
+msgid "Vivid green cyan"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Color name"
+msgid "Pale cyan blue"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Color name"
+msgid "Vivid cyan blue"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Color name"
+msgid "Vivid purple"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Font size name"
+msgid "Small"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Font size name"
+msgid "Medium"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Font size name"
+msgid "Large"
+msgstr ""
+
+#: wordpress/wp-includes/theme.json
+msgctxt "Font size name"
+msgid "Extra Large"
+msgstr ""
