@@ -46,7 +46,27 @@ export const MultiSearchAPI = {
 			return {};
 		}
 	},
+
+	fetchTooltipSearchResults: async ( query, brand ) => {
+		try {
+			const response = await apiFetch( {
+				path: '/newfold-multi-search/v1/tootip_search',
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify( { query, brand } ),
+			} );
+
+			return response;
+		} catch ( error ) {
+			// eslint-disable-next-line no-console
+			console.error( 'Error in getMultiSearchResults:', error );
+			return {};
+		}
+	},
 };
+
 
 export const CapabilityAPI = {
 	getHelpCenterCapability: () => {

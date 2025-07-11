@@ -64,6 +64,27 @@ class MultiSearchController extends \WP_REST_Controller {
 				),
 			)
 		);
+
+		/**
+		 * Register the routes for this objects of the controller
+		 */
+		register_rest_route(
+			$this->namespace,
+			'/tootip_search',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'get_tooltip_search_result' ),
+					'args'                => array(
+						'query' => array(
+							'required' => true,
+							'type'     => 'string',
+						),
+					),
+					'permission_callback' => array( $this, 'check_permission' ),
+				),
+			)
+		);
 	}
 
 	/**
@@ -114,6 +135,15 @@ class MultiSearchController extends \WP_REST_Controller {
 		}
 
 		return rest_ensure_response( $data );
+	}
+
+	/**
+	 * Fetch the result from typesense
+	 *
+	 * @param \WP_REST_Request $request the REST request object
+	 */
+	function get_tooltip_search_result( \WP_REST_Request $request ) {
+		return "hello world";
 	}
 
 	/**
