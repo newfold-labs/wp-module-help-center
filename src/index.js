@@ -210,14 +210,9 @@ window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery = function (
 /* Detect click event on the calling element and  checking if the clicked element has a specific data attribute name nfdhelpcenterquery */
 document.addEventListener( 'click', ( event ) => {
 	try {
-		if (
-			event.target?.dataset?.nfdhelpcenterquery &&
-			event.target.dataset.nfdhelpcenterquery.trim() !== ''
-		) {
-			window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery(
-				event.target.dataset.nfdhelpcenterquery,
-				true
-			);
+		if ( event.target?.classList?.contains( 'nfd-help-center-tip' ) ) {
+			const postid = event.target.dataset.postId;
+			console.log(postid);
 		}
 	} catch ( error ) {
 		// eslint-disable-next-line no-console
