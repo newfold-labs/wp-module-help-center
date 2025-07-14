@@ -143,7 +143,42 @@ class MultiSearchController extends \WP_REST_Controller {
 	 * @param \WP_REST_Request $request the REST request object
 	 */
 	function get_tooltip_search_result( \WP_REST_Request $request ) {
-		return "hello world";
+		$id = sanitize_text_field( $request->get_param( 'query' ) );
+
+		$params = array(
+			'searches' => array(
+				array(
+					'q'                         => '*',
+					'query_by'                  => 'post_title',
+					'group_by'                  => 'post_title',
+					'group_limit'               => 1,
+					'filter_by'                 => 'id:=' . $id,
+					'collection'                => 'nfd_help_articles',
+					'page'                      => 1,
+				),
+			),
+		);
+
+		$args = array(
+			'body'    => wp_json_encode( $params ),
+			'headers' => array(
+				'Content-Type'        => 'application/json',
+				'X-TYPESENSE-API-KEY' => $this->api_key,
+			),
+		);
+
+		$response = wp_remote_post( $this->endpoint, $args );
+		if ( is_wp_error( $response ) ) {
+			return new \WP_Error( 'request_failed', __( 'The request failed', 'wp-module-help-center' ), array( 'status' => 500 ) );
+		}
+
+		$body = wp_remote_retrieve_body( $response );
+		$data = json_decode( $body, true );
+		if ( empty( $data ) ) {
+			return new \WP_Error( 'no_data', __( 'No data found', 'wp-module-help-center' ), array( 'status' => 404 ) );
+		}
+
+		return rest_ensure_response( $data );
 	}
 
 	/**
