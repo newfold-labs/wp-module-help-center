@@ -76,7 +76,7 @@ class MultiSearchController extends \WP_REST_Controller {
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'get_tooltip_search_result' ),
 					'args'                => array(
-						'query' => array(
+						'postId' => array(
 							'required' => true,
 							'type'     => 'string',
 						),
@@ -143,31 +143,24 @@ class MultiSearchController extends \WP_REST_Controller {
 	 * @param \WP_REST_Request $request the REST request object
 	 */
 	function get_tooltip_search_result( \WP_REST_Request $request ) {
-		$id = sanitize_text_field( $request->get_param( 'query' ) );
+		$id = sanitize_text_field( $request->get_param( 'postId' ) );
 
-		$params = array(
-			'searches' => array(
-				array(
-					'q'                         => '*',
-					'query_by'                  => 'post_title',
-					'group_by'                  => 'post_title',
-					'group_limit'               => 1,
-					'filter_by'                 => 'id:=' . $id,
-					'collection'                => 'nfd_help_articles',
-					'page'                      => 1,
-				),
-			),
-		);
+		$url = 'http://127.0.0.1:8787/postContent' ;
 
 		$args = array(
-			'body'    => wp_json_encode( $params ),
+			'method'  => 'POST',
 			'headers' => array(
-				'Content-Type'        => 'application/json',
-				'X-TYPESENSE-API-KEY' => $this->api_key,
+				'Content-Type' => 'application/json',
 			),
+			'timeout' => 60,
+			'body'    => wp_json_encode(
+					array(
+						'postId' => $id,
+					)
+				),
 		);
 
-		$response = wp_remote_post( $this->endpoint, $args );
+		$response = wp_remote_post( $url,$args);
 		if ( is_wp_error( $response ) ) {
 			return new \WP_Error( 'request_failed', __( 'The request failed', 'wp-module-help-center' ), array( 'status' => 500 ) );
 		}

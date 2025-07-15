@@ -58,7 +58,7 @@ export const MultiSearchAPI = {
 				body: JSON.stringify({ postId }),
 			});
 
-			return response?.results?.[0]?.grouped_hits?.[0]?.hits;
+			return response;
 		} catch (error) {
 			// eslint-disable-next-line no-console
 			console.error('Error in getMultiSearchResults:', error);

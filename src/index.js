@@ -224,16 +224,21 @@ document.addEventListener('click', async (event) => {
 
 			const results =
 				await MultiSearchAPI.fetchTooltipSearchResults(postId);
+			console.log(results);
+
+			if (!results?.content) {
+				store.dispatch(helpcenterActions.updateIsTooltipLoading());
+				store.dispatch(helpcenterActions.setIsFooterVisible(false));
+				store.dispatch(helpcenterActions.setNoResult());
+				return;
+			}
 
 			const result = {
-				resultContent: formatPostContent(
-					results[0]?.document?.post_content
-				),
+				resultContent: formatPostContent(results.content.rendered),
 				postId,
-				searchInput: results[0]?.document?.post_title,
+				searchInput: results.title.render,
 				feedbackSubmitted: null,
 			};
-			console.log(results);
 			store.dispatch(helpcenterActions.updateIsTooltipLoading());
 			store.dispatch(helpcenterActions.updateResultContent(result));
 		}
