@@ -21,13 +21,14 @@ const HelpCenter = () => {
 		initComplete,
 		resultContent,
 		isLoading,
-	} = useSelector( ( state ) => state.helpcenter );
+		isTooltip,
+	} = useSelector((state) => state.helpcenter);
 
 	const wrapper = useRef();
 	const resultsContainer = useRef();
 
 	// === useEffect: on mount ===
-	useEffect( () => {
+	useEffect(() => {
 		getHelpStatus();
 		const updateVisibility = () =>
 			dispatch(
@@ -35,40 +36,40 @@ const HelpCenter = () => {
 					LocalStorageUtils.getHelpVisible()
 				)
 			);
-		window.addEventListener( 'storage', updateVisibility );
+		window.addEventListener('storage', updateVisibility);
 
 		return () => {
-			window.removeEventListener( 'storage', updateVisibility );
+			window.removeEventListener('storage', updateVisibility);
 		};
-	}, [] );
+	}, []);
 
 	// === useEffect: on visible ===
-	useEffect( () => {
-		if ( visible ) {
-			dispatch( helpcenterActions.updateInitComplete( true ) );
+	useEffect(() => {
+		if (visible) {
+			dispatch(helpcenterActions.updateInitComplete(true));
 			checkFooterVisibility();
-			adjustPadding( wrapper );
+			adjustPadding(wrapper);
 			/* setTimeout( () => {
 				scrollToBottom( wrapper, resultsContainer );
 			}, 500 ); */
 		}
-	}, [ visible ] );
+	}, [visible]);
 
 	// === useEffect: on initComplete / disliked ===
-	useEffect( () => {
-		if ( initComplete ) {
+	useEffect(() => {
+		if (initComplete) {
 			checkFooterVisibility();
-			adjustPadding( wrapper );
+			adjustPadding(wrapper);
 			/* scrollToBottom( wrapper, resultsContainer ); */
 		}
-	}, [ initComplete, disliked ] );
+	}, [initComplete, disliked]);
 
 	const getHelpStatus = async () => {
 		try {
 			const response = await CapabilityAPI.getHelpCenterCapability();
-			dispatch( helpcenterActions.updateHelpEnabled( response ) );
+			dispatch(helpcenterActions.updateHelpEnabled(response));
 		} catch {
-			dispatch( helpcenterActions.updateHelpEnabled( false ) );
+			dispatch(helpcenterActions.updateHelpEnabled(false));
 		}
 	};
 
@@ -80,25 +81,23 @@ const HelpCenter = () => {
 		);
 	};
 
-	if ( ! helpEnabled || ! visible ) {
+	if (!helpEnabled || !visible) {
 		return null;
 	}
 
 	const renderResultContainer = () => {
-		if ( noResult ) {
+		if (noResult) {
 			return <NoResults />;
 		}
-		if ( disliked ) {
+		if (disliked) {
 			return <DislikeFeedbackPanel />;
 		}
 		return (
 			<>
-				{ resultContent?.length < 1 && ! isLoading && (
-					<HelpCenterIntro />
-				) }
+				{resultContent?.length < 1 && !isLoading && <HelpCenterIntro />}
 				<ResultList
-					wrapper={ wrapper }
-					resultsContainer={ resultsContainer }
+					wrapper={wrapper}
+					resultsContainer={resultsContainer}
 				/>
 			</>
 		);
@@ -108,10 +107,10 @@ const HelpCenter = () => {
 		<div
 			className="nfd-help-center"
 			id="helpcenterResultsWrapper"
-			ref={ wrapper }
+			ref={wrapper}
 		>
-			{ renderResultContainer() }
-			<SearchInput />
+			{renderResultContainer()}
+			{!isTooltip && <SearchInput />}
 		</div>
 	);
 };

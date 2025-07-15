@@ -47,7 +47,7 @@ export const MultiSearchAPI = {
 		}
 	},
 
-	fetchTooltipSearchResults: async (query) => {
+	fetchTooltipSearchResults: async (postId) => {
 		try {
 			const response = await apiFetch({
 				path: '/newfold-multi-search/v1/tootip_search',
@@ -55,10 +55,10 @@ export const MultiSearchAPI = {
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ query }),
+				body: JSON.stringify({ postId }),
 			});
 
-			return response;
+			return response?.results?.[0]?.grouped_hits?.[0]?.hits;
 		} catch (error) {
 			// eslint-disable-next-line no-console
 			console.error('Error in getMultiSearchResults:', error);

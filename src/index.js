@@ -10,12 +10,13 @@ import domReady from '@wordpress/dom-ready';
 //
 import { Provider } from 'react-redux';
 import { store } from '../store';
+import { helpcenterActions } from '../store/helpcenterSlice';
 import Modal from './components/Modal';
 import { ReactComponent as Help } from './icons/help-plugin-sidebar-icon.svg';
 import './styles/styles.scss';
 import {
 	Analytics,
-	CapabilityAPI,
+	formatPostContent,
 	LocalStorageUtils,
 	MultiSearchAPI,
 } from './utils';
@@ -213,14 +214,28 @@ window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery = function (
 document.addEventListener('click', async (event) => {
 	try {
 		if (event.target?.classList?.contains('nfd-help-center-tip')) {
-			const postid = event.target.dataset.postId;
-			const brand = CapabilityAPI.getBrand();
+			!LocalStorageUtils.getHelpVisible() &&
+				document
+					.getElementById('wp-admin-bar-help-center')
+					.querySelector('.ab-item')
+					.click();
+			store.dispatch(helpcenterActions.setIsTooltipLoading());
+			const postId = event.target.dataset.postId;
 
-			const results = await MultiSearchAPI.fetchTooltipSearchResults(
-				postid,
-				brand
-			);
+			const results =
+				await MultiSearchAPI.fetchTooltipSearchResults(postId);
+
+			const result = {
+				resultContent: formatPostContent(
+					results[0]?.document?.post_content
+				),
+				postId,
+				searchInput: results[0]?.document?.post_title,
+				feedbackSubmitted: null,
+			};
 			console.log(results);
+			store.dispatch(helpcenterActions.updateIsTooltipLoading());
+			store.dispatch(helpcenterActions.updateResultContent(result));
 		}
 	} catch (error) {
 		// eslint-disable-next-line no-console
