@@ -58,6 +58,17 @@ const Modal = ({ onClose }) => {
 					<span>
 						{__('Help with WordPress', 'wp-module-help-center')}
 					</span>
+					{
+						// only for testing
+					}
+					<div
+						className="nfd-help-center-tip"
+						data-post-id="111456"
+						id="help-center-tooltip"
+						style={{ display: 'none' }}
+					>
+						?
+					</div>
 				</h3>
 				<button
 					aria-label={__('Close Help Modal', 'wp-module-help-center')}

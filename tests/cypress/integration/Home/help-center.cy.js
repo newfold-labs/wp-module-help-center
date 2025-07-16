@@ -9,14 +9,14 @@ const customCommandTimeout = 20000;
 const pluginId = GetPluginId();
 
 export const HCTrue = JSON.stringify({
-  canAccessAI: true,
-  hasAISiteGen: true,
-  canAccessHelpCenter: true,
-  canAccessGlobalCTB: true,
-  hasEcomdash: true,
-  hasYithExtended: true,
-  isEcommerce: true,
-  isJarvis: true,
+	canAccessAI: true,
+	hasAISiteGen: true,
+	canAccessHelpCenter: true,
+	canAccessGlobalCTB: true,
+	hasEcomdash: true,
+	hasYithExtended: true,
+	isEcommerce: true,
+	isJarvis: true,
 });
 
 describe(
@@ -181,6 +181,21 @@ describe(
 			cy.get('#nfd-help-center').should('not.be.visible')
 
 		});
+
+		it('Verify Tooltip functionality to retrive post information', () => {
+			cy.get('#wp-admin-bar-help-center .ab-item.ab-empty-item', {
+				timeout: customCommandTimeout,
+			})
+				.find('svg')
+				.should('exist')
+				.and('be.visible')
+				.click()
+			cy.get('#help-center-tooltip')
+				.should('have.css', 'display', 'none')
+				.click({ force: true });
+			cy.get('.helpcenter-question-block')
+				.findByText('"i have 7 items in the cart that dont really exist how do i get rid of them"').should('exist')
+		})
 
 	}
 );
