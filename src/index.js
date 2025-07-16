@@ -210,7 +210,7 @@ window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery = function (
 	}, 500);
 };
 
-/* Detect click event on the calling element and  checking if the clicked element has a specific data attribute name nfdhelpcenterquery */
+/* Detect click event on the calling element and  checking if the clicked element has a specific class name nfd-help-center-tip */
 document.addEventListener('click', async (event) => {
 	try {
 		if (event.target?.classList?.contains('nfd-help-center-tip')) {
@@ -224,11 +224,9 @@ document.addEventListener('click', async (event) => {
 
 			const results =
 				await MultiSearchAPI.fetchTooltipSearchResults(postId);
-			console.log(results);
 
 			if (!results?.content) {
 				store.dispatch(helpcenterActions.updateIsTooltipLoading());
-				store.dispatch(helpcenterActions.setIsFooterVisible(false));
 				store.dispatch(helpcenterActions.setNoResult());
 				return;
 			}

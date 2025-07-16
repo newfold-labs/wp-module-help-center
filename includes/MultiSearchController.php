@@ -143,9 +143,9 @@ class MultiSearchController extends \WP_REST_Controller {
 	 * @param \WP_REST_Request $request the REST request object
 	 */
 	function get_tooltip_search_result( \WP_REST_Request $request ) {
-		$id = sanitize_text_field( $request->get_param( 'postId' ) );
+		$postId = sanitize_text_field( $request->get_param( 'postId' ) );
 
-		$url = 'http://127.0.0.1:8787/postContent' ;
+		$url = USER_INTERACTION_SERVICE_BASE . 'postContent/';
 
 		$args = array(
 			'method'  => 'POST',
@@ -154,13 +154,13 @@ class MultiSearchController extends \WP_REST_Controller {
 			),
 			'timeout' => 60,
 			'body'    => wp_json_encode(
-					array(
-						'postId' => $id,
-					)
-				),
+				array(
+					'postId' => $postId,
+				)
+			),
 		);
 
-		$response = wp_remote_post( $url,$args);
+		$response = wp_remote_post( $url, $args );
 		if ( is_wp_error( $response ) ) {
 			return new \WP_Error( 'request_failed', __( 'The request failed', 'wp-module-help-center' ), array( 'status' => 500 ) );
 		}
