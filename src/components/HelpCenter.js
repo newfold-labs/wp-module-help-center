@@ -21,7 +21,7 @@ const HelpCenter = () => {
 		initComplete,
 		resultContent,
 		isLoading,
-		isTooltip,
+		hasLaunchedFromTooltip,
 	} = useSelector((state) => state.helpcenter);
 
 	const wrapper = useRef();
@@ -87,7 +87,9 @@ const HelpCenter = () => {
 
 	const renderResultContainer = () => {
 		if (noResult) {
-			return <NoResults />;
+			return (
+				<NoResults hasLaunchedFromTooltip={hasLaunchedFromTooltip} />
+			);
 		}
 		if (disliked) {
 			return <DislikeFeedbackPanel />;
@@ -108,10 +110,14 @@ const HelpCenter = () => {
 			className="nfd-help-center"
 			id="helpcenterResultsWrapper"
 			ref={wrapper}
-			style={isTooltip ? { height: window.innerHeight - 100 } : undefined}
+			style={
+				hasLaunchedFromTooltip
+					? { height: window.innerHeight - 100 }
+					: undefined
+			}
 		>
 			{renderResultContainer()}
-			{!isTooltip && <SearchInput />}
+			{!hasLaunchedFromTooltip && <SearchInput />}
 		</div>
 	);
 };

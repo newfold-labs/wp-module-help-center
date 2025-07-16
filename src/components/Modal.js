@@ -12,7 +12,7 @@ import { getHelpcenterOption, LocalStorageUtils } from '../utils';
 
 const Modal = ({ onClose }) => {
 	const dispatch = useDispatch();
-	const { isFooterVisible, isTooltip } = useSelector(
+	const { isFooterVisible, hasLaunchedFromTooltip } = useSelector(
 		(state) => state.helpcenter
 	);
 	useEffect(() => {
@@ -91,7 +91,7 @@ const Modal = ({ onClose }) => {
 			>
 				<HelpCenter />
 			</div>
-			{isFooterVisible && !isTooltip && <Footer />}
+			{isFooterVisible && !hasLaunchedFromTooltip && <Footer />}
 		</div>
 	);
 };

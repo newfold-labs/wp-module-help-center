@@ -4,7 +4,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { LocalStorageUtils } from '../../utils';
 import { ReactComponent as NoResultIcon } from './../../icons/noresults-icon.svg';
 
-const NoResults = () => {
+const NoResults = ({ hasLaunchedFromTooltip }) => {
 	const responseRef = useRef(null);
 	const resourceLink = window?.nfdHelpCenter?.resourceLink || '#'; // Fallback if resourceLink is not defined
 
@@ -27,10 +27,10 @@ const NoResults = () => {
 					<p>
 						{sprintf(
 							__(
-								'Sorry, I don’t have any information on “%s” yet.',
+								'Sorry, I don’t have any information on %s yet.',
 								'wp-module-help-center'
 							),
-							query
+							hasLaunchedFromTooltip ? 'this' : `"${query}"`
 						)}
 					</p>
 					<div>

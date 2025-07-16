@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-undef */
+import { toggleHelp } from '../../../../src';
 import { GetPluginId } from '../wp-module-support/pluginID.cy';
 import {
 	wpLogin,
@@ -183,13 +184,7 @@ describe(
 		});
 
 		it('Verify Tooltip functionality to retrive post information', () => {
-			cy.get('#wp-admin-bar-help-center .ab-item.ab-empty-item', {
-				timeout: customCommandTimeout,
-			})
-				.find('svg')
-				.should('exist')
-				.and('be.visible')
-				.click()
+			toggleHelp(true);
 			cy.get('#help-center-tooltip')
 				.should('have.css', 'display', 'none')
 				.click({ force: true });

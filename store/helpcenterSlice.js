@@ -19,7 +19,7 @@ const initialState = {
 	triggerSearch: false,
 	showBackButton: false,
 	viaLinkSearch: [],
-	isTooltip: false,
+	hasLaunchedFromTooltip: false,
 };
 
 const helpcenterSlice = createSlice({
@@ -29,7 +29,7 @@ const helpcenterSlice = createSlice({
 		setIsTooltipLoading: (state) => {
 			state.isLoading = true;
 			state.isFooterVisible = false;
-			state.isTooltip = true;
+			state.hasLaunchedFromTooltip = true;
 		},
 		updateIsTooltipLoading: (state) => {
 			state.isLoading = false;
@@ -101,7 +101,7 @@ const helpcenterSlice = createSlice({
 			state.noResult = false;
 			state.viaLinkSearch = [];
 			state.showBackButton = false;
-			state.isTooltip = false;
+			state.hasLaunchedFromTooltip = false;
 		},
 		setNewSearchResult: (state, action) => {
 			state.isNewResult = action.payload;
@@ -139,8 +139,8 @@ const helpcenterSlice = createSlice({
 			state.triggerSearch = action.payload;
 		},
 		goBackInHistory: (state) => {
-			if (state.isTooltip) {
-				state.isTooltip = false;
+			if (state.hasLaunchedFromTooltip) {
+				state.hasLaunchedFromTooltip = false;
 			}
 			if (state.viaLinkSearch.length >= 1) {
 				state.viaLinkSearch.pop();
@@ -158,8 +158,8 @@ const helpcenterSlice = createSlice({
 				state.isFooterVisible = true;
 			}
 
-			if (state.isTooltip) {
-				state.isTooltip = false;
+			if (state.hasLaunchedFromTooltip) {
+				state.hasLaunchedFromTooltip = false;
 			}
 		},
 		setShowBackButton: (state, action) => {
