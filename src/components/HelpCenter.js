@@ -108,6 +108,7 @@ const HelpCenter = () => {
 			className="nfd-help-center"
 			id="helpcenterResultsWrapper"
 			ref={wrapper}
+			style={isTooltip ? { height: window.innerHeight - 100 } : undefined}
 		>
 			{renderResultContainer()}
 			{!isTooltip && <SearchInput />}

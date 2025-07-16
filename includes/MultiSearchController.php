@@ -142,7 +142,7 @@ class MultiSearchController extends \WP_REST_Controller {
 	 *
 	 * @param \WP_REST_Request $request the REST request object
 	 */
-	function get_tooltip_search_result( \WP_REST_Request $request ) {
+	public function get_tooltip_search_result( \WP_REST_Request $request ) {
 		$postId = sanitize_text_field( $request->get_param( 'postId' ) );
 
 		$url = USER_INTERACTION_SERVICE_BASE . 'postContent/';
