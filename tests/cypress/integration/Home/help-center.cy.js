@@ -201,39 +201,39 @@ describe(
 				.findByText('"i have 7 items in the cart that dont really exist how do i get rid of them"').should('exist')
 		})
 
-		it.only('should return valid multi_search results for query "ftp"', () => {
-			cy.request({
-				method: 'POST',
-				url: '/wp-json/newfold-multi-search/v1/multi_search?_locale=user',
-				headers: {
-				'Content-Type': 'application/json',
-				'Accept': 'application/json, */*;q=0.1',
-				'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8',
-				'X-WP-Nonce': Cypress.env('wpNonce'),
-				'Origin': Cypress.config('baseUrl'),
-				'Referer': `${Cypress.config('baseUrl')}/wp-admin/`,
-				},
-				body: {
-				query: 'ftp',
-				brand: 'bluehost',
-				},
-				failOnStatusCode: false,
-			}).then((response) => {
-				cy.log('🔎 API Status:', response.status);
-				cy.log('🧠 API Response:', JSON.stringify(response.body, null, 2));
+		it('should return valid multi_search results for query "ftp"', () => {
+		const fullUrl = `${Cypress.config('baseUrl')}/wp-json/newfold-multi-search/v1/multi_search?_locale=user`;
 
-				// ✅ Assert response structure
-				expect(response.status).to.eq(200);
-				expect(response.body).to.have.property('results');
-				expect(response.body.results).to.be.an('array');
+		cy.request({
+			method: 'POST',
+			url: fullUrl, // ✅ full URL using baseUrl
+			headers: {
+			'Content-Type': 'application/json',
+			'Accept': 'application/json, */*;q=0.1',
+			'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8',
+			'X-WP-Nonce': Cypress.env('wpNonce'),
+			'Origin': Cypress.config('baseUrl'),
+			'Referer': `${Cypress.config('baseUrl')}/wp-admin/`,
+			},
+			body: {
+			query: 'ftp',
+			brand: 'bluehost',
+			},
+			failOnStatusCode: false,
+		}).then((response) => {
+			cy.log('🔎 API Status:', response.status);
+			cy.log('🧠 API Response:', JSON.stringify(response.body, null, 2));
 
-				if (response.body.results.length === 0) {
-				cy.log('⚠️ No results found — possibly a data issue?');
-				} else {
-				cy.log(`✅ ${response.body.results.length} results returned`);
-				}
-			});
+			expect(response.status).to.eq(200);
+			expect(response.body).to.have.property('results');
+			expect(response.body.results).to.be.an('array');
+
+			if (response.body.results.length === 0) {
+			cy.log('⚠️ No results found — possibly a data issue?');
+			} else {
+			cy.log(`✅ ${response.body.results.length} results returned`);
+			}
 		});
-
+		});
 	}
 );
