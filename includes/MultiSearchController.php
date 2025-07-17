@@ -167,7 +167,7 @@ class MultiSearchController extends \WP_REST_Controller {
 
 		$body = wp_remote_retrieve_body( $response );
 		$data = json_decode( $body, true );
-		if ( isset( $data['data']['status'] ) && $data['data']['status'] === 404 ) {
+		if ( isset( $data['data']['status'] ) && 404 === $data['data']['status'] ) {
 			return new \WP_Error( 'no_data', __( 'No data found', 'wp-module-help-center' ), array( 'status' => 404 ) );
 		}
 
