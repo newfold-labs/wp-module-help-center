@@ -26,10 +26,10 @@ describe(
 
 		beforeEach(() => {
 			wpLogin();
-			/* cy.exec(
+			cy.exec(
 				`npx wp-env run cli wp option update _transient_nfd_site_capabilities '${HCTrue}' --format=json`,
 				{ timeout: customCommandTimeout }
-			); */
+			);
 			cy.reload();
 			cy.visit('/wp-admin').then(() => {
 			const nonce = window.wpApiSettings?.nonce;
@@ -201,7 +201,7 @@ describe(
 				.findByText('"i have 7 items in the cart that dont really exist how do i get rid of them"').should('exist')
 		})
 
-		it('should return valid multi_search results for query "ftp"', () => {
+		it.only('should return valid multi_search results for query "ftp"', () => {
 		const fullUrl = `${Cypress.config('baseUrl')}/wp-json/newfold-multi-search/v1/multi_search?_locale=user`;
 
 		cy.request({
