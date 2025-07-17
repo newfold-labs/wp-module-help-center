@@ -182,7 +182,7 @@ describe(
 
 		});
 
-		it.only('Verify Tooltip functionality to retrive post information', () => {
+		it('Verify Tooltip functionality to retrive post information', () => {
 			cy.get('#wp-admin-bar-help-center .ab-item.ab-empty-item', {
 				timeout: customCommandTimeout,
 			})
