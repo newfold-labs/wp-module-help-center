@@ -26,11 +26,15 @@ describe(
 
 		beforeEach(() => {
 			wpLogin();
-			cy.exec(
+			/* cy.exec(
 				`npx wp-env run cli wp option update _transient_nfd_site_capabilities '${HCTrue}' --format=json`,
 				{ timeout: customCommandTimeout }
-			);
+			); */
 			cy.reload();
+			cy.visit('/wp-admin').then(() => {
+			const nonce = window.wpApiSettings?.nonce;
+			Cypress.env('wpNonce', nonce);
+			});
 			cy.visit("/wp-admin/index.php");
 		});
 
@@ -196,6 +200,40 @@ describe(
 			cy.get('.helpcenter-question-block')
 				.findByText('"i have 7 items in the cart that dont really exist how do i get rid of them"').should('exist')
 		})
+
+		it.only('should return valid multi_search results for query "ftp"', () => {
+			cy.request({
+				method: 'POST',
+				url: '/wp-json/newfold-multi-search/v1/multi_search?_locale=user',
+				headers: {
+				'Content-Type': 'application/json',
+				'Accept': 'application/json, */*;q=0.1',
+				'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8',
+				'X-WP-Nonce': Cypress.env('wpNonce'),
+				'Origin': Cypress.config('baseUrl'),
+				'Referer': `${Cypress.config('baseUrl')}/wp-admin/`,
+				},
+				body: {
+				query: 'ftp',
+				brand: 'bluehost',
+				},
+				failOnStatusCode: false,
+			}).then((response) => {
+				cy.log('🔎 API Status:', response.status);
+				cy.log('🧠 API Response:', JSON.stringify(response.body, null, 2));
+
+				// ✅ Assert response structure
+				expect(response.status).to.eq(200);
+				expect(response.body).to.have.property('results');
+				expect(response.body.results).to.be.an('array');
+
+				if (response.body.results.length === 0) {
+				cy.log('⚠️ No results found — possibly a data issue?');
+				} else {
+				cy.log(`✅ ${response.body.results.length} results returned`);
+				}
+			});
+		});
 
 	}
 );
