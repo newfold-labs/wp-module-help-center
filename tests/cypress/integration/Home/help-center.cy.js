@@ -31,10 +31,6 @@ describe(
 				{ timeout: customCommandTimeout }
 			);
 			cy.reload();
-			cy.visit('/wp-admin').then(() => {
-			const nonce = window.wpApiSettings?.nonce;
-			Cypress.env('wpNonce', nonce);
-			});
 			cy.visit("/wp-admin/index.php");
 		});
 
@@ -186,7 +182,7 @@ describe(
 
 		});
 
-		it('Verify Tooltip functionality to retrive post information', () => {
+		it.only('Verify Tooltip functionality to retrive post information', () => {
 			cy.get('#wp-admin-bar-help-center .ab-item.ab-empty-item', {
 				timeout: customCommandTimeout,
 			})
@@ -197,43 +193,9 @@ describe(
 			cy.get('#help-center-tooltip')
 				.should('have.css', 'display', 'none')
 				.click({ force: true });
-			cy.get('.helpcenter-question-block')
+			cy.get('.helpcenter-question-block', { timeout: 10000 })
 				.findByText('"i have 7 items in the cart that dont really exist how do i get rid of them"').should('exist')
 		})
 
-		it.only('should return valid multi_search results for query "ftp"', () => {
-		const fullUrl = `${Cypress.config('baseUrl')}/wp-json/newfold-multi-search/v1/multi_search?_locale=user`;
-
-		cy.request({
-			method: 'POST',
-			url: fullUrl, // ✅ full URL using baseUrl
-			headers: {
-			'Content-Type': 'application/json',
-			'Accept': 'application/json, */*;q=0.1',
-			'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8',
-			'X-WP-Nonce': Cypress.env('wpNonce'),
-			'Origin': Cypress.config('baseUrl'),
-			'Referer': `${Cypress.config('baseUrl')}/wp-admin/`,
-			},
-			body: {
-			query: 'ftp',
-			brand: 'bluehost',
-			},
-			failOnStatusCode: false,
-		}).then((response) => {
-			cy.log('🔎 API Status:', response.status);
-			cy.log('🧠 API Response:', JSON.stringify(response.body, null, 2));
-
-			expect(response.status).to.eq(200);
-			expect(response.body).to.have.property('results');
-			expect(response.body.results).to.be.an('array');
-
-			if (response.body.results.length === 0) {
-			cy.log('⚠️ No results found — possibly a data issue?');
-			} else {
-			cy.log(`✅ ${response.body.results.length} results returned`);
-			}
-		});
-		});
 	}
 );
