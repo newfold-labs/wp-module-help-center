@@ -182,7 +182,7 @@ describe(
 
 		});
 
-		it.only('Verify Tooltip functionality to retrive post information', () => {
+		it('Verify Tooltip functionality to retrive post information', () => {
 			cy.get('#wp-admin-bar-help-center .ab-item.ab-empty-item', {
 				timeout: customCommandTimeout,
 			})
@@ -195,7 +195,25 @@ describe(
 				.click({ force: true });
 			cy.get('.helpcenter-question-block', { timeout: 10000 })
 				.findByText('"i have 7 items in the cart that dont really exist how do i get rid of them"').should('exist')
-		})
+		});
+
+		it.only('should confirm that the WordPress REST API is available', () => {
+  cy.request('/wp-json').then((response) => {
+    // Log full response for debugging
+    cy.log('🌐 WP REST API Root:', JSON.stringify(response.body, null, 2));
+
+    // ✅ Assert that the API root responds successfully
+    expect(response.status).to.eq(200);
+
+    // ✅ Assert required structure exists
+    expect(response.body).to.have.property('namespaces');
+    expect(response.body.namespaces).to.include('wp/v2');
+
+    // ✅ Optionally assert your custom plugin namespace (if present)
+    // expect(response.body.namespaces).to.include('newfold-multi-search/v1');
+  });
+});
+
 
 	}
 );
