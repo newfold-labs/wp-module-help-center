@@ -12,8 +12,8 @@ import { getHelpcenterOption, LocalStorageUtils } from '../utils';
 
 const Modal = ({ onClose }) => {
 	const dispatch = useDispatch();
-	const isFooterVisible = useSelector(
-		(state) => state.helpcenter.isFooterVisible
+	const { isFooterVisible, hasLaunchedFromTooltip } = useSelector(
+		(state) => state.helpcenter
 	);
 	useEffect(() => {
 		dispatch(
@@ -58,6 +58,17 @@ const Modal = ({ onClose }) => {
 					<span>
 						{__('Help with WordPress', 'wp-module-help-center')}
 					</span>
+					{
+						// only for testing
+					}
+					<div
+						className="nfd-help-center-tip"
+						data-post-id="111456"
+						id="help-center-tooltip"
+						style={{ display: 'none' }}
+					>
+						?
+					</div>
 				</h3>
 				<button
 					aria-label={__('Close Help Modal', 'wp-module-help-center')}
@@ -80,7 +91,7 @@ const Modal = ({ onClose }) => {
 			>
 				<HelpCenter />
 			</div>
-			{isFooterVisible && <Footer />}
+			{isFooterVisible && !hasLaunchedFromTooltip && <Footer />}
 		</div>
 	);
 };

@@ -64,6 +64,27 @@ class MultiSearchController extends \WP_REST_Controller {
 				),
 			)
 		);
+
+		/**
+		 * Register the routes for this objects of the controller
+		 */
+		register_rest_route(
+			$this->namespace,
+			'/tootip_search',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'get_tooltip_search_result' ),
+					'args'                => array(
+						'postId' => array(
+							'required' => true,
+							'type'     => 'string',
+						),
+					),
+					'permission_callback' => array( $this, 'check_permission' ),
+				),
+			)
+		);
 	}
 
 	/**
@@ -110,6 +131,43 @@ class MultiSearchController extends \WP_REST_Controller {
 		$body = wp_remote_retrieve_body( $response );
 		$data = json_decode( $body, true );
 		if ( empty( $data ) ) {
+			return new \WP_Error( 'no_data', __( 'No data found', 'wp-module-help-center' ), array( 'status' => 404 ) );
+		}
+
+		return rest_ensure_response( $data );
+	}
+
+	/**
+	 * Fetch the result from typesense
+	 *
+	 * @param \WP_REST_Request $request the REST request object
+	 */
+	public function get_tooltip_search_result( \WP_REST_Request $request ) {
+		$postId = sanitize_text_field( $request->get_param( 'postId' ) );
+
+		$url = USER_INTERACTION_SERVICE_BASE . 'postContent/';
+
+		$args = array(
+			'method'  => 'POST',
+			'headers' => array(
+				'Content-Type' => 'application/json',
+			),
+			'timeout' => 60,
+			'body'    => wp_json_encode(
+				array(
+					'postId' => $postId,
+				)
+			),
+		);
+
+		$response = wp_remote_post( $url, $args );
+		if ( is_wp_error( $response ) ) {
+			return new \WP_Error( 'request_failed', __( 'The request failed', 'wp-module-help-center' ), array( 'status' => 500 ) );
+		}
+
+		$body = wp_remote_retrieve_body( $response );
+		$data = json_decode( $body, true );
+		if ( isset( $data['data']['status'] ) && 404 === $data['data']['status'] ) {
 			return new \WP_Error( 'no_data', __( 'No data found', 'wp-module-help-center' ), array( 'status' => 404 ) );
 		}
 
