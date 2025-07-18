@@ -32,7 +32,8 @@ describe(
 			cy.get('#permalink-input-post-name').check({ force: true });
 
 			// Submit the form
-			cy.get('form[name="form"]').submit();
+			 // Click the "Save Changes" button (name="submit")
+  			cy.get('form[name="form"] input[type="submit"]').click();
 			cy.wait(5000);
 		});
 		beforeEach(() => {
