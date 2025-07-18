@@ -23,7 +23,18 @@ describe(
 	'Home Page- Help Center',
 	{ testIsolation: true },
 	() => {
+		before(() => {
+			wpLogin();
+			cy.wait(5000);
+			cy.visit('/wp-admin/options-permalink.php');
 
+			// Select the "Post name" radio input
+			cy.get('#permalink-input-post-name').check({ force: true });
+
+			// Submit the form
+			cy.get('form[name="form"]').submit();
+			cy.wait(5000);
+		});
 		beforeEach(() => {
 			wpLogin();
 			cy.exec(
