@@ -70,7 +70,7 @@ class MultiSearchController extends \WP_REST_Controller {
 		 */
 		register_rest_route(
 			$this->namespace,
-			'/tootip_search',
+			'/tooltip_search',
 			array(
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
@@ -78,6 +78,10 @@ class MultiSearchController extends \WP_REST_Controller {
 					'args'                => array(
 						'postId' => array(
 							'required' => true,
+							'type'     => 'string',
+						),
+						'locale' => array(
+							'required' => false,
 							'type'     => 'string',
 						),
 					),
@@ -144,6 +148,7 @@ class MultiSearchController extends \WP_REST_Controller {
 	 */
 	public function get_tooltip_search_result( \WP_REST_Request $request ) {
 		$postId = sanitize_text_field( $request->get_param( 'postId' ) );
+		$locale = get_user_locale();
 
 		$url = USER_INTERACTION_SERVICE_BASE . 'postContent/';
 
@@ -156,6 +161,7 @@ class MultiSearchController extends \WP_REST_Controller {
 			'body'    => wp_json_encode(
 				array(
 					'postId' => $postId,
+					'locale' => $locale,
 				)
 			),
 		);

@@ -199,7 +199,8 @@ describe(
 				.should('exist')
 				.and('be.visible')
 				.click();
-			cy.get('#help-center-tooltip')
+			cy.get('#help-center-tooltip', { timeout: customCommandTimeout })
+				.should('exist')
 				.should('have.css', 'display', 'none')
 				.click({ force: true });
 			cy.get('.helpcenter-question-block')

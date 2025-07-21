@@ -17,9 +17,13 @@ export const Result = ({
 	wrapper,
 	feedbackSubmitted,
 }) => {
-	const { isLoading, isNewResult, noResult, showBackButton } = useSelector(
-		(state) => state.helpcenter
-	);
+	const {
+		isLoading,
+		isNewResult,
+		noResult,
+		showBackButton,
+		hasLaunchedFromTooltip,
+	} = useSelector((state) => state.helpcenter);
 	const isNewEntry = isNewResult;
 	const responseRef = useRef(null);
 	const [shouldReveal, setShouldReveal] = useState(false);
@@ -61,13 +65,14 @@ export const Result = ({
 			feedbackSubmitted === null &&
 			content &&
 			revealComplete &&
-			content.length > 0
+			content.length > 0 &&
+			!hasLaunchedFromTooltip
 		);
 	}
 
 	return (
 		<div ref={responseRef} className="helpcenter-response-block">
-			{showBackButton && (
+			{showBackButton && !hasLaunchedFromTooltip && (
 				<BackButton
 					handleBackClick={() => {
 						dispatch(helpcenterActions.goBackInHistory());
