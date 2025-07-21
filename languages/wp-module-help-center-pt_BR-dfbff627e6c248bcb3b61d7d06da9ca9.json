@@ -1,6 +1,6 @@
 {
     "translation-revision-date": "2025-05-07 16:20+0100",
-    "generator": "WP-CLI\/2.11.0",
+    "generator": "WP-CLI\/2.12.0",
     "source": "build\/index.js",
     "domain": "messages",
     "locale_data": {
@@ -13,35 +13,17 @@
             "Did this result help you?": [
                 "Esse resultado foi \u00fatil para voc\u00ea?"
             ],
-            "Yes": [
-                "Sim"
-            ],
-            "No": [
-                "N\u00e3o"
-            ],
             "Thanks for the feedback!": [
                 "Obrigado pelo feedback!"
             ],
             "You can try searching our <a href=\"{link}\">Resource center.<\/a> though to see if there\u2019s a helpful article or video on that subject.": [
                 "Voc\u00ea pode tentar procurar no nosso <a href=\"{link}\">Centro de Recursos<\/a> para ver se h\u00e1 um artigo ou v\u00eddeo \u00fatil sobre esse assunto."
             ],
-            "Sorry, I don\u2019t have any information on that topic yet.": [
-                "Desculpe, ainda n\u00e3o tenho informa\u00e7\u00f5es sobre esse assunto."
-            ],
-            "Hi! I\u2019m your WordPress AI assistant. <\/br><\/br> Ask me how to do things in WordPress and I\u2019ll provide step by step instructions.<\/br><\/br> I\u2019m still learning so I don\u2019t have all the answers just yet.": [
-                "Oi! Eu sou seu assistente de IA do WordPress. <\/br><\/br> Pergunte como fazer coisas no WordPress e eu fornecerei instru\u00e7\u00f5es passo a passo.<\/br><\/br> Ainda estou aprendendo, ent\u00e3o ainda n\u00e3o tenho todas as respostas."
-            ],
             "Search Help Center": [
                 "Buscar no Centro de Ajuda"
             ],
-            "Ask about WordPress": [
-                "Pergunte sobre o WordPress"
-            ],
             "submit text": [
                 "enviar texto"
-            ],
-            "Common Topics": [
-                "T\u00f3picos comuns"
             ],
             "Please enter a specific search term to get results.": [
                 "Por favor, insira um termo de pesquisa espec\u00edfico para obter resultados."
@@ -49,17 +31,65 @@
             "Account Support": [
                 "Suporte de conta"
             ],
-            "If you need help with your Bluehost account, contact our support team:": [
-                "Se voc\u00ea precisar de ajuda com sua conta da Bluehost, entre em contato com nossa equipe de suporte:"
-            ],
-            "Chat with support": [
-                "Conversar com o suporte"
-            ],
             "Help with WordPress": [
                 "Ajuda com o WordPress"
             ],
             "Close Help Modal": [
                 "Fechar janela de ajuda"
+            ],
+            "If you need help with your Bluehost account, give us a call at ": [
+                ""
+            ],
+            " with one of our support agents \u2014 we're here for you!": [
+                ""
+            ],
+            "Your dream site is just a click away.": [
+                ""
+            ],
+            "Let's build a site you love, together.": [
+                ""
+            ],
+            "With Pro Design Live, our expert team bring your vision to life. We help you to create and the site you\u2019ve always dreamed of \u2014 tailored to your goals, ready to perform.": [
+                ""
+            ],
+            "Start Now": [
+                ""
+            ],
+            "Back": [
+                ""
+            ],
+            "We're sorry the suggestions didn\u2019t help.": [
+                ""
+            ],
+            "Try to:": [
+                ""
+            ],
+            "Use different keywords in the search field.": [
+                ""
+            ],
+            "A clear, short prompt can make the difference.": [
+                ""
+            ],
+            "Reach out to our customer support.": [
+                ""
+            ],
+            "Call at": [
+                ""
+            ],
+            "or": [
+                ""
+            ],
+            "with one of our support agents \u2014 we will assist you as soon as possible.": [
+                ""
+            ],
+            "Hey there! I\u2019m here to help you find your way around WordPress. <\/br><\/br> If you\u2019re not sure how to do something, just ask \u2014 I\u2019ll walk you through it step by step. I\u2019m still learning, so I might not have every answer, but I\u2019ll do my best to help!": [
+                ""
+            ],
+            "Sorry, I don\u2019t have any information on \u201c%s\u201d yet.": [
+                ""
+            ],
+            "Ask anything about WordPress": [
+                ""
             ]
         }
     }
