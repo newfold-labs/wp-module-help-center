@@ -118,6 +118,7 @@ const helpcenterSlice = createSlice({
 			state.noResult = false;
 			state.errorMsg = '';
 			state.searchInput = action.payload;
+			state.hasLaunchedFromTooltip = false;
 		},
 		searchInputCatch: (state) => {
 			state.noResult = true;
