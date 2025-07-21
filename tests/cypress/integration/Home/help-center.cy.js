@@ -24,6 +24,15 @@ describe(
 	{ testIsolation: true },
 	() => {
 
+		before(() => {
+			wpLogin();
+			cy.wait(5000);
+			cy.visit('/wp-admin/options-permalink.php');
+			cy.get('#permalink-input-post-name').check({ force: true });
+  			cy.get('form[name="form"] input[type="submit"]').click();
+			cy.wait(5000);
+		});
+
 		beforeEach(() => {
 			wpLogin();
 			cy.exec(
