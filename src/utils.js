@@ -50,7 +50,7 @@ export const MultiSearchAPI = {
 	fetchTooltipSearchResults: async (postId) => {
 		try {
 			const response = await apiFetch({
-				path: '/newfold-multi-search/v1/tootip_search',
+				path: '/newfold-multi-search/v1/tooltip_search',
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
