@@ -1,12 +1,31 @@
 /* eslint-disable @wordpress/i18n-no-flanking-whitespace */
 import { __ } from '@wordpress/i18n';
 import { useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
 import { ReactComponent as FooterBackground } from '../icons/footer.svg';
 
 const Footer = () => {
 	const { disliked, noResult } = useSelector((state) => state.helpcenter);
+    const [ contactUrl, setContactUrl ] = useState('https://www.bluehost.com/contact');
+    const [ proDesignUrl, setProDesignUrl ] = useState('https://www.bluehost.com/pro-design-live');
 
-	return (
+    // Function to add UTM parameters to a URL
+    useEffect(() => {
+        const interval = setInterval(() => {
+            if (
+                window.NewfoldRuntime?.linkTracker?.addUtmParams instanceof Function
+            ) {
+                const addParamsContact = window.NewfoldRuntime.linkTracker.addUtmParams(contactUrl);
+                const addParamsProDesign = window.NewfoldRuntime.linkTracker.addUtmParams(proDesignUrl);
+                setContactUrl(addParamsContact);
+                setProDesignUrl(addParamsProDesign);
+            }
+        }, 200);
+
+        return () => clearInterval(interval);
+    }, []);
+
+    return (
 		<div className="nfd-hc-modal__footer">
 			<div className="helpcenter-supportinfo__wrapper">
 				{!disliked && !noResult && (
@@ -24,7 +43,7 @@ const Footer = () => {
 								<a href="tel:8884014678">888-401-4678</a>
 								{' or '}
 								<a
-									href="https://www.bluehost.com/contact"
+									href={contactUrl}
 									target="_blank"
 									rel="noreferrer"
 								>
@@ -64,7 +83,7 @@ const Footer = () => {
 								data-action="load-nfd-ctb"
 								data-ctb-id="838cc912-adb3-4d75-9450-262bf3ee3576"
 								role="button"
-								href="https://www.bluehost.com/pro-design-live"
+								href={proDesignUrl}
 								className="hc-banner-content__cta--button"
 							>
 								{__('Start Now', 'wp-module-help-center')}
