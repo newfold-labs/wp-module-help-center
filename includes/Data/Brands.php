@@ -1,6 +1,7 @@
 <?php
 
 namespace NewfoldLabs\WP\Module\HelpCenter\Data;
+use function NewfoldLabs\WP\Module\LinkTracker\Functions\build_link as buildLink;
 
 /**
  * Contains Brand information.
@@ -18,20 +19,20 @@ final class Brands {
 			'bluehost'     => array(
 				'brand'   => 'bluehost',
 				'name'    => 'Bluehost',
-				'url'     => 'https://bluehost.com',
-				'helpURL' => 'https://www.bluehost.com/help',
+				'url'     => buildLink( 'https://bluehost.com' ),
+				'helpURL' => buildLink( 'https://www.bluehost.com/help' ),
 			),
 			'hostgator-us' => array(
 				'brand'   => 'hostgator',
 				'name'    => 'HostGator',
-				'url'     => 'https://www.hostgator.com',
-				'helpUrl' => 'https://www.hostgator.com/help',
+				'url'     => buildLink( 'https://www.hostgator.com' ),
+				'helpUrl' => buildLink('https://www.hostgator.com/help' ),
 			),
 			'hostgator-br' => array(
 				'brand'   => 'hostgator-br',
 				'name'    => 'HostGator',
-				'url'     => 'https://www.hostgator.com.br',
-				'helpUrl' => 'https://suporte.hostgator.com.br/hc/pt-br',
+				'url'     => buildLink( 'https://www.hostgator.com.br' ),
+				'helpUrl' => buildLink('https://suporte.hostgator.com.br/hc/pt-br'),
 			),
 		);
 	}
