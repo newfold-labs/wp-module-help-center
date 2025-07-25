@@ -1,6 +1,7 @@
 <?php
 
 namespace NewfoldLabs\WP\Module\HelpCenter\Data;
+
 use function NewfoldLabs\WP\Module\LinkTracker\Functions\build_link as buildLink;
 
 /**
@@ -26,13 +27,13 @@ final class Brands {
 				'brand'   => 'hostgator',
 				'name'    => 'HostGator',
 				'url'     => buildLink( 'https://www.hostgator.com' ),
-				'helpUrl' => buildLink('https://www.hostgator.com/help' ),
+				'helpUrl' => buildLink( 'https://www.hostgator.com/help' ),
 			),
 			'hostgator-br' => array(
 				'brand'   => 'hostgator-br',
 				'name'    => 'HostGator',
 				'url'     => buildLink( 'https://www.hostgator.com.br' ),
-				'helpUrl' => buildLink('https://suporte.hostgator.com.br/hc/pt-br'),
+				'helpUrl' => buildLink( 'https://suporte.hostgator.com.br/hc/pt-br' ),
 			),
 		);
 	}
