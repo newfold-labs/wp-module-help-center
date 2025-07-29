@@ -8,7 +8,7 @@ const ResourceLink = () => {
 					'In the meantime, try searching our',
 					'wp-module-help-center'
 				) }{ ' ' }
-				<a href={ window?.NewfoldRuntime?.linkTracker?.addUtmParams( window?.nfdHelpCenter?.resourceLink ) }>
+				<a href={ window.NewfoldRuntime?.linkTracker?.addUtmParams( window?.nfdHelpCenter?.resourceLink ) || window?.nfdHelpCenter?.resourceLink }>
 					{ __( 'Resource center.', 'wp-module-help-center' ) }
 				</a>
 			</p>

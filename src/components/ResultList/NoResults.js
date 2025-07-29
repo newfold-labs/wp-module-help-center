@@ -70,7 +70,7 @@ const NoResults = ({ hasLaunchedFromTooltip }) => {
 									<a href="tel:8884014678">888-401-4678</a>{' '}
 									{__('or', 'wp-module-help-center')}{' '}
 									<a
-										href={window?.NewfoldRuntime?.linkTracker?.addUtmParams("https://www.bluehost.com/contact")}
+										href={window.NewfoldRuntime?.linkTracker?.addUtmParams("https://www.bluehost.com/contact") || "https://www.bluehost.com/contact" }
 										target="_blank"
 										rel="noreferrer"
 									>
