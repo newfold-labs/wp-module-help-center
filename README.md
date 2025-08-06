@@ -7,6 +7,20 @@ height="42" />
 
 Help Center
 
+
+## Critical Paths
+
+* `Help Center` icon should be visible in the top WordPress admin bar for users with the required capabilities.
+* Clicking the `Help Center` icon should open a sidebar with an introduction and search field to help users navigate WordPress.
+* The `Help Center` sidebar should allow users to type a question and receive a list of suggested help articles.
+* When submitting a search, the sidebar should display a highlighted question and related answers.
+* Users should be able to provide feedback on the answer by selecting if it was helpful or not, and optionally provide a reason if it wasn’t.
+* The `Help Center` should include a footer section with information about professional design services and a button to start the process.
+* The sidebar must include support contact information for users who need assistance with their account.
+* Clicking the close icon should properly dismiss the `Help Center` sidebar and return to the previous view.
+* A tooltip should be available to show a list of recent or suggested questions when triggered by the user.
+
+
 ## Installation
 
 ### 1. Add the Newfold Satis to your `composer.json`.
