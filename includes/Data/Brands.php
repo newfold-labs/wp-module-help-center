@@ -18,20 +18,20 @@ final class Brands {
 			'bluehost'     => array(
 				'brand'   => 'bluehost',
 				'name'    => 'Bluehost',
-				'url'     => 'https://bluehost.com',
-				'helpURL' => 'https://www.bluehost.com/help',
+				'url'     => apply_filters( 'nfd_build_url', 'https://bluehost.com' ),
+				'helpURL' => apply_filters( 'nfd_build_url', 'https://www.bluehost.com/help' ),
 			),
 			'hostgator-us' => array(
 				'brand'   => 'hostgator',
 				'name'    => 'HostGator',
-				'url'     => 'https://www.hostgator.com',
-				'helpUrl' => 'https://www.hostgator.com/help',
+				'url'     => apply_filters( 'nfd_build_url', 'https://www.hostgator.com' ),
+				'helpUrl' => apply_filters( 'nfd_build_url', 'https://www.hostgator.com/help' ),
 			),
 			'hostgator-br' => array(
 				'brand'   => 'hostgator-br',
 				'name'    => 'HostGator',
-				'url'     => 'https://www.hostgator.com.br',
-				'helpUrl' => 'https://suporte.hostgator.com.br/hc/pt-br',
+				'url'     => apply_filters( 'nfd_build_url', 'https://www.hostgator.com.br' ),
+				'helpUrl' => apply_filters( 'nfd_build_url', 'https://suporte.hostgator.com.br/hc/pt-br' ),
 			),
 		);
 	}
