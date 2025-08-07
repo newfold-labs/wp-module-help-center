@@ -7,6 +7,10 @@
 		"name": "Faizaan Mohammed",
 		"email": "faizaan.md@newfold.com"
 	},
+    "engines": {
+        "node": ">=22.11.0",
+        "npm": ">=10.9.0"
+    },
 	"scripts": {
 		"prepare": "npm run build",
 		"build": "wp-scripts build ./src/index.js --config ./scripts/webpack.config.js",
