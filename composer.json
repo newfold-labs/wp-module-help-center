@@ -62,6 +62,14 @@
             "@i18n-php",
             "@i18n-json"
         ],
+        "i18n-ci-pre": [
+            "@i18n-pot",
+            "@i18n-po"
+        ],
+        "i18n-ci-post": [
+            "@i18n-json",
+            "@i18n-php"
+        ],
         "i18n-json": "rm -f languages/*.json && vendor/bin/wp i18n make-json ./languages --no-purge --pretty-print",
         "i18n-php": "vendor/bin/wp i18n make-php ./languages",
         "i18n-po": "vendor/bin/wp i18n update-po ./languages/wp-module-help-center.pot ./languages",
