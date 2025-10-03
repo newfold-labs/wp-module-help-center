@@ -26,20 +26,21 @@ describe(
 
 		before(() => {
 			wpLogin();
-			cy.wait(5000);
+			cy.wait(1000);
 			cy.visit('/wp-admin/options-permalink.php');
 			cy.get('#permalink-input-post-name').check({ force: true });
   			cy.get('form[name="form"] input[type="submit"]').click();
-			cy.wait(5000);
-		});
-
-		beforeEach(() => {
-			wpLogin();
 			cy.exec(
 				`npx wp-env run cli wp option update _transient_nfd_site_capabilities '${HCTrue}' --format=json`,
 				{ timeout: customCommandTimeout }
 			);
-			cy.reload();
+			cy.wait(1000);
+		});
+
+		beforeEach(() => {
+			wpLogin();
+			
+			// cy.reload();
 			cy.visit("/wp-admin/index.php");
 		});
 
@@ -87,8 +88,8 @@ describe(
 			cy.get('.helpcenter-question-block')
 				.findByText('"How to install a plugin in WordPress"').should('exist')
 
-			cy.wait(5000);
-			cy.get('.helpcenter-question-block')
+			cy.wait(300);
+			cy.get('.helpcenter-question-block', { timeout: customCommandTimeout })
 				.next()
 				.should('have.class', 'helpcenter-result-block').should('exist').and('be.visible')
 		});
@@ -113,9 +114,8 @@ describe(
 				.should('exist')
 				.type('How to install a plugin in WordPress{enter}')
 
-			cy.wait(5000);
-			cy.get('button.feedback-button.no').click();
-			cy.wait(500);
+			cy.wait(300);
+			cy.get('button.feedback-button.no', { timeout: customCommandTimeout }).click();
 			cy.get('.dislike-feedback').should('exist');
 		});
 
