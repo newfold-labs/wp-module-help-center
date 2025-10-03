@@ -26,7 +26,7 @@
 		"@newfold-labs/wp-module-ai": "github:newfold-labs/js-utility-ai#1.0.1",
 		"@newfold/js-utility-ui-analytics": "1.4.0",
 		"@newfold/wp-module-runtime": "1.1.3",
-		"@reduxjs/toolkit": "2.8.2",
+		"@reduxjs/toolkit": "2.9.0",
 		"@wordpress/api-fetch": "^7.22.0",
 		"@wordpress/data": "^10.22.0",
 		"@wordpress/dom-ready": "4.32.0",
