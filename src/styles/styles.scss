@@ -39,7 +39,7 @@ $blue-links-color: #356CD8;
 .nfd-hc-seperator{
 
   @extend %padding-x-23;
-  
+
   hr{
     margin: 0;
   }
@@ -217,7 +217,7 @@ $blue-links-color: #356CD8;
 
     @extend %padding-x-23;
     padding-bottom: 15px;
-     
+
     position: fixed;
     width: 356px;
     bottom: 90px;
@@ -270,7 +270,7 @@ $blue-links-color: #356CD8;
     border-top: 1px solid rgba(231, 231, 231, 1);
 
     .feedback-question {
-     
+
       p{
         margin: 3px 0;
       }
@@ -312,7 +312,7 @@ $blue-links-color: #356CD8;
     h2 {
       font-size: 1.1em;
     }
-    
+
     .helpcenter-results {
       padding: 0;
     }
@@ -339,6 +339,13 @@ $blue-links-color: #356CD8;
       li {
         margin: 0;
         padding: 0;
+      }
+
+      /* fit the media in parent container: ; */
+      img, picture, video, audio, iframe {
+        max-width: 100%;
+        height: auto;
+        vertical-align: middle;
       }
     }
   }
@@ -498,7 +505,7 @@ body:is(.page, .post-php, .post-new-php) {
 
   .helpcenter-supportinfo__wrapper {
     padding: 15px 23px 0;
-    
+
     .helpcenter-supportinfo__breakline {
       margin: 0;
     }
@@ -510,7 +517,7 @@ body:is(.page, .post-php, .post-new-php) {
         font-size: 13px;
         font-weight: 500;
       }
-  
+
       &--body {
         font-size: 13px;
         font-weight: 400;
@@ -565,12 +572,12 @@ body:is(.page, .post-php, .post-new-php) {
       bottom: 0;
       z-index: 1;
       padding: 10px 23px 20px;
-      background-color: transparent;  
+      background-color: transparent;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-  
+
       .hc-banner-content {
 
         &__heading {
@@ -578,16 +585,16 @@ body:is(.page, .post-php, .post-new-php) {
           font-weight: 500;
           margin: 0 0 15px;
         }
-  
+
         &__body {
           font-size: 12px;
           width: 90%;
           margin: 0 0 15px;
         }
-  
+
         &__cta {
           display: flex;
-  
+
           &--button {
             height: 28px;
             font-size: 12px;
@@ -602,7 +609,7 @@ body:is(.page, .post-php, .post-new-php) {
         }
       }
     }
-  
+
     .hc-banner-background {
       position: absolute;
       bottom: -5px;
@@ -614,7 +621,7 @@ body:is(.page, .post-php, .post-new-php) {
 .helpcenter-noresult-wrapper {
 
    @extend %padding-x-23;
-   
+
   .helpcenter-noresult-block {
     padding-top: 18px;
     color:#000;
