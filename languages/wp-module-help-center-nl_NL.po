@@ -1,15 +1,16 @@
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: newfold-labswp-module-staging\n"
 "Report-Msgid-Bugs-To: https://github.com/newfold-labs/wp-module-help-center/issues\n"
+"POT-Creation-Date: 2025-02-13T09:55:55+00:00\n"
+"PO-Revision-Date: 2025-02-19 16:04\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
+"Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-13T09:55:55+00:00\n"
-"PO-Revision-Date: 2025-02-19 16:04\n"
-"Language: nl_NL\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-File: wp-module-help-center.pot\n"
 "X-Crowdin-File-ID: 44\n"
@@ -23,8 +24,7 @@ msgstr ""
 msgid "We could not find the brand"
 msgstr "We konden het merk niet vinden"
 
-#: includes/CapabilityController.php:93
-#: includes/MultiSearchController.php:192
+#: includes/CapabilityController.php:93 includes/MultiSearchController.php:192
 #: includes/UserInteractionController.php:81
 msgid "You must be authenticated to make this call"
 msgstr "U moet geverifieerd zijn om deze oproep te kunnen doen"
@@ -42,8 +42,12 @@ msgid "Thanks for the feedback!"
 msgstr "Bedankt voor de feedback!"
 
 #: build/index.js:1
-msgid "You can try searching our <a href=\"{link}\">Resource center.</a> though to see if there’s a helpful article or video on that subject."
-msgstr "Je kunt proberen in ons <a href=\"{link}\">Kenniscentrum</a> te zoeken om te zien of er een nuttig artikel of video over dat onderwerp is."
+msgid ""
+"You can try searching our <a href=\"{link}\">Resource center.</a> though to "
+"see if there’s a helpful article or video on that subject."
+msgstr ""
+"Je kunt proberen in ons <a href=\"{link}\">Kenniscentrum</a> te zoeken om te"
+" zien of er een nuttig artikel of video over dat onderwerp is."
 
 #: build/index.js:1
 msgid "Search Help Center"
@@ -100,8 +104,14 @@ msgid "Let's build a site you love, together."
 msgstr "Laten we samen een site bouwen waar u van houdt."
 
 #: build/index.js:1
-msgid "With Pro Design Live, our expert team bring your vision to life. We help you to create and the site you’ve always dreamed of — tailored to your goals, ready to perform."
-msgstr "Met Pro Design Live brengt ons deskundige team uw visie tot leven. Wij helpen u om de site te creëren waar u altijd al van gedroomd heeft - afgestemd op uw doelen, klaar om te presteren."
+msgid ""
+"With Pro Design Live, our expert team bring your vision to life. We help you"
+" to create and the site you’ve always dreamed of — tailored to your goals, "
+"ready to perform."
+msgstr ""
+"Met Pro Design Live brengt ons deskundige team uw visie tot leven. Wij "
+"helpen u om de site te creëren waar u altijd al van gedroomd heeft - "
+"afgestemd op uw doelen, klaar om te presteren."
 
 #: build/index.js:1
 msgid "Start Now"
@@ -140,12 +150,24 @@ msgid "or"
 msgstr "of"
 
 #: build/index.js:1
-msgid "with one of our support agents — we will assist you as soon as possible."
-msgstr "Met een van onze ondersteuningsmedewerkers helpen we u zo snel mogelijk verder."
+msgid ""
+"with one of our support agents — we will assist you as soon as possible."
+msgstr ""
+"Met een van onze ondersteuningsmedewerkers helpen we u zo snel mogelijk "
+"verder."
 
 #: build/index.js:1
-msgid "Hey there! I’m here to help you find your way around WordPress. </br></br> If you’re not sure how to do something, just ask — I’ll walk you through it step by step. I’m still learning, so I might not have every answer, but I’ll do my best to help!"
-msgstr "Hallo daar! Ik ben hier om je te helpen je weg te vinden in WordPress. </br></br> Als je niet zeker weet hoe je iets moet doen, vraag het dan gewoon - ik zal je er stap voor stap doorheen leiden. Ik ben nog steeds aan het leren, dus ik heb misschien niet elk antwoord, maar ik zal mijn best doen om te helpen!"
+msgid ""
+"Hey there! I’m here to help you find your way around WordPress. </br></br> "
+"If you’re not sure how to do something, just ask — I’ll walk you through it "
+"step by step. I’m still learning, so I might not have every answer, but I’ll"
+" do my best to help!"
+msgstr ""
+"Hallo daar! Ik ben hier om je te helpen je weg te vinden in WordPress. "
+"</br></br> Als je niet zeker weet hoe je iets moet doen, vraag het dan "
+"gewoon - ik zal je er stap voor stap doorheen leiden. Ik ben nog steeds aan "
+"het leren, dus ik heb misschien niet elk antwoord, maar ik zal mijn best "
+"doen om te helpen!"
 
 #: build/index.js:1
 #, js-format

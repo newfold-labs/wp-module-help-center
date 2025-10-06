@@ -1,15 +1,16 @@
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/newfold-labs/wp-module-help-center/issues\n"
+"POT-Creation-Date: 2025-02-13T09:55:55+00:00\n"
+"PO-Revision-Date: 2025-05-07 16:21+0100\n"
 "Last-Translator: Carlos Rodriguez <carlos.rodriguez@newfold.com>\n"
 "Language-Team: Spanish <es@tp.org.es>\n"
+"Language: es_MX\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-13T09:55:55+00:00\n"
-"PO-Revision-Date: 2025-05-07 16:21+0100\n"
-"Language: es_MX\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: wp-module-help-center\n"
 "X-Generator: WP-CLI 2.11.0\n"
@@ -18,8 +19,7 @@ msgstr ""
 msgid "We could not find the brand"
 msgstr "No pudimos encontrar la marca"
 
-#: includes/CapabilityController.php:93
-#: includes/MultiSearchController.php:192
+#: includes/CapabilityController.php:93 includes/MultiSearchController.php:192
 #: includes/UserInteractionController.php:81
 msgid "You must be authenticated to make this call"
 msgstr "Debes estar autenticado para realizar esta acción"
@@ -47,8 +47,12 @@ msgid "Thanks for the feedback!"
 msgstr "¡Gracias por tus comentarios!"
 
 #: build/index.js:1
-msgid "You can try searching our <a href=\"{link}\">Resource center.</a> though to see if there’s a helpful article or video on that subject."
-msgstr "Puedes intentar buscar en nuestro <a href=\"{link}\">Centro de recursos</a> para ver si hay un artículo o video útil sobre ese tema."
+msgid ""
+"You can try searching our <a href=\"{link}\">Resource center.</a> though to "
+"see if there’s a helpful article or video on that subject."
+msgstr ""
+"Puedes intentar buscar en nuestro <a href=\"{link}\">Centro de recursos</a> "
+"para ver si hay un artículo o video útil sobre ese tema."
 
 #: build/index.js:1
 msgid "Search Help Center"
@@ -60,7 +64,9 @@ msgstr "enviar texto"
 
 #: build/index.js:1
 msgid "Please enter a specific search term to get results."
-msgstr "Por favor, ingresa un término de búsqueda específico para obtener resultados."
+msgstr ""
+"Por favor, ingresa un término de búsqueda específico para obtener "
+"resultados."
 
 #: build/index.js:1
 msgid "Account Support"
@@ -95,8 +101,14 @@ msgid "Let's build a site you love, together."
 msgstr "Construyamos juntos un sitio que te guste."
 
 #: build/index.js:1
-msgid "With Pro Design Live, our expert team bring your vision to life. We help you to create and the site you’ve always dreamed of — tailored to your goals, ready to perform."
-msgstr "Con Pro Design Live, nuestro equipo de expertos da vida a tu visión. Te ayudamos a crear el sitio con el que siempre has soñado, adaptado a tus objetivos, listo para funcionar."
+msgid ""
+"With Pro Design Live, our expert team bring your vision to life. We help you"
+" to create and the site you’ve always dreamed of — tailored to your goals, "
+"ready to perform."
+msgstr ""
+"Con Pro Design Live, nuestro equipo de expertos da vida a tu visión. Te "
+"ayudamos a crear el sitio con el que siempre has soñado, adaptado a tus "
+"objetivos, listo para funcionar."
 
 #: build/index.js:1
 msgid "Start Now"
@@ -135,12 +147,22 @@ msgid "or"
 msgstr "o"
 
 #: build/index.js:1
-msgid "with one of our support agents — we will assist you as soon as possible."
-msgstr "con uno de nuestros agentes de soporte, lo ayudaremos lo antes posible."
+msgid ""
+"with one of our support agents — we will assist you as soon as possible."
+msgstr ""
+"con uno de nuestros agentes de soporte, lo ayudaremos lo antes posible."
 
 #: build/index.js:1
-msgid "Hey there! I’m here to help you find your way around WordPress. </br></br> If you’re not sure how to do something, just ask — I’ll walk you through it step by step. I’m still learning, so I might not have every answer, but I’ll do my best to help!"
-msgstr "¡Hola! Estoy aquí para ayudarte a orientarte en WordPress. </br></br> Si no está seguro de cómo hacer algo, simplemente pregunte, lo guiaré paso a paso. Todavía estoy aprendiendo, así que puede que no tenga todas las respuestas, ¡pero haré todo lo posible para ayudar!"
+msgid ""
+"Hey there! I’m here to help you find your way around WordPress. </br></br> "
+"If you’re not sure how to do something, just ask — I’ll walk you through it "
+"step by step. I’m still learning, so I might not have every answer, but I’ll"
+" do my best to help!"
+msgstr ""
+"¡Hola! Estoy aquí para ayudarte a orientarte en WordPress. </br></br> Si no "
+"está seguro de cómo hacer algo, simplemente pregunte, lo guiaré paso a paso."
+" Todavía estoy aprendiendo, así que puede que no tenga todas las respuestas,"
+" ¡pero haré todo lo posible para ayudar!"
 
 #: build/index.js:1
 #, js-format
