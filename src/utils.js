@@ -223,8 +223,12 @@ export const isValidJSON = (json) => {
 	}
 };
 
+/* Replace multiple line breaks with one line, remove line breaks at the start and end, convert existing \n to <br> */
 export function formatPostContent(postContent = '') {
-	return postContent.replace(/\n/g, '<br />');
+  return postContent
+    .replace(/\n{2,}/g, '\n')
+    .replace(/^\n+|\n+$/g, '')
+    .replace(/\n/g, '<br />');
 }
 
 export function getResultMatches(query, tokensMatched, fieldsMatched) {
@@ -271,40 +275,47 @@ export function adjustPadding(wrapperRef) {
 	}
 }
 
-/* Parse the html in string to a document node, replace the <p>  tags with a fragment and line break */
+/* Process inline markdown syntax inside the <p> tags */
 export const processContentForMarkdown = (textToDisplay) => {
-	if (textToDisplay) {
-		// eslint-disable-next-line no-undef
-		const parser = new DOMParser();
-		const doc = parser.parseFromString(textToDisplay, 'text/html');
+  if (!textToDisplay) return '';
 
-		const paragraphElements = doc.querySelectorAll('p');
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(textToDisplay, 'text/html');
 
-		paragraphElements.forEach((p) => {
-			// Create a DocumentFragment to hold the content and <br> tags
-			const fragment = document.createDocumentFragment();
+  // Only process text inside <p> tags
+  const paragraphElements = doc.querySelectorAll('p');
 
-			// Append all child nodes of the <p> to the fragment
-			while (p.firstChild) {
-				fragment.appendChild(p.firstChild);
-			}
+  paragraphElements.forEach((p) => {
+    let innerHTML = p.innerHTML;
 
-			const br1 = document.createElement('br');
-			const br2 = document.createElement('br');
-			fragment.appendChild(br1);
-			fragment.appendChild(br2);
+    // replace inline Markdown syntax with html tags
+    innerHTML = innerHTML
+      .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
+      .replace(/___(.+?)___/g, '<strong><em>$1</em></strong>')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/__(.+?)__/g, '<strong>$1</strong>')
+      .replace(/\*([^\s*](?:[^*]*[^\s*])?)\*/g, '<em>$1</em>')
+      .replace(/_([^\s_](?:[^_]*[^\s_])?)_/g, '<em>$1</em>')
+      .replace(/~~(.+?)~~/g, '<del>$1</del>')
+      .replace(/`([^`]+)`/g, '<code>$1</code>')
+      .replace(/\[([^\]]+)\]\(([^)]+?)(?:\s+"([^"]*)")?\)/g, (match, text, url, title) => {
+        return title
+          ? `<a href="${url}" title="${title}">${text}</a>`
+          : `<a href="${url}">${text}</a>`;
+      })
+      .replace(/!\[([^\]]*)\]\(([^)]+?)(?:\s+"([^"]*)")?\)/g, (match, alt, src, title) => {
+        return title
+          ? `<img src="${src}" alt="${alt}" title="${title}" />`
+          : `<img src="${src}" alt="${alt}" />`;
+      });
 
-			// Replace the <p> element with the fragment
-			p.parentNode.replaceChild(fragment, p);
-		});
+    p.innerHTML = innerHTML;
+  });
 
-		const updatedContent = doc.body.innerHTML;
-		return updatedContent;
-	}
-	return '';
+  return doc.body.innerHTML;
 };
 
-export const saveHelpcenterOption = async (result) => {
+export const saveHelpcenterOption = async ( result ) => {
 	const apiUrl = NewfoldRuntime.createApiUrl('/wp/v2/settings');
 	try {
 		await apiFetch({
