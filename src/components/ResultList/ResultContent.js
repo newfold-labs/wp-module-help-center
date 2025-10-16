@@ -50,7 +50,7 @@ function ResultContent( { source, index, questionBlock, content } ) {
 
 		if ( content && content.length > 0 ) {
 			return (
-				<p
+				<div
 					className="helpcenter-results"
 					dangerouslySetInnerHTML={ { __html: content } }
 				/>

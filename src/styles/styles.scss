@@ -325,28 +325,46 @@ $blue-links-color: #356CD8;
     }
 
     .helpcenter-result-block {
-      padding: 0 0 12px 0 ;
+		padding: 0 0 12px 0 ;
 
-      /* Reset default styles */
-      ul,
-      ol {
-        margin: 0;
-        padding: 0;
-        list-style-position: inside;
-      }
+		p {
+			margin: 0 0 5px 0;
+		}
 
-      /* Standardize list items */
-      li {
-        margin: 0;
-        padding: 0;
-      }
+		/* Reset default styles */
+		h1, h2, h3, h4, h5, h6 {
+			line-height: 1;
+		}
 
-      /* fit the media in parent container: ; */
-      img, picture, video, audio, iframe {
-        max-width: 100%;
-        height: auto;
-        vertical-align: middle;
-      }
+		ul,
+		ol {
+			margin: 0;
+			padding: 0;
+			list-style-position: inside;
+		}
+
+		ul {
+			list-style-type: disc;
+		}
+
+		/* Standardize list items */
+		li {
+			margin: 0;
+			padding: 0;
+		}
+
+		/* fit the media in parent container: ; */
+		img, picture, video, audio, iframe {
+			max-width: 100%;
+			height: auto;
+			vertical-align: middle;
+		}
+
+		.wp-block-quote {
+			border-left: 4px solid rgb(128 128 128 / 20%);
+			padding-left: 5px;
+			margin: auto 0;
+		}
     }
   }
 }
