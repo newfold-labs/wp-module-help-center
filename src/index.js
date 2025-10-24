@@ -237,6 +237,11 @@ document.addEventListener('click', async (event) => {
 				searchInput: results.title.rendered,
 				feedbackSubmitted: null,
 			};
+			LocalStorageUtils.persistResult(
+				result.resultContent,
+				postId,
+				result.searchInput
+			);
 			store.dispatch(helpcenterActions.updateIsTooltipLoading());
 			store.dispatch(helpcenterActions.updateResultContent(result));
 		}

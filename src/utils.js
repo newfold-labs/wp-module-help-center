@@ -102,9 +102,9 @@ export const LocalStorageUtils = {
 			return;
 		}
 
-		// Retrieve existing results or initialize as an empty array
+		/* 		// Retrieve existing results or initialize as an empty array
 		const existingResults = LocalStorageUtils.getResultInfo();
-
+ */
 		// Create a new result object
 		const newResult = {
 			searchInput,
@@ -113,13 +113,10 @@ export const LocalStorageUtils = {
 		};
 
 		// Add new result to the array
-		existingResults.push(newResult);
+		/* existingResults.push(newResult); */
 
 		// Store the updated array back in local storage
-		localStorage.setItem(
-			'helpResultContent',
-			JSON.stringify(existingResults)
-		);
+		localStorage.setItem('helpResultContent', JSON.stringify(newResult));
 	},
 
 	persistSearchInput: (searchInput) => {
@@ -225,10 +222,10 @@ export const isValidJSON = (json) => {
 
 /* Replace multiple line breaks with one line, remove line breaks at the start and end, convert existing \n to <br> */
 export function formatPostContent(postContent = '') {
-  return postContent
-    .replace(/\n{2,}/g, '\n')
-    .replace(/^\n+|\n+$/g, '')
-    .replace(/\n/g, '<br />');
+	return postContent
+		.replace(/\n{2,}/g, '\n')
+		.replace(/^\n+|\n+$/g, '')
+		.replace(/\n/g, '<br />');
 }
 
 export function getResultMatches(query, tokensMatched, fieldsMatched) {
@@ -277,45 +274,53 @@ export function adjustPadding(wrapperRef) {
 
 /* Process inline markdown syntax inside the <p> tags */
 export const processContentForMarkdown = (textToDisplay) => {
-  if (!textToDisplay) return '';
+	if (!textToDisplay) {
+		return '';
+	}
 
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(textToDisplay, 'text/html');
+	const parser = new DOMParser();
+	const doc = parser.parseFromString(textToDisplay, 'text/html');
 
-  // Only process text inside <p> tags
-  const paragraphElements = doc.querySelectorAll('p');
+	// Only process text inside <p> tags
+	const paragraphElements = doc.querySelectorAll('p');
 
-  paragraphElements.forEach((p) => {
-    let innerHTML = p.innerHTML;
+	paragraphElements.forEach((p) => {
+		let innerHTML = p.innerHTML;
 
-    // replace inline Markdown syntax with html tags
-    innerHTML = innerHTML
-      .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
-      .replace(/___(.+?)___/g, '<strong><em>$1</em></strong>')
-      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-      .replace(/__(.+?)__/g, '<strong>$1</strong>')
-      .replace(/\*([^\s*](?:[^*]*[^\s*])?)\*/g, '<em>$1</em>')
-      .replace(/_([^\s_](?:[^_]*[^\s_])?)_/g, '<em>$1</em>')
-      .replace(/~~(.+?)~~/g, '<del>$1</del>')
-      .replace(/`([^`]+)`/g, '<code>$1</code>')
-      .replace(/\[([^\]]+)\]\(([^)]+?)(?:\s+"([^"]*)")?\)/g, (match, text, url, title) => {
-        return title
-          ? `<a href="${url}" title="${title}">${text}</a>`
-          : `<a href="${url}">${text}</a>`;
-      })
-      .replace(/!\[([^\]]*)\]\(([^)]+?)(?:\s+"([^"]*)")?\)/g, (match, alt, src, title) => {
-        return title
-          ? `<img src="${src}" alt="${alt}" title="${title}" />`
-          : `<img src="${src}" alt="${alt}" />`;
-      });
+		// replace inline Markdown syntax with html tags
+		innerHTML = innerHTML
+			.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
+			.replace(/___(.+?)___/g, '<strong><em>$1</em></strong>')
+			.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+			.replace(/__(.+?)__/g, '<strong>$1</strong>')
+			.replace(/\*([^\s*](?:[^*]*[^\s*])?)\*/g, '<em>$1</em>')
+			.replace(/_([^\s_](?:[^_]*[^\s_])?)_/g, '<em>$1</em>')
+			.replace(/~~(.+?)~~/g, '<del>$1</del>')
+			.replace(/`([^`]+)`/g, '<code>$1</code>')
+			.replace(
+				/\[([^\]]+)\]\(([^)]+?)(?:\s+"([^"]*)")?\)/g,
+				(match, text, url, title) => {
+					return title
+						? `<a href="${url}" title="${title}">${text}</a>`
+						: `<a href="${url}">${text}</a>`;
+				}
+			)
+			.replace(
+				/!\[([^\]]*)\]\(([^)]+?)(?:\s+"([^"]*)")?\)/g,
+				(match, alt, src, title) => {
+					return title
+						? `<img src="${src}" alt="${alt}" title="${title}" />`
+						: `<img src="${src}" alt="${alt}" />`;
+				}
+			);
 
-    p.innerHTML = innerHTML;
-  });
+		p.innerHTML = innerHTML;
+	});
 
-  return doc.body.innerHTML;
+	return doc.body.innerHTML;
 };
 
-export const saveHelpcenterOption = async ( result ) => {
+export const saveHelpcenterOption = async (result) => {
 	const apiUrl = NewfoldRuntime.createApiUrl('/wp/v2/settings');
 	try {
 		await apiFetch({
