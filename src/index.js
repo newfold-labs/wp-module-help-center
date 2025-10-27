@@ -46,6 +46,7 @@ export const toggleHelp = (visible) => {
 	nfdHelpContainer.classList.toggle('help-container', visible);
 	LocalStorageUtils.updateHelpVisible(visible);
 	window.dispatchEvent(new Event('storage'));
+	LocalStorageUtils.clearSearchInput();
 	if (!visible) {
 		LocalStorageUtils.clearSearchInput();
 	}
@@ -85,6 +86,8 @@ window.newfoldEmbeddedHelp = {
 					<Provider store={store}>
 						<Modal
 							onClose={() => {
+								LocalStorageUtils.clear();
+								store.dispatch(helpcenterActions.resetState());
 								toggleHelp(false);
 							}}
 						/>
@@ -95,6 +98,8 @@ window.newfoldEmbeddedHelp = {
 					<Provider store={store}>
 						<Modal
 							onClose={() => {
+								LocalStorageUtils.clear();
+								store.dispatch(helpcenterActions.resetState());
 								toggleHelp(false);
 							}}
 						/>
@@ -240,8 +245,11 @@ document.addEventListener('click', async (event) => {
 			LocalStorageUtils.persistResult(
 				result.resultContent,
 				postId,
-				result.searchInput
+				result.searchInput,
+				result.feedbackSubmitted,
+				true
 			);
+			LocalStorageUtils.persistSearchInput(result.searchInput);
 			store.dispatch(helpcenterActions.updateIsTooltipLoading());
 			store.dispatch(helpcenterActions.updateResultContent(result));
 		}

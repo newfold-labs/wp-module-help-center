@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { helpcenterActions } from '../../../store/helpcenterSlice';
 import { ReactComponent as ThumbsDown } from '../../icons/thumb-down.svg';
 import { ReactComponent as ThumbsUp } from '../../icons/thumb-up.svg';
-import { Analytics, InteractionAPIs } from '../../utils';
+import { Analytics, InteractionAPIs, LocalStorageUtils } from '../../utils';
 
 const ResultFeedback = ({ postId, source }) => {
 	const [status, setStatus] = useState('');
@@ -63,6 +63,7 @@ const ResultFeedback = ({ postId, source }) => {
 			})
 		);
 		setStatus(feedback);
+		LocalStorageUtils.updateFeedbackStatus(postId);
 	};
 
 	return (

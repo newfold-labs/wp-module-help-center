@@ -96,7 +96,13 @@ export const LocalStorageUtils = {
 	getHelpVisible: () => {
 		return localStorage.getItem('helpVisible') === 'true';
 	},
-	persistResult: (resultContent, postId, searchInput) => {
+	persistResult: (
+		resultContent,
+		postId,
+		searchInput,
+		feedbackSubmitted = null,
+		hasLaunchedFromTooltip
+	) => {
 		// Only store the result if resultContent has a value
 		if (!resultContent || resultContent.trim() === '') {
 			return;
@@ -110,6 +116,8 @@ export const LocalStorageUtils = {
 			searchInput,
 			resultContent,
 			postId,
+			feedbackSubmitted,
+			hasLaunchedFromTooltip,
 		};
 
 		// Add new result to the array
@@ -144,17 +152,10 @@ export const LocalStorageUtils = {
 	setFeatureFlag(flagName, value) {
 		localStorage.setItem(flagName, value);
 	},
-	updateFeedbackStatus: (postId) => {
+	updateFeedbackStatus: () => {
 		const savedResults = LocalStorageUtils.getResultInfo();
-		const updatedResults = savedResults.map((result) =>
-			result.postId === postId
-				? { ...result, feedbackSubmitted: true }
-				: result
-		);
-		localStorage.setItem(
-			'helpResultContent',
-			JSON.stringify(updatedResults)
-		);
+		savedResults.feedbackSubmitted = true;
+		localStorage.setItem('helpResultContent', JSON.stringify(savedResults));
 	},
 };
 

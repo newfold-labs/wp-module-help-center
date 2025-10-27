@@ -68,8 +68,11 @@ const SearchInput = () => {
 		LocalStorageUtils.persistResult(
 			result.resultContent,
 			postId,
-			result.searchInput
+			result.searchInput,
+			result.feedbackSubmitted,
+			false
 		);
+		LocalStorageUtils.persistSearchInput(result.searchInput);
 		dispatch(helpcenterActions.updateResultContent(result));
 		dispatch(helpcenterActions.updateHelpResultHistory(result));
 
