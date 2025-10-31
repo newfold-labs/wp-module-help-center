@@ -22,6 +22,7 @@ const initialState = {
 	showBackButton: false,
 	viaLinkSearch: [],
 	hasLaunchedFromTooltip: lastSearchedResult?.hasLaunchedFromTooltip || false,
+	floatingIconVisibility: false,
 };
 
 const helpcenterSlice = createSlice({
@@ -105,6 +106,7 @@ const helpcenterSlice = createSlice({
 			state.showBackButton = false;
 			state.hasLaunchedFromTooltip = false;
 			state.searchInput = '';
+			state.floatingIconVisibility = false;
 		},
 		setNewSearchResult: (state, action) => {
 			state.isNewResult = action.payload;
@@ -168,6 +170,9 @@ const helpcenterSlice = createSlice({
 		},
 		setShowBackButton: (state, action) => {
 			state.showBackButton = action.payload;
+		},
+		updateFloatingIconVisibilty: (state, action) => {
+			state.floatingIconVisibility = action.payload;
 		},
 	},
 });

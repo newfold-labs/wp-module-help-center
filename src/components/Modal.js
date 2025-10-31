@@ -12,9 +12,8 @@ import { getHelpcenterOption, LocalStorageUtils } from '../utils';
 
 const Modal = ({ onClose }) => {
 	const dispatch = useDispatch();
-	const { isFooterVisible, hasLaunchedFromTooltip } = useSelector(
-		(state) => state.helpcenter
-	);
+	const { isFooterVisible, hasLaunchedFromTooltip, floatingIconVisibility } =
+		useSelector((state) => state.helpcenter);
 	useEffect(() => {
 		dispatch(
 			helpcenterActions.initialDataSet({
@@ -83,7 +82,12 @@ const Modal = ({ onClose }) => {
 							'wp-module-help-center'
 						)}
 						onClick={() => {
-							toggleHelp();
+							dispatch(
+								helpcenterActions.updateFloatingIconVisibilty(
+									true
+								)
+							);
+							toggleHelp(false);
 						}}
 					></button>
 				)}
