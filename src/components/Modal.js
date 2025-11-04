@@ -12,8 +12,9 @@ import { getHelpcenterOption, LocalStorageUtils } from '../utils';
 
 const Modal = ({ onClose }) => {
 	const dispatch = useDispatch();
-	const { isFooterVisible, hasLaunchedFromTooltip, floatingIconVisibility } =
-		useSelector((state) => state.helpcenter);
+	const { isFooterVisible, hasLaunchedFromTooltip } = useSelector(
+		(state) => state.helpcenter
+	);
 	useEffect(() => {
 		dispatch(
 			helpcenterActions.initialDataSet({
@@ -62,9 +63,9 @@ const Modal = ({ onClose }) => {
 					}
 					<div
 						className="nfd-help-center-tip"
-						data-post-id="111456"
+						data-post-id="117848"
 						id="help-center-tooltip"
-						style={{ display: 'none' }}
+						style={{ display: 'block' }}
 					>
 						?
 					</div>

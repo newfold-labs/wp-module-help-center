@@ -5,16 +5,15 @@ import { toggleHelp } from '../'; //
 
 const FloatingIcon = () => {
 	const dispatch = useDispatch();
-	const { floatingIconVisibility, visible } = useSelector(
-		(state) => state.helpcenter
-	);
+	const { floatingIconVisibilty, visible, hasLaunchedFromTooltip } =
+		useSelector((state) => state.helpcenter);
 
 	const handleClick = () => {
 		toggleHelp(true);
 		dispatch(helpcenterActions.updateFloatingIconVisibilty(false));
 	};
 
-	if (!floatingIconVisibility || visible) {
+	if (!floatingIconVisibilty && (visible || !hasLaunchedFromTooltip)) {
 		return null;
 	}
 
