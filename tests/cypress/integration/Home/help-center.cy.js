@@ -90,7 +90,8 @@ describe(
 
 			cy.wait(300);
 			cy.get('.helpcenter-question-block', { timeout: customCommandTimeout })
-				.next()
+				.parent()
+				.find('.helpcenter-result-block')
 				.should('have.class', 'helpcenter-result-block').should('exist').and('be.visible')
 		});
 
