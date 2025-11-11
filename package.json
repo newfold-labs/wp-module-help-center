@@ -7,10 +7,10 @@
 		"name": "Faizaan Mohammed",
 		"email": "faizaan.md@newfold.com"
 	},
-    "engines": {
-        "node": ">=22.11.0",
-        "npm": ">=10.9.0"
-    },
+	"engines": {
+		"node": ">=22.11.0",
+		"npm": ">=10.9.0"
+	},
 	"scripts": {
 		"prepare": "npm run build",
 		"build": "wp-scripts build ./src/index.js --config ./scripts/webpack.config.js",
@@ -39,12 +39,10 @@
 		"regenerator-runtime": "0.14.1"
 	},
 	"devDependencies": {
-		"@testing-library/cypress": "^10.0.1",
 		"@wordpress/env": "10.32.0",
 		"@wordpress/eslint-plugin": "^22.8.0",
 		"@wordpress/scripts": "^30",
-		"cypress": "^14.3.1",
-		"cypress-axe": "^1.5.0",
+		"playwright": "1.56.1",
 		"stylelint": "16.18.0",
 		"stylelint-scss": "6.12.1"
 	},
