@@ -312,9 +312,14 @@ $blue-links-color: #356CD8;
     h2 {
       font-size: 1.1em;
     }
-
+    
     .helpcenter-results {
       padding: 0;
+    }
+
+   .helpcenter-response-block .helpcenter-results figure {
+    margin: 0 !important;
+    padding: 0 !important;
     }
 
     .helpcenter-question-block {

@@ -159,6 +159,7 @@ function ResultContent({ source, index, questionBlock, content }) {
 
 	return (
 		<>
+			<br />
 			<div className="helpcenter-result-block" ref={resultBlockRef}>
 				<div>{renderContentOrLoading()}</div>
 			</div>
