@@ -1,7 +1,8 @@
+import { __ } from '@wordpress/i18n';
 import { useDispatch, useSelector } from 'react-redux';
-import { helpcenterActions } from '../../store/helpcenterSlice';
-import { ReactComponent as HelpcenterChatBubbleIcon } from '../icons/helpcenter-chat-bubble-icon.svg';
 import { toggleHelp } from '../'; //
+import { helpcenterActions } from '../../store/helpcenterSlice';
+import { ReactComponent as HelpcenterChatBubbleIcon } from '../icons/help-bubble.svg';
 
 const FloatingIcon = () => {
 	const dispatch = useDispatch();
@@ -32,6 +33,7 @@ const FloatingIcon = () => {
 			}}
 		>
 			<HelpcenterChatBubbleIcon />
+			<p>{__('Help', 'wp-module-help-center')}</p>
 		</div>
 	);
 };

@@ -686,10 +686,10 @@ body:is(.page, .post-php, .post-new-php) {
   .nfd-hc-floating-icon {
     width: 56px;
     height: 56px;
-    border-radius: 50%;
-    background-color: #2563eb;
+    border-radius: 8px;
     color: #fff;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
@@ -699,25 +699,35 @@ body:is(.page, .post-php, .post-new-php) {
       box-shadow 0.2s ease,
       background-color 0.2s ease;
 
-  svg {
-    width: 28px;
-    height: 28px;
-    fill: currentColor;
-  }
+    svg {
+      width: 28px;
+      height: 28px;
+      fill: currentcolor;
+    }
 
-  &:hover {
-    background-color: #1d4ed8;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
-  }
+     & > p {
+      font-size: 12px;
+      margin: 0;
+      color: #000;
+    }
 
-  &:active {
-    transform: scale(0.96);
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-  }
+    &:hover {
+      background-color: #1d4ed8;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+       
+      p {
+        color: #fff;
+      }
+    }
 
-  &:focus-visible {
-    outline: 3px solid #93c5fd;
-    outline-offset: 2px;
+    &:active {
+      transform: scale(0.96);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    &:focus-visible {
+      outline: 3px solid #93c5fd;
+      outline-offset: 2px;
+    }
   }
-}
