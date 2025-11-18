@@ -679,20 +679,31 @@ body:is(.page, .post-php, .post-new-php) {
   #nfd-hc-floating-icon-wrapper{
       position: fixed;
       bottom: 24px;
-      right: 24px;
+      right: 0;
       z-index: 9999;
+      background-color:#fff;
+      border: none;
+      overflow: visible !important;
+      border-top-left-radius: 12px;
+      border-bottom-left-radius: 12px;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
   }
 
   .nfd-hc-floating-icon {
     width: 56px;
-    height: 56px;
-    border-radius: 8px;
+    height: 76px;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
     color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: -6px 1px 12px #DEEEFB;
+    padding-left: 4px;
     cursor: pointer;
     transition:
       transform 0.2s ease,
