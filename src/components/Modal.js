@@ -65,7 +65,7 @@ const Modal = ({ onClose }) => {
 						className="nfd-help-center-tip"
 						data-post-id="117848"
 						id="help-center-tooltip"
-						style={{ display: 'block' }}
+						style={{ display: 'none' }}
 					>
 						?
 					</div>
