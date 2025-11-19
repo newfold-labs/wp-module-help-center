@@ -63,7 +63,7 @@ const Modal = ({ onClose }) => {
 					}
 					<div
 						className="nfd-help-center-tip"
-						data-post-id="117848"
+						data-post-id="111456"
 						id="help-center-tooltip"
 						style={{ display: 'none' }}
 					>
