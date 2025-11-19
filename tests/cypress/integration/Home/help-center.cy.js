@@ -205,7 +205,8 @@ describe(
 				.should('have.css', 'display', 'none')
 				.click({ force: true });
 			cy.get('.helpcenter-question-block')
-				.findByText('"i have 7 items in the cart that dont really exist how do i get rid of them"').should('exist')
+				.find('div')
+				.contains('i have 7 items in the cart that dont really exist how do i get rid of them')
 		})
 
 	}
