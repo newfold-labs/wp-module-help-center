@@ -315,6 +315,10 @@ $blue-links-color: #356CD8;
     
     .helpcenter-results {
       padding: 0;
+      
+      ul {
+        line-height: 1.5;
+      }
     }
 
    .helpcenter-response-block .helpcenter-results figure {
