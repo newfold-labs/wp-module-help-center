@@ -8,11 +8,11 @@ import { subscribe, default as wpData } from '@wordpress/data';
 import { HiiveAnalytics } from '@newfold/js-utility-ui-analytics';
 import domReady from '@wordpress/dom-ready';
 //
-import { useSelector, Provider } from 'react-redux';
+import { Provider } from 'react-redux';
 import { store } from '../store';
 import { helpcenterActions } from '../store/helpcenterSlice';
-import Modal from './components/Modal';
 import FloatingIcon from './components/FloatingIcon';
+import Modal from './components/Modal';
 import { ReactComponent as Help } from './icons/help-plugin-sidebar-icon.svg';
 import './styles/styles.scss';
 import {

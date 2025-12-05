@@ -226,7 +226,10 @@ export function formatPostContent(postContent = '') {
 	return postContent
 		.replace(/\n{2,}/g, '\n')
 		.replace(/^\n+|\n+$/g, '')
-		.replace(/\n/g, '<br />');
+		.replace(/\n/g, '<br />')
+		.replace(/(<ul[^>]*>)[\s\n\r]*<br\s*\/?>/g, '$1')
+		.replace(/<br\s*\/?>\s*(?=<li)/g, '')
+		.replace(/<br\s*\/?>\s*(<\/ul>)/g, '$1');
 }
 
 export function getResultMatches(query, tokensMatched, fieldsMatched) {
@@ -345,7 +348,7 @@ export const getHelpcenterOption = async () => {
 		if (responseData?.length > 0) {
 			return responseData;
 		}
-	} catch (err) {}
+	} catch (err) { }
 };
 
 export const getMultiSearchResponse = async (query, brand) => {
