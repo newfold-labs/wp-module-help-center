@@ -49,3 +49,56 @@
   border-radius: 8px;
   margin: 16px 0;
 }
+
+/* The clickable overlay that sits above the inline iframe */
+.hc-iframe-click-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+
+  /* Optional play icon */
+
+  /* &::before {
+    content: '';
+    width: 64px;
+    height: 64px;
+    border-radius: 9999px;
+    background: rgba(0,0,0,0.5);
+    display: block;
+    position: relative;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    margin-left: 6px;
+    width: 0;
+    height: 0;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-left: 18px solid white;
+  }
+
+  &:hover {
+    background: linear-gradient(
+      to bottom,
+      rgba(0,0,0,0.2),
+      rgba(0,0,0,0.35)
+    );
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.7);
+  } */
+}
+
+/* Ensure wrapper can host absolutely-positioned overlay */
+.wp-block-embed__wrapper { position: relative; }
+
+

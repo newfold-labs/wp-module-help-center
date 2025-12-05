@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { LocalStorageUtils } from '../src/utils';
 
+const lastSearchedResult = LocalStorageUtils.getResultInfo();
 const initialState = {
 	visible: false,
 	helpEnabled: false,
@@ -9,7 +11,7 @@ const initialState = {
 	isLoading: false,
 	loadingQuery: null,
 	loadingIndex: null,
-	resultContent: [],
+	resultContent: lastSearchedResult,
 	multiResults: {},
 	showSuggestions: false,
 	initComplete: false,
@@ -19,7 +21,8 @@ const initialState = {
 	triggerSearch: false,
 	showBackButton: false,
 	viaLinkSearch: [],
-	hasLaunchedFromTooltip: false,
+	hasLaunchedFromTooltip: lastSearchedResult?.hasLaunchedFromTooltip || false,
+	floatingIconVisibility: false,
 };
 
 const helpcenterSlice = createSlice({
@@ -102,6 +105,8 @@ const helpcenterSlice = createSlice({
 			state.viaLinkSearch = [];
 			state.showBackButton = false;
 			state.hasLaunchedFromTooltip = false;
+			state.searchInput = '';
+			state.floatingIconVisibility = false;
 		},
 		setNewSearchResult: (state, action) => {
 			state.isNewResult = action.payload;
@@ -165,6 +170,9 @@ const helpcenterSlice = createSlice({
 		},
 		setShowBackButton: (state, action) => {
 			state.showBackButton = action.payload;
+		},
+		updateFloatingIconVisibilty: (state, action) => {
+			state.floatingIconVisibility = action.payload;
 		},
 	},
 });

@@ -1,14 +1,22 @@
 import { useSelector } from 'react-redux';
 
 export default function ResultHeader({ noResult, questionBlock }) {
-	const { isNewEntry } = useSelector((state) => state.helpcenter);
+	const { isNewEntry, hasLaunchedFromTooltip } = useSelector(
+		(state) => state.helpcenter
+	);
+
+	const getQuestionBlockText = () => {
+		if (!questionBlock || (noResult && isNewEntry)) {
+			return '';
+		}
+		if (hasLaunchedFromTooltip) {
+			return questionBlock;
+		}
+		return `"${questionBlock}"`;
+	};
 	return (
 		<div className="helpcenter-question-block">
-			<div>
-				{noResult && isNewEntry
-					? ''
-					: questionBlock && `"${questionBlock}"`}
-			</div>
+			<div>{getQuestionBlockText()}</div>
 		</div>
 	);
 }

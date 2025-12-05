@@ -11,6 +11,7 @@ import domReady from '@wordpress/dom-ready';
 import { Provider } from 'react-redux';
 import { store } from '../store';
 import { helpcenterActions } from '../store/helpcenterSlice';
+import FloatingIcon from './components/FloatingIcon';
 import Modal from './components/Modal';
 import { ReactComponent as Help } from './icons/help-plugin-sidebar-icon.svg';
 import './styles/styles.scss';
@@ -46,6 +47,7 @@ export const toggleHelp = (visible) => {
 	nfdHelpContainer.classList.toggle('help-container', visible);
 	LocalStorageUtils.updateHelpVisible(visible);
 	window.dispatchEvent(new Event('storage'));
+	LocalStorageUtils.clearSearchInput();
 	if (!visible) {
 		LocalStorageUtils.clearSearchInput();
 	}
@@ -77,7 +79,19 @@ window.newfoldEmbeddedHelp = {
 		helpContainer.id = 'nfd-help-center';
 		helpContainer.style.display = 'none';
 		wpContentContainer.appendChild(helpContainer);
+
+		// Create separate container for FloatingIcon
+		const floatingIconContainer = document.createElement('div');
+		floatingIconContainer.id = 'nfd-hc-floating-icon-wrapper';
+		wpContentContainer.appendChild(floatingIconContainer);
+
 		const DOM_TARGET = document.getElementById('nfd-help-center');
+		const FLOATING_ICON_TARGET = document.getElementById(
+			'nfd-hc-floating-icon-wrapper'
+		);
+
+		const { hasLaunchedFromTooltip } = store.getState().helpcenter;
+
 		if (null !== DOM_TARGET) {
 			if ('undefined' !== createRoot) {
 				// WP 6.2+ only
@@ -85,22 +99,44 @@ window.newfoldEmbeddedHelp = {
 					<Provider store={store}>
 						<Modal
 							onClose={() => {
+								LocalStorageUtils.clear();
+								store.dispatch(helpcenterActions.resetState());
 								toggleHelp(false);
 							}}
 						/>
 					</Provider>
 				);
+
+				if (hasLaunchedFromTooltip) {
+					createRoot(FLOATING_ICON_TARGET).render(
+						<Provider store={store}>
+							<FloatingIcon />
+						</Provider>
+					);
+				}
 			} else if ('undefined' !== render) {
 				render(
 					<Provider store={store}>
 						<Modal
 							onClose={() => {
+								LocalStorageUtils.clear();
+								store.dispatch(helpcenterActions.resetState());
 								toggleHelp(false);
 							}}
 						/>
 					</Provider>,
 					DOM_TARGET
 				);
+
+				// Render FloatingIcon in separate container
+				if (hasLaunchedFromTooltip) {
+					render(
+						<Provider store={store}>
+							<FloatingIcon />
+						</Provider>,
+						FLOATING_ICON_TARGET
+					);
+				}
 			}
 		}
 	},
@@ -237,6 +273,14 @@ document.addEventListener('click', async (event) => {
 				searchInput: results.title.rendered,
 				feedbackSubmitted: null,
 			};
+			LocalStorageUtils.persistResult(
+				result.resultContent,
+				postId,
+				result.searchInput,
+				result.feedbackSubmitted,
+				true
+			);
+			LocalStorageUtils.persistSearchInput(result.searchInput);
 			store.dispatch(helpcenterActions.updateIsTooltipLoading());
 			store.dispatch(helpcenterActions.updateResultContent(result));
 		}

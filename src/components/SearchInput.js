@@ -65,6 +65,14 @@ const SearchInput = () => {
 			searchInput: postTitle,
 			feedbackSubmitted: null,
 		};
+		LocalStorageUtils.persistResult(
+			result.resultContent,
+			postId,
+			result.searchInput,
+			result.feedbackSubmitted,
+			false
+		);
+		LocalStorageUtils.persistSearchInput(result.searchInput);
 		dispatch(helpcenterActions.updateResultContent(result));
 		dispatch(helpcenterActions.updateHelpResultHistory(result));
 

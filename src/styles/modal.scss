@@ -43,6 +43,34 @@ $container-width: 350px;
 				width: 17px;
 				height: 17px;
 			}
+
+			&__minimize-button {
+				position: absolute;
+				width: 18px;
+				height: 18px;
+				display: inline-block;
+				cursor: pointer;
+				top: 4px;
+				right: 30px;
+				outline: transparent;
+				border: 0;
+				background: transparent;
+				background-image: url(../icons/minus.svg);
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: contain;
+
+				&:hover {
+					color: #111;
+					filter: brightness(0.8);
+				}
+
+				&:focus-visible {
+					outline: 2px solid #3b82f6;
+					outline-offset: 3px;
+				}
+
+			}
 		}
 	}
 
@@ -56,4 +84,63 @@ $container-width: 350px;
 			padding: 0 8px;
 		}
 	}
+}
+
+.iframe-modal {
+
+	&__overlay {
+		position: fixed;
+		inset: 0;
+		z-index: 50;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: rgba(0, 0, 0, 0.75);
+		cursor: pointer;
+	}
+
+	&__content {
+		position: relative;
+		width: 60%;
+		max-width: 1024px;
+		margin: 0 1rem;
+		cursor: default;
+	}
+
+	&__close {
+		position: absolute;
+		top: -2.5rem;
+		right: 0;
+		font-size: 1.875rem;
+		font-weight: 700;
+		color: #fff;
+		background: none;
+		border: none;
+		cursor: pointer;
+		transition: color 0.2s ease-in-out;
+
+		&:hover {
+			color: #d1d5db;
+		}
+	}
+
+	&__iframe-wrapper {
+		position: relative;
+		width: 100%;
+		padding-bottom: 56.25%; // 16:9 aspect ratio161616161616
+	}
+
+	&__iframe {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		border: 0;
+		border-radius: 0.5rem; // rounded-lg equivalent
+	}
+}
+
+iframe {
+	aspect-ratio: 16 / 9;
 }
