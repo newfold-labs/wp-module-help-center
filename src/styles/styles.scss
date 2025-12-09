@@ -65,7 +65,7 @@ $blue-links-color: #356CD8;
     br {
       content: '';
       display: block;
-      margin-bottom: 5px; /* Adjust this value as per your requirements */
+      /*margin-bottom: 5px;  Adjust this value as per your requirements */
     }
   }
 
@@ -350,6 +350,10 @@ $blue-links-color: #356CD8;
 			margin: 0;
 			padding: 0;
 			list-style-position: inside;
+
+          li{
+            margin-bottom:10px;
+          }
 		}
 
 		ul {
