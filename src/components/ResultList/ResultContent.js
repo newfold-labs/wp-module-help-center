@@ -1,41 +1,133 @@
-import { useEffect, useRef } from '@wordpress/element';
+import { useState, useEffect, useRef } from '@wordpress/element';
 import { useDispatch, useSelector } from 'react-redux';
 import { helpcenterActions } from '../../../store/helpcenterSlice';
-function ResultContent( { source, index, questionBlock, content } ) {
+import IframeModal from './IframeModal';
+
+function ResultContent({ source, index, questionBlock, content }) {
 	const { isLoading, loadingQuery, loadingIndex } = useSelector(
-		( state ) => state.helpcenter
+		(state) => state.helpcenter
 	);
+	const [iframeModalOpen, setIframeModalOpen] = useState(false);
+	const [iframeAttributes, setIframeAttributes] = useState({});
 	const resultBlockRef = useRef();
 	const dispatch = useDispatch();
 
-	useEffect( () => {
+	useEffect(() => {
 		const resultBlock = resultBlockRef.current;
 
-		if ( ! resultBlock ) {
+		if (!resultBlock) {
 			return;
 		}
 
-		const handleClick = ( e ) => {
-			const anchor = e.target.closest( 'a[href*="bhmultisite.com/"]' );
-			if ( anchor && resultBlock.contains( anchor ) ) {
+		const ensureOverlays = () => {
+			const iframes = resultBlock.querySelectorAll('iframe');
+			iframes.forEach((iframe) => {
+				// Avoid duplicating overlays
+				if (iframe.dataset.hcOverlay === '1') {
+					return;
+				}
+
+				// Use Gutenberg wrapper if present; else use the iframe's parent
+				const wrapper =
+					iframe.closest('.wp-block-embed__wrapper') ||
+					iframe.parentElement;
+
+				if (!wrapper) {
+					return;
+				}
+
+				// Make wrapper positioned for overlay
+				if (getComputedStyle(wrapper).position === 'static') {
+					wrapper.style.position = 'relative';
+				}
+
+				// Create overlay
+				const overlay = document.createElement('button');
+				overlay.type = 'button';
+				overlay.className = 'hc-iframe-click-overlay';
+				overlay.setAttribute('aria-label', 'Open player');
+				overlay.tabIndex = 0;
+
+				// On hover, cache all attributes we’ll need
+				const cacheAttrs = () => {
+					const attrs = {};
+					for (let i = 0; i < iframe.attributes.length; i++) {
+						const attr = iframe.attributes[i];
+						attrs[attr.name] = attr.value;
+					}
+					// Save on overlay dataset for quick retrieval on click
+					overlay.dataset.hcAttrs = JSON.stringify(attrs);
+				};
+
+				overlay.addEventListener('mouseenter', cacheAttrs, {
+					passive: true,
+				});
+				overlay.addEventListener('focus', cacheAttrs, {
+					passive: true,
+				});
+
+				// Clicking overlay opens modal; prevent any bubbling to underlying iframe
+				overlay.addEventListener('click', (e) => {
+					e.preventDefault();
+					e.stopPropagation();
+
+					let attrs = {};
+					try {
+						if (overlay.dataset.hcAttrs) {
+							attrs = JSON.parse(overlay.dataset.hcAttrs) || {};
+						} else {
+							// fallback if hover never happened
+							for (let i = 0; i < iframe.attributes.length; i++) {
+								const attr = iframe.attributes[i];
+								attrs[attr.name] = attr.value;
+							}
+						}
+					} catch {
+						// ignore JSON errors; just rebuild from DOM
+						for (let i = 0; i < iframe.attributes.length; i++) {
+							const attr = iframe.attributes[i];
+							attrs[attr.name] = attr.value;
+						}
+					}
+
+					// Keep original src as requested (don’t strip/modify)
+					setIframeAttributes(attrs);
+					setIframeModalOpen(true);
+				});
+
+				// Insert overlay as last child so it sits above iframe
+				wrapper.appendChild(overlay);
+
+				// Mark iframe prepared
+				iframe.dataset.hcOverlay = '1';
+				// Make the cursor show intent; DO NOT disable pointer events on iframe (keeps visual cues)
+				iframe.style.cursor = 'pointer';
+			});
+		};
+
+		ensureOverlays();
+
+		const handleClick = (e) => {
+			const anchor = e.target.closest('a[href*="bhmultisite.com/"]');
+			if (anchor && resultBlock.contains(anchor)) {
 				e.preventDefault();
 				const clickedText = anchor.textContent.trim();
 
-				dispatch( helpcenterActions.updateSearchInput( clickedText ) );
-				dispatch( helpcenterActions.setAIResultLoading() );
+				dispatch(helpcenterActions.updateSearchInput(clickedText));
+				dispatch(helpcenterActions.setAIResultLoading());
 
 				// set a flag like "triggerSubmit" in the store
-				dispatch( helpcenterActions.setTriggerSearch( true ) );
-				dispatch( helpcenterActions.setShowBackButton( true ) );
+				dispatch(helpcenterActions.setTriggerSearch(true));
+				dispatch(helpcenterActions.setShowBackButton(true));
 			}
 		};
 
-		resultBlock.addEventListener( 'click', handleClick );
+		resultBlock.addEventListener('click', handleClick);
 
 		return () => {
-			resultBlock.removeEventListener( 'click', handleClick );
+			resultBlock.removeEventListener('click', handleClick);
 		};
-	}, [ content ] );
+	}, [content]);
 
 	function renderContentOrLoading() {
 		const isAISourceLoading =
@@ -44,15 +136,15 @@ function ResultContent( { source, index, questionBlock, content } ) {
 			loadingQuery === questionBlock &&
 			loadingIndex === index;
 
-		if ( isAISourceLoading ) {
+		if (isAISourceLoading) {
 			return <div className="loading-cursor"></div>;
 		}
 
-		if ( content && content.length > 0 ) {
+		if (content && content.length > 0) {
 			return (
-				<p
+				<div
 					className="helpcenter-results"
-					dangerouslySetInnerHTML={ { __html: content } }
+					dangerouslySetInnerHTML={{ __html: content }}
 				/>
 			);
 		}
@@ -60,10 +152,23 @@ function ResultContent( { source, index, questionBlock, content } ) {
 		return null;
 	}
 
+	const handleCloseIframeModal = () => {
+		setIframeModalOpen(false);
+		setIframeAttributes({});
+	};
+
 	return (
-		<div className="helpcenter-result-block" ref={ resultBlockRef }>
-			<div>{ renderContentOrLoading() }</div>
-		</div>
+		<>
+			<br />
+			<div className="helpcenter-result-block" ref={resultBlockRef}>
+				<div>{renderContentOrLoading()}</div>
+			</div>
+			<IframeModal
+				isOpen={iframeModalOpen}
+				onClose={handleCloseIframeModal}
+				iframeAttributes={iframeAttributes}
+			/>
+		</>
 	);
 }
 

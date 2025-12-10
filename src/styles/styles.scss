@@ -65,7 +65,7 @@ $blue-links-color: #356CD8;
     br {
       content: '';
       display: block;
-      margin-bottom: 5px; /* Adjust this value as per your requirements */
+      /*margin-bottom: 5px;  Adjust this value as per your requirements */
     }
   }
 
@@ -312,9 +312,18 @@ $blue-links-color: #356CD8;
     h2 {
       font-size: 1.1em;
     }
-
+    
     .helpcenter-results {
       padding: 0;
+      
+      ul {
+        line-height: 1.5;
+      }
+    }
+
+   .helpcenter-response-block .helpcenter-results figure {
+    margin: 0 !important;
+    padding: 0 !important;
     }
 
     .helpcenter-question-block {
@@ -325,28 +334,50 @@ $blue-links-color: #356CD8;
     }
 
     .helpcenter-result-block {
-      padding: 0 0 12px 0 ;
+		padding: 0 0 12px 0 ;
 
-      /* Reset default styles */
-      ul,
-      ol {
-        margin: 0;
-        padding: 0;
-        list-style-position: inside;
-      }
+		p {
+			margin: 0 0 5px 0;
+		}
 
-      /* Standardize list items */
-      li {
-        margin: 0;
-        padding: 0;
-      }
+		/* Reset default styles */
+		h1, h2, h3, h4, h5, h6 {
+			line-height: 1;
+		}
 
-      /* fit the media in parent container: ; */
-      img, picture, video, audio, iframe {
-        max-width: 100%;
-        height: auto;
-        vertical-align: middle;
-      }
+		ul,
+		ol {
+			margin: 0;
+			padding: 0;
+			list-style-position: inside;
+
+          li{
+            margin-bottom:10px;
+          }
+		}
+
+		ul {
+			list-style-type: disc;
+		}
+
+		/* Standardize list items */
+		li {
+			margin: 0;
+			padding: 0;
+		}
+
+		/* fit the media in parent container: ; */
+		img, picture, video, audio, iframe {
+			max-width: 100%;
+			height: auto;
+			vertical-align: middle;
+		}
+
+		.wp-block-quote {
+			border-left: 4px solid rgb(128 128 128 / 20%);
+			padding-left: 5px;
+			margin: auto 0;
+		}
     }
   }
 }
@@ -651,4 +682,71 @@ body:is(.page, .post-php, .post-new-php) {
     display: inline-flex;
     gap: 6px;
     padding-top: 10px;
+  }
+
+  #nfd-hc-floating-icon-wrapper{
+      position: fixed;
+      bottom: 24px;
+      right: 0;
+      z-index: 9999;
+      background-color:#fff;
+      border: none;
+      overflow: visible !important;
+      border-top-left-radius: 12px;
+      border-bottom-left-radius: 12px;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+  }
+
+  .nfd-hc-floating-icon {
+    width: 56px;
+    height: 76px;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: -6px 1px 12px #DEEEFB;
+    padding-left: 4px;
+    cursor: pointer;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      background-color 0.2s ease;
+
+    svg {
+      width: 28px;
+      height: 28px;
+      fill: currentcolor;
+    }
+
+     & > p {
+      font-size: 12px;
+      margin: 0;
+      color: #000;
+    }
+
+    &:hover {
+      background-color: #1d4ed8;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+       
+      p {
+        color: #fff;
+      }
+    }
+
+    &:active {
+      transform: scale(0.96);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    &:focus-visible {
+      outline: 3px solid #93c5fd;
+      outline-offset: 2px;
+    }
   }

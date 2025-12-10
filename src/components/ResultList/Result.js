@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useRef, useState } from '@wordpress/element';
-import { marked } from 'marked';
 import { useDispatch, useSelector } from 'react-redux';
 import { helpcenterActions } from '../../../store/helpcenterSlice';
 import { processContentForMarkdown, useRevealText } from '../../utils';
@@ -53,10 +52,7 @@ export const Result = ({
 
 	const htmlContent = useMemo(() => {
 		const processedHTMLContent = processContentForMarkdown(textToDisplay);
-		const markedContent = processedHTMLContent
-			? marked(processedHTMLContent)
-			: '';
-		return markedContent;
+		return processedHTMLContent;
 	}, [textToDisplay]);
 
 	function shouldShowFeedback() {
