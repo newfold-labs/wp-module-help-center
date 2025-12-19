@@ -1,42 +1,31 @@
 /**
- * Help Center Module Test Helpers
+ * Help Center Module Test Helpers for Playwright
  * 
- * Specific utilities for testing the help center module functionality.
- * Includes modal interactions, search functionality, and UI state management.
+ * Utilities for testing the Deactivation module functionality.
+ * Includes plugin activation/deactivation helpers and survey interactions.
  */
+import { expect } from '@playwright/test';
+import { join, dirname } from 'path';
+import { readFileSync } from 'fs';
+import { fileURLToPath, pathToFileURL } from 'url';
 
-const { expect } = require('@playwright/test');
-const { execSync } = require('child_process');
+// ES module equivalent of __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-/**
- * WordPress CLI helper for help center module
- * 
- * @param {string} cmd - WP-CLI command to execute
- * @param {Object} options - Command options
- * @returns {string} Command output
- */
-function wpCli(cmd, options = {}) {
-  const defaultOptions = {
-    timeout: 20000,
-    failOnNonZeroExit: true,
-  };
-  
-  const finalOptions = { ...defaultOptions, ...options };
-  
-  try {
-    const result = execSync(`npx wp-env run cli wp ${cmd}`, { 
-      encoding: 'utf-8',
-      stdio: finalOptions.failOnNonZeroExit ? 'pipe' : 'inherit',
-      timeout: finalOptions.timeout
-    });
-    return result.trim();
-  } catch (error) {
-    if (finalOptions.failOnNonZeroExit) {
-      throw new Error(`WP-CLI command failed: ${cmd}\n${error.message}`);
-    }
-    return '';
-  }
-}
+// Resolve plugin directory from PLUGIN_DIR env var (set by playwright.config.mjs) or process.cwd()
+const pluginDir = process.env.PLUGIN_DIR || process.cwd();
+
+// Build path to plugin helpers (.mjs extension for ES module compatibility)
+const finalHelpersPath = join(pluginDir, 'tests/playwright/helpers/index.mjs');
+
+// Import plugin helpers using file:// URL
+const helpersUrl = pathToFileURL(finalHelpersPath).href;
+const pluginHelpers = await import(helpersUrl);
+// destructure pluginHelpers
+let { auth, wordpress, newfold, a11y, utils } = pluginHelpers;
+const { fancyLog } = utils;
+const { setCapability } = newfold;
 
 /**
  * Set permalink structure
@@ -56,15 +45,29 @@ async function setPermalinkStructure(page) {
  * @param {Object} capabilities - Capabilities object
  */
 async function setSiteCapabilities(page, capabilities) {
-  const capabilitiesJson = JSON.stringify(capabilities);
   try {
-    wpCli(
-      `option update _transient_nfd_site_capabilities '${capabilitiesJson}' --format=json`,
-      { timeout: 10000, failOnNonZeroExit: false }
-    );
+    await setCapability( capabilities );
   } catch (error) {
-    console.warn('Failed to set site capabilities:', error.message);
+    fancyLog('Failed to set site capabilities:' + error.message, 55, 'yellow' );
   }
+}
+
+/**
+ * Create capabilities object for help center
+ * 
+ * @returns {Object} Capabilities object
+ */
+function createHelpCenterCapabilities() {
+  return {
+    canAccessAI: true,
+    hasAISiteGen: true,
+    canAccessHelpCenter: true,
+    canAccessGlobalCTB: true,
+    hasEcomdash: true,
+    hasYithExtended: true,
+    isEcommerce: true,
+    isJarvis: true,
+  };
 }
 
 /**
@@ -196,7 +199,7 @@ function getTooltip(page) {
 async function clickHelpCenterIcon(page) {
   const icon = getHelpCenterIcon(page);
   // Wait a bit for the icon to appear
-  await page.waitForTimeout(2000);
+  // await page.waitForTimeout(2000);
   await expect(icon).toBeVisible({ timeout: 10000 });
   await icon.click();
 }
@@ -209,7 +212,7 @@ async function clickHelpCenterIcon(page) {
 async function verifyHelpCenterIconVisible(page) {
   const icon = getHelpCenterIcon(page);
   // Wait a bit for the icon to appear
-  await page.waitForTimeout(2000);
+  // await page.waitForTimeout(2000);
   await expect(icon).toBeVisible({ timeout: 10000 });
 }
 
@@ -254,10 +257,12 @@ async function searchInHelpCenter(page, query) {
  */
 async function verifySearchResults(page, query) {
   const questionBlock = getQuestionBlock(page);
-  await expect(questionBlock).toContainText(`"${query}"`);
+  await expect(questionBlock).toContainText(`"${query}"`, { timeout: 20000 });
   
-  const resultBlock = questionBlock.locator('+ .helpcenter-result-block');
-  await expect(resultBlock).toBeVisible();
+  // Wait for result block to appear - it's a sibling within the same parent container
+  const resultBlock = page.locator('.helpcenter-result-block');
+  await expect(resultBlock).toBeVisible({ timeout: 20000 });
+  await expect(resultBlock).toHaveClass(/helpcenter-result-block/);
 }
 
 /**
@@ -281,6 +286,16 @@ async function verifyDislikeFeedback(page) {
 }
 
 /**
+ * Get CTA container
+ * 
+ * @param {import('@playwright/test').Page} page - Playwright page object
+ * @returns {import('@playwright/test').Locator} CTA container locator
+ */
+function getCTAContainer(page) {
+  return page.locator('.hc-banner-content__cta');
+}
+
+/**
  * Verify footer and CTA are visible
  * 
  * @param {import('@playwright/test').Page} page - Playwright page object
@@ -289,6 +304,11 @@ async function verifyFooterAndCTA(page) {
   const footer = getFooter(page);
   await expect(footer).toBeVisible();
   
+  // Check CTA container is visible
+  const ctaContainer = getCTAContainer(page);
+  await expect(ctaContainer).toBeVisible();
+  
+  // Check CTA button is visible and has href
   const ctaButton = getCTAButton(page);
   await expect(ctaButton).toBeVisible();
   await expect(ctaButton).toHaveAttribute('href');
@@ -349,26 +369,14 @@ function getAppId() {
   return process.env.APP_ID || 'bluehost';
 }
 
-/**
- * Create capabilities object for help center
- * 
- * @returns {Object} Capabilities object
- */
-function createHelpCenterCapabilities() {
-  return {
-    canAccessAI: true,
-    hasAISiteGen: true,
-    canAccessHelpCenter: true,
-    canAccessGlobalCTB: true,
-    hasEcomdash: true,
-    hasYithExtended: true,
-    isEcommerce: true,
-    isJarvis: true,
-  };
-}
-
-module.exports = {
-  wpCli,
+export {
+  // Plugin helpers (re-exported for convenience)
+  auth,
+  wordpress,
+  newfold,
+  a11y,
+  utils,
+  // Module helpers
   setPermalinkStructure,
   setSiteCapabilities,
   getHelpCenterIcon,
@@ -378,6 +386,7 @@ module.exports = {
   getCloseButton,
   getFooter,
   getCTAButton,
+  getCTAContainer,
   getQuestionBlock,
   getResultBlock,
   getFeedbackButton,
