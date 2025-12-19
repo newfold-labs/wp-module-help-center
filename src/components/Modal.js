@@ -70,6 +70,28 @@ const Modal = ({ onClose }) => {
 						?
 					</div>
 				</h3>
+
+				{hasLaunchedFromTooltip && (
+					<button
+						className="nfd-hc-modal__header__minimize-button"
+						aria-label={__(
+							'Minimize HelpCenter',
+							'wp-module-help-center'
+						)}
+						title={__(
+							'Minimize HelpCenter',
+							'wp-module-help-center'
+						)}
+						onClick={() => {
+							dispatch(
+								helpcenterActions.updateFloatingIconVisibilty(
+									true
+								)
+							);
+							toggleHelp(false);
+						}}
+					></button>
+				)}
 				<button
 					aria-label={__('Close Help Modal', 'wp-module-help-center')}
 					title={__('Close Help Modal', 'wp-module-help-center')}

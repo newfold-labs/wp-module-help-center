@@ -96,30 +96,35 @@ export const LocalStorageUtils = {
 	getHelpVisible: () => {
 		return localStorage.getItem('helpVisible') === 'true';
 	},
-	persistResult: (resultContent, postId, searchInput) => {
+	persistResult: (
+		resultContent,
+		postId,
+		searchInput,
+		feedbackSubmitted = null,
+		hasLaunchedFromTooltip
+	) => {
 		// Only store the result if resultContent has a value
 		if (!resultContent || resultContent.trim() === '') {
 			return;
 		}
 
-		// Retrieve existing results or initialize as an empty array
+		/* 		// Retrieve existing results or initialize as an empty array
 		const existingResults = LocalStorageUtils.getResultInfo();
-
+ */
 		// Create a new result object
 		const newResult = {
 			searchInput,
 			resultContent,
 			postId,
+			feedbackSubmitted,
+			hasLaunchedFromTooltip,
 		};
 
 		// Add new result to the array
-		existingResults.push(newResult);
+		/* existingResults.push(newResult); */
 
 		// Store the updated array back in local storage
-		localStorage.setItem(
-			'helpResultContent',
-			JSON.stringify(existingResults)
-		);
+		localStorage.setItem('helpResultContent', JSON.stringify(newResult));
 	},
 
 	persistSearchInput: (searchInput) => {
@@ -147,17 +152,10 @@ export const LocalStorageUtils = {
 	setFeatureFlag(flagName, value) {
 		localStorage.setItem(flagName, value);
 	},
-	updateFeedbackStatus: (postId) => {
+	updateFeedbackStatus: () => {
 		const savedResults = LocalStorageUtils.getResultInfo();
-		const updatedResults = savedResults.map((result) =>
-			result.postId === postId
-				? { ...result, feedbackSubmitted: true }
-				: result
-		);
-		localStorage.setItem(
-			'helpResultContent',
-			JSON.stringify(updatedResults)
-		);
+		savedResults.feedbackSubmitted = true;
+		localStorage.setItem('helpResultContent', JSON.stringify(savedResults));
 	},
 };
 
@@ -223,8 +221,15 @@ export const isValidJSON = (json) => {
 	}
 };
 
+/* Replace multiple line breaks with one line, remove line breaks at the start and end, convert existing \n to <br> */
 export function formatPostContent(postContent = '') {
-	return postContent.replace(/\n/g, '<br />');
+	return postContent
+		.replace(/\n{2,}/g, '\n')
+		.replace(/^\n+|\n+$/g, '')
+		.replace(/\n/g, '<br />')
+		.replace(/(<ul[^>]*>)[\s\n\r]*<br\s*\/?>/g, '$1')
+		.replace(/<br\s*\/?>\s*(?=<li)/g, '')
+		.replace(/<br\s*\/?>\s*(<\/ul>)/g, '$1');
 }
 
 export function getResultMatches(query, tokensMatched, fieldsMatched) {
@@ -271,37 +276,52 @@ export function adjustPadding(wrapperRef) {
 	}
 }
 
-/* Parse the html in string to a document node, replace the <p>  tags with a fragment and line break */
+/* Process inline markdown syntax inside the <p> tags */
 export const processContentForMarkdown = (textToDisplay) => {
-	if (textToDisplay) {
-		// eslint-disable-next-line no-undef
-		const parser = new DOMParser();
-		const doc = parser.parseFromString(textToDisplay, 'text/html');
-
-		const paragraphElements = doc.querySelectorAll('p');
-
-		paragraphElements.forEach((p) => {
-			// Create a DocumentFragment to hold the content and <br> tags
-			const fragment = document.createDocumentFragment();
-
-			// Append all child nodes of the <p> to the fragment
-			while (p.firstChild) {
-				fragment.appendChild(p.firstChild);
-			}
-
-			const br1 = document.createElement('br');
-			const br2 = document.createElement('br');
-			fragment.appendChild(br1);
-			fragment.appendChild(br2);
-
-			// Replace the <p> element with the fragment
-			p.parentNode.replaceChild(fragment, p);
-		});
-
-		const updatedContent = doc.body.innerHTML;
-		return updatedContent;
+	if (!textToDisplay) {
+		return '';
 	}
-	return '';
+
+	const parser = new DOMParser();
+	const doc = parser.parseFromString(textToDisplay, 'text/html');
+
+	// Only process text inside <p> tags
+	const paragraphElements = doc.querySelectorAll('p');
+
+	paragraphElements.forEach((p) => {
+		let innerHTML = p.innerHTML;
+
+		// replace inline Markdown syntax with html tags
+		innerHTML = innerHTML
+			.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
+			.replace(/___(.+?)___/g, '<strong><em>$1</em></strong>')
+			.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+			.replace(/__(.+?)__/g, '<strong>$1</strong>')
+			.replace(/\*([^\s*](?:[^*]*[^\s*])?)\*/g, '<em>$1</em>')
+			.replace(/_([^\s_](?:[^_]*[^\s_])?)_/g, '<em>$1</em>')
+			.replace(/~~(.+?)~~/g, '<del>$1</del>')
+			.replace(/`([^`]+)`/g, '<code>$1</code>')
+			.replace(
+				/\[([^\]]+)\]\(([^)]+?)(?:\s+"([^"]*)")?\)/g,
+				(match, text, url, title) => {
+					return title
+						? `<a href="${url}" title="${title}">${text}</a>`
+						: `<a href="${url}">${text}</a>`;
+				}
+			)
+			.replace(
+				/!\[([^\]]*)\]\(([^)]+?)(?:\s+"([^"]*)")?\)/g,
+				(match, alt, src, title) => {
+					return title
+						? `<img src="${src}" alt="${alt}" title="${title}" />`
+						: `<img src="${src}" alt="${alt}" />`;
+				}
+			);
+
+		p.innerHTML = innerHTML;
+	});
+
+	return doc.body.innerHTML;
 };
 
 export const saveHelpcenterOption = async (result) => {
@@ -328,7 +348,7 @@ export const getHelpcenterOption = async () => {
 		if (responseData?.length > 0) {
 			return responseData;
 		}
-	} catch (err) {}
+	} catch (err) { }
 };
 
 export const getMultiSearchResponse = async (query, brand) => {
