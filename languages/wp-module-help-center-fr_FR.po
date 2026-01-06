@@ -30,6 +30,7 @@ msgid "You must be authenticated to make this call"
 msgstr "Vous devez être authentifié pour passer cet appel"
 
 #: includes/HelpCenter.php:147
+#: build/index.js:1
 msgid "Help"
 msgstr "Aide"
 
@@ -155,3 +156,7 @@ msgstr "Désolé, je n’ai pas encore d’informations sur %s."
 #: build/index.js:1
 msgid "Ask anything about WordPress"
 msgstr "Demandez n’importe quoi sur WordPress"
+
+#: build/index.js:1
+msgid "Minimize HelpCenter"
+msgstr "Minimiser le Centre d’aide"

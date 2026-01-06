@@ -27,6 +27,7 @@ msgid "NFD helpcenter data"
 msgstr ""
 
 #: includes/HelpCenter.php:147
+#: build/index.js:1
 msgid "Help"
 msgstr ""
 
@@ -143,6 +144,10 @@ msgstr ""
 
 #: build/index.js:1
 msgid "Help with WordPress"
+msgstr ""
+
+#: build/index.js:1
+msgid "Minimize HelpCenter"
 msgstr ""
 
 #: build/index.js:1
