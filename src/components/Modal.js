@@ -65,7 +65,7 @@ const Modal = ({ onClose }) => {
 			aria-modal="true"
 			className="nfd-hc-modal"
 		>
-			<div className="nfd-hc-modal__header" style={{ flexShrink: 0 }}>
+			<div className="nfd-hc-modal__header">
 				<h3
 					id="helpcenter-modal-heading"
 					className="nfd-hc-modal__header__heading"
@@ -111,7 +111,7 @@ const Modal = ({ onClose }) => {
 					<CloseIcon aria-hidden="true" />
 				</button>
 			</div>
-			<div className="nfd-hc-seperator" style={{ flexShrink: 0 }}>
+			<div className="nfd-hc-seperator">
 				<hr />
 			</div>
 			<div

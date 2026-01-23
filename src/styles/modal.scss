@@ -32,6 +32,7 @@ $container-width: 350px;
 			top: 0;
 			left: 0;
 			padding: 17px 23px 10px;
+			flex-shrink: 0;
 
 			&__heading {
 				font-size: 16px;
@@ -103,6 +104,10 @@ $container-width: 350px;
 			padding: 0 8px;
 		}
 	}
+
+	.nfd-hc-seperator {
+		flex-shrink: 0;
+	}
 }
 
 .nfd-help-center-chat {
@@ -112,7 +117,97 @@ $container-width: 350px;
 	flex-direction: column;
 	overflow: hidden;
 	position: relative;
+	width: 100%;
 	z-index: 15;
+
+	// Error alert wrapper
+	&__error-alert {
+		padding: 10px 20px;
+		flex-shrink: 0;
+	}
+
+	// Welcome screen wrapper
+	&__welcome-wrapper {
+		flex: 1 1 0%;
+		min-height: 0;
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+		padding: 20px;
+		background-color: #fff;
+	}
+
+	// Actions row (clear chat)
+	&__actions-row {
+		padding: 8px 20px;
+		text-align: right;
+		flex-shrink: 0;
+		border-top: 1px solid #e0e0e0;
+		background: #fff;
+		position: relative;
+		z-index: 10;
+	}
+
+	// Clear chat button
+	&__clear-chat-button {
+		background: none;
+		border: none;
+		padding: 0;
+		font-size: 12px;
+		color: #666;
+		cursor: pointer;
+		text-decoration: none;
+		font-family: inherit;
+		transition: text-decoration 0.2s, color 0.2s;
+
+		&:hover {
+			text-decoration: underline;
+			color: #333;
+		}
+	}
+
+	// Input area
+	&__input-area {
+		padding: 20px;
+		border-top: 1px solid #e0e0e0;
+		background: #fff;
+		flex-shrink: 0;
+		position: relative;
+		z-index: 20;
+		overflow: visible;
+
+		&--no-border {
+			border-top: none;
+		}
+	}
+
+	// Footer wrapper
+	&__footer-wrapper {
+		flex-shrink: 0;
+		border-top: 1px solid #e0e0e0;
+		background: #fff;
+		width: 100%;
+	}
+
+	// Connecting overlay
+	&__connecting-overlay {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		z-index: 1000;
+		background: rgba(255, 255, 255, 0.85);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	// Connecting text
+	&__connecting-text {
+		font-size: 14px;
+		color: #666;
+	}
 }
 
 .iframe-modal {

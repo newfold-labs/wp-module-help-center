@@ -154,22 +154,10 @@ const HelpCenterChat = () => {
 		`nfd-help-center-chat nfd-ai-chat-container ${brandClass}`.trim();
 
 	return (
-		<div
-			className={containerClasses}
-			data-brand={brandId || undefined}
-			style={{
-				flex: 1, // Fill flex parent instead of height: 100%
-				minHeight: 0, // Allow flex parent to control height
-				display: 'flex',
-				flexDirection: 'column',
-				overflow: 'hidden',
-				width: '100%',
-				position: 'relative', // Ensure proper positioning context
-			}}
-		>
+		<div className={containerClasses} data-brand={brandId || undefined}>
 			{/* Error Alert */}
 			{error && (
-				<div style={{ padding: '10px 20px', flexShrink: 0 }}>
+				<div className="nfd-help-center-chat__error-alert">
 					<ErrorAlert message={error} />
 				</div>
 			)}
@@ -177,17 +165,7 @@ const HelpCenterChat = () => {
 			{/* Messages Area - flex container that grows to fill space */}
 			{/* ChatMessages handles its own scrolling via overflow-y: auto */}
 			{showWelcome ? (
-				<div
-					style={{
-						flex: '1 1 0%',
-						minHeight: 0,
-						display: 'flex',
-						flexDirection: 'column',
-						overflow: 'hidden',
-						padding: '20px',
-						backgroundColor: '#fff',
-					}}
-				>
+				<div className="nfd-help-center-chat__welcome-wrapper">
 					<WelcomeScreen
 						onSendMessage={sendMessage}
 						title={__(
@@ -218,38 +196,10 @@ const HelpCenterChat = () => {
 
 			{/* Actions Row - Clear Chat Link */}
 			{messages.length > 0 && (
-				<div
-					style={{
-						padding: '8px 20px',
-						textAlign: 'right',
-						flexShrink: 0,
-						borderTop: '1px solid #e0e0e0',
-						background: '#fff',
-						position: 'relative',
-						zIndex: 10,
-					}}
-				>
+				<div className="nfd-help-center-chat__actions-row">
 					<button
 						onClick={handleClearChat}
-						className="nfd-clear-chat-link"
-						style={{
-							background: 'none',
-							border: 'none',
-							padding: 0,
-							fontSize: '12px',
-							color: '#666',
-							cursor: 'pointer',
-							textDecoration: 'none',
-							fontFamily: 'inherit',
-						}}
-						onMouseEnter={(e) => {
-							e.target.style.textDecoration = 'underline';
-							e.target.style.color = '#333';
-						}}
-						onMouseLeave={(e) => {
-							e.target.style.textDecoration = 'none';
-							e.target.style.color = '#666';
-						}}
+						className="nfd-help-center-chat__clear-chat-button nfd-clear-chat-link"
 						aria-label={__('Clear chat', 'wp-module-help-center')}
 					>
 						{__('Clear Chat', 'wp-module-help-center')}
@@ -259,16 +209,11 @@ const HelpCenterChat = () => {
 
 			{/* Input Area */}
 			<div
-				style={{
-					padding: '20px',
-					borderTop:
-						messages.length > 0 ? 'none' : '1px solid #e0e0e0',
-					background: '#fff',
-					flexShrink: 0,
-					position: 'relative',
-					zIndex: 20,
-					overflow: 'visible',
-				}}
+				className={`nfd-help-center-chat__input-area ${
+					messages.length > 0
+						? 'nfd-help-center-chat__input-area--no-border'
+						: ''
+				}`}
 			>
 				<ChatInput
 					onSendMessage={sendMessage}
@@ -283,14 +228,7 @@ const HelpCenterChat = () => {
 
 			{/* Footer - Support banner (hidden when launched from tooltip) */}
 			{shouldShowFooterInChat(hasLaunchedFromTooltip) && (
-				<div
-					style={{
-						flexShrink: 0,
-						borderTop: '1px solid #e0e0e0',
-						background: '#fff',
-						width: '100%',
-					}}
-				>
+				<div className="nfd-help-center-chat__footer-wrapper">
 					<Footer />
 				</div>
 			)}
@@ -298,22 +236,11 @@ const HelpCenterChat = () => {
 			{/* Connecting overlay - grey out when WebSocket is connecting */}
 			{isConnecting && (
 				<div
-					style={{
-						position: 'absolute',
-						top: 0,
-						right: 0,
-						bottom: 0,
-						left: 0,
-						zIndex: 1000,
-						background: 'rgba(255, 255, 255, 0.85)',
-						display: 'flex',
-						alignItems: 'center',
-						justifyContent: 'center',
-					}}
+					className="nfd-help-center-chat__connecting-overlay"
 					aria-live="polite"
 					aria-busy="true"
 				>
-					<span style={{ fontSize: '14px', color: '#666' }}>
+					<span className="nfd-help-center-chat__connecting-text">
 						{__('Connecting…', 'wp-module-help-center')}
 					</span>
 				</div>
