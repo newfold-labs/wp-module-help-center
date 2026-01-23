@@ -5,41 +5,39 @@ import { ReactComponent as HistoryIcon } from '../icons/reload.svg';
 const RecentSearches = () => {
 	const dispatch = useDispatch();
 	const recentSearches = useSelector(
-		( state ) => state.helpcenter.recentSearches
+		(state) => state.helpcenter.recentSearches
 	);
 
-	if ( ! recentSearches || recentSearches.length === 0 ) {
+	if (!recentSearches || recentSearches.length === 0) {
 		return null;
 	}
-	const handleHistory = ( index ) => {
-		dispatch( helpcenterActions.setIsFooterVisible( false ) );
+	const handleHistory = (index) => {
+		dispatch(helpcenterActions.setIsFooterVisible(false));
+		dispatch(helpcenterActions.updateResultContent(recentSearches[index]));
 		dispatch(
-			helpcenterActions.updateResultContent( recentSearches[ index ] )
-		);
-		dispatch(
-			helpcenterActions.updateHelpResultHistory( recentSearches[ index ] )
+			helpcenterActions.updateHelpResultHistory(recentSearches[index])
 		);
 	};
 
 	return (
 		<div className="helpcenter-recent-search">
-			{ recentSearches.map( ( history, index ) => (
+			{recentSearches.map((history, index) => (
 				<div
-					key={ index }
+					key={index}
 					className="helpcenter-recent-search--item"
-					onClick={ () => handleHistory( index ) }
+					onClick={() => handleHistory(index)}
 					role="button"
-					tabIndex={ 0 }
-					onKeyDown={ ( e ) => {
-						if ( e.key === 'Enter' || e.key === ' ' ) {
-							handleHistory( index );
+					tabIndex={0}
+					onKeyDown={(e) => {
+						if (e.key === 'Enter' || e.key === ' ') {
+							handleHistory(index);
 						}
-					} }
+					}}
 				>
 					<HistoryIcon />
-					<span>{ history.searchInput }</span>
+					<span>{history.searchInput}</span>
 				</div>
-			) ) }
+			))}
 		</div>
 	);
 };

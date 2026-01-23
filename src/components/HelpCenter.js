@@ -1,7 +1,8 @@
 import { useEffect, useRef } from '@wordpress/element';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { CapabilityAPI, LocalStorageUtils, adjustPadding } from '../utils';
+import { useHelpCenterState } from '../hooks/useHelpCenterState';
 
 import { helpcenterActions } from '../../store/helpcenterSlice';
 
@@ -13,6 +14,8 @@ import SearchInput from './SearchInput';
 
 const HelpCenter = () => {
 	const dispatch = useDispatch();
+
+	// Use reusable hook for Redux state
 	const {
 		visible,
 		helpEnabled,
@@ -22,7 +25,7 @@ const HelpCenter = () => {
 		resultContent,
 		isLoading,
 		hasLaunchedFromTooltip,
-	} = useSelector((state) => state.helpcenter);
+	} = useHelpCenterState();
 
 	const wrapper = useRef();
 	const resultsContainer = useRef();
@@ -30,6 +33,7 @@ const HelpCenter = () => {
 	// === useEffect: on mount ===
 	useEffect(() => {
 		getHelpStatus();
+		// Sync visibility state with Redux when localStorage changes
 		const updateVisibility = () =>
 			dispatch(
 				helpcenterActions.updateVisibility(
@@ -38,10 +42,13 @@ const HelpCenter = () => {
 			);
 		window.addEventListener('storage', updateVisibility);
 
+		// Initial sync
+		updateVisibility();
+
 		return () => {
 			window.removeEventListener('storage', updateVisibility);
 		};
-	}, []);
+	}, [dispatch]);
 
 	// === useEffect: on visible ===
 	useEffect(() => {

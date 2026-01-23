@@ -1,9 +1,7 @@
-import { useSelector } from 'react-redux';
+import { useHelpCenterState } from '../../hooks/useHelpCenterState';
 
 export default function ResultHeader({ noResult, questionBlock }) {
-	const { isNewEntry, hasLaunchedFromTooltip } = useSelector(
-		(state) => state.helpcenter
-	);
+	const { isNewEntry, hasLaunchedFromTooltip } = useHelpCenterState();
 
 	const getQuestionBlockText = () => {
 		if (!questionBlock || (noResult && isNewEntry)) {

@@ -518,11 +518,13 @@ body:is(.page, .post-php, .post-new-php) {
 }
 
 .nfd-hc-modal__footer {
-  position: fixed;
-  bottom: 0;
-  z-index: 10;
+  position: relative;
+  z-index: 5;
   background-color: #f3f7fa;
   color:#000;
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 100%;
 
   &__breakline {
     padding: 20px 23px 0;
@@ -596,7 +598,8 @@ body:is(.page, .post-php, .post-new-php) {
   .hc-banner__wrapper{
     position: relative;
     height: 210px;
-    width: 360px;
+    width: 100%;
+    max-width: 360px;
 
     .hc-banner {
       position: absolute;

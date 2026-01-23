@@ -5,7 +5,18 @@ $container-width: 350px;
 	box-sizing: border-box;
 
 	.nfd-hc-modal {
-		padding-bottom: 32px;
+		display: flex;
+		flex-direction: column;
+		height: calc(100vh - 255px);
+		max-height: calc(100vh - 255px);
+		min-height: 0;
+		overflow: hidden;
+
+		// Only apply min-height: 100% when AI chat container is present (new help center)
+		&:has(.nfd-ai-chat-container) {
+			max-height: none;
+			min-height: 100%;
+		}
 
 		h4,
 		h3 {
@@ -72,6 +83,14 @@ $container-width: 350px;
 
 			}
 		}
+
+		&__content {
+			display: flex;
+			flex-direction: column;
+			flex: 1 1 0%; // Use 0% basis to properly fill flex parent
+			min-height: 0;
+			overflow: hidden;
+		}
 	}
 
 	.helpcenter-intro {
@@ -84,6 +103,16 @@ $container-width: 350px;
 			padding: 0 8px;
 		}
 	}
+}
+
+.nfd-help-center-chat {
+	flex: 1 1 0%; // Fill flex parent properly
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	position: relative;
+	z-index: 15;
 }
 
 .iframe-modal {

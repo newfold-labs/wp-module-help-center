@@ -1,31 +1,40 @@
 /* eslint-disable @wordpress/i18n-no-flanking-whitespace */
 import { __ } from '@wordpress/i18n';
-import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { ReactComponent as FooterBackground } from '../icons/footer.svg';
+import { useHelpCenterState } from '../hooks/useHelpCenterState';
 
 const Footer = () => {
-	const { disliked, noResult } = useSelector((state) => state.helpcenter);
-    const [ contactUrl, setContactUrl ] = useState('https://www.bluehost.com/contact');
-    const [ proDesignUrl, setProDesignUrl ] = useState('https://www.bluehost.com/pro-design-live');
+	const { disliked, noResult } = useHelpCenterState();
+	const [contactUrl, setContactUrl] = useState(
+		'https://www.bluehost.com/contact'
+	);
+	const [proDesignUrl, setProDesignUrl] = useState(
+		'https://www.bluehost.com/pro-design-live'
+	);
 
-    // Function to add UTM parameters to a URL
-    useEffect(() => {
-        const interval = setInterval(() => {
-            if (
-                window.NewfoldRuntime?.linkTracker?.addUtmParams instanceof Function
-            ) {
-                const addParamsContact = window.NewfoldRuntime.linkTracker.addUtmParams(contactUrl);
-                const addParamsProDesign = window.NewfoldRuntime.linkTracker.addUtmParams(proDesignUrl);
-                setContactUrl(addParamsContact);
-                setProDesignUrl(addParamsProDesign);
-            }
-        }, 200);
+	// Function to add UTM parameters to a URL
+	useEffect(() => {
+		const interval = setInterval(() => {
+			if (
+				window.NewfoldRuntime?.linkTracker?.addUtmParams instanceof
+				Function
+			) {
+				const addParamsContact =
+					window.NewfoldRuntime.linkTracker.addUtmParams(contactUrl);
+				const addParamsProDesign =
+					window.NewfoldRuntime.linkTracker.addUtmParams(
+						proDesignUrl
+					);
+				setContactUrl(addParamsContact);
+				setProDesignUrl(addParamsProDesign);
+			}
+		}, 200);
 
-        return () => clearInterval(interval);
-    }, []);
+		return () => clearInterval(interval);
+	}, []);
 
-    return (
+	return (
 		<div className="nfd-hc-modal__footer">
 			<div className="helpcenter-supportinfo__wrapper">
 				{!disliked && !noResult && (
