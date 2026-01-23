@@ -30,11 +30,11 @@ jobs:
 
     strategy:
       matrix: # Supported PHP versions
-        php: [ '7.3', '7.4', '8.0', '8.1', '8.2', '8.3', '8.4' ]
+        php: [ '7.4', '8.0', '8.1', '8.2', '8.3', '8.4' ]
 
     steps:
       - name: Checkout
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           fetch-depth: 0 # attempting to get all branch names.
 
@@ -65,13 +65,13 @@ jobs:
       #          commit_message: "🤖 Creating gh-pages branch"
 
       - name: Checkout GitHub Pages branch for code coverage report
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           ref: gh-pages
           path: gh-pages
 
       - name: Install PHP
-        uses: shivammathur/setup-php@7bf05c6b704e0b9bfee22300130a31b5ea68d593 # v2.36.0
+        uses: shivammathur/setup-php@5efa2a774eb6c55954af5652a1f947afbc8dd282 # v2.36.0
         with:
           php-version: ${{ matrix.php }}
           coverage: xdebug
@@ -148,7 +148,7 @@ jobs:
 
       - name: Commit code coverage to gh-pages
         if: ${{ matrix.php == '7.3' }}
-        uses: stefanzweifel/git-auto-commit-action@28e16e81777b558cc906c8750092100bbb34c5e3 # v7.0.0
+        uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7.1.0
         with:
           repository: gh-pages
           branch: gh-pages

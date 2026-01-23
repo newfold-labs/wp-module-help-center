@@ -30,6 +30,7 @@ msgid "You must be authenticated to make this call"
 msgstr "U moet geverifieerd zijn om deze oproep te kunnen doen"
 
 #: includes/HelpCenter.php:147
+#: build/index.js:1
 msgid "Help"
 msgstr "Hulp"
 
@@ -155,3 +156,7 @@ msgstr "Sorry, ik heb nog geen informatie over %s."
 #: build/index.js:1
 msgid "Ask anything about WordPress"
 msgstr "Vraag alles over WordPress"
+
+#: build/index.js:1
+msgid "Minimize HelpCenter"
+msgstr "Minimaliseer HelpCenter"
