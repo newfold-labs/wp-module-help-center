@@ -1,13 +1,14 @@
 import { __ } from '@wordpress/i18n';
-import { useDispatch, useSelector } from 'react-redux';
-import { toggleHelp } from '../'; //
+import { useDispatch } from 'react-redux';
+import { toggleHelp } from '..';
 import { helpcenterActions } from '../../store/helpcenterSlice';
 import { ReactComponent as HelpcenterChatBubbleIcon } from '../icons/help-bubble.svg';
+import { useHelpCenterState } from '../hooks/useHelpCenterState';
 
 const FloatingIcon = () => {
 	const dispatch = useDispatch();
 	const { floatingIconVisibilty, visible, hasLaunchedFromTooltip } =
-		useSelector((state) => state.helpcenter);
+		useHelpCenterState();
 
 	const handleClick = () => {
 		toggleHelp(true);

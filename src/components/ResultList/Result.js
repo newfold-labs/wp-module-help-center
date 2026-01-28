@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from '@wordpress/element';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { helpcenterActions } from '../../../store/helpcenterSlice';
 import { processContentForMarkdown, useRevealText } from '../../utils';
+import { useHelpCenterState } from '../../hooks/useHelpCenterState';
 import BackButton from '../BackButton';
 import ResultContent from './ResultContent';
 import ResultFeedback from './ResultFeedback';
@@ -22,7 +23,7 @@ export const Result = ({
 		noResult,
 		showBackButton,
 		hasLaunchedFromTooltip,
-	} = useSelector((state) => state.helpcenter);
+	} = useHelpCenterState();
 	const isNewEntry = isNewResult;
 	const responseRef = useRef(null);
 	const [shouldReveal, setShouldReveal] = useState(false);

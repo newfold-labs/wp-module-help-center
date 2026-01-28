@@ -250,11 +250,12 @@ window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery = function (
 document.addEventListener('click', async (event) => {
 	try {
 		if (event.target?.classList?.contains('nfd-help-center-tip')) {
-			!LocalStorageUtils.getHelpVisible() &&
+			if (!LocalStorageUtils.getHelpVisible()) {
 				document
 					.getElementById('wp-admin-bar-help-center')
 					.querySelector('.ab-item')
 					.click();
+			}
 			store.dispatch(helpcenterActions.setIsTooltipLoading());
 			const postId = event.target.dataset.postId;
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { useState, useEffect, useRef } from '@wordpress/element';
 import { useDispatch, useSelector } from 'react-redux';
 import { helpcenterActions } from '../../../store/helpcenterSlice';

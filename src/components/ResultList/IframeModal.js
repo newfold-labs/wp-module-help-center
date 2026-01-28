@@ -46,11 +46,27 @@ const IframeModal = ({ isOpen, onClose, iframeAttributes }) => {
 		return null;
 	}
 
+	const handleOverlayKeyDown = (e) => {
+		if (e.key === 'Escape') {
+			onClose();
+		}
+	};
+
 	return (
-		<div className="iframe-modal__overlay" onClick={onClose}>
+		<div
+			className="iframe-modal__overlay"
+			onClick={onClose}
+			onKeyDown={handleOverlayKeyDown}
+			role="button"
+			tabIndex={0}
+			aria-label="Close modal"
+		>
+			{/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events */}
 			<div
 				className="iframe-modal__content"
 				onClick={(e) => e.stopPropagation()}
+				role="dialog"
+				aria-modal="true"
 			>
 				<button
 					onClick={onClose}

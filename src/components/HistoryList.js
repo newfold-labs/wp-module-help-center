@@ -1,11 +1,12 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { helpcenterActions } from '../../store/helpcenterSlice';
 import { ReactComponent as HistoryIcon } from '../icons/reload.svg';
 import { LocalStorageUtils } from './../utils';
+import { useHelpCenterState } from '../hooks/useHelpCenterState';
 
 const HistoryList = () => {
 	const dispatch = useDispatch();
-	const { helpResultHistory } = useSelector((state) => state.helpcenter);
+	const { helpResultHistory } = useHelpCenterState();
 	const handleHistory = (historyItem) => {
 		dispatch(helpcenterActions.clearViaLinkSearch());
 		dispatch(helpcenterActions.setIsFooterVisible(false));

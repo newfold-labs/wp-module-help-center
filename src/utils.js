@@ -74,6 +74,12 @@ export const CapabilityAPI = {
 			window.NewfoldRuntime?.capabilities?.canAccessHelpCenter || false
 		);
 	},
+	getAIHelpCenterCapability: () => {
+		return (
+			// get the AI help center capability from newfold runtime
+			window.NewfoldRuntime?.capabilities?.canAccessAIHelpCenter || false
+		);
+	},
 	getBrand: () => {
 		// get the brand name from newfold runtime
 		const brand = window.NewfoldRuntime?.plugin?.brand || 'wordpress';
@@ -348,7 +354,7 @@ export const getHelpcenterOption = async () => {
 		if (responseData?.length > 0) {
 			return responseData;
 		}
-	} catch (err) { }
+	} catch (err) {}
 };
 
 export const getMultiSearchResponse = async (query, brand) => {

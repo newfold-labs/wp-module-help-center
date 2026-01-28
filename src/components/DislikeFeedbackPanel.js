@@ -48,7 +48,11 @@ const DislikeFeedbackPanel = () => {
 						{__('or', 'wp-module-help-center')}{' '}
 						<span>
 							<a
-								href={window.NewfoldRuntime?.linkTracker?.addUtmParams("https://www.bluehost.com/contact") || "https://www.bluehost.com/contact" }
+								href={
+									window.NewfoldRuntime?.linkTracker?.addUtmParams(
+										'https://www.bluehost.com/contact'
+									) || 'https://www.bluehost.com/contact'
+								}
 								target="_blank"
 								rel="noreferrer"
 							>
