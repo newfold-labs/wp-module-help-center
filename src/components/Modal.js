@@ -124,7 +124,8 @@ const Modal = ({ onClose }) => {
 				<HelpCenterChat />
 			</div>
 			{/* Footer for legacy HelpCenter flow only - HelpCenterChat manages its own Footer when enabled */}
-			{showFooter && <Footer />}
+			{/* Only show footer when capability is OFF (legacy flow) */}
+			{showFooter && !canAccessAIHelpCenter && <Footer />}
 		</div>
 	);
 };

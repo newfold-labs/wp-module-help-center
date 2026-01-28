@@ -7,8 +7,7 @@ $container-width: 350px;
 	.nfd-hc-modal {
 		display: flex;
 		flex-direction: column;
-		height: calc(100vh - 255px);
-		max-height: calc(100vh - 255px);
+		height: 100%;
 		min-height: 0;
 		overflow: hidden;
 
@@ -88,9 +87,26 @@ $container-width: 350px;
 		&__content {
 			display: flex;
 			flex-direction: column;
-			flex: 1 1 0%; // Use 0% basis to properly fill flex parent
+			flex: 1 1 0%;
 			min-height: 0;
+			height: 0; // Critical: Force flex constraint
 			overflow: hidden;
+		}
+
+		&__footer {
+			flex-shrink: 0;
+			overflow: hidden; // Prevent footer from overflowing
+			max-width: 100%;
+
+			.helpcenter-supportinfo__wrapper,
+			.hc-banner__wrapper {
+				max-width: 100%;
+				overflow: hidden;
+			}
+
+			.hc-banner__wrapper {
+				max-width: 100% !important; // Override inline max-width if present
+			}
 		}
 	}
 
@@ -113,6 +129,7 @@ $container-width: 350px;
 .nfd-help-center-chat {
 	flex: 1 1 0%; // Fill flex parent properly
 	min-height: 0;
+	height: 0; // Critical: Force flex constraint to prevent expansion
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
@@ -120,11 +137,6 @@ $container-width: 350px;
 	width: 100%;
 	z-index: 15;
 
-	// Error alert wrapper
-	&__error-alert {
-		padding: 10px 20px;
-		flex-shrink: 0;
-	}
 
 	// Welcome screen wrapper
 	&__welcome-wrapper {
@@ -137,15 +149,65 @@ $container-width: 350px;
 		background-color: #fff;
 	}
 
-	// Actions row (clear chat)
-	&__actions-row {
-		padding: 8px 20px;
-		text-align: right;
-		flex-shrink: 0;
-		border-top: 1px solid #e0e0e0;
+	// Messages wrapper - ensures ChatMessages can scroll properly
+	&__messages-wrapper {
+		flex: 1 1 0%;
+		min-height: 0;
+		height: 0; // Critical: Force flex to constrain based on available space
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+		position: relative; // Establish positioning context
+
+		.nfd-ai-chat-messages {
+			// Override base styles to ensure proper scrolling
+			flex: 1 1 0% !important;
+			min-height: 0 !important;
+			max-height: none !important; // Remove max-height: 100% that prevents flex scrolling
+			height: 100% !important; // Fill parent height
+			overflow-y: auto !important; // Force scrolling
+			overflow-x: hidden !important;
+			// Ensure it doesn't expand beyond parent
+			position: relative;
+		}
+	}
+
+	// Messages header with clear chat button
+	&__messages-header {
+		display: flex;
+		justify-content: flex-end;
+		padding: 8px 16px;
 		background: #fff;
-		position: relative;
-		z-index: 10;
+		flex-shrink: 0;
+	}
+
+	// Chat history list styles
+	&__history-list {
+		margin-top: 20px;
+		padding-top: 20px;
+		border-top: 1px solid #e0e0e0;
+	}
+
+	&__history-item {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		cursor: pointer;
+		color: #336AD7;
+		font-size: 12px;
+		padding: 8px 0;
+		transition: color 0.2s;
+
+		&:hover {
+			color: #1d4ed8;
+			text-decoration: underline;
+		}
+
+		svg {
+			width: 14px;
+			height: 14px;
+			fill: currentColor;
+		}
 	}
 
 	// Clear chat button
@@ -181,15 +243,160 @@ $container-width: 350px;
 		}
 	}
 
-	// Footer wrapper
-	&__footer-wrapper {
-		flex-shrink: 0;
-		border-top: 1px solid #e0e0e0;
-		background: #fff;
-		width: 100%;
+	// Input wrapper - hide disclaimer and make input smaller
+	&__input-wrapper {
+		.nfd-ai-chat-input {
+			padding: 12px 16px;
+
+			&__disclaimer {
+				display: none; // Hide AI disclaimer
+			}
+
+			&__container {
+				padding: 8px 10px;
+			}
+
+			&__textarea {
+				font-size: 13px;
+				min-height: 20px;
+				max-height: 120px;
+			}
+		}
 	}
 
-	// Connecting overlay
+	// Footer wrapper (AI chat flow) - match old help center styling
+	&__footer-wrapper {
+		flex-shrink: 0;
+		background: #f3f7fa;
+		width: 100%;
+		max-width: 100%; // Match old help center
+		overflow: hidden;
+		position: relative;
+		z-index: 10;
+		box-sizing: border-box; // Ensure proper width calculation
+
+		// Reset footer styles when inside AI chat wrapper
+		.nfd-hc-modal__footer {
+			position: relative;
+			bottom: auto;
+			right: auto;
+			width: 100%;
+			max-width: 100%; // Match old help center
+			height: auto;
+			overflow: hidden;
+			box-sizing: border-box; // Ensure proper width calculation
+		}
+
+		// Support info for AI chat - match old help center
+		.helpcenter-supportinfo__wrapper {
+			padding: 15px 23px 0;
+			width: 100%;
+			max-width: 100%; // Prevent overflow
+			box-sizing: border-box; // Ensure proper width calculation
+			overflow: hidden; // Prevent content overflow
+
+			.helpcenter-supportinfo__text {
+				padding: 15px 0 30px;
+				width: 100%;
+				max-width: 100%; // Prevent overflow
+				box-sizing: border-box;
+
+				&--heading {
+					font-size: 13px;
+					font-weight: 500;
+				}
+
+				&--body {
+					font-size: 13px;
+					font-weight: 400;
+					margin: 0;
+					word-wrap: break-word; // Prevent text overflow
+					overflow-wrap: break-word; // Prevent text overflow
+				}
+			}
+		}
+
+		// Banner for AI chat - match old help center styling
+		.hc-banner__wrapper {
+			position: relative;
+			height: 210px;
+			width: 100%;
+			max-width: 100%; // Match old help center - prevent overflow
+			overflow: hidden; // Match old help center - prevent SVG from overflowing
+			box-sizing: border-box; // Ensure proper width calculation
+
+			.hc-banner {
+				position: absolute;
+				bottom: 0;
+				z-index: 1;
+				padding: 10px 23px 20px;
+				background-color: transparent;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				width: 100%;
+				max-width: 100%; // Prevent overflow
+				box-sizing: border-box;
+
+				.hc-banner-content {
+					width: 100%;
+					max-width: 100%; // Prevent overflow
+					box-sizing: border-box;
+
+					&__heading {
+						font-size: 13px;
+						font-weight: 500;
+						margin: 0 0 15px;
+						word-wrap: break-word; // Prevent text overflow
+						overflow-wrap: break-word;
+					}
+
+					&__body {
+						font-size: 12px;
+						width: 90%;
+						max-width: 90%; // Prevent overflow
+						margin: 0 0 15px;
+						word-wrap: break-word; // Prevent text overflow
+						overflow-wrap: break-word;
+					}
+
+					&__cta {
+						display: flex; // Match old help center
+
+						&--button {
+							height: 28px;
+							font-size: 12px;
+							background-color: #121212;
+							color: #fff;
+							border-radius: 5px;
+							border: none;
+							padding: 6px 10px;
+							font-weight: 700;
+							text-decoration: none;
+							box-sizing: border-box; // Ensure proper sizing
+						}
+					}
+				}
+			}
+
+			.hc-banner-background {
+				position: absolute;
+				bottom: -5px;
+				width: 100%;
+				max-width: 100%; // Match old help center
+				overflow: hidden; // Match old help center
+
+				svg {
+					width: 100%;
+					height: auto;
+					max-width: 100%; // Match old help center - prevent overflow
+				}
+			}
+		}
+	}
+
+	// Connecting overlay - polished loading state
 	&__connecting-overlay {
 		position: absolute;
 		top: 0;
@@ -197,16 +404,92 @@ $container-width: 350px;
 		bottom: 0;
 		left: 0;
 		z-index: 1000;
-		background: rgba(255, 255, 255, 0.85);
+		background: rgba(255, 255, 255, 0.92);
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		backdrop-filter: blur(2px);
+	}
+
+	// Connecting content container
+	&__connecting-content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 12px;
+	}
+
+	// Connecting spinner
+	&__connecting-spinner {
+		width: 28px;
+		height: 28px;
+		border: 3px solid #e5e7eb;
+		border-top-color: #3b82f6;
+		border-radius: 50%;
+		animation: nfd-spin 0.8s linear infinite;
 	}
 
 	// Connecting text
 	&__connecting-text {
+		font-size: 13px;
+		color: #6b7280;
+		font-weight: 500;
+		display: inline-flex;
+		align-items: center;
+	}
+
+	// Blinking cursor for typing animation
+	&__connecting-cursor {
+		display: inline-block;
+		width: 2px;
+		height: 14px;
+		background-color: #3b82f6;
+		margin-left: 2px;
+		animation: nfd-cursor-blink 0.8s ease-in-out infinite;
+	}
+}
+
+// Loading placeholder while AI chat component loads
+.nfd-help-center-chat-loading {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	min-height: 300px;
+	padding: 40px;
+	background: #fff;
+
+	&__spinner {
+		width: 32px;
+		height: 32px;
+		border: 3px solid #e5e7eb;
+		border-top-color: #3b82f6;
+		border-radius: 50%;
+		animation: nfd-spin 0.8s linear infinite;
+	}
+
+	&__text {
+		margin-top: 16px;
 		font-size: 14px;
-		color: #666;
+		color: #6b7280;
+	}
+}
+
+@keyframes nfd-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes nfd-cursor-blink {
+	0%,
+	50% {
+		opacity: 1;
+	}
+	51%,
+	100% {
+		opacity: 0;
 	}
 }
 

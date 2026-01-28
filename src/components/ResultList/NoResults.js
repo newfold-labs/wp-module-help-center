@@ -4,7 +4,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { LocalStorageUtils } from '../../utils';
 import { ReactComponent as NoResultIcon } from './../../icons/noresults-icon.svg';
 
-const NoResults = ({ hasLaunchedFromTooltip }) => {
+const NoResults = ({ hasLaunchedFromTooltip, query: queryProp }) => {
 	const responseRef = useRef(null);
 	const resourceLink = window?.nfdHelpCenter?.resourceLink || '#'; // Fallback if resourceLink is not defined
 
@@ -16,7 +16,14 @@ const NoResults = ({ hasLaunchedFromTooltip }) => {
 
 	// Replace the {link} placeholder with the actual link
 	const formattedContent = contentWithLink.replace('{link}', resourceLink);
-	const query = LocalStorageUtils.getSearchInput();
+	// Use prop query if provided, otherwise try localStorage, fallback to null
+	const query =
+		queryProp !== undefined
+			? queryProp
+			: LocalStorageUtils.getSearchInput();
+	// Determine the message text - use "this" if launched from tooltip or query is null/empty
+	const messageText =
+		hasLaunchedFromTooltip || !query ? 'this' : `"${query}"`;
 	return (
 		<div ref={responseRef} className="helpcenter-response-block">
 			<div className="helpcenter-noresult-wrapper">
@@ -30,7 +37,7 @@ const NoResults = ({ hasLaunchedFromTooltip }) => {
 								'Sorry, I don’t have any information on %s yet.',
 								'wp-module-help-center'
 							),
-							hasLaunchedFromTooltip ? 'this' : `"${query}"`
+							messageText
 						)}
 					</p>
 					<div>

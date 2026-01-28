@@ -5,3 +5,4 @@
 
 export { useHelpVisibility } from './useHelpVisibility';
 export { useHelpCenterState } from './useHelpCenterState';
+export { useTypingAnimation } from './useTypingAnimation';

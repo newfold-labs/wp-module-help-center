@@ -54,9 +54,9 @@ $blue-links-color: #356CD8;
 
 .nfd-help-center {
   position: relative;
-  height: calc(100vh - 255px);
+  height: 100%;
   overflow-y: auto;
-  z-index: 10;
+  // Note: Removed z-index to prevent creating a stacking context that traps fixed-positioned children
 
 
   p {
@@ -122,6 +122,7 @@ $blue-links-color: #356CD8;
     background: #f3f7fa;
     z-index: 12;
     bottom: 0;
+    right: 0;
 
     .search-container__wrapper {
       padding: 5px 23px 12px;
@@ -517,12 +518,13 @@ body:is(.page, .post-php, .post-new-php) {
   }
 }
 
+// Base footer styles (shared between legacy and AI chat)
 .nfd-hc-modal__footer {
   position: relative;
   z-index: 5;
   background-color: #f3f7fa;
   color:#000;
-  flex-shrink: 0;
+  overflow: hidden; // Changed from visible to prevent overflow
   width: 100%;
   max-width: 100%;
 
@@ -599,7 +601,8 @@ body:is(.page, .post-php, .post-new-php) {
     position: relative;
     height: 210px;
     width: 100%;
-    max-width: 360px;
+    max-width: 100%; // Prevent overflow - changed from 360px
+    overflow: hidden; // Prevent SVG from overflowing
 
     .hc-banner {
       position: absolute;
@@ -611,6 +614,8 @@ body:is(.page, .post-php, .post-new-php) {
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      width: 100%;
+      box-sizing: border-box;
 
       .hc-banner-content {
 
@@ -648,8 +653,26 @@ body:is(.page, .post-php, .post-new-php) {
       position: absolute;
       bottom: -5px;
       width: 100%;
+      max-width: 100%;
+      overflow: hidden;
+      
+      svg {
+        width: 100%;
+        height: auto;
+        max-width: 100%;
+      }
     }
   }
+}
+
+// Legacy help center footer - fixed positioned (only when AI chat is NOT present)
+.nfd-hc-modal:not(:has(.nfd-ai-chat-container)) > .nfd-hc-modal__footer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 356px;
+  max-width: 356px;
+  height: 375px; // Match the input wrapper's bottom position
 }
 
 .helpcenter-noresult-wrapper {
