@@ -16,12 +16,17 @@ class CapabilityControllerWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTest
 	 */
 	public function test_controller_namespace_and_rest_base() {
 		$controller = new CapabilityController();
-		$this->assertSame( 'nfd-help-center/v1', $controller->get_namespace() );
-		$this->assertSame( 'capability', $controller->get_rest_base() );
+		$reflection  = new \ReflectionClass( $controller );
+		$namespace  = $reflection->getProperty( 'namespace' );
+		$namespace->setAccessible( true );
+		$rest_base = $reflection->getProperty( 'rest_base' );
+		$rest_base->setAccessible( true );
+		$this->assertSame( 'nfd-help-center/v1', $namespace->getValue( $controller ) );
+		$this->assertSame( 'capability', $rest_base->getValue( $controller ) );
 	}
 
 	/**
-	 * check_permission returns WP_Error when user cannot read.
+	 * Check_permission returns WP_Error when user cannot read.
 	 *
 	 * @return void
 	 */
@@ -35,7 +40,7 @@ class CapabilityControllerWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTest
 	}
 
 	/**
-	 * check_permission returns true when user can read.
+	 * Check_permission returns true when user can read.
 	 *
 	 * @return void
 	 */

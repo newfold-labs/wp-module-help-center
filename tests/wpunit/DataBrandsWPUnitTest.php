@@ -12,7 +12,7 @@ use NewfoldLabs\WP\Module\HelpCenter\Data\Brands;
 class DataBrandsWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 
 	/**
-	 * get_brands returns expected brand keys.
+	 * Get_brands returns expected brand keys.
 	 *
 	 * @return void
 	 */
@@ -28,7 +28,7 @@ class DataBrandsWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 	}
 
 	/**
-	 * get_resource_link_for_brand returns help URL for bluehost.
+	 * Get_resource_link_for_brand returns help URL for bluehost.
 	 *
 	 * @return void
 	 */
@@ -40,7 +40,7 @@ class DataBrandsWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 	}
 
 	/**
-	 * get_resource_link_for_brand returns empty for unknown brand.
+	 * Get_resource_link_for_brand returns empty for unknown brand.
 	 *
 	 * @return void
 	 */
