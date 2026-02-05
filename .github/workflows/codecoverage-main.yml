@@ -71,7 +71,7 @@ jobs:
           path: gh-pages
 
       - name: Install PHP
-        uses: shivammathur/setup-php@5efa2a774eb6c55954af5652a1f947afbc8dd282 # v2.36.0
+        uses: shivammathur/setup-php@f89a301251ea3f109745bab3a62be58575f216bf # v2.36.0
         with:
           php-version: ${{ matrix.php }}
           coverage: xdebug
