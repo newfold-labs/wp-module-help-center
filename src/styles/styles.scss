@@ -23,6 +23,14 @@ $blue-links-color: #356CD8;
     padding-right: 23px;
 }
 
+
+.helpcenter-result-block h1:first-child,
+.helpcenter-result-block h2:first-child,
+.helpcenter-result-block h3:first-child,
+.helpcenter-result-block h4:first-child{
+    margin-top: 1em!important;
+}
+
 .nfd-help-center-tip[data-post-id] {
     display: flex;
     align-items: center;
@@ -51,6 +59,7 @@ $blue-links-color: #356CD8;
         box-sizing: border-box;
     }
 }
+
 
 .nfd-help-center {
     position: relative;
@@ -375,7 +384,7 @@ $blue-links-color: #356CD8;
 
             /* Reset default styles */
             h1, h2, h3, h4, h5, h6 {
-                line-height: 1;
+                line-height: 1.5;
             }
 
             ul,
