@@ -120,6 +120,9 @@ $container-width: 350px;
 	}
 }
 
+// Shared border for chat sections (header, messages, input)
+$nfd-help-center-chat-border: #e5e7eb;
+
 .nfd-help-center-chat {
 	flex: 1 1 0%; // Fill flex parent properly
 	min-height: 0;
@@ -130,6 +133,12 @@ $container-width: 350px;
 	position: relative;
 	width: 100%;
 	z-index: 15;
+
+	// Header: Blu Chat title, +, history, close
+	&__header-wrapper {
+		flex-shrink: 0;
+		border-bottom: 1px solid $nfd-help-center-chat-border;
+	}
 
 	// Welcome screen wrapper
 	&__welcome-wrapper {
@@ -142,7 +151,7 @@ $container-width: 350px;
 		background-color: #fff;
 	}
 
-	// Messages wrapper - ensures ChatMessages can scroll properly
+	// Messages wrapper - ensures ChatMessages can scroll properly (only visible when chat expanded)
 	&__messages-wrapper {
 		flex: 1 1 0%;
 		min-height: 0;
@@ -151,6 +160,7 @@ $container-width: 350px;
 		flex-direction: column;
 		overflow: hidden;
 		position: relative; // Establish positioning context
+		border-top: 1px solid $nfd-help-center-chat-border;
 
 		.nfd-ai-chat-messages {
 			// Override base styles to ensure proper scrolling
@@ -169,7 +179,7 @@ $container-width: 350px;
 	&__messages-header {
 		display: flex;
 		justify-content: flex-end;
-		padding: 8px 16px;
+		padding: 6px 14px;
 		background: #fff;
 		flex-shrink: 0;
 	}
@@ -192,19 +202,15 @@ $container-width: 350px;
 		}
 	}
 
-	// Input area
+	// Input area - always show top border to delineate from messages
 	&__input-area {
-		padding: 10px;
-		border-top: 1px solid #e0e0e0;
+		padding: 10px 14px;
+		border-top: 1px solid $nfd-help-center-chat-border;
 		background: #fff;
 		flex-shrink: 0;
 		position: relative;
 		z-index: 20;
 		overflow: visible;
-
-		&--no-border {
-			border-top: none;
-		}
 	}
 
 	// Input wrapper - hide disclaimer and make input smaller

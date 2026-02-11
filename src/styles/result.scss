@@ -101,4 +101,10 @@
 /* Ensure wrapper can host absolutely-positioned overlay */
 .wp-block-embed__wrapper { position: relative; }
 
-
+.helpcenter-back-arrow {
+  cursor: pointer;
+  color: #356CD8;
+  display: inline-flex;
+  gap: 6px;
+  padding-top: 10px;
+}

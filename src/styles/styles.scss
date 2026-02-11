@@ -464,6 +464,7 @@ $blue-links-color: #356CD8;
 .help-container {
     width: 356px;
     height: 100vh;
+    max-height: calc(100vh - 32px);
     overflow: hidden;
     position: fixed;
     right: 0;
@@ -598,13 +599,12 @@ body:is(.page, .post-php, .post-new-php) {
 
 // Base footer styles (shared between legacy and AI chat)
 .nfd-hc-modal__footer {
-  position: relative;
+  position: fixed;
   bottom: 0;
   z-index: 10;
   background-color: #f3f7fa;
   color: #000;
   overflow: hidden;
-  width: 100%;
   max-width: 100%;
 
     &__breakline {
@@ -677,7 +677,7 @@ body:is(.page, .post-php, .post-new-php) {
 
   .hc-banner__wrapper {
     position: relative;
-    height: 210px;
+    height: 242px;
     width: 100%;
     max-width: 100%;
     overflow: hidden;
@@ -777,14 +777,6 @@ body:is(.page, .post-php, .post-new-php) {
             }
         }
     }
-}
-
-.helpcenter-back-arrow {
-    cursor: pointer;
-    color: $blue-links-color;
-    display: inline-flex;
-    gap: 6px;
-    padding-top: 10px;
 }
 
 #nfd-hc-floating-icon-wrapper {
