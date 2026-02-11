@@ -24,11 +24,11 @@ jobs:
     steps:
 
       - name: Checkout
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       # Using PHP 8.1 here for compatibility with the latest WordPress code sniffer rules.
       - name: Setup PHP
-        uses: shivammathur/setup-php@5efa2a774eb6c55954af5652a1f947afbc8dd282 # v2.36.0
+        uses: shivammathur/setup-php@f89a301251ea3f109745bab3a62be58575f216bf # v2.36.0
         with:
           php-version: '7.3'
           coverage: none
@@ -46,7 +46,7 @@ jobs:
         if: "!! env.GIT_DIFF"
 
       - name: Cache Composer vendor directory
-        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
