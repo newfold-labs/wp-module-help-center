@@ -269,7 +269,7 @@ document.addEventListener('click', async (event) => {
 			}
 
 			const result = {
-				resultContent: formatPostContent(results.content.rendered),
+				resultContent: results.content.rendered,
 				postId,
 				searchInput: results.title.rendered,
 				feedbackSubmitted: null,

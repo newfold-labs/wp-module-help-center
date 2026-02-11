@@ -57,7 +57,7 @@ const SearchInput = () => {
 		searchSource = 'kb'
 	) => {
 		const resultContentFormatted = postContent
-			? formatPostContent(postContent)
+			? postContent
 			: '';
 		// Retrieve existing results from local storage and using the updated persistResult method to store the result
 		const result = {
