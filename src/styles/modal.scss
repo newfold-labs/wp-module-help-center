@@ -11,12 +11,6 @@ $container-width: 350px;
 		min-height: 0;
 		overflow: hidden;
 
-		// Only apply min-height: 100% when AI chat container is present (new help center)
-		&:has(.nfd-ai-chat-container) {
-			max-height: none;
-			min-height: 100%;
-		}
-
 		h4,
 		h3 {
 			margin: 0;
@@ -137,7 +131,6 @@ $container-width: 350px;
 	width: 100%;
 	z-index: 15;
 
-
 	// Welcome screen wrapper
 	&__welcome-wrapper {
 		flex: 1 1 0%;
@@ -181,35 +174,6 @@ $container-width: 350px;
 		flex-shrink: 0;
 	}
 
-	// Chat history list styles
-	&__history-list {
-		margin-top: 20px;
-		padding-top: 20px;
-		border-top: 1px solid #e0e0e0;
-	}
-
-	&__history-item {
-		display: flex;
-		align-items: center;
-		gap: 6px;
-		cursor: pointer;
-		color: #336AD7;
-		font-size: 12px;
-		padding: 8px 0;
-		transition: color 0.2s;
-
-		&:hover {
-			color: #1d4ed8;
-			text-decoration: underline;
-		}
-
-		svg {
-			width: 14px;
-			height: 14px;
-			fill: currentColor;
-		}
-	}
-
 	// Clear chat button
 	&__clear-chat-button {
 		background: none;
@@ -230,7 +194,7 @@ $container-width: 350px;
 
 	// Input area
 	&__input-area {
-		padding: 20px;
+		padding: 10px;
 		border-top: 1px solid #e0e0e0;
 		background: #fff;
 		flex-shrink: 0;
@@ -274,6 +238,10 @@ $container-width: 350px;
 		position: relative;
 		z-index: 10;
 		box-sizing: border-box; // Ensure proper width calculation
+		// Expanded state: cap height for transition and short viewports
+		max-height: 500px; // Fallback for older browsers
+		max-height: min(500px, 50vh);
+		transition: max-height 0.35s ease-out;
 
 		// Reset footer styles when inside AI chat wrapper
 		.nfd-hc-modal__footer {
@@ -396,6 +364,20 @@ $container-width: 350px;
 		}
 	}
 
+	// Footer collapsed when chat has messages (animated)
+	&__footer-wrapper--collapsed {
+		max-height: 0;
+		visibility: hidden;
+	}
+
+	// Respect reduced-motion preference for footer collapse
+	@media (prefers-reduced-motion: reduce) {
+		&__footer-wrapper,
+		&__footer-wrapper--collapsed {
+			transition: none;
+		}
+	}
+
 	// Connecting overlay - polished loading state
 	&__connecting-overlay {
 		position: absolute;
@@ -446,6 +428,58 @@ $container-width: 350px;
 		background-color: #3b82f6;
 		margin-left: 2px;
 		animation: nfd-cursor-blink 0.8s ease-in-out infinite;
+	}
+
+	// Header wrapper (ChatHeader + non-blocking bars)
+	&__header-wrapper {
+		display: flex;
+		flex-direction: column;
+		flex-shrink: 0;
+	}
+
+	// Non-blocking connecting bar (slim, below header)
+	&__connecting-bar {
+		padding: 6px 16px;
+		background: #f0f9ff;
+		font-size: 13px;
+		color: #0369a1;
+		display: flex;
+		align-items: center;
+	}
+
+	&__connecting-bar-text {
+		display: inline-flex;
+		align-items: center;
+	}
+
+	// Failed connection: Retry bar
+	&__retry-bar {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		padding: 8px 16px;
+		background: #fef2f2;
+		font-size: 13px;
+		color: #991b1b;
+	}
+
+	&__retry-text {
+		flex: 1;
+	}
+
+	&__retry-button {
+		padding: 4px 12px;
+		font-size: 13px;
+		font-weight: 500;
+		color: #fff;
+		background: #dc2626;
+		border: none;
+		border-radius: 4px;
+		cursor: pointer;
+	}
+
+	&__retry-button:hover {
+		background: #b91c1c;
 	}
 }
 

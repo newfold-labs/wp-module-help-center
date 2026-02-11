@@ -144,7 +144,7 @@ $blue-links-color: #356CD8;
 
     h3 {
         font-size: 1em;
-        font-weight: bold;
+        font-weight: 700;
     }
 
     h4 {
@@ -851,4 +851,5 @@ body:is(.page, .post-php, .post-new-php) {
         outline: 3px solid #93c5fd;
         outline-offset: 2px;
     }
+}
 }

@@ -8,12 +8,15 @@
 import {
 	ChatInput,
 	ChatMessages,
+	ChatHeader,
 	WelcomeScreen,
 	useNfdAgentsWebSocket,
+	ChatHistoryDropdown,
+	archiveConversation,
 } from '@newfold-labs/wp-module-ai-chat';
 import Footer from './Footer'; // Support banner component
-import NoResults from './ResultList/NoResults'; // Fallback for errors
-import ChatHistoryList from './ChatHistoryList'; // Chat history component
+import { useHelpCenterChatContext } from '../context/HelpCenterChatContext';
+import { getConnectionFailedFallbackMessage } from '../utils/connectionFailedFallbackMessage';
 import { useEffect, useRef, useCallback, useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 import { useHelpVisibility } from '../hooks/useHelpVisibility';
@@ -26,12 +29,13 @@ import { shouldShowFooterInChat } from '../utils/footerUtils';
 // eslint-disable-next-line import/no-unresolved -- package resolved at build time (github: or file:)
 import '@newfold-labs/wp-module-ai-chat/styles/app';
 
-/* eslint-disable no-undef */
 const HelpCenterChatAI = () => {
 	const [isVisible] = useHelpVisibility();
 	const { hasLaunchedFromTooltip } = useHelpCenterState();
+	const { onClose } = useHelpCenterChatContext();
 	const hasShownWelcomeRef = useRef(false);
-	const [showFallback, setShowFallback] = useState(false);
+	const [historyDropdownOpen, setHistoryDropdownOpen] = useState(false);
+	const [historyRefreshTrigger, setHistoryRefreshTrigger] = useState(0);
 
 	// Typing animation for connecting state
 	const connectingText = __('Connecting…', 'wp-module-help-center');
@@ -56,7 +60,6 @@ const HelpCenterChatAI = () => {
 		messages,
 		sendMessage,
 		sendSystemMessage,
-		error,
 		isTyping,
 		isConnecting,
 		currentResponse,
@@ -66,15 +69,18 @@ const HelpCenterChatAI = () => {
 		updateMessage,
 		stopRequest,
 		clearChatHistory,
+		loadConversation,
+		getSessionId,
+		connectionState,
+		manualRetry,
 		brandId,
 	} = useNfdAgentsWebSocket({
-		// Pass REST API path directly - useNfdAgentsWebSocket uses apiFetch internally
-		// which handles permalinks and rest_route automatically
 		configEndpoint: '/nfd-agents/chat/v1/config',
 		storageNamespace: 'help_center',
-		autoConnect: isVisible, // Capability already checked by parent component
-		consumerType: 'help_center', // Pass consumer type to construct consumer=wordpress_help_center
-		autoLoadHistory: shouldLoadHistory, // Load history if user selected a history item
+		autoConnect: isVisible,
+		consumerType: 'help_center',
+		autoLoadHistory: shouldLoadHistory,
+		getConnectionFailedFallbackMessage,
 	});
 
 	// Animate connecting text character-by-character for more engaging UX
@@ -85,14 +91,14 @@ const HelpCenterChatAI = () => {
 		loopDelay: 500,
 	});
 
-	// Show fallback NoResults component for any error instead of error alerts
-	useEffect(() => {
-		if (error) {
-			setShowFallback(true);
-		} else {
-			setShowFallback(false);
-		}
-	}, [error]);
+	// When user selects a conversation from history, load it into the hook so view updates without remount
+	const handleSelectConversation = useCallback(
+		(conversation) => {
+			const msgs = conversation.messages || conversation;
+			loadConversation(msgs, conversation.conversationId ?? null, conversation.sessionId ?? null);
+		},
+		[loadConversation]
+	);
 
 	const handleApproval = useCallback(() => {
 		if (updateMessage) {
@@ -143,24 +149,15 @@ const HelpCenterChatAI = () => {
 	}, [clearApprovalRequest, updateMessage]);
 
 	/**
-	 * Handle clear chat button click
+	 * Handle new chat button click - archives current conversation and starts fresh
 	 */
-	const handleClearChat = useCallback(() => {
-		if (
-			// eslint-disable-next-line no-alert -- Planned to replace with ConfirmDialog later.
-			window.confirm(
-				__(
-					'Are you sure you want to clear the chat? This will start a new conversation.',
-					'wp-module-help-center'
-				)
-			)
-		) {
-			hasShownWelcomeRef.current = false;
-			clearChatHistory();
-			// Reconnect to get fresh conversation ID
-			// The hook will handle reconnection if autoConnect is true
+	const handleNewChat = useCallback(() => {
+		if (messages.length > 0) {
+			archiveConversation(messages, getSessionId(), conversationId, 'help_center');
 		}
-	}, [clearChatHistory]);
+		hasShownWelcomeRef.current = false;
+		clearChatHistory();
+	}, [messages, conversationId, clearChatHistory, getSessionId]);
 
 	// Combine messages with current streaming response
 	const displayMessages = [...messages];
@@ -189,34 +186,26 @@ const HelpCenterChatAI = () => {
 	const brandClass = brandId ? `nfd-brand-${brandId}` : '';
 	const containerClasses =
 		`nfd-help-center-chat nfd-ai-chat-container ${brandClass}`.trim();
+	const hasMessages = messages.length > 0;
 
-	// Determine what to show in the messages area
+	// Determine what to show in the messages area. Always show welcome when no messages;
+	// when connection fails and user sends, the hook adds error content as an AI message in the thread.
 	let messagesAreaContent;
-	if (showFallback) {
-		messagesAreaContent = (
-			<div className="nfd-help-center-chat__welcome-wrapper">
-				<NoResults
-					hasLaunchedFromTooltip={hasLaunchedFromTooltip}
-					query={null}
-				/>
-			</div>
-		);
-	} else if (showWelcome) {
+	if (showWelcome) {
 		messagesAreaContent = (
 			<div className="nfd-help-center-chat__welcome-wrapper">
 				<WelcomeScreen
 					onSendMessage={sendMessage}
 					title={__(
-						"Hi, I'm your AI assistant.",
+						"Hi, I'm BLU, your AI assistant.",
 						'wp-module-help-center'
 					)}
 					subtitle={__(
-						'How can I help you with WordPress today?',
+						'I can help you update page sections and styles, add, remove, or edit existing content.',
 						'wp-module-help-center'
 					)}
 					showSuggestions={false}
 				/>
-				<ChatHistoryList />
 			</div>
 		);
 	} else {
@@ -226,7 +215,7 @@ const HelpCenterChatAI = () => {
 				{messages.length > 0 && (
 					<div className="nfd-help-center-chat__messages-header">
 						<button
-							onClick={handleClearChat}
+							onClick={handleNewChat}
 							className="nfd-help-center-chat__clear-chat-button"
 							aria-label={__(
 								'Clear chat',
@@ -254,9 +243,63 @@ const HelpCenterChatAI = () => {
 
 	return (
 		<div className={containerClasses} data-brand={brandId || undefined}>
-			{/* Messages Area - flex container that grows to fill space */}
-			{/* ChatMessages handles its own scrolling via overflow-y: auto */}
-			{/* Show fallback NoResults when there's an error, otherwise show normal chat UI */}
+			{/* Header: white container, two-tone pill, New chat (+) and Close (×) */}
+			<div className="nfd-help-center-chat__header-wrapper">
+				<ChatHeader
+					title={__('Blu Chat', 'wp-module-help-center')}
+					onNewChat={handleNewChat}
+					newChatDisabled={showWelcome}
+					onClose={onClose}
+					extraActions={
+						<ChatHistoryDropdown
+							storageNamespace="help_center"
+							open={historyDropdownOpen}
+							onOpenChange={(isOpen) => {
+								setHistoryDropdownOpen(isOpen);
+								if (isOpen) {
+									setHistoryRefreshTrigger((c) => c + 1);
+								}
+							}}
+							onSelectConversation={(conv) => {
+								handleSelectConversation(conv);
+								setHistoryDropdownOpen(false);
+							}}
+							refreshTrigger={historyRefreshTrigger}
+							disabled={false}
+						/>
+					}
+				/>
+				{/* Non-blocking connecting/reconnecting indicator */}
+				{(isConnecting || connectionState === 'reconnecting') && (
+					<div
+						className="nfd-help-center-chat__connecting-bar"
+						aria-live="polite"
+						aria-busy="true"
+					>
+						<span className="nfd-help-center-chat__connecting-bar-text">
+							{animatedConnectingText}
+							<span className="nfd-help-center-chat__connecting-cursor" />
+						</span>
+					</div>
+				)}
+				{/* Failed: compact Retry UI */}
+				{connectionState === 'failed' && (
+					<div className="nfd-help-center-chat__retry-bar">
+						<span className="nfd-help-center-chat__retry-text">
+							{__("Couldn't connect.", 'wp-module-help-center')}
+						</span>
+						<button
+							type="button"
+							className="nfd-help-center-chat__retry-button"
+							onClick={manualRetry}
+						>
+							{__('Retry', 'wp-module-help-center')}
+						</button>
+					</div>
+				)}
+			</div>
+
+			{/* Messages Area */}
 			{messagesAreaContent}
 
 			{/* Input Area */}
@@ -276,31 +319,18 @@ const HelpCenterChatAI = () => {
 							'Ask me anything about WordPress…',
 							'wp-module-help-center'
 						)}
+						showTopBorder={false}
 					/>
 				</div>
 			</div>
 
-			{/* Footer - Support banner (hidden when launched from tooltip) */}
+			{/* Footer - Support banner (hidden when launched from tooltip); collapses when chat has messages */}
 			{shouldShowFooterInChat(hasLaunchedFromTooltip) && (
-				<div className="nfd-help-center-chat__footer-wrapper">
-					<Footer />
-				</div>
-			)}
-
-			{/* Connecting overlay - polished loading state while WebSocket connects */}
-			{isConnecting && (
 				<div
-					className="nfd-help-center-chat__connecting-overlay"
-					aria-live="polite"
-					aria-busy="true"
+					className={`nfd-help-center-chat__footer-wrapper${hasMessages ? ' nfd-help-center-chat__footer-wrapper--collapsed' : ''}`}
+					aria-hidden={hasMessages}
 				>
-					<div className="nfd-help-center-chat__connecting-content">
-						<div className="nfd-help-center-chat__connecting-spinner" />
-						<span className="nfd-help-center-chat__connecting-text">
-							{animatedConnectingText}
-							<span className="nfd-help-center-chat__connecting-cursor" />
-						</span>
-					</div>
+					<Footer />
 				</div>
 			)}
 		</div>
