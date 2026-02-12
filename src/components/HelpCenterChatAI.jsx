@@ -39,47 +39,44 @@ const HelpCenterChatAI = () => {
 	const [historyDropdownOpen, setHistoryDropdownOpen] = useState(false);
 	const [historyRefreshTrigger, setHistoryRefreshTrigger] = useState(0);
 
-	// Restore last chat when returning to wp-admin: load from history click flag, or auto-restore most recent if recent
-	const shouldLoadHistory = (() => {
+	// "Latest conversation wins": always load the active conversation from localStorage.
+	// The hook persists messages to STORAGE_KEY on every change, so any tab that opens
+	// will read the most recent conversation written by any other tab.
+	// When STORAGE_KEY is empty (e.g. after clearChatHistory) but archive has a recent
+	// conversation, seed STORAGE_KEY from it so the hook picks it up.
+	(() => {
 		const keys = getChatHistoryStorageKeys('help_center');
-		const RECENT_MS = 10 * 60 * 1000; // 10 minutes
 		try {
-			const loadFlag = localStorage.getItem(
-				'nfd-ai-chat-help_center-load-history'
-			);
-			if (loadFlag === 'true') {
-				localStorage.removeItem('nfd-ai-chat-help_center-load-history');
-				return true;
-			}
-			const rawArchive = localStorage.getItem(keys.archive);
-			if (rawArchive) {
-				const archive = JSON.parse(rawArchive);
-				const first = Array.isArray(archive) && archive[0];
-				if (first?.archivedAt) {
-					const archivedAt = new Date(first.archivedAt).getTime();
-					if (Date.now() - archivedAt <= RECENT_MS) {
-						const messages = (first.messages || []).map((m) => ({
-							...m,
-							timestamp:
-								m.timestamp instanceof Date
-									? m.timestamp.toISOString()
-									: m.timestamp,
-						}));
-						localStorage.setItem(keys.history, JSON.stringify(messages));
-						if (first.conversationId != null) {
-							localStorage.setItem(keys.conversationId, String(first.conversationId));
+			if (!localStorage.getItem(keys.history)) {
+				const rawArchive = localStorage.getItem(keys.archive);
+				if (rawArchive) {
+					const archive = JSON.parse(rawArchive);
+					const first = Array.isArray(archive) && archive[0];
+					if (first?.messages?.length > 0 && first?.archivedAt) {
+						const RECENT_MS = 30 * 60 * 1000; // 30 minutes
+						const archivedAt = new Date(first.archivedAt).getTime();
+						if (Date.now() - archivedAt <= RECENT_MS) {
+							const msgs = first.messages.map((m) => ({
+								...m,
+								timestamp:
+									m.timestamp instanceof Date
+										? m.timestamp.toISOString()
+										: m.timestamp,
+							}));
+							localStorage.setItem(keys.history, JSON.stringify(msgs));
+							if (first.conversationId != null) {
+								localStorage.setItem(keys.conversationId, String(first.conversationId));
+							}
+							if (first.sessionId != null) {
+								localStorage.setItem(keys.sessionId, String(first.sessionId));
+							}
 						}
-						if (first.sessionId != null) {
-							localStorage.setItem(keys.sessionId, String(first.sessionId));
-						}
-						return true;
 					}
 				}
 			}
 		} catch (err) {
-			// Ignore errors
+			// Ignore storage errors
 		}
-		return false;
 	})();
 
 	const {
@@ -106,7 +103,7 @@ const HelpCenterChatAI = () => {
 		storageNamespace: 'help_center',
 		autoConnect: isVisible,
 		consumerType: 'help_center',
-		autoLoadHistory: shouldLoadHistory,
+		autoLoadHistory: true,
 		getConnectionFailedFallbackMessage,
 	});
 
@@ -115,6 +112,17 @@ const HelpCenterChatAI = () => {
 		if (messages.length > 0) {
 			archiveConversation(messages, getSessionId(), conversationId, 'help_center');
 		}
+	}, [messages, getSessionId, conversationId]);
+
+	// Archive conversation before page unload to ensure persistence across navigation and tab close.
+	useEffect(() => {
+		const handleBeforeUnload = () => {
+			if (messages.length > 0) {
+				archiveConversation(messages, getSessionId(), conversationId, 'help_center');
+			}
+		};
+		window.addEventListener('beforeunload', handleBeforeUnload);
+		return () => window.removeEventListener('beforeunload', handleBeforeUnload);
 	}, [messages, getSessionId, conversationId]);
 
 	// When user selects a conversation from history, load it into the hook so view updates without remount

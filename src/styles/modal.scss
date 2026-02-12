@@ -121,7 +121,7 @@ $container-width: 350px;
 }
 
 // Shared border for chat sections (header, messages, input)
-$nfd-help-center-chat-border: #e5e7eb;
+$nfd-help-center-chat-border: #eef1f4;
 
 .nfd-help-center-chat {
 	flex: 1 1 0%; // Fill flex parent properly
@@ -146,8 +146,10 @@ $nfd-help-center-chat-border: #e5e7eb;
 		min-height: 0;
 		display: flex;
 		flex-direction: column;
+		align-items: center;
+		justify-content: center;
 		overflow: hidden;
-		padding: 20px;
+		padding: 32px 20px 20px;
 		background-color: #fff;
 	}
 
@@ -160,7 +162,7 @@ $nfd-help-center-chat-border: #e5e7eb;
 		flex-direction: column;
 		overflow: hidden;
 		position: relative; // Establish positioning context
-		border-top: 1px solid $nfd-help-center-chat-border;
+		background: #fafbfc;
 
 		.nfd-ai-chat-messages {
 			// Override base styles to ensure proper scrolling
@@ -172,6 +174,24 @@ $nfd-help-center-chat-border: #e5e7eb;
 			overflow-x: hidden !important;
 			// Ensure it doesn't expand beyond parent
 			position: relative;
+
+			// Refined scrollbar
+			&::-webkit-scrollbar {
+				width: 6px;
+			}
+
+			&::-webkit-scrollbar-track {
+				background: transparent;
+			}
+
+			&::-webkit-scrollbar-thumb {
+				background: #d1d5db;
+				border-radius: 3px;
+
+				&:hover {
+					background: #9ca3af;
+				}
+			}
 		}
 	}
 
@@ -189,22 +209,23 @@ $nfd-help-center-chat-border: #e5e7eb;
 		background: none;
 		border: none;
 		padding: 0;
-		font-size: 12px;
-		color: #666;
+		font-size: 11px;
+		color: #9ca3af;
 		cursor: pointer;
 		text-decoration: none;
 		font-family: inherit;
-		transition: text-decoration 0.2s, color 0.2s;
+		letter-spacing: 0.01em;
+		transition: color 0.15s ease;
 
 		&:hover {
 			text-decoration: underline;
-			color: #333;
+			color: #6b7280;
 		}
 	}
 
 	// Input area - always show top border to delineate from messages
 	&__input-area {
-		padding: 10px 14px;
+		padding: 12px 16px;
 		border-top: 1px solid $nfd-help-center-chat-border;
 		background: #fff;
 		flex-shrink: 0;
@@ -216,14 +237,17 @@ $nfd-help-center-chat-border: #e5e7eb;
 	// Input wrapper - hide disclaimer and make input smaller
 	&__input-wrapper {
 		.nfd-ai-chat-input {
-			padding: 12px 16px;
+			padding: 8px 12px;
 
 			&__disclaimer {
 				display: none; // Hide AI disclaimer
 			}
 
 			&__container {
-				padding: 8px 10px;
+				padding: 8px 12px;
+				border-radius: 10px;
+				border-color: #e5e7eb;
+				box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
 			}
 
 			&__textarea {
@@ -247,7 +271,7 @@ $nfd-help-center-chat-border: #e5e7eb;
 		// Expanded state: cap height for transition and short viewports
 		max-height: 500px; // Fallback for older browsers
 		max-height: min(500px, 50vh);
-		transition: max-height 0.35s ease-out;
+		transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
 		// Reset footer styles when inside AI chat wrapper
 		.nfd-hc-modal__footer {
