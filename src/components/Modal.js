@@ -52,7 +52,7 @@ const Modal = ({ onClose }) => {
 			? false
 			: LocalStorageUtils.getHelpVisible();
 		toggleHelp(helpVisible);
-	}, []);
+	}, [dispatch]);
 
 	useEffect(() => {
 		let data = [];
@@ -63,7 +63,7 @@ const Modal = ({ onClose }) => {
 			}
 		}
 		fetchData();
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<div
@@ -85,7 +85,10 @@ const Modal = ({ onClose }) => {
 								<Help />
 							</span>
 							<span>
-								{__('Help with WordPress', 'wp-module-help-center')}
+								{__(
+									'Help with WordPress',
+									'wp-module-help-center'
+								)}
 							</span>
 						</h3>
 
@@ -111,15 +114,21 @@ const Modal = ({ onClose }) => {
 							></button>
 						)}
 						<button
-							aria-label={__('Close Help Modal', 'wp-module-help-center')}
-							title={__('Close Help Modal', 'wp-module-help-center')}
+							aria-label={__(
+								'Close Help Modal',
+								'wp-module-help-center'
+							)}
+							title={__(
+								'Close Help Modal',
+								'wp-module-help-center'
+							)}
 							className="nfd-hc-modal__header__close-button"
 							onClick={handleClose}
 						>
 							<CloseIcon aria-hidden="true" />
 						</button>
 					</div>
-					<div className="nfd-hc-seperator">
+					<div className="nfd-hc-separator">
 						<hr />
 					</div>
 				</>

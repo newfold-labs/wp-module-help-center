@@ -115,7 +115,7 @@ $container-width: 350px;
 		}
 	}
 
-	.nfd-hc-seperator {
+	.nfd-hc-separator {
 		flex-shrink: 0;
 	}
 }
@@ -598,7 +598,7 @@ $nfd-help-center-chat-border: #eef1f4;
 	&__iframe-wrapper {
 		position: relative;
 		width: 100%;
-		padding-bottom: 56.25%; // 16:9 aspect ratio161616161616
+		padding-bottom: 56.25%; // 16:9 aspect ratio
 	}
 
 	&__iframe {

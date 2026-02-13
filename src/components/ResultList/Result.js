@@ -24,17 +24,18 @@ export const Result = ({
 		showBackButton,
 		hasLaunchedFromTooltip,
 	} = useHelpCenterState();
-	const isNewEntry = isNewResult;
 	const responseRef = useRef(null);
 	const [shouldReveal, setShouldReveal] = useState(false);
 	const dispatch = useDispatch();
-	useEffect(() => {
-		if ((isNewEntry && responseRef.current) || isLoading) {
-			adjustHeightAndScroll();
-		}
-	}, [isNewEntry, isLoading]);
 
-	const adjustHeightAndScroll = () => {
+	// When a new result loads or loading starts, set min-height and scroll to bottom so reveal animation is visible.
+	useEffect(() => {
+		if (!((isNewResult && responseRef.current) || isLoading)) {
+			return;
+		}
+		if (!responseRef.current || !wrapper?.current) {
+			return;
+		}
 		const viewportHeight = window.innerHeight;
 		const minHeight = viewportHeight - 255;
 		responseRef.current.style.minHeight = `${minHeight}px`;
@@ -45,16 +46,16 @@ export const Result = ({
 			behavior: 'smooth',
 		});
 		setShouldReveal(true);
-	};
+	}, [isNewResult, isLoading, wrapper]);
 
 	const startReveal = isNewResult ? shouldReveal : false;
 	const { displayedText: textToDisplay, isComplete: revealComplete } =
 		useRevealText(content || '', 50, startReveal);
 
-	const htmlContent = useMemo(() => {
-		const processedHTMLContent = processContentForMarkdown(textToDisplay);
-		return processedHTMLContent;
-	}, [textToDisplay]);
+	const htmlContent = useMemo(
+		() => processContentForMarkdown(textToDisplay),
+		[textToDisplay]
+	);
 
 	function shouldShowFeedback() {
 		return (

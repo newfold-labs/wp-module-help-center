@@ -26,11 +26,6 @@ import { useHelpVisibility } from '../hooks/useHelpVisibility';
 import { useHelpCenterState } from '../hooks/useHelpCenterState';
 import { shouldShowFooterInChat } from '../utils/footerUtils';
 
-// Import AI chat styles. The wp-module-ai-chat package exports ./styles/app.
-// This import only executes when this component is loaded (capability enabled).
-// eslint-disable-next-line import/no-unresolved -- package resolved at build time (github: or file:)
-import '@newfold-labs/wp-module-ai-chat/styles/app';
-
 const HelpCenterChatAI = () => {
 	const [isVisible] = useHelpVisibility();
 	const { hasLaunchedFromTooltip } = useHelpCenterState();
@@ -39,12 +34,10 @@ const HelpCenterChatAI = () => {
 	const [historyDropdownOpen, setHistoryDropdownOpen] = useState(false);
 	const [historyRefreshTrigger, setHistoryRefreshTrigger] = useState(0);
 
-	// "Latest conversation wins": always load the active conversation from localStorage.
-	// The hook persists messages to STORAGE_KEY on every change, so any tab that opens
-	// will read the most recent conversation written by any other tab.
-	// When STORAGE_KEY is empty (e.g. after clearChatHistory) but archive has a recent
-	// conversation, seed STORAGE_KEY from it so the hook picks it up.
-	(() => {
+	// "Latest conversation wins": seed active conversation from archive once on mount when history is empty.
+	// When STORAGE_KEY is empty (e.g. after clearChatHistory) but archive has a recent conversation,
+	// seed STORAGE_KEY from it so the hook picks it up. Runs once to avoid redundant localStorage work on every render.
+	useEffect(() => {
 		const keys = getChatHistoryStorageKeys('help_center');
 		try {
 			if (!localStorage.getItem(keys.history)) {
@@ -63,12 +56,27 @@ const HelpCenterChatAI = () => {
 										? m.timestamp.toISOString()
 										: m.timestamp,
 							}));
-							localStorage.setItem(keys.history, JSON.stringify(msgs));
-							if (first.conversationId != null) {
-								localStorage.setItem(keys.conversationId, String(first.conversationId));
+							localStorage.setItem(
+								keys.history,
+								JSON.stringify(msgs)
+							);
+							if (
+								first.conversationId !== null &&
+								first.conversationId !== undefined
+							) {
+								localStorage.setItem(
+									keys.conversationId,
+									String(first.conversationId)
+								);
 							}
-							if (first.sessionId != null) {
-								localStorage.setItem(keys.sessionId, String(first.sessionId));
+							if (
+								first.sessionId !== null &&
+								first.sessionId !== undefined
+							) {
+								localStorage.setItem(
+									keys.sessionId,
+									String(first.sessionId)
+								);
 							}
 						}
 					}
@@ -77,7 +85,7 @@ const HelpCenterChatAI = () => {
 		} catch (err) {
 			// Ignore storage errors
 		}
-	})();
+	}, []);
 
 	const {
 		messages,
@@ -100,7 +108,7 @@ const HelpCenterChatAI = () => {
 		manualRetry,
 	} = useNfdAgentsWebSocket({
 		configEndpoint: '/nfd-agents/chat/v1/config',
-		storageNamespace: 'help_center',
+		consumer: 'help_center',
 		autoConnect: isVisible,
 		consumerType: 'help_center',
 		autoLoadHistory: true,
@@ -110,7 +118,12 @@ const HelpCenterChatAI = () => {
 	// When the customer types (first message or any new message), add/update this conversation in history (latest 3).
 	useEffect(() => {
 		if (messages.length > 0) {
-			archiveConversation(messages, getSessionId(), conversationId, 'help_center');
+			archiveConversation(
+				messages,
+				getSessionId(),
+				conversationId,
+				'help_center'
+			);
 		}
 	}, [messages, getSessionId, conversationId]);
 
@@ -118,18 +131,28 @@ const HelpCenterChatAI = () => {
 	useEffect(() => {
 		const handleBeforeUnload = () => {
 			if (messages.length > 0) {
-				archiveConversation(messages, getSessionId(), conversationId, 'help_center');
+				archiveConversation(
+					messages,
+					getSessionId(),
+					conversationId,
+					'help_center'
+				);
 			}
 		};
 		window.addEventListener('beforeunload', handleBeforeUnload);
-		return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+		return () =>
+			window.removeEventListener('beforeunload', handleBeforeUnload);
 	}, [messages, getSessionId, conversationId]);
 
 	// When user selects a conversation from history, load it into the hook so view updates without remount
 	const handleSelectConversation = useCallback(
 		(conversation) => {
 			const msgs = conversation.messages || conversation;
-			loadConversation(msgs, conversation.conversationId ?? null, conversation.sessionId ?? null);
+			loadConversation(
+				msgs,
+				conversation.conversationId ?? null,
+				conversation.sessionId ?? null
+			);
 		},
 		[loadConversation]
 	);
@@ -188,18 +211,27 @@ const HelpCenterChatAI = () => {
 	const handleNewChat = useCallback(() => {
 		hasShownWelcomeRef.current = false;
 		if (messages.length > 0) {
-			archiveConversation(messages, getSessionId(), conversationId, 'help_center');
+			archiveConversation(
+				messages,
+				getSessionId(),
+				conversationId,
+				'help_center'
+			);
 		}
 		clearChatHistory();
 		setHistoryRefreshTrigger((t) => t + 1);
-	}, [messages, getSessionId(), conversationId, clearChatHistory]);
+	}, [messages, getSessionId, conversationId, clearChatHistory]);
 
 	/**
 	 * Handle clear chat button - remove current conversation from history and clear view
 	 */
 	const handleClearChat = useCallback(() => {
 		hasShownWelcomeRef.current = false;
-		removeConversationFromArchive(conversationId, getSessionId(), 'help_center');
+		removeConversationFromArchive(
+			conversationId,
+			getSessionId(),
+			'help_center'
+		);
 		clearChatHistory();
 		setHistoryRefreshTrigger((t) => t + 1);
 	}, [conversationId, getSessionId, clearChatHistory]);
@@ -274,7 +306,9 @@ const HelpCenterChatAI = () => {
 					isLoading={isTyping || isConnecting}
 					status={isConnecting ? TYPING_STATUS.WS_CONNECTING : status}
 					error={error}
-					onRetry={connectionState === 'failed' ? manualRetry : undefined}
+					onRetry={
+						connectionState === 'failed' ? manualRetry : undefined
+					}
 					connectionFailed={connectionState === 'failed'}
 					onApprove={handleApproval}
 					onReject={handleRejection}
@@ -299,7 +333,7 @@ const HelpCenterChatAI = () => {
 					onClose={onClose}
 					extraActions={
 						<ChatHistoryDropdown
-							storageNamespace="help_center"
+							consumer="help_center"
 							open={historyDropdownOpen}
 							onOpenChange={(isOpen) => {
 								setHistoryDropdownOpen(isOpen);
