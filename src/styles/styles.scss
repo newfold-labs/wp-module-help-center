@@ -1,5 +1,6 @@
 /* stylelint-disable at-rule-no-unknown */
 /* stylelint-disable selector-class-pattern */
+/* stylelint-disable no-descending-specificity */
 @use './modal';
 
 $blue: #196bde;
@@ -85,7 +86,7 @@ $blue-links-color: #356CD8;
   }
 
   li {
-    line-height: 1.5em;
+    line-height: 1.5;
     margin-bottom: 0 !important;
   }
 
@@ -124,6 +125,42 @@ $blue-links-color: #356CD8;
       color: $white;
       cursor: grab;
     }
+
+    p {
+      font-size: 18px;
+    }
+
+    a {
+      margin-top: 16px;
+      display: block;
+      cursor: grab;
+    }
+  }
+
+  h4,
+  h1,
+  h2,
+  h3 {
+    margin: 2em 0 1em !important;
+  }
+
+  h3 {
+    font-size: 1em;
+    font-weight: 700;
+  }
+
+  h4 {
+    font-size: 0.8em;
+    text-transform: uppercase;
+  }
+
+  .HistoryList {
+    gap: 6px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: #336AD7;
+    font-size: 12px;
   }
 
   .helpcenter-input-wrapper {
@@ -133,75 +170,8 @@ $blue-links-color: #356CD8;
     z-index: 12;
     bottom: 0;
     right: 0;
-  }
 
-    h4,
-    h1,
-    h2,
-    h3 {
-        margin: 2em 0 1em !important;
-    }
-
-    h3 {
-        font-size: 1em;
-        font-weight: 700;
-    }
-
-    h4 {
-        font-size: 0.8em;
-        text-transform: uppercase;
-    }
-
-    .launch-help-center {
-        text-align: center;
-
-        .launch-description {
-            margin: 24px 0;
-        }
-
-        .launch-action {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        button {
-            width: 146px;
-            height: 36px;
-            background-color: $blue;
-            border: 1px solid $blue;
-            color: $white;
-            cursor: grab;
-        }
-
-        p {
-            font-size: 18px;
-        }
-
-        a {
-            margin-top: 16px;
-            display: block;
-            cursor: grab;
-        }
-    }
-
-    .HistoryList {
-        gap: 6px;
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-        color: #336AD7;
-        font-size: 12px;
-    }
-
-    .helpcenter-input-wrapper {
-        position: fixed;
-        width: 356px;
-        background: #f3f7fa;
-        z-index: 12;
-        bottom: 0;
-
-        .search-container__wrapper {
+    .search-container__wrapper {
             padding: 5px 23px 12px;
 
             .search-container {
@@ -646,7 +616,6 @@ body:is(.page, .post-php, .post-new-php) {
             .helpcenter-supportinfo__telephone {
                 margin-bottom: 12px;
 
-                /* stylelint-disable-next-line no-descending-specificity */
                 span {
                     margin-right: 8px;
                     vertical-align: text-top;
@@ -661,7 +630,6 @@ body:is(.page, .post-php, .post-new-php) {
             .helpcenter-supportinfo__chat {
                 margin-bottom: 12px;
 
-                /* stylelint-disable-next-line no-descending-specificity */
                 span {
                     margin-right: 8px;
                     vertical-align: text-top;
@@ -818,7 +786,7 @@ body:is(.page, .post-php, .post-new-php) {
         fill: currentcolor;
     }
 
-    & > p {
+    > p {
         font-size: 12px;
         margin: 0;
         color: #000;

@@ -1,3 +1,4 @@
+/* stylelint-disable selector-class-pattern */
 $gray-text: #394150;
 $container-width: 350px;
 
@@ -134,8 +135,10 @@ $nfd-help-center-chat-border: #eef1f4;
 	width: 100%;
 	z-index: 15;
 
-	// Header: Blu Chat title, +, history, close
+	// Header: Blu Chat title, +, history, close (ChatHeader + non-blocking bars)
 	&__header-wrapper {
+		display: flex;
+		flex-direction: column;
 		flex-shrink: 0;
 		border-bottom: 1px solid $nfd-help-center-chat-border;
 	}
@@ -236,6 +239,7 @@ $nfd-help-center-chat-border: #eef1f4;
 
 	// Input wrapper - hide disclaimer and make input smaller
 	&__input-wrapper {
+
 		.nfd-ai-chat-input {
 			padding: 8px 12px;
 
@@ -274,6 +278,7 @@ $nfd-help-center-chat-border: #eef1f4;
 		transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
 		// Reset footer styles when inside AI chat wrapper
+		/* stylelint-disable-next-line no-descending-specificity */
 		.nfd-hc-modal__footer {
 			position: relative;
 			bottom: auto;
@@ -286,6 +291,7 @@ $nfd-help-center-chat-border: #eef1f4;
 		}
 
 		// Support info for AI chat - match old help center
+		/* stylelint-disable-next-line no-descending-specificity */
 		.helpcenter-supportinfo__wrapper {
 			padding: 15px 23px 0;
 			width: 100%;
@@ -315,6 +321,7 @@ $nfd-help-center-chat-border: #eef1f4;
 		}
 
 		// Banner for AI chat - match old help center styling
+		/* stylelint-disable-next-line no-descending-specificity */
 		.hc-banner__wrapper {
 			position: relative;
 			height: 210px;
@@ -402,6 +409,7 @@ $nfd-help-center-chat-border: #eef1f4;
 
 	// Respect reduced-motion preference for footer collapse
 	@media (prefers-reduced-motion: reduce) {
+
 		&__footer-wrapper,
 		&__footer-wrapper--collapsed {
 			transition: none;
@@ -458,13 +466,6 @@ $nfd-help-center-chat-border: #eef1f4;
 		background-color: #3b82f6;
 		margin-left: 2px;
 		animation: nfd-cursor-blink 0.8s ease-in-out infinite;
-	}
-
-	// Header wrapper (ChatHeader + non-blocking bars)
-	&__header-wrapper {
-		display: flex;
-		flex-direction: column;
-		flex-shrink: 0;
 	}
 
 	// Non-blocking connecting bar (slim, below header)
@@ -541,16 +542,19 @@ $nfd-help-center-chat-border: #eef1f4;
 }
 
 @keyframes nfd-spin {
+
 	to {
 		transform: rotate(360deg);
 	}
 }
 
 @keyframes nfd-cursor-blink {
+
 	0%,
 	50% {
 		opacity: 1;
 	}
+
 	51%,
 	100% {
 		opacity: 0;

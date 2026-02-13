@@ -17,15 +17,16 @@ export function getConnectionFailedFallbackMessage(userMessage) {
 	const resourceUrl = window?.nfdHelpCenter?.resourceLink || '#';
 	const resourceCenterLabel = __('Resource center', 'wp-module-help-center');
 	const resourceLineBefore = __(
-		'You can try searching our ',
+		'You can try searching our',
 		'wp-module-help-center'
 	);
 	const resourceLineAfter = __(
-		" though to see if there's a helpful article or video on that subject.",
+		"though to see if there's a helpful article or video on that subject.",
 		'wp-module-help-center'
 	);
 
 	const primary = sprintf(
+		/* translators: %s: the user's search query (or the word "this" if empty) */
 		__(
 			"Sorry, I don't have any information on %s yet.",
 			'wp-module-help-center'
@@ -55,16 +56,16 @@ export function getConnectionFailedFallbackMessage(userMessage) {
 
 	// Build HTML for proper formatting (links, bullets). ChatMessage sanitizes via containsHtml.
 	return [
-		'<p>' + primary + '</p>',
+		'<p>' + escapeHtml(primary) + '</p>',
 		'<p><strong>' + tryTo + '</strong></p>',
 		'<ul>',
 		'<li>' +
 			escapeHtml(resourceLineBefore) +
-			'<a href="' +
+			' <a href="' +
 			escapeHtmlAttr(resourceUrl) +
 			'" target="_blank" rel="noopener noreferrer">' +
 			escapeHtml(resourceCenterLabel) +
-			'</a>' +
+			'</a> ' +
 			escapeHtml(resourceLineAfter) +
 			'</li>',
 		'<li>' + escapeHtml(useDifferent + ' ' + clearShort) + '</li>',
@@ -82,7 +83,9 @@ export function getConnectionFailedFallbackMessage(userMessage) {
 }
 
 function escapeHtml(text) {
-	if (typeof text !== 'string') return '';
+	if (typeof text !== 'string') {
+		return '';
+	}
 	return text
 		.replace(/&/g, '&amp;')
 		.replace(/</g, '&lt;')
