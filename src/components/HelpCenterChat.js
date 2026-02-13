@@ -1,9 +1,12 @@
 /**
  * Help Center Chat Component
  *
- * Wrapper component that checks capability and renders either:
- * - Legacy HelpCenter (when capability is off OR when launched from tooltip)
- * - AI Chat interface (when capability is on and not from tooltip)
+ * Renders one of two independent flows (never both):
+ * - Legacy HelpCenter: search, results, tooltips (uses Redux helpcenter slice).
+ * - AI Chat: BLU Chat UI (uses wp-module-ai-chat, own storage); no legacy Redux.
+ *
+ * Legacy runs when capability is off OR when launched from tooltip.
+ * AI runs when capability is on and not from tooltip.
  */
 
 import HelpCenter from './HelpCenter'; // Legacy component

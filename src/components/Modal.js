@@ -23,9 +23,8 @@ const Modal = ({ onClose }) => {
 	// Use reusable hook for Redux state
 	const { isFooterVisible, hasLaunchedFromTooltip } = useHelpCenterState();
 
-	// Check capability to determine which flow is active
-	// HelpCenterChat renders its own Footer when capability is true
-	// Legacy HelpCenter flow (when capability is false) needs Footer from Modal.js
+	// Which flow is active: legacy (search/tooltips) vs AI chat. They are independent;
+	// legacy-only Redux init and data loading run only when !canAccessAIHelpCenter.
 	const canAccessAIHelpCenter = CapabilityAPI.getAIHelpCenterCapability();
 
 	// Use reusable utility function for footer visibility logic
@@ -41,20 +40,30 @@ const Modal = ({ onClose }) => {
 		onClose();
 	}, [dispatch, onClose]);
 
+	// Global visibility (panel open/close) – runs for both flows.
+	// Legacy-only Redux init runs only when legacy flow is active so AI and legacy stay independent.
 	useEffect(() => {
-		dispatch(
-			helpcenterActions.initialDataSet({
-				isFooterVisible: LocalStorageUtils.getResultInfo()?.length < 1,
-				SearchInput: LocalStorageUtils.getSearchInput() || '',
-			})
-		);
 		const helpVisible = window.newfoldHelpCenter?.closeOnLoad
 			? false
 			: LocalStorageUtils.getHelpVisible();
 		toggleHelp(helpVisible);
-	}, [dispatch]);
 
+		if (!canAccessAIHelpCenter) {
+			dispatch(
+				helpcenterActions.initialDataSet({
+					isFooterVisible:
+						LocalStorageUtils.getResultInfo()?.length < 1,
+					SearchInput: LocalStorageUtils.getSearchInput() || '',
+				})
+			);
+		}
+	}, [dispatch, canAccessAIHelpCenter]);
+
+	// Legacy-only: load help result history from DB. Skip when AI flow is active.
 	useEffect(() => {
+		if (canAccessAIHelpCenter) {
+			return;
+		}
 		let data = [];
 		async function fetchData() {
 			data = await getHelpcenterOption();
@@ -63,7 +72,7 @@ const Modal = ({ onClose }) => {
 			}
 		}
 		fetchData();
-	}, [dispatch]);
+	}, [dispatch, canAccessAIHelpCenter]);
 
 	return (
 		<div

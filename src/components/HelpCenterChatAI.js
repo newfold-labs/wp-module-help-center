@@ -107,7 +107,11 @@ const HelpCenterChatAI = () => {
 		isConnecting,
 		manualRetry,
 	} = useNfdAgentsWebSocket({
-		configEndpoint: '/nfd-agents/chat/v1/config',
+		// Use full URL when Help Center has restUrl (subpath installs); otherwise relative path.
+		configEndpoint:
+			typeof window !== 'undefined' && window.nfdHelpCenter?.restUrl
+				? window.nfdHelpCenter.restUrl + '/nfd-agents/chat/v1/config'
+				: '/nfd-agents/chat/v1/config',
 		consumer: 'help_center',
 		autoConnect: isVisible,
 		consumerType: 'help_center',
