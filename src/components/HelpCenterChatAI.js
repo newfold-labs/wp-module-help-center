@@ -115,6 +115,7 @@ const HelpCenterChatAI = () => {
 		consumer: 'help_center',
 		autoConnect: isVisible,
 		consumerType: 'help_center',
+		siteUrlOverride: 'https://emg.nyy.mybluehost.me/website_3eccfbf0',
 		autoLoadHistory: true,
 		getConnectionFailedFallbackMessage,
 	});
@@ -266,6 +267,8 @@ const HelpCenterChatAI = () => {
 
 	const containerClasses = 'nfd-help-center-chat nfd-ai-chat-container';
 	const hasMessages = messages.length > 0;
+	// Only show connecting/fallback and disable input for connection state once user has engaged (sent a message or chat has content)
+	const hasUserEngaged = messages.length > 0;
 
 	// Determine what to show in the messages area. Always show welcome when no messages;
 	// when connection fails and user sends, the hook adds error content as an AI message in the thread.
@@ -307,13 +310,17 @@ const HelpCenterChatAI = () => {
 				)}
 				<ChatMessages
 					messages={displayMessages}
-					isLoading={isTyping || isConnecting}
+					isLoading={hasUserEngaged && (isTyping || isConnecting)}
 					status={isConnecting ? TYPING_STATUS.WS_CONNECTING : status}
 					error={error}
 					onRetry={
-						connectionState === 'failed' ? manualRetry : undefined
+						hasUserEngaged && connectionState === 'failed' ? manualRetry : undefined
 					}
-					connectionFailed={connectionState === 'failed'}
+					connectionFailed={hasUserEngaged && connectionState === 'failed'}
+					isConnectingOrReconnecting={
+						hasUserEngaged &&
+						(connectionState === 'connecting' || connectionState === 'reconnecting')
+					}
 					onApprove={handleApproval}
 					onReject={handleRejection}
 					onSendMessage={sendMessage}
@@ -333,7 +340,13 @@ const HelpCenterChatAI = () => {
 				<ChatHeader
 					title={__('Blu Chat', 'wp-module-help-center')}
 					onNewChat={handleNewChat}
-					newChatDisabled={showWelcome}
+					newChatDisabled={
+						showWelcome ||
+						(hasUserEngaged &&
+							(connectionState === 'failed' ||
+								connectionState === 'connecting' ||
+								connectionState === 'reconnecting'))
+					}
 					onClose={onClose}
 					extraActions={
 						<ChatHistoryDropdown
@@ -365,7 +378,14 @@ const HelpCenterChatAI = () => {
 					<ChatInput
 						onSendMessage={sendMessage}
 						onStopRequest={stopRequest}
-						disabled={isTyping}
+						showStopButton={isTyping}
+						disabled={
+							isTyping ||
+							(hasUserEngaged &&
+								(connectionState === 'failed' ||
+									connectionState === 'connecting' ||
+									connectionState === 'reconnecting'))
+						}
 						placeholder={__(
 							'Ask me anything about WordPress…',
 							'wp-module-help-center'
