@@ -174,6 +174,13 @@ const helpcenterSlice = createSlice({
 		updateFloatingIconVisibilty: (state, action) => {
 			state.floatingIconVisibility = action.payload;
 		},
+		// Dismiss tooltip content and show AI chat welcome (when AI capability is on).
+		dismissTooltipView: (state) => {
+			state.hasLaunchedFromTooltip = false;
+			state.resultContent = [];
+			state.showBackButton = false;
+			state.viaLinkSearch = [];
+		},
 	},
 });
 

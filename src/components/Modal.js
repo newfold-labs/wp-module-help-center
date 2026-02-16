@@ -82,6 +82,29 @@ const Modal = ({ onClose }) => {
 			aria-modal="true"
 			className="nfd-hc-modal"
 		>
+			{/* When AI is on but tooltip content is showing: bar with close to switch to AI chat welcome */}
+			{canAccessAIHelpCenter && hasLaunchedFromTooltip && (
+				<div className="nfd-hc-modal__tooltip-dismiss">
+					<button
+						type="button"
+						className="nfd-hc-modal__tooltip-dismiss__close"
+						aria-label={__(
+							'Close and show AI chat',
+							'wp-module-help-center'
+						)}
+						title={__(
+							'Close and show AI chat',
+							'wp-module-help-center'
+						)}
+						onClick={() => {
+							LocalStorageUtils.clearResultContent();
+							dispatch(helpcenterActions.dismissTooltipView());
+						}}
+					>
+						<CloseIcon aria-hidden="true" />
+					</button>
+				</div>
+			)}
 			{/* Header - hidden for AI Help Center (which has its own ChatHeader) */}
 			{!canAccessAIHelpCenter && (
 				<>

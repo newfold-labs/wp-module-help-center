@@ -141,6 +141,11 @@ export const LocalStorageUtils = {
 		localStorage.removeItem('helpPostId');
 		localStorage.removeItem('searchInput');
 	},
+	// Clear only the stored result (e.g. when user dismisses tooltip so it does not reappear on refresh).
+	clearResultContent: () => {
+		localStorage.removeItem('helpResultContent');
+		localStorage.removeItem('helpPostId');
+	},
 	// Update getResultInfo to retrieve all results
 	getResultInfo: () => {
 		const results = localStorage.getItem('helpResultContent');
