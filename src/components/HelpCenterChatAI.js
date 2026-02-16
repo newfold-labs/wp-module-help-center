@@ -115,7 +115,6 @@ const HelpCenterChatAI = () => {
 		consumer: 'help_center',
 		autoConnect: isVisible,
 		consumerType: 'help_center',
-		siteUrlOverride: 'https://emg.nyy.mybluehost.me/website_3eccfbf0',
 		autoLoadHistory: true,
 		getConnectionFailedFallbackMessage,
 	});
