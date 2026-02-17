@@ -127,7 +127,7 @@ function ResultContent({ source, index, questionBlock, content }) {
 		return () => {
 			resultBlock.removeEventListener('click', handleClick);
 		};
-	}, [content]);
+	}, [content, dispatch]);
 
 	function renderContentOrLoading() {
 		const isAISourceLoading =
