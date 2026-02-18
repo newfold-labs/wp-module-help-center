@@ -30,7 +30,7 @@
 		"@reduxjs/toolkit": "2.11.2",
 		"@wordpress/api-fetch": "^7.40.0",
 		"@wordpress/data": "^10.39.0",
-		"@wordpress/dom-ready": "4.39.0",
+		"@wordpress/dom-ready": "4.40.0",
 		"@wordpress/element": "^6.31.0",
 		"@wordpress/i18n": "^6.10.0",
 		"lodash": "4.17.23",
