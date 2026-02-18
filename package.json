@@ -42,7 +42,7 @@
 		"@wordpress/env": "10.37.0",
 		"@wordpress/eslint-plugin": "^24.1.0",
 		"@wordpress/scripts": "^31",
-		"playwright": "1.57.0",
+		"playwright": "1.58.2",
 		"stylelint": "16.26.1",
 		"stylelint-scss": "7.0.0"
 	},
