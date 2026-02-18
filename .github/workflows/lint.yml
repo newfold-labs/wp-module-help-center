@@ -28,7 +28,7 @@ jobs:
 
       # Using PHP 8.1 here for compatibility with the latest WordPress code sniffer rules.
       - name: Setup PHP
-        uses: shivammathur/setup-php@f89a301251ea3f109745bab3a62be58575f216bf # v2.36.0
+        uses: shivammathur/setup-php@3aeeb0366058fd8efb58f4d53b5717a49bcb5226 # v2.36.0
         with:
           php-version: '7.3'
           coverage: none
