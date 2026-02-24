@@ -307,10 +307,11 @@ const HelpCenterChatAI = () => {
 						</button>
 					</div>
 				)}
+				{/* isLoading = isTyping only (not isConnecting) so we show one "Connecting...." via isConnectingOrReconnecting; TypingIndicator is for reply-in-progress. */}
 				<ChatMessages
 					messages={displayMessages}
-					isLoading={hasUserEngaged && (isTyping || isConnecting)}
-					status={isConnecting ? TYPING_STATUS.WS_CONNECTING : status}
+					isLoading={hasUserEngaged && isTyping}
+					status={status}
 					error={error}
 					onRetry={
 						hasUserEngaged && connectionState === 'failed' ? manualRetry : undefined
