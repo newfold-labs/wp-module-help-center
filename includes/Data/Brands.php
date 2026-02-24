@@ -221,6 +221,10 @@ final class Brands {
 	 * @return string
 	 */
 	public static function get_resource_link_for_brand( $brand_key ) {
+		$all_data = self::get_brand_data();
+		if ( ! isset( $all_data[ $brand_key ] ) && 0 !== strpos( $brand_key, 'hostgator' ) ) {
+			return '';
+		}
 		$data = self::get_data_for_brand( $brand_key );
 		return $data['helpURL'] ?? '';
 	}
