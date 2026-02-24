@@ -197,14 +197,18 @@ class HelpCenter {
 					self::$handle,
 					'var nfdHelpCenter =' . wp_json_encode(
 						array(
-							'restUrl'                   => \get_home_url() . '/index.php?rest_route=',
-							'resourceLink'              => Brands::get_resource_link_for_brand( NFD_HELPCENTER_PLUGIN_BRAND ),
-							'brand'                     => NFD_HELPCENTER_PLUGIN_BRAND,
-							'brandConfig'               => $brand_data,
-							'supportMessageTemplate'       => __( 'If you need help with your %1$s account, give us a call at %2$s or %3$s with one of our support agents — we\'re here for you!', self::$text_domain ),
-							'supportMessageTemplateNoPhone' => __( 'If you need help with your %1$s account, %2$s with one of our support agents — we\'re here for you!', self::$text_domain ),
-							'noResultsSupportTemplate'      => __( 'Call at %1$s or %2$s with one of our support agents — we will assist you as soon as possible.', self::$text_domain ),
-							'noResultsSupportTemplateNoPhone' => __( 'Or %1$s with one of our support agents — we will assist you as soon as possible.', self::$text_domain ),
+							'restUrl'                      => \get_home_url() . '/index.php?rest_route=',
+							'resourceLink'                 => Brands::get_resource_link_for_brand( NFD_HELPCENTER_PLUGIN_BRAND ),
+							'brand'                        => NFD_HELPCENTER_PLUGIN_BRAND,
+							'brandConfig'                  => $brand_data,
+							/* translators: 1: account name, 2: phone link, 3: chat link */
+							'supportMessageTemplate'       => __( 'If you need help with your %1$s account, give us a call at %2$s or %3$s with one of our support agents — we\'re here for you!', 'wp-module-help-center' ),
+							/* translators: 1: account name, 2: chat link */
+							'supportMessageTemplateNoPhone' => __( 'If you need help with your %1$s account, %2$s with one of our support agents — we\'re here for you!', 'wp-module-help-center' ),
+							/* translators: 1: phone link, 2: chat link */
+							'noResultsSupportTemplate'     => __( 'Call at %1$s or %2$s with one of our support agents — we will assist you as soon as possible.', 'wp-module-help-center' ),
+							/* translators: 1: chat link */
+							'noResultsSupportTemplateNoPhone' => __( 'Or %1$s with one of our support agents — we will assist you as soon as possible.', 'wp-module-help-center' ),
 						)
 					) . ';',
 					'before'
@@ -214,7 +218,7 @@ class HelpCenter {
 				\wp_localize_script( self::$handle, 'newfoldHelpCenter', array( 'closeOnLoad' => ( isset( $_GET['page'] ) && 'nfd-onboarding' === sanitize_text_field( wp_unslash( $_GET['page'] ) ) ) ) );
 
 				/* Remove values on log out */
-				$logout_listener_js = <<<JS
+				$logout_listener_js = <<<'JS'
 				jQuery(document).ready(function ($) {
 					$('a[href*="wp-login.php?action=logout"]').on('click', function () {
 						localStorage.removeItem('helpResultContent');
@@ -227,7 +231,7 @@ class HelpCenter {
 				\wp_add_inline_script( self::$handle, $logout_listener_js );
 
 				/* Remove values when the user is logged out */
-				$session_expiration_js = <<<JS
+				$session_expiration_js = <<<'JS'
 				jQuery(document).on('heartbeat-tick', function (event, data) {
 					if (data.hasOwnProperty('wp-auth-check') && data['wp-auth-check'] === false) {
 						localStorage.removeItem('helpResultContent');
