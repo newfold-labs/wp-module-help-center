@@ -192,12 +192,19 @@ class HelpCenter {
 					'screen'
 				);
 
+				$brand_data = Brands::get_data_for_brand( NFD_HELPCENTER_PLUGIN_BRAND );
 				\wp_add_inline_script(
 					self::$handle,
 					'var nfdHelpCenter =' . wp_json_encode(
 						array(
-							'restUrl'      => \get_home_url() . '/index.php?rest_route=',
-							'resourceLink' => Brands::get_resource_link_for_brand( NFD_HELPCENTER_PLUGIN_BRAND ),
+							'restUrl'                   => \get_home_url() . '/index.php?rest_route=',
+							'resourceLink'              => Brands::get_resource_link_for_brand( NFD_HELPCENTER_PLUGIN_BRAND ),
+							'brand'                     => NFD_HELPCENTER_PLUGIN_BRAND,
+							'brandConfig'               => $brand_data,
+							'supportMessageTemplate'       => __( 'If you need help with your %1$s account, give us a call at %2$s or %3$s with one of our support agents — we\'re here for you!', self::$text_domain ),
+							'supportMessageTemplateNoPhone' => __( 'If you need help with your %1$s account, %2$s with one of our support agents — we\'re here for you!', self::$text_domain ),
+							'noResultsSupportTemplate'      => __( 'Call at %1$s or %2$s with one of our support agents — we will assist you as soon as possible.', self::$text_domain ),
+							'noResultsSupportTemplateNoPhone' => __( 'Or %1$s with one of our support agents — we will assist you as soon as possible.', self::$text_domain ),
 						)
 					) . ';',
 					'before'

@@ -88,51 +88,6 @@ export const CapabilityAPI = {
 	},
 };
 
-/**
- * Cached runtime promise - ensures only one polling instance exists
- * @type {Promise<object>|null}
- */
-let runtimePromise = null;
-
-/**
- * Wait for the NewfoldRuntime object (with plugin.brand) to be available on window.
- * Uses a cached promise to prevent duplicate polling and errors.
- * Follows the same pattern as waitForRuntime in host plugin helpers.
- *
- * @param {number} timeout - Maximum time to wait in milliseconds (default: 5000)
- * @return {Promise<object>} Resolves with the runtime object when available
- */
-export const waitForRuntime = ( timeout = 5000 ) => {
-	if ( runtimePromise ) {
-		return runtimePromise;
-	}
-
-	runtimePromise = new Promise( ( resolve, reject ) => {
-		if ( window.NewfoldRuntime?.plugin?.brand ) {
-			resolve( window.NewfoldRuntime );
-			return;
-		}
-
-		const startTime = Date.now();
-		const interval = setInterval( () => {
-			if ( window.NewfoldRuntime?.plugin?.brand ) {
-				clearInterval( interval );
-				resolve( window.NewfoldRuntime );
-			} else if ( Date.now() - startTime >= timeout ) {
-				clearInterval( interval );
-				runtimePromise = null;
-				reject(
-					new Error(
-						'NewfoldRuntime not available, please refresh the page and try again.'
-					)
-				);
-			}
-		}, 50 );
-	} );
-
-	return runtimePromise;
-};
-
 // A wrapper to get and set things more easily
 export const LocalStorageUtils = {
 	updateHelpVisible: (visible) => {

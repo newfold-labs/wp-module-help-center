@@ -1,10 +1,25 @@
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { useDispatch } from 'react-redux';
 import { helpcenterActions } from '../../store/helpcenterSlice';
 import { ReactComponent as DislikeFeedback } from '../icons/dislike-help.svg';
 import BackButton from './BackButton';
 const DislikeFeedbackPanel = () => {
 	const dispatch = useDispatch();
+	const brandConfig = window.nfdHelpCenter?.brandConfig || {};
+	const hasPhone = brandConfig.hasPhone !== false;
+	const supportTemplate = hasPhone
+		? ( window.nfdHelpCenter?.noResultsSupportTemplate ||
+			__( 'Call at %1$s or %2$s with one of our support agents — we will assist you as soon as possible.', 'wp-module-help-center' ) )
+		: ( window.nfdHelpCenter?.noResultsSupportTemplateNoPhone ||
+			__( 'Or %1$s with one of our support agents — we will assist you as soon as possible.', 'wp-module-help-center' ) );
+	const contactUrl =
+		window.NewfoldRuntime?.linkTracker?.addUtmParams?.( brandConfig.contactUrl ) ||
+		brandConfig.contactUrl ||
+		'#';
+	const chatLink = `<a href="${ contactUrl }" target="_blank" rel="noreferrer">${ __( 'Chat Live', 'wp-module-help-center' ) }</a>`;
+	const supportMessage = hasPhone
+		? sprintf( supportTemplate, `<a href="tel:${ brandConfig.phone || '8884014678' }">${ brandConfig.phoneDisplay || '888-401-4678' }</a>`, chatLink )
+		: sprintf( supportTemplate, chatLink );
 	return (
 		<div className="dislike-feedback">
 			<BackButton
@@ -41,24 +56,11 @@ const DislikeFeedbackPanel = () => {
 							'wp-module-help-center'
 						)}
 						<br />
-						{__('Call at', 'wp-module-help-center')}{' '}
-						<span>
-							<a href="tel:8884014678">888-401-4678</a>
-						</span>{' '}
-						{__('or', 'wp-module-help-center')}{' '}
-						<span>
-							<a
-								href={window.NewfoldRuntime?.linkTracker?.addUtmParams("https://www.bluehost.com/contact") || "https://www.bluehost.com/contact" }
-								target="_blank"
-								rel="noreferrer"
-							>
-								Chat Live
-							</a>{' '}
-						</span>
-						{__(
-							'with one of our support agents — we will assist you as soon as possible.',
-							'wp-module-help-center'
-						)}
+						<span
+							dangerouslySetInnerHTML={{
+								__html: supportMessage,
+							}}
+						/>
 					</li>
 				</ul>
 			</div>
