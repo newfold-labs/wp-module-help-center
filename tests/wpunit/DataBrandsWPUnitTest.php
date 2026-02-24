@@ -105,6 +105,7 @@ class DataBrandsWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 	 * @return void
 	 */
 	public function test_get_data_for_brand_unknown_brand_falls_back_to_bluehost() {
+		// phpcs:ignore WordPress.WP.CapitalPDangit.MisspelledInText -- Intentionally lowercase brand key for test.
 		$data = Brands::get_data_for_brand( 'wordpress' );
 		$this->assertSame( 'bluehost', $data['brand'] );
 		$this->assertStringContainsString( 'bluehost', $data['helpURL'] );
@@ -206,6 +207,7 @@ class DataBrandsWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 	 * @return void
 	 */
 	public function test_get_data_for_brand_returns_has_phone_key() {
+		// phpcs:ignore WordPress.WP.CapitalPDangit.MisspelledInText -- Intentionally lowercase brand key for test.
 		$brands_to_check = array( 'bluehost', 'hostgator-us', 'hostgator-xy', 'hostgator', 'wordpress' );
 		foreach ( $brands_to_check as $brand ) {
 			$data = Brands::get_data_for_brand( $brand );
@@ -229,12 +231,27 @@ class DataBrandsWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 		$plugin->region = '';
 
 		$container = new class( $plugin ) {
+			/**
+			 * Plugin object with brand and region.
+			 *
+			 * @var \stdClass
+			 */
 			private $plugin;
 
+			/**
+			 * Constructor.
+			 *
+			 * @param \stdClass $plugin Plugin object.
+			 */
 			public function __construct( $plugin ) {
 				$this->plugin = $plugin;
 			}
 
+			/**
+			 * Returns the plugin object.
+			 *
+			 * @return \stdClass
+			 */
 			public function plugin() {
 				return $this->plugin;
 			}
