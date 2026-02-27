@@ -14,6 +14,10 @@ import {
 	saveHelpcenterOption,
 } from '../utils';
 import HistoryList from './HistoryList';
+
+/** Height of the Pro Design banner; only present for Bluehost. */
+const PRO_DESIGN_BANNER_HEIGHT = 210;
+
 const SearchInput = () => {
 	const isFirstRender = useRef(true);
 	const brand = CapabilityAPI.getBrand();
@@ -23,13 +27,15 @@ const SearchInput = () => {
 	const searchData = useSelector((state) => state.helpcenter);
 
 	const getInputBoxBottomPosition = (data) => {
-		if (data.isFooterVisible && (data.disliked || data.noResult)) {
+		if ( ! data.isFooterVisible ) {
+			return '0px';
+		}
+		if ( data.disliked || data.noResult ) {
 			return '222px';
 		}
-		if (data.isFooterVisible) {
-			return '375px';
-		}
-		return '0px';
+		const showProDesignBanner =
+			window.nfdHelpCenter?.brandConfig?.showProDesignBanner ?? true;
+		return showProDesignBanner ? '375px' : `${375 - PRO_DESIGN_BANNER_HEIGHT}px`;
 	};
 
 	useEffect(() => {

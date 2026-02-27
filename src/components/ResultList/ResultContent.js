@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { helpcenterActions } from '../../../store/helpcenterSlice';
 import IframeModal from './IframeModal';
 
-function ResultContent({ source, index, questionBlock, content }) {
+function ResultContent( { source, index, questionBlock, content } ) {
 	const { isLoading, loadingQuery, loadingIndex } = useSelector(
 		(state) => state.helpcenter
 	);
@@ -107,27 +107,35 @@ function ResultContent({ source, index, questionBlock, content }) {
 
 		ensureOverlays();
 
-		const handleClick = (e) => {
-			const anchor = e.target.closest('a[href*="bhmultisite.com/"]');
-			if (anchor && resultBlock.contains(anchor)) {
-				e.preventDefault();
-				const clickedText = anchor.textContent.trim();
+		const kbClickDomains =
+			window.nfdHelpCenter?.brandConfig?.kbClickDomains || [];
 
-				dispatch(helpcenterActions.updateSearchInput(clickedText));
-				dispatch(helpcenterActions.setAIResultLoading());
-
-				// set a flag like "triggerSubmit" in the store
-				dispatch(helpcenterActions.setTriggerSearch(true));
-				dispatch(helpcenterActions.setShowBackButton(true));
+		const handleClick = ( e ) => {
+			const anchor = e.target.closest( 'a' );
+			if ( ! anchor || ! anchor.href || ! resultBlock.contains( anchor ) ) {
+				return;
 			}
+			const hrefMatches = kbClickDomains.some(
+				( domain ) => anchor.href.includes( domain )
+			);
+			if ( ! hrefMatches ) {
+				return;
+			}
+			e.preventDefault();
+			const clickedText = anchor.textContent.trim();
+
+			dispatch( helpcenterActions.updateSearchInput( clickedText ) );
+			dispatch( helpcenterActions.setAIResultLoading() );
+			dispatch( helpcenterActions.setTriggerSearch( true ) );
+			dispatch( helpcenterActions.setShowBackButton( true ) );
 		};
 
-		resultBlock.addEventListener('click', handleClick);
+		resultBlock.addEventListener( 'click', handleClick );
 
 		return () => {
-			resultBlock.removeEventListener('click', handleClick);
+			resultBlock.removeEventListener( 'click', handleClick );
 		};
-	}, [content]);
+	}, [ content, dispatch ] );
 
 	function renderContentOrLoading() {
 		const isAISourceLoading =
