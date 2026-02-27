@@ -45,6 +45,7 @@ jobs:
       module-branch: ${{ needs.setup.outputs.branch }}
       plugin-repo: 'newfold-labs/wp-plugin-bluehost'
       plugin-branch: 'develop'
+      artifact-name: 'wp-plugin-bluehost-develop'
     secrets: inherit
 
   hostgator:
@@ -66,4 +67,5 @@ jobs:
       module-branch: ${{ needs.setup.outputs.branch }}
       plugin-repo: 'newfold-labs/wp-plugin-hostgator'
       plugin-branch: 'develop'
+      artifact-name: 'wp-plugin-hostgator-develop'
     secrets: inherit
