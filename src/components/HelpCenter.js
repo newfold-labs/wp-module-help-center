@@ -1,7 +1,8 @@
 import { useEffect, useRef } from '@wordpress/element';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { CapabilityAPI, LocalStorageUtils, adjustPadding } from '../utils';
+import { useHelpCenterState } from '../hooks/useHelpCenterState';
 
 import { helpcenterActions } from '../../store/helpcenterSlice';
 
@@ -13,6 +14,8 @@ import SearchInput from './SearchInput';
 
 const HelpCenter = () => {
 	const dispatch = useDispatch();
+
+	// Use reusable hook for Redux state
 	const {
 		visible,
 		helpEnabled,
@@ -22,7 +25,7 @@ const HelpCenter = () => {
 		resultContent,
 		isLoading,
 		hasLaunchedFromTooltip,
-	} = useSelector((state) => state.helpcenter);
+	} = useHelpCenterState();
 
 	const wrapper = useRef();
 	const resultsContainer = useRef();
@@ -30,6 +33,7 @@ const HelpCenter = () => {
 	// === useEffect: on mount ===
 	useEffect(() => {
 		getHelpStatus();
+		// Sync visibility state with Redux when localStorage changes
 		const updateVisibility = () =>
 			dispatch(
 				helpcenterActions.updateVisibility(
@@ -38,10 +42,13 @@ const HelpCenter = () => {
 			);
 		window.addEventListener('storage', updateVisibility);
 
+		// Initial sync
+		updateVisibility();
+
 		return () => {
 			window.removeEventListener('storage', updateVisibility);
 		};
-	}, []);
+	}, [dispatch]);
 
 	// === useEffect: on visible ===
 	useEffect(() => {
@@ -67,9 +74,17 @@ const HelpCenter = () => {
 	const getHelpStatus = async () => {
 		try {
 			const response = await CapabilityAPI.getHelpCenterCapability();
-			dispatch(helpcenterActions.updateHelpEnabled(response));
+			const aiResponse = CapabilityAPI.getAIHelpCenterCapability();
+			// Show help center if either capability is true
+			// If AI capability is true, HelpCenterChat will show AI chat instead
+			// but we still need helpEnabled to be true so the modal/content area renders
+			dispatch(
+				helpcenterActions.updateHelpEnabled(response || aiResponse)
+			);
 		} catch {
-			dispatch(helpcenterActions.updateHelpEnabled(false));
+			// On error, check AI capability as fallback
+			const aiResponse = CapabilityAPI.getAIHelpCenterCapability();
+			dispatch(helpcenterActions.updateHelpEnabled(aiResponse));
 		}
 	};
 
@@ -81,7 +96,11 @@ const HelpCenter = () => {
 		);
 	};
 
-	if (!helpEnabled || !visible) {
+	// Check both capabilities - show if either is true
+	const canAccessAIHelpCenter = CapabilityAPI.getAIHelpCenterCapability();
+	const shouldShow = (helpEnabled || canAccessAIHelpCenter) && visible;
+
+	if (!shouldShow) {
 		return null;
 	}
 

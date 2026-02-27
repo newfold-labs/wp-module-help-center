@@ -25,6 +25,7 @@
 	},
 	"dependencies": {
 		"@newfold-labs/wp-module-ai": "github:newfold-labs/js-utility-ai#1.0.1",
+		"@newfold-labs/wp-module-ai-chat": "github:newfold-labs/wp-module-ai-chat#v1.0.0",
 		"@newfold/js-utility-ui-analytics": "1.4.0",
 		"@newfold/wp-module-runtime": "1.2.2",
 		"@reduxjs/toolkit": "2.11.2",

@@ -98,7 +98,14 @@
   } */
 }
 
-/* Ensure wrapper can host absolutely-positioned overlay */
+/* Ensure wrapper can host absolutely-positioned overlay (WordPress core block class) */
+/* stylelint-disable-next-line selector-class-pattern */
 .wp-block-embed__wrapper { position: relative; }
 
-
+.helpcenter-back-arrow {
+  cursor: pointer;
+  color: #356CD8;
+  display: inline-flex;
+  gap: 6px;
+  padding-top: 10px;
+}

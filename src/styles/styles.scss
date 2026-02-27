@@ -1,5 +1,6 @@
 /* stylelint-disable at-rule-no-unknown */
 /* stylelint-disable selector-class-pattern */
+/* stylelint-disable no-descending-specificity */
 @use './modal';
 
 $blue: #196bde;
@@ -44,7 +45,7 @@ $blue-links-color: #356CD8;
     font-size: 12px;
 }
 
-.nfd-hc-seperator {
+.nfd-hc-separator {
 
     @extend %padding-x-23;
 
@@ -62,109 +63,115 @@ $blue-links-color: #356CD8;
 
 
 .nfd-help-center {
-    position: relative;
-    height: calc(100vh - 255px);
-    overflow-y: auto;
-    z-index: 10;
+  position: relative;
+  height: 100%;
+  overflow-y: auto;
+  z-index: 10;
+
+  p {
+    font-size: 13px;
+    margin-bottom: 1em !important;
+
+    br {
+      content: '';
+      display: block;
+    }
+  }
+
+  ul,
+  ol {
+    margin: 1em 0 1em 0 !important;
+    list-style-position: outside !important;
+    padding-left: 2em !important;
+  }
+
+  li {
+    line-height: 1.5;
+    margin-bottom: 0 !important;
+  }
+
+  ol ul,
+  ol ol,
+  ul ol,
+  ul ul {
+    list-style-position: outside !important;
+    margin: auto 0 auto 0 !important;
+    padding-left: 1em !important;
+  }
+
+  h4,
+  h3 {
+    margin: 0;
+  }
+
+  .launch-help-center {
+    text-align: center;
+
+    .launch-description {
+      margin: 24px 0;
+    }
+
+    .launch-action {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    button {
+      width: 146px;
+      height: 36px;
+      background-color: $blue;
+      border: 1px solid $blue;
+      color: $white;
+      cursor: grab;
+    }
 
     p {
-        font-size: 13px;
-        margin-bottom: 1em !important;
-
-        br {
-            content: '';
-            display: block;
-        }
+      font-size: 18px;
     }
 
-    ul,
-    ol {
-        margin: 1em 0 1em 0 !important;
-        list-style-position: outside!important;
-        padding-left: 2em !important;
+    a {
+      margin-top: 16px;
+      display: block;
+      cursor: grab;
     }
+  }
 
-    li{
-        line-height: 1.5em;
-        margin-bottom: 0 !important;
-    }
+  h4,
+  h1,
+  h2,
+  h3 {
+    margin: 2em 0 1em !important;
+  }
 
-    ol ul,
-    ol ol,
-    ul ol,
-    ul ul {
-        list-style-position: outside !important;
-        margin: auto 0 auto 0 !important;
-        padding-left: 1em !important;
-    }
+  h3 {
+    font-size: 1em;
+    font-weight: 700;
+  }
 
-    h4,
-    h1,
-    h2,
-    h3 {
-        margin: 2em 0 1em !important;
-    }
+  h4 {
+    font-size: 0.8em;
+    text-transform: uppercase;
+  }
 
-    h3 {
-        font-size: 1em;
-        font-weight: bold;
-    }
+  .HistoryList {
+    gap: 6px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: #336AD7;
+    font-size: 12px;
+  }
 
-    h4 {
-        font-size: 0.8em;
-        text-transform: uppercase;
-    }
+  .helpcenter-input-wrapper {
+    position: fixed;
+    width: 356px;
+    background: #f3f7fa;
+    z-index: 12;
+    bottom: 0;
+    right: 0;
 
-    .launch-help-center {
-        text-align: center;
-
-        .launch-description {
-            margin: 24px 0;
-        }
-
-        .launch-action {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        button {
-            width: 146px;
-            height: 36px;
-            background-color: $blue;
-            border: 1px solid $blue;
-            color: $white;
-            cursor: grab;
-        }
-
-        p {
-            font-size: 18px;
-        }
-
-        a {
-            margin-top: 16px;
-            display: block;
-            cursor: grab;
-        }
-    }
-
-    .HistoryList {
-        gap: 6px;
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-        color: #336AD7;
-        font-size: 12px;
-    }
-
-    .helpcenter-input-wrapper {
-        position: fixed;
-        width: 356px;
-        background: #f3f7fa;
-        z-index: 12;
-        bottom: 0;
-
-        .search-container__wrapper {
+    .search-container__wrapper {
             padding: 5px 23px 12px;
 
             .search-container {
@@ -427,6 +434,7 @@ $blue-links-color: #356CD8;
 .help-container {
     width: 356px;
     height: 100vh;
+    max-height: calc(100vh - 32px);
     overflow: hidden;
     position: fixed;
     right: 0;
@@ -559,12 +567,15 @@ body:is(.page, .post-php, .post-new-php) {
     }
 }
 
+// Base footer styles (shared between legacy and AI chat)
 .nfd-hc-modal__footer {
-    position: fixed;
-    bottom: 0;
-    z-index: 10;
-    background-color: #f3f7fa;
-    color: #000;
+  position: fixed;
+  bottom: 0;
+  z-index: 10;
+  background-color: #f3f7fa;
+  color: #000;
+  overflow: hidden;
+  max-width: 100%;
 
     &__breakline {
         padding: 20px 23px 0;
@@ -600,95 +611,113 @@ body:is(.page, .post-php, .post-new-php) {
                     text-decoration: none;
                     color: $blue-links-color;
                 }
-
             }
-        }
 
-        .helpcenter-supportinfo__telephone {
-            margin-bottom: 12px;
+            .helpcenter-supportinfo__telephone {
+                margin-bottom: 12px;
 
-            /* stylelint-disable-next-line no-descending-specificity */
-            span {
-                margin-right: 8px;
-                vertical-align: text-top;
+                span {
+                    margin-right: 8px;
+                    vertical-align: text-top;
 
-                a {
-                    text-decoration: none;
-                    color: #196cdf;
-                }
-            }
-        }
-
-        .helpcenter-supportinfo__chat {
-            margin-bottom: 12px;
-
-            /* stylelint-disable-next-line no-descending-specificity */
-            span {
-                margin-right: 8px;
-                vertical-align: text-top;
-
-                a {
-                    text-decoration: none;
-                    color: #196cdf;
-                }
-            }
-        }
-    }
-
-    .hc-banner__wrapper {
-        position: relative;
-        height: 210px;
-        width: 360px;
-
-        .hc-banner {
-            position: absolute;
-            bottom: 0;
-            z-index: 1;
-            padding: 10px 23px 20px;
-            background-color: transparent;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-
-            .hc-banner-content {
-
-                &__heading {
-                    font-size: 13px;
-                    font-weight: 500;
-                    margin: 0 0 15px;
-                }
-
-                &__body {
-                    font-size: 12px;
-                    width: 90%;
-                    margin: 0 0 15px;
-                }
-
-                &__cta {
-                    display: flex;
-
-                    &--button {
-                        height: 28px;
-                        font-size: 12px;
-                        background-color: #121212;
-                        color: #fff;
-                        border-radius: 5px;
-                        border: none;
-                        padding: 6px 10px;
-                        font-weight: 700;
+                    a {
                         text-decoration: none;
+                        color: #196cdf;
+                    }
+                }
+            }
+
+            .helpcenter-supportinfo__chat {
+                margin-bottom: 12px;
+
+                span {
+                    margin-right: 8px;
+                    vertical-align: text-top;
+
+                    a {
+                        text-decoration: none;
+                        color: #196cdf;
                     }
                 }
             }
         }
-
-        .hc-banner-background {
-            position: absolute;
-            bottom: -5px;
-            width: 100%;
-        }
     }
+
+  .hc-banner__wrapper {
+    position: relative;
+    height: 242px;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+
+    .hc-banner {
+      position: absolute;
+      bottom: 0;
+      z-index: 1;
+      padding: 10px 23px 20px;
+      background-color: transparent;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      box-sizing: border-box;
+
+      .hc-banner-content {
+
+        &__heading {
+          font-size: 13px;
+          font-weight: 500;
+          margin: 0 0 15px;
+        }
+
+        &__body {
+          font-size: 12px;
+          width: 90%;
+          margin: 0 0 15px;
+        }
+
+        &__cta {
+          display: flex;
+
+          &--button {
+            height: 28px;
+            font-size: 12px;
+            background-color: #121212;
+            color: #fff;
+            border-radius: 5px;
+            border: none;
+            padding: 6px 10px;
+            font-weight: 700;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+
+    .hc-banner-background {
+      position: absolute;
+      bottom: -5px;
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;
+
+      svg {
+        width: 100%;
+        height: auto;
+        max-width: 100%;
+      }
+    }
+}
+
+// Legacy help center footer - fixed positioned (only when AI chat is NOT present)
+.nfd-hc-modal:not(:has(.nfd-ai-chat-container)) > .nfd-hc-modal__footer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 356px;
+  max-width: 356px;
+  height: 375px; // Match the input wrapper's bottom position
 }
 
 .helpcenter-noresult-wrapper {
@@ -716,14 +745,6 @@ body:is(.page, .post-php, .post-new-php) {
             }
         }
     }
-}
-
-.helpcenter-back-arrow {
-    cursor: pointer;
-    color: $blue-links-color;
-    display: inline-flex;
-    gap: 6px;
-    padding-top: 10px;
 }
 
 #nfd-hc-floating-icon-wrapper {
@@ -765,7 +786,7 @@ body:is(.page, .post-php, .post-new-php) {
         fill: currentcolor;
     }
 
-    & > p {
+    > p {
         font-size: 12px;
         margin: 0;
         color: #000;
@@ -790,4 +811,5 @@ body:is(.page, .post-php, .post-new-php) {
         outline: 3px solid #93c5fd;
         outline-offset: 2px;
     }
+}
 }
