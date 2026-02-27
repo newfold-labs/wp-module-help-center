@@ -27,11 +27,43 @@ jobs:
         id: extract_branch
 
   bluehost:
-    name: Bluehost Build and Test Cypress
+    name: Bluehost Build and Test
     needs: setup
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
     with:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
       plugin-repo: 'newfold-labs/wp-plugin-bluehost'
+    secrets: inherit
+
+  bluehost-dev:
+    name: Bluehost Dev Build and Test
+    needs: setup
+    uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
+    with:
+      module-repo: ${{ github.repository }}
+      module-branch: ${{ needs.setup.outputs.branch }}
+      plugin-repo: 'newfold-labs/wp-plugin-bluehost'
+      plugin-branch: 'develop'
+    secrets: inherit
+
+  hostgator:
+    name: HostGator Build and Test
+    needs: setup
+    uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
+    with:
+      module-repo: ${{ github.repository }}
+      module-branch: ${{ needs.setup.outputs.branch }}
+      plugin-repo: 'newfold-labs/wp-plugin-hostgator'
+    secrets: inherit
+
+  hostgator-dev:
+    name: HostGator Dev Build and Test
+    needs: setup
+    uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
+    with:
+      module-repo: ${{ github.repository }}
+      module-branch: ${{ needs.setup.outputs.branch }}
+      plugin-repo: 'newfold-labs/wp-plugin-hostgator'
+      plugin-branch: 'develop'
     secrets: inherit
