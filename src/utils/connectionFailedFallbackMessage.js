@@ -8,13 +8,32 @@
  */
 import { __, sprintf } from '@wordpress/i18n';
 
+/**
+ * Allow only http/https URLs for safe use in href to prevent XSS (e.g. javascript:/data:).
+ * Mirrors getSafeResourceLink in NoResults.js.
+ *
+ * @param {string} url - URL to validate (e.g. from nfdHelpCenter.resourceLink).
+ * @return {string} The URL if safe, otherwise '#'.
+ */
+function getSafeResourceLink(url) {
+	if (typeof url !== 'string') {
+		return '#';
+	}
+	const trimmed = url.trim();
+	return trimmed.startsWith('http://') || trimmed.startsWith('https://')
+		? trimmed
+		: '#';
+}
+
 export function getConnectionFailedFallbackMessage(userMessage) {
 	const messageText =
 		!userMessage || !String(userMessage).trim()
 			? 'this'
 			: `"${String(userMessage).trim()}"`;
 
-	const resourceUrl = window?.nfdHelpCenter?.resourceLink || '#';
+	const resourceUrl = getSafeResourceLink(
+		window?.nfdHelpCenter?.resourceLink || '#'
+	);
 	const resourceCenterLabel = __('Resource center', 'wp-module-help-center');
 	const resourceLineBefore = __(
 		'You can try searching our',

@@ -708,6 +708,7 @@ body:is(.page, .post-php, .post-new-php) {
         max-width: 100%;
       }
     }
+  }
 }
 
 // Legacy help center footer - fixed positioned (only when AI chat is NOT present)
@@ -811,5 +812,4 @@ body:is(.page, .post-php, .post-new-php) {
         outline: 3px solid #93c5fd;
         outline-offset: 2px;
     }
-}
 }
