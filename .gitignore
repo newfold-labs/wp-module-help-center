@@ -23,4 +23,5 @@
 /vendor
 /wordpress
 /wp-content
+.env.testing
 cypress.env.json

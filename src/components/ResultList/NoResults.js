@@ -1,5 +1,6 @@
 /* eslint-disable @wordpress/i18n-translator-comments */
 import { __, sprintf } from '@wordpress/i18n';
+import { useRef } from 'react';
 import { LocalStorageUtils } from '../../utils';
 import { ReactComponent as NoResultIcon } from './../../icons/noresults-icon.svg';
 
@@ -18,12 +19,27 @@ const getSafeResourceLink = (url) => {
 		: '#';
 };
 
-const NoResults = ({ hasLaunchedFromTooltip, query: queryProp }) => {
+const NoResults = ( { hasLaunchedFromTooltip, query: queryProp } ) => {
+	const responseRef = useRef( null );
 	const resourceLink = getSafeResourceLink(
 		window?.nfdHelpCenter?.resourceLink || '#'
 	);
+	const brandConfig = window.nfdHelpCenter?.brandConfig || {};
+	const hasPhone = brandConfig.hasPhone !== false;
+	const supportTemplate = hasPhone
+		? ( window.nfdHelpCenter?.noResultsSupportTemplate ||
+			__( 'Call at %1$s or %2$s with one of our support agents — we will assist you as soon as possible.', 'wp-module-help-center' ) )
+		: ( window.nfdHelpCenter?.noResultsSupportTemplateNoPhone ||
+			__( 'Or %1$s with one of our support agents — we will assist you as soon as possible.', 'wp-module-help-center' ) );
+	const contactUrl =
+		window.NewfoldRuntime?.linkTracker?.addUtmParams?.( brandConfig.contactUrl ) ||
+		brandConfig.contactUrl ||
+		'#';
+	const chatLink = `<a href="${ contactUrl }" target="_blank" rel="noreferrer">${ __( 'Chat Live', 'wp-module-help-center' ) }</a>`;
+	const supportMessage = hasPhone
+		? sprintf( supportTemplate, `<a href="tel:${ brandConfig.phone || '8884014678' }">${ brandConfig.phoneDisplay || '888-401-4678' }</a>`, chatLink )
+		: sprintf( supportTemplate, chatLink );
 
-	// Define the content with a placeholder for the link
 	const contentWithLink = __(
 		'You can try searching our <a href="{link}">Resource center.</a> though to see if there’s a helpful article or video on that subject.',
 		'wp-module-help-center'
@@ -80,33 +96,16 @@ const NoResults = ({ hasLaunchedFromTooltip, query: queryProp }) => {
 							</li>
 							<li>
 								<p>
-									{__(
+									{ __(
 										'Reach out to our customer support.',
 										'wp-module-help-center'
-									)}
+									) }
 									<br />
-									{__(
-										'Call at',
-										'wp-module-help-center'
-									)}{' '}
-									<a href="tel:8884014678">888-401-4678</a>{' '}
-									{__('or', 'wp-module-help-center')}{' '}
-									<a
-										href={
-											window.NewfoldRuntime?.linkTracker?.addUtmParams(
-												'https://www.bluehost.com/contact'
-											) ||
-											'https://www.bluehost.com/contact'
-										}
-										target="_blank"
-										rel="noreferrer"
-									>
-										Chat Live
-									</a>{' '}
-									{__(
-										'with one of our support agents — we will assist you as soon as possible.',
-										'wp-module-help-center'
-									)}
+									<span
+										dangerouslySetInnerHTML={ {
+											__html: supportMessage,
+										} }
+									/>
 								</p>
 							</li>
 						</ul>
