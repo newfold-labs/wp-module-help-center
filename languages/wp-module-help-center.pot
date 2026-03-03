@@ -22,6 +22,33 @@ msgstr ""
 msgid "You must be authenticated to make this call"
 msgstr ""
 
+#: includes/Data/Brands.php:24
+#: includes/Data/Brands.php:30
+#: build/index.js:1
+msgid "Bluehost"
+msgstr ""
+
+#: includes/Data/Brands.php:35
+msgid "Your dream site is just a click away."
+msgstr ""
+
+#: includes/Data/Brands.php:36
+msgid "Let's build a site you love, together."
+msgstr ""
+
+#: includes/Data/Brands.php:37
+msgid "With Pro Design Live, our expert team bring your vision to life. We help you to create the site you've always dreamed of — tailored to your goals, ready to perform."
+msgstr ""
+
+#: includes/Data/Brands.php:38
+msgid "Start Now"
+msgstr ""
+
+#: includes/Data/Brands.php:42
+#: includes/Data/Brands.php:48
+msgid "HostGator"
+msgstr ""
+
 #: includes/HelpCenter.php:122
 msgid "NFD helpcenter data"
 msgstr ""
@@ -29,6 +56,34 @@ msgstr ""
 #: includes/HelpCenter.php:147
 #: build/index.js:1
 msgid "Help"
+msgstr ""
+
+#. translators: 1: account name, 2: phone link, 3: chat link
+#: includes/HelpCenter.php:205
+#: build/index.js:1
+#, php-format,js-format
+msgid "If you need help with your %1$s account, give us a call at %2$s or %3$s with one of our support agents — we're here for you!"
+msgstr ""
+
+#. translators: 1: account name, 2: chat link
+#: includes/HelpCenter.php:207
+#: build/index.js:1
+#, php-format,js-format
+msgid "If you need help with your %1$s account, %2$s with one of our support agents — we're here for you!"
+msgstr ""
+
+#. translators: 1: phone link, 2: chat link
+#: includes/HelpCenter.php:209
+#: build/index.js:1
+#, php-format,js-format
+msgid "Call at %1$s or %2$s with one of our support agents — we will assist you as soon as possible."
+msgstr ""
+
+#. translators: 1: chat link
+#: includes/HelpCenter.php:211
+#: build/index.js:1
+#, php-format,js-format
+msgid "Or %1$s with one of our support agents — we will assist you as soon as possible."
 msgstr ""
 
 #: includes/MultiSearchController.php:132
@@ -42,31 +97,11 @@ msgid "No data found"
 msgstr ""
 
 #: build/index.js:1
+msgid "Chat Live"
+msgstr ""
+
+#: build/index.js:1
 msgid "Account Support"
-msgstr ""
-
-#: build/index.js:1
-msgid "If you need help with your Bluehost account, give us a call at "
-msgstr ""
-
-#: build/index.js:1
-msgid " with one of our support agents — we're here for you!"
-msgstr ""
-
-#: build/index.js:1
-msgid "Your dream site is just a click away."
-msgstr ""
-
-#: build/index.js:1
-msgid "Let's build a site you love, together."
-msgstr ""
-
-#: build/index.js:1
-msgid "With Pro Design Live, our expert team bring your vision to life. We help you to create and the site you’ve always dreamed of — tailored to your goals, ready to perform."
-msgstr ""
-
-#: build/index.js:1
-msgid "Start Now"
 msgstr ""
 
 #: build/index.js:1
@@ -91,18 +126,6 @@ msgstr ""
 
 #: build/index.js:1
 msgid "Reach out to our customer support."
-msgstr ""
-
-#: build/index.js:1
-msgid "Call at"
-msgstr ""
-
-#: build/index.js:1
-msgid "or"
-msgstr ""
-
-#: build/index.js:1
-msgid "with one of our support agents — we will assist you as soon as possible."
 msgstr ""
 
 #: build/index.js:1
