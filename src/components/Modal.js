@@ -1,34 +1,69 @@
-import { useEffect } from '@wordpress/element';
+import { useEffect, useCallback } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { ReactComponent as CloseIcon } from '../icons/close.svg';
 import { ReactComponent as Help } from '../icons/helpcenter-chat-bubble-icon.svg';
 import Footer from './Footer';
-import HelpCenter from './HelpCenter';
+import HelpCenterChat from './HelpCenterChat';
+import { HelpCenterChatProvider } from '../context/HelpCenterChatContext';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { toggleHelp } from '..';
 import { helpcenterActions } from '../../store/helpcenterSlice';
-import { getHelpcenterOption, LocalStorageUtils } from '../utils';
+import {
+	getHelpcenterOption,
+	LocalStorageUtils,
+	CapabilityAPI,
+} from '../utils';
+import { useHelpCenterState } from '../hooks/useHelpCenterState';
+import { shouldShowFooter } from '../utils/footerUtils';
 
 const Modal = ({ onClose }) => {
 	const dispatch = useDispatch();
-	const { isFooterVisible, hasLaunchedFromTooltip } = useSelector(
-		(state) => state.helpcenter
-	);
+
+	// Use reusable hook for Redux state
+	const { isFooterVisible, hasLaunchedFromTooltip } = useHelpCenterState();
+
+	// Which flow is active: legacy (search/tooltips) vs AI chat. They are independent;
+	// legacy-only Redux init and data loading run only when !canAccessAIHelpCenter.
+	const canAccessAIHelpCenter = CapabilityAPI.getAIHelpCenterCapability();
+
+	// Use reusable utility function for footer visibility logic
+	const showFooter = shouldShowFooter({
+		isFooterVisible,
+		hasLaunchedFromTooltip,
+		canAccessAIHelpCenter,
+	});
+
+	// Handler for closing the modal - used by both legacy close button and AI chat header
+	const handleClose = useCallback(() => {
+		dispatch(helpcenterActions.resetState());
+		onClose();
+	}, [dispatch, onClose]);
+
+	// Global visibility (panel open/close) – runs for both flows.
+	// Legacy-only Redux init runs only when legacy flow is active so AI and legacy stay independent.
 	useEffect(() => {
-		dispatch(
-			helpcenterActions.initialDataSet({
-				isFooterVisible: LocalStorageUtils.getResultInfo()?.length < 1,
-				SearchInput: LocalStorageUtils.getSearchInput() || '',
-			})
-		);
 		const helpVisible = window.newfoldHelpCenter?.closeOnLoad
 			? false
 			: LocalStorageUtils.getHelpVisible();
 		toggleHelp(helpVisible);
-	}, []);
 
+		if (!canAccessAIHelpCenter) {
+			dispatch(
+				helpcenterActions.initialDataSet({
+					isFooterVisible:
+						LocalStorageUtils.getResultInfo()?.length < 1,
+					SearchInput: LocalStorageUtils.getSearchInput() || '',
+				})
+			);
+		}
+	}, [dispatch, canAccessAIHelpCenter]);
+
+	// Legacy-only: load help result history from DB. Skip when AI flow is active.
 	useEffect(() => {
+		if (canAccessAIHelpCenter) {
+			return;
+		}
 		let data = [];
 		async function fetchData() {
 			data = await getHelpcenterOption();
@@ -37,7 +72,7 @@ const Modal = ({ onClose }) => {
 			}
 		}
 		fetchData();
-	}, []);
+	}, [dispatch, canAccessAIHelpCenter]);
 
 	return (
 		<div
@@ -47,73 +82,103 @@ const Modal = ({ onClose }) => {
 			aria-modal="true"
 			className="nfd-hc-modal"
 		>
-			<div className="nfd-hc-modal__header">
-				<h3
-					id="helpcenter-modal-heading"
-					className="nfd-hc-modal__header__heading"
-				>
-					<span className="nfd-hc-modal__header__heading__icon">
-						<Help />
-					</span>
-					<span>
-						{__('Help with WordPress', 'wp-module-help-center')}
-					</span>
-					{
-						// only for testing
-					}
-					<div
-						className="nfd-help-center-tip"
-						data-post-id="111456"
-						id="help-center-tooltip"
-						style={{ display: 'none' }}
-					>
-						?
-					</div>
-				</h3>
-
-				{hasLaunchedFromTooltip && (
+			{/* When AI is on but tooltip content is showing: bar with close to switch to AI chat welcome */}
+			{canAccessAIHelpCenter && hasLaunchedFromTooltip && (
+				<div className="nfd-hc-modal__tooltip-dismiss">
 					<button
-						className="nfd-hc-modal__header__minimize-button"
+						type="button"
+						className="nfd-hc-modal__tooltip-dismiss__close"
 						aria-label={__(
-							'Minimize HelpCenter',
+							'Close and show AI chat',
 							'wp-module-help-center'
 						)}
 						title={__(
-							'Minimize HelpCenter',
+							'Close and show AI chat',
 							'wp-module-help-center'
 						)}
 						onClick={() => {
-							dispatch(
-								helpcenterActions.updateFloatingIconVisibilty(
-									true
-								)
-							);
-							toggleHelp(false);
+							LocalStorageUtils.clearResultContent();
+							dispatch(helpcenterActions.dismissTooltipView());
 						}}
-					></button>
-				)}
-				<button
-					aria-label={__('Close Help Modal', 'wp-module-help-center')}
-					title={__('Close Help Modal', 'wp-module-help-center')}
-					className="nfd-hc-modal__header__close-button"
-					onClick={() => {
-						dispatch(helpcenterActions.resetState());
-						onClose();
-					}}
-				>
-					<CloseIcon aria-hidden="true" />
-				</button>
-			</div>
-			<div className="nfd-hc-seperator">
-				<hr />
-			</div>
+					>
+						<CloseIcon aria-hidden="true" />
+					</button>
+				</div>
+			)}
+			{/* Header - hidden for AI Help Center (which has its own ChatHeader) */}
+			{!canAccessAIHelpCenter && (
+				<>
+					<div className="nfd-hc-modal__header">
+						<h3
+							id="helpcenter-modal-heading"
+							className="nfd-hc-modal__header__heading"
+						>
+							<span className="nfd-hc-modal__header__heading__icon">
+								<Help />
+							</span>
+							<span>
+								{__(
+									'Help with WordPress',
+									'wp-module-help-center'
+								)}
+							</span>
+						</h3>
+
+						{hasLaunchedFromTooltip && (
+							<button
+								className="nfd-hc-modal__header__minimize-button"
+								aria-label={__(
+									'Minimize HelpCenter',
+									'wp-module-help-center'
+								)}
+								title={__(
+									'Minimize HelpCenter',
+									'wp-module-help-center'
+								)}
+								onClick={() => {
+									dispatch(
+										helpcenterActions.updateFloatingIconVisibilty(
+											true
+										)
+									);
+									toggleHelp(false);
+								}}
+							></button>
+						)}
+						<button
+							aria-label={__(
+								'Close Help Modal',
+								'wp-module-help-center'
+							)}
+							title={__(
+								'Close Help Modal',
+								'wp-module-help-center'
+							)}
+							className="nfd-hc-modal__header__close-button"
+							onClick={handleClose}
+						>
+							<CloseIcon aria-hidden="true" />
+						</button>
+					</div>
+					<div className="nfd-hc-separator">
+						<hr />
+					</div>
+				</>
+			)}
 			<div
 				id="helpcenter-modal-description"
 				className="nfd-hc-modal__content"
 			>
-				<HelpCenter />
+				{/* HelpCenterChat handles capability check internally and renders appropriate component */}
+				{/* When capability is false, it renders legacy HelpCenter component */}
+				{/* When capability is true, it renders new AI chat with its own header */}
+				<HelpCenterChatProvider value={{ onClose: handleClose }}>
+					<HelpCenterChat />
+				</HelpCenterChatProvider>
 			</div>
-			{isFooterVisible && !hasLaunchedFromTooltip && <Footer />}
+			{/* Footer for legacy HelpCenter flow only - HelpCenterChat manages its own Footer when enabled */}
+			{/* Only show footer when capability is OFF (legacy flow) */}
+			{showFooter && !canAccessAIHelpCenter && <Footer />}
 		</div>
 	);
 };

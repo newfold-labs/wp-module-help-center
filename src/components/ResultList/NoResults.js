@@ -1,12 +1,29 @@
 /* eslint-disable @wordpress/i18n-translator-comments */
-import { useRef } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
+import { useRef } from 'react';
 import { LocalStorageUtils } from '../../utils';
 import { ReactComponent as NoResultIcon } from './../../icons/noresults-icon.svg';
 
-const NoResults = ( { hasLaunchedFromTooltip } ) => {
+/**
+ * Allow only http/https URLs for safe use in href to prevent XSS when injecting into HTML.
+ * @param {string} url - URL to validate (e.g. from nfdHelpCenter.resourceLink).
+ * @return {string} The URL if safe, otherwise '#'.
+ */
+const getSafeResourceLink = (url) => {
+	if (typeof url !== 'string') {
+		return '#';
+	}
+	const trimmed = url.trim();
+	return trimmed.startsWith('http://') || trimmed.startsWith('https://')
+		? trimmed
+		: '#';
+};
+
+const NoResults = ( { hasLaunchedFromTooltip, query: queryProp } ) => {
 	const responseRef = useRef( null );
-	const resourceLink = window?.nfdHelpCenter?.resourceLink || '#';
+	const resourceLink = getSafeResourceLink(
+		window?.nfdHelpCenter?.resourceLink || '#'
+	);
 	const brandConfig = window.nfdHelpCenter?.brandConfig || {};
 	const hasPhone = brandConfig.hasPhone !== false;
 	const supportTemplate = hasPhone
@@ -28,11 +45,18 @@ const NoResults = ( { hasLaunchedFromTooltip } ) => {
 		'wp-module-help-center'
 	);
 
-	// Replace the {link} placeholder with the actual link
+	// Replace the {link} placeholder with the actual link (sanitized)
 	const formattedContent = contentWithLink.replace('{link}', resourceLink);
-	const query = LocalStorageUtils.getSearchInput();
+	// Use prop query if provided, otherwise try localStorage, fallback to null
+	const query =
+		queryProp !== undefined
+			? queryProp
+			: LocalStorageUtils.getSearchInput();
+	// Determine the message text - use "this" if launched from tooltip or query is null/empty
+	const messageText =
+		hasLaunchedFromTooltip || !query ? 'this' : `"${query}"`;
 	return (
-		<div ref={responseRef} className="helpcenter-response-block">
+		<div className="helpcenter-response-block">
 			<div className="helpcenter-noresult-wrapper">
 				<div className="helpcenter-noresult-block">
 					<div className="helpcenter-noresult-icon">
@@ -44,7 +68,7 @@ const NoResults = ( { hasLaunchedFromTooltip } ) => {
 								'Sorry, I don’t have any information on %s yet.',
 								'wp-module-help-center'
 							),
-							hasLaunchedFromTooltip ? 'this' : `"${query}"`
+							messageText
 						)}
 					</p>
 					<div>

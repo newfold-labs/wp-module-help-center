@@ -74,6 +74,12 @@ export const CapabilityAPI = {
 			window.NewfoldRuntime?.capabilities?.canAccessHelpCenter || false
 		);
 	},
+	getAIHelpCenterCapability: () => {
+		return (
+			// get the AI help center capability from newfold runtime
+			window.NewfoldRuntime?.capabilities?.canAccessAIHelpCenter || false
+		);
+	},
 	getBrand: () => {
 		// get the brand name from newfold runtime
 		const brand = window.NewfoldRuntime?.plugin?.brand || 'wordpress';
@@ -134,6 +140,11 @@ export const LocalStorageUtils = {
 		localStorage.removeItem('helpResultContent');
 		localStorage.removeItem('helpPostId');
 		localStorage.removeItem('searchInput');
+	},
+	// Clear only the stored result (e.g. when user dismisses tooltip so it does not reappear on refresh).
+	clearResultContent: () => {
+		localStorage.removeItem('helpResultContent');
+		localStorage.removeItem('helpPostId');
 	},
 	// Update getResultInfo to retrieve all results
 	getResultInfo: () => {
@@ -348,7 +359,7 @@ export const getHelpcenterOption = async () => {
 		if (responseData?.length > 0) {
 			return responseData;
 		}
-	} catch (err) { }
+	} catch (err) {}
 };
 
 export const getMultiSearchResponse = async (query, brand) => {

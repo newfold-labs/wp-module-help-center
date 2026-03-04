@@ -1,7 +1,8 @@
 import moduleAI from '@newfold-labs/wp-module-ai';
 import { useEffect, useRef, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useHelpCenterState } from '../hooks/useHelpCenterState';
 import { helpcenterActions } from '../../store/helpcenterSlice';
 import { ReactComponent as GoSearchIcon } from '../icons/paper-airplane.svg';
 import {
@@ -24,7 +25,7 @@ const SearchInput = () => {
 	const dispatch = useDispatch();
 
 	const [errorMsg, setErrorMsg] = useState('');
-	const searchData = useSelector((state) => state.helpcenter);
+	const searchData = useHelpCenterState();
 
 	const getInputBoxBottomPosition = (data) => {
 		if ( ! data.isFooterVisible ) {
@@ -64,6 +65,11 @@ const SearchInput = () => {
 		const resultContentFormatted = postContent
 			? postContent
 			: '';
+		// Legacy only: empty content should show the no-results UI, not a blank area
+		if ( ! resultContentFormatted || ! resultContentFormatted.trim() ) {
+			dispatch( helpcenterActions.setNoResult() );
+			return;
+		}
 		// Retrieve existing results from local storage and using the updated persistResult method to store the result
 		const result = {
 			resultContent: resultContentFormatted,
