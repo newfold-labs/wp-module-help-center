@@ -16,7 +16,8 @@ import {
 	removeConversationFromArchive,
 	getChatHistoryStorageKeys,
 	TYPING_STATUS,
-} from '@newfold-labs/wp-module-ai-chat';
+} from '@newfold/wp-module-ai-chat';
+import '@newfold/wp-module-ai-chat/style.css';
 import Footer from './Footer'; // Support banner component
 import { useHelpCenterChatContext } from '../context/HelpCenterChatContext';
 import { getConnectionFailedFallbackMessage } from '../utils/connectionFailedFallbackMessage';
