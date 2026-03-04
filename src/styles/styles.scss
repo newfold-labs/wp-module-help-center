@@ -644,11 +644,12 @@ body:is(.page, .post-php, .post-new-php) {
     }
 
   .hc-banner__wrapper {
-    position: relative;
     height: 242px;
     width: 100%;
     max-width: 100%;
     overflow: hidden;
+    position: absolute;
+    bottom: 0;
 
     .hc-banner {
       position: absolute;
