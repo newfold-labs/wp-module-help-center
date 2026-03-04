@@ -65,6 +65,11 @@ const SearchInput = () => {
 		const resultContentFormatted = postContent
 			? postContent
 			: '';
+		// Legacy only: empty content should show the no-results UI, not a blank area
+		if ( ! resultContentFormatted || ! resultContentFormatted.trim() ) {
+			dispatch( helpcenterActions.setNoResult() );
+			return;
+		}
 		// Retrieve existing results from local storage and using the updated persistResult method to store the result
 		const result = {
 			resultContent: resultContentFormatted,

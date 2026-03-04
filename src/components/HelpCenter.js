@@ -89,10 +89,11 @@ const HelpCenter = () => {
 	};
 
 	const checkFooterVisibility = () => {
+		const hasContent = Array.isArray(resultContent)
+			? resultContent.length >= 1
+			: resultContent != null && resultContent.resultContent;
 		dispatch(
-			helpcenterActions.setIsFooterVisible(
-				resultContent.length < 1 || disliked
-			)
+			helpcenterActions.setIsFooterVisible(!hasContent || disliked)
 		);
 	};
 
@@ -136,7 +137,8 @@ const HelpCenter = () => {
 			}
 		>
 			{renderResultContainer()}
-			{!hasLaunchedFromTooltip && <SearchInput />}
+			{/* When showing no-results, always show chatbox so user can type again; otherwise show when not launched from tooltip */}
+			{(noResult || !hasLaunchedFromTooltip) && <SearchInput />}
 		</div>
 	);
 };
