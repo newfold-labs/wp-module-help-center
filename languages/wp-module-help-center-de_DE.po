@@ -1,15 +1,16 @@
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: newfold-labswp-module-staging\n"
 "Report-Msgid-Bugs-To: https://github.com/newfold-labs/wp-module-help-center/issues\n"
+"POT-Creation-Date: 2025-02-13T09:55:55+00:00\n"
+"PO-Revision-Date: 2025-02-19 16:04\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-13T09:55:55+00:00\n"
-"PO-Revision-Date: 2025-02-19 16:04\n"
-"Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-File: wp-module-help-center.pot\n"
 "X-Crowdin-File-ID: 44\n"
@@ -23,14 +24,12 @@ msgstr ""
 msgid "We could not find the brand"
 msgstr "Wir konnten die Marke nicht finden"
 
-#: includes/CapabilityController.php:93
-#: includes/MultiSearchController.php:192
+#: includes/CapabilityController.php:93 includes/MultiSearchController.php:192
 #: includes/UserInteractionController.php:81
 msgid "You must be authenticated to make this call"
 msgstr "Sie müssen authentifiziert sein, um diesen Anruf zu tätigen"
 
-#: includes/HelpCenter.php:147
-#: build/index.js:1
+#: includes/HelpCenter.php:147 build/index.js:1
 msgid "Help"
 msgstr "Hilfe"
 
@@ -43,8 +42,13 @@ msgid "Thanks for the feedback!"
 msgstr "Danke für das Feedback!"
 
 #: build/index.js:1
-msgid "You can try searching our <a href=\"{link}\">Resource center.</a> though to see if there’s a helpful article or video on that subject."
-msgstr "Du kannst versuchen, in unserem <a href=\"{link}\">Ressourcenzentrum zu suchen.</a> , um zu sehen, ob es einen hilfreichen Artikel oder ein Video zu diesem Thema gibt."
+msgid ""
+"You can try searching our <a href=\"{link}\">Resource center.</a> though to "
+"see if there’s a helpful article or video on that subject."
+msgstr ""
+"Du kannst versuchen, in unserem <a href=\"{link}\">Ressourcenzentrum zu "
+"suchen.</a> , um zu sehen, ob es einen hilfreichen Artikel oder ein Video zu"
+" diesem Thema gibt."
 
 #: build/index.js:1
 msgid "Search Help Center"
@@ -56,7 +60,8 @@ msgstr "sende Text"
 
 #: build/index.js:1
 msgid "Please enter a specific search term to get results."
-msgstr "Bitte geben Sie einen bestimmten Suchbegriff ein, um Ergebnisse zu erhalten."
+msgstr ""
+"Bitte geben Sie einen bestimmten Suchbegriff ein, um Ergebnisse zu erhalten."
 
 #: build/index.js:1
 msgid "Account Support"
@@ -121,8 +126,17 @@ msgid "Reach out to our customer support."
 msgstr "Wenden Sie sich an unseren Kundensupport."
 
 #: build/index.js:1
-msgid "Hey there! I’m here to help you find your way around WordPress. </br></br> If you’re not sure how to do something, just ask — I’ll walk you through it step by step. I’m still learning, so I might not have every answer, but I’ll do my best to help!"
-msgstr "Hallo! Ich bin hier, um dir zu helfen, dich in WordPress zurechtzufinden. </br></br> Wenn Sie sich nicht sicher sind, wie Sie etwas tun sollen, fragen Sie einfach – ich werde Sie Schritt für Schritt durch die Sache führen. Ich lerne immer noch, also habe ich vielleicht nicht jede Antwort, aber ich werde mein Bestes tun, um zu helfen!"
+msgid ""
+"Hey there! I’m here to help you find your way around WordPress. </br></br> "
+"If you’re not sure how to do something, just ask — I’ll walk you through it "
+"step by step. I’m still learning, so I might not have every answer, but I’ll"
+" do my best to help!"
+msgstr ""
+"Hallo! Ich bin hier, um dir zu helfen, dich in WordPress zurechtzufinden. "
+"</br></br> Wenn Sie sich nicht sicher sind, wie Sie etwas tun sollen, fragen"
+" Sie einfach – ich werde Sie Schritt für Schritt durch die Sache führen. Ich"
+" lerne immer noch, also habe ich vielleicht nicht jede Antwort, aber ich "
+"werde mein Bestes tun, um zu helfen!"
 
 #: build/index.js:1
 #, js-format
@@ -137,48 +151,63 @@ msgstr "Fragen Sie alles über WordPress"
 msgid "Minimize HelpCenter"
 msgstr "Minimieren Sie das HelpCenter"
 
-#: includes/Data/Brands.php:24
-#: includes/Data/Brands.php:30
-#: build/index.js:1
+#: includes/Data/Brands.php:24 includes/Data/Brands.php:30 build/index.js:1
 msgid "Bluehost"
 msgstr "Bluehost"
 
 #: includes/Data/Brands.php:37
-msgid "With Pro Design Live, our expert team bring your vision to life. We help you to create the site you've always dreamed of — tailored to your goals, ready to perform."
-msgstr "Mit Pro Design Live verwirklicht unser Expertenteam Ihre Vision zum Leben. Wir helfen Ihnen, die Seite zu gestalten, von der Sie immer geträumt haben – maßgeschneidert auf Ihre Ziele, bereit zur Arbeit."
+msgid ""
+"With Pro Design Live, our expert team bring your vision to life. We help you"
+" to create the site you've always dreamed of — tailored to your goals, ready"
+" to perform."
+msgstr ""
+"Mit Pro Design Live verwirklicht unser Expertenteam Ihre Vision zum Leben. "
+"Wir helfen Ihnen, die Seite zu gestalten, von der Sie immer geträumt haben –"
+" maßgeschneidert auf Ihre Ziele, bereit zur Arbeit."
 
-#: includes/Data/Brands.php:42
-#: includes/Data/Brands.php:48
+#: includes/Data/Brands.php:42 includes/Data/Brands.php:48
 msgid "HostGator"
 msgstr "HostGator"
 
 #. translators: 1: account name, 2: phone link, 3: chat link
-#: includes/HelpCenter.php:205
-#: build/index.js:1
-#, php-format,js-format
-msgid "If you need help with your %1$s account, give us a call at %2$s or %3$s with one of our support agents — we're here for you!"
-msgstr "Wenn Sie Hilfe mit Ihrem %1$s-Konto benötigen, rufen Sie uns unter %2$s oder %3$s bei einem unserer Support-Mitarbeiter an – wir sind für Sie da!"
+#: includes/HelpCenter.php:205 build/index.js:1
+#, php-format, js-format
+msgid ""
+"If you need help with your %1$s account, give us a call at %2$s or %3$s with"
+" one of our support agents — we're here for you!"
+msgstr ""
+"Wenn Sie Hilfe mit Ihrem %1$s-Konto benötigen, rufen Sie uns unter %2$s oder"
+" %3$s bei einem unserer Support-Mitarbeiter an – wir sind für Sie da!"
 
 #. translators: 1: account name, 2: chat link
-#: includes/HelpCenter.php:207
-#: build/index.js:1
-#, php-format,js-format
-msgid "If you need help with your %1$s account, %2$s with one of our support agents — we're here for you!"
-msgstr "Wenn Sie Hilfe mit Ihrem 1$s-Konto benötigen, 2 % bei einem unserer Support-Agenten – wir sind für Sie da!"
+#: includes/HelpCenter.php:207 build/index.js:1
+#, php-format, js-format
+msgid ""
+"If you need help with your %1$s account, %2$s with one of our support agents"
+" — we're here for you!"
+msgstr ""
+"Wenn Sie Hilfe mit Ihrem 1$s-Konto benötigen, 2 % bei einem unserer Support-"
+"Agenten – wir sind für Sie da!"
 
 #. translators: 1: phone link, 2: chat link
-#: includes/HelpCenter.php:209
-#: build/index.js:1
-#, php-format,js-format
-msgid "Call at %1$s or %2$s with one of our support agents — we will assist you as soon as possible."
-msgstr "Rufen Sie unter 1$s oder 2$s einen unserer Support-Mitarbeiter an – wir helfen Ihnen so schnell wie möglich."
+#: includes/HelpCenter.php:209 build/index.js:1
+#, php-format, js-format
+msgid ""
+"Call at %1$s or %2$s with one of our support agents — we will assist you as "
+"soon as possible."
+msgstr ""
+"Rufen Sie unter 1$s oder 2$s einen unserer Support-Mitarbeiter an – wir "
+"helfen Ihnen so schnell wie möglich."
 
 #. translators: 1: chat link
-#: includes/HelpCenter.php:211
-#: build/index.js:1
-#, php-format,js-format
-msgid "Or %1$s with one of our support agents — we will assist you as soon as possible."
-msgstr "Oder 1 % mit einem unserer Support-Agenten – wir helfen Ihnen so schnell wie möglich."
+#: includes/HelpCenter.php:211 build/index.js:1
+#, php-format, js-format
+msgid ""
+"Or %1$s with one of our support agents — we will assist you as soon as "
+"possible."
+msgstr ""
+"Oder 1 % mit einem unserer Support-Agenten – wir helfen Ihnen so schnell wie"
+" möglich."
 
 #: build/index.js:1
 msgid "Chat Live"
