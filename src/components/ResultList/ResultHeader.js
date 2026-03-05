@@ -8,7 +8,9 @@ export default function ResultHeader({ noResult, questionBlock }) {
 			return '';
 		}
 		if (hasLaunchedFromTooltip) {
-			return questionBlock;
+			const txt = document.createElement('textarea');
+			txt.innerHTML = questionBlock;
+			return txt.value;
 		}
 		return `"${questionBlock}"`;
 	};
