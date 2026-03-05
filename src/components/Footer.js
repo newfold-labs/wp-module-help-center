@@ -7,6 +7,7 @@ import { ReactComponent as FooterBackground } from '../icons/footer.svg';
 const Footer = () => {
 	const { disliked, noResult } = useSelector( ( state ) => state.helpcenter );
 	const brandConfig = window.nfdHelpCenter?.brandConfig || {};
+	const showProDesignBanner = brandConfig.showProDesignBanner !== false;
 	const hasPhone = brandConfig.hasPhone !== false;
 	const supportTemplate = hasPhone
 		? ( window.nfdHelpCenter?.supportMessageTemplate ||
@@ -64,7 +65,9 @@ const Footer = () => {
 		: sprintf( supportTemplate, brandConfig.accountName || __( 'Bluehost', 'wp-module-help-center' ), chatLink );
 
 	return (
-		<div className="nfd-hc-modal__footer">
+		<div
+			className={`nfd-hc-modal__footer${ showProDesignBanner ? ' nfd-hc-modal__footer--has-pro-banner' : '' }`}
+		>
 			<div className="helpcenter-supportinfo__wrapper">
 				{!disliked && !noResult && (
 					<>
