@@ -1,0 +1,75 @@
+{
+    "translation-revision-date": "2025-04-25 14:32+0100",
+    "generator": "WP-CLI\/2.12.0",
+    "source": "build\/649.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "es_ES",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Try to:": [
+                "Intente:"
+            ],
+            "Use different keywords in the search field.": [
+                "Utilice diferentes palabras clave en el campo de b\u00fasqueda."
+            ],
+            "A clear, short prompt can make the difference.": [
+                "Un mensaje claro y breve puede marcar la diferencia."
+            ],
+            "Reach out to our customer support.": [
+                "Comun\u00edquese con nuestro servicio de atenci\u00f3n al cliente."
+            ],
+            "Chat Live": [
+                "Chat Live"
+            ],
+            "Resource center": [
+                "Centro de recursos"
+            ],
+            "You can try searching our": [
+                "Puedes intentar buscar en"
+            ],
+            "though to see if there's a helpful article or video on that subject.": [
+                "Aunque para ver si hay alg\u00fan art\u00edculo o v\u00eddeo \u00fatil sobre ese tema."
+            ],
+            "Sorry, I don't have any information on %s yet.": [
+                "Lo siento, a\u00fan no tengo informaci\u00f3n sobre los %s."
+            ],
+            "Call at": [
+                "Llama a"
+            ],
+            "or": [
+                "o"
+            ],
+            "with one of our support agents \u2014 we will assist you as soon as possible.": [
+                "Con uno de nuestros agentes de soporte \u2014 te asistiremos lo antes posible."
+            ],
+            "Action approved and executed.": [
+                "Acci\u00f3n aprobada y ejecutada."
+            ],
+            "Action \"%s\" was cancelled.": [
+                "La acci\u00f3n \"%s\" fue cancelada."
+            ],
+            "Hi, I'm BLU, your AI assistant.": [
+                "Hola, soy BLU, vuestro asistente de IA."
+            ],
+            "I can help you create and edit posts and pages, update content, and manage your WordPress site.": [
+                "Puedo ayudarte a crear y editar publicaciones y p\u00e1ginas, actualizar contenido y gestionar tu sitio WordPress."
+            ],
+            "Clear chat": [
+                "Chat claro"
+            ],
+            "Clear Chat": [
+                "Clear Chat"
+            ],
+            "Blu Chat": [
+                "Blu Chat"
+            ],
+            "Ask me anything about WordPress\u2026": [
+                "Preg\u00fantame cualquier cosa sobre WordPress..."
+            ]
+        }
+    }
+}

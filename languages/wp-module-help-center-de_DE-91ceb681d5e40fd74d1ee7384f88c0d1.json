@@ -1,0 +1,75 @@
+{
+    "translation-revision-date": "2025-02-19 16:04",
+    "generator": "WP-CLI\/2.12.0",
+    "source": "build\/649.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "de_DE",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Try to:": [
+                "Versuchen Sie:"
+            ],
+            "Use different keywords in the search field.": [
+                "Verwenden Sie unterschiedliche Schl\u00fcsselw\u00f6rter im Suchfeld."
+            ],
+            "A clear, short prompt can make the difference.": [
+                "Eine klare, kurze Eingabeaufforderung kann den Unterschied ausmachen."
+            ],
+            "Reach out to our customer support.": [
+                "Wenden Sie sich an unseren Kundensupport."
+            ],
+            "Chat Live": [
+                "Chat Live"
+            ],
+            "Resource center": [
+                "Ressourcenzentrum"
+            ],
+            "You can try searching our": [
+                "Sie k\u00f6nnen versuchen, unsere zu durchsuchen"
+            ],
+            "though to see if there's a helpful article or video on that subject.": [
+                "Um zu sehen, ob es einen hilfreichen Artikel oder ein Video zu diesem Thema gibt."
+            ],
+            "Sorry, I don't have any information on %s yet.": [
+                "Entschuldigung, ich habe noch keine Informationen zu den %s."
+            ],
+            "Call at": [
+                "Rufen Sie an bei"
+            ],
+            "or": [
+                "oder"
+            ],
+            "with one of our support agents \u2014 we will assist you as soon as possible.": [
+                "Mit einem unserer Support-Agenten helfen wir Ihnen so schnell wie m\u00f6glich."
+            ],
+            "Action approved and executed.": [
+                "Aktion genehmigt und ausgef\u00fchrt."
+            ],
+            "Action \"%s\" was cancelled.": [
+                "Die Aktions-\"%s\" wurden gestrichen."
+            ],
+            "Hi, I'm BLU, your AI assistant.": [
+                "Hallo, ich bin BLU, euer KI-Assistent."
+            ],
+            "I can help you create and edit posts and pages, update content, and manage your WordPress site.": [
+                "Ich kann Ihnen helfen, Beitr\u00e4ge und Seiten zu erstellen und zu bearbeiten, Inhalte zu aktualisieren und Ihre WordPress-Seite zu verwalten."
+            ],
+            "Clear chat": [
+                "Klarer Chat"
+            ],
+            "Clear Chat": [
+                "Clear Chat"
+            ],
+            "Blu Chat": [
+                "Blu Chat"
+            ],
+            "Ask me anything about WordPress\u2026": [
+                "Frag mich irgendetwas \u00fcber WordPress..."
+            ]
+        }
+    }
+}
