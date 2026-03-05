@@ -24,7 +24,7 @@ msgstr "Não conseguimos encontrar a marca"
 msgid "You must be authenticated to make this call"
 msgstr "Você precisa estar autenticado para fazer essa solicitação"
 
-#: includes/HelpCenter.php:147 build/index.js:1
+#: includes/HelpCenter.php:147
 msgid "Help"
 msgstr "Ajuda"
 
@@ -103,19 +103,19 @@ msgstr "Voltar"
 msgid "We're sorry the suggestions didn’t help."
 msgstr "Lamentamos que as sugestões não tenham ajudado."
 
-#: build/index.js:1
+#: build/649.js:9 build/index.js:1
 msgid "Try to:"
 msgstr "Tente:"
 
-#: build/index.js:1
+#: build/649.js:9 build/index.js:1
 msgid "Use different keywords in the search field."
 msgstr "Use palavras-chave diferentes no campo de pesquisa."
 
-#: build/index.js:1
+#: build/649.js:9 build/index.js:1
 msgid "A clear, short prompt can make the difference."
 msgstr "Um prompt claro e curto pode fazer a diferença."
 
-#: build/index.js:1
+#: build/649.js:9 build/index.js:1
 msgid "Reach out to our customer support."
 msgstr "Entre em contato com nosso suporte ao cliente."
 
@@ -202,6 +202,98 @@ msgstr ""
 "Ou entre em contato com um de nossos agentes de suporte — vamos te ajudar o "
 "mais rápido possível."
 
-#: build/index.js:1
+#: build/649.js:9 build/index.js:1
 msgid "Chat Live"
 msgstr "Chat Live"
+
+#. translators: %1$s: HTTP status, %2$s: status text
+#: build/649.js:8
+msgid "Resource center"
+msgstr "Centro de recursos"
+
+#: build/649.js:8
+msgid "You can try searching our"
+msgstr "Você pode tentar pesquisar em"
+
+#: build/649.js:8
+msgid "though to see if there's a helpful article or video on that subject."
+msgstr "Mas quero ver se há algum artigo ou vídeo útil sobre esse assunto."
+
+#. translators: %s: the user's search query (or the word "this" if empty)
+#: build/649.js:9
+#, js-format
+msgid "Sorry, I don't have any information on %s yet."
+msgstr "Desculpe, ainda não tenho nenhuma informação sobre as porcentagens."
+
+#: build/649.js:9
+msgid "Call at"
+msgstr "Ligue para"
+
+#: build/649.js:9
+msgid "or"
+msgstr "ou"
+
+#: build/649.js:9
+msgid ""
+"with one of our support agents — we will assist you as soon as possible."
+msgstr ""
+"Com um de nossos agentes de suporte — vamos te ajudar o mais rápido "
+"possível."
+
+#: build/649.js:9
+msgid "Action approved and executed."
+msgstr "Ação aprovada e executada."
+
+#. translators: %s: the name of the action or tool that was cancelled
+#: build/649.js:10
+#, js-format
+msgid "Action \"%s\" was cancelled."
+msgstr "A ação \"%s\" foi cancelada."
+
+#: build/649.js:10
+msgid "Hi, I'm BLU, your AI assistant."
+msgstr "Oi, eu sou a BLU, sua assistente de IA."
+
+#: build/649.js:10
+msgid ""
+"I can help you create and edit posts and pages, update content, and manage "
+"your WordPress site."
+msgstr ""
+"Posso ajudar você a criar e editar posts e páginas, atualizar conteúdo e "
+"gerenciar seu site WordPress."
+
+#: build/649.js:10
+msgid "Clear chat"
+msgstr "Conversa limpa"
+
+#: build/649.js:10
+msgid "Clear Chat"
+msgstr "Chat Claro"
+
+#: build/649.js:10
+msgid "Blu Chat"
+msgstr "Blu Chat"
+
+#: build/649.js:10
+msgid "Ask me anything about WordPress…"
+msgstr "Me pergunte qualquer coisa sobre WordPress..."
+
+#: build/index.js:1
+msgid "Toggle chat view"
+msgstr "Visualização de chat alternada"
+
+#: build/index.js:1
+msgid "Ask BLU"
+msgstr "Pergunte à BLU"
+
+#: build/index.js:1
+msgid "BETA"
+msgstr "BETA"
+
+#: build/index.js:1
+msgid "Loading…"
+msgstr "Carregando..."
+
+#: build/index.js:1
+msgid "Close and show AI chat"
+msgstr "Fechar e mostrar o chat de IA"
