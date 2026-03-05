@@ -1,6 +1,6 @@
 {
     "translation-revision-date": "2025-02-19 16:04",
-    "generator": "WP-CLI\/2.11.0",
+    "generator": "WP-CLI\/2.12.0",
     "source": "build\/index.js",
     "domain": "messages",
     "locale_data": {
@@ -13,35 +13,17 @@
             "Did this result help you?": [
                 "Ce r\u00e9sultat vous a-t-il aid\u00e9?"
             ],
-            "Yes": [
-                "Oui"
-            ],
-            "No": [
-                "Non"
-            ],
             "Thanks for the feedback!": [
                 "Merci pour vos commentaires!"
             ],
             "You can try searching our <a href=\"{link}\">Resource center.<\/a> though to see if there\u2019s a helpful article or video on that subject.": [
                 "Vous pouvez essayer de rechercher dans notre <a href=\"{link}\">Centre de ressources.<\/a> pour voir s'il y a un article ou une vid\u00e9o utile sur ce sujet."
             ],
-            "Sorry, I don\u2019t have any information on that topic yet.": [
-                "D\u00e9sol\u00e9, je n\u2019ai pas encore d\u2019informations sur ce sujet."
-            ],
-            "Hi! I\u2019m your WordPress AI assistant. <\/br><\/br> Ask me how to do things in WordPress and I\u2019ll provide step by step instructions.<\/br><\/br> I\u2019m still learning so I don\u2019t have all the answers just yet.": [
-                "Bonjour ! Je suis votre assistant IA WordPress. <\/br><\/br> Demandez-moi comment faire des choses dans WordPress et je vais fournir des instructions \u00e9tape par \u00e9tape.<\/br><\/br> Je suis toujours en train d\u2019apprendre pour que je n\u2019aie pas encore toutes les r\u00e9ponses."
-            ],
             "Search Help Center": [
                 "Centre d'aide \u00e0 la recherche"
             ],
-            "Ask about WordPress": [
-                "Demander \u00e0 propos de WordPress"
-            ],
             "submit text": [
                 "envoyer le texte"
-            ],
-            "Common Topics": [
-                "Sujets communs"
             ],
             "Please enter a specific search term to get results.": [
                 "Veuillez entrer un terme de recherche sp\u00e9cifique pour obtenir des r\u00e9sultats."
@@ -49,17 +31,74 @@
             "Account Support": [
                 "Support du compte"
             ],
-            "If you need help with your Bluehost account, contact our support team:": [
-                "Si vous avez besoin d\u2019aide avec votre compte Bluehost, contactez notre \u00e9quipe d\u2019assistance :"
-            ],
-            "Chat with support": [
-                "Discuter avec le support"
-            ],
             "Help with WordPress": [
                 "Aide sur WordPress"
             ],
             "Close Help Modal": [
                 "Fermer la fen\u00eatre d'aide"
+            ],
+            "Back": [
+                "Pr\u00e9c\u00e9dent"
+            ],
+            "We're sorry the suggestions didn\u2019t help.": [
+                "Nous sommes d\u00e9sol\u00e9s que les suggestions n\u2019aient pas aid\u00e9."
+            ],
+            "Try to:": [
+                "Essayez de :"
+            ],
+            "Use different keywords in the search field.": [
+                "Utilisez des mots-cl\u00e9s diff\u00e9rents dans le champ de recherche."
+            ],
+            "A clear, short prompt can make the difference.": [
+                "Une invite claire et courte peut faire la diff\u00e9rence."
+            ],
+            "Reach out to our customer support.": [
+                "Contactez notre service client."
+            ],
+            "Hey there! I\u2019m here to help you find your way around WordPress. <\/br><\/br> If you\u2019re not sure how to do something, just ask \u2014 I\u2019ll walk you through it step by step. I\u2019m still learning, so I might not have every answer, but I\u2019ll do my best to help!": [
+                "Salut! Je suis l\u00e0 pour vous aider \u00e0 vous y retrouver dans WordPress. <\/br><\/br> Si vous n\u2019\u00eates pas s\u00fbr de savoir comment faire quelque chose, il vous suffit de demander - je vais vous guider \u00e9tape par \u00e9tape. J\u2019apprends encore, donc je n\u2019ai peut-\u00eatre pas toutes les r\u00e9ponses, mais je ferai de mon mieux pour aider !"
+            ],
+            "Sorry, I don\u2019t have any information on %s yet.": [
+                "D\u00e9sol\u00e9, je n\u2019ai pas encore d\u2019informations sur %s."
+            ],
+            "Ask anything about WordPress": [
+                "Demandez n\u2019importe quoi sur WordPress"
+            ],
+            "Minimize HelpCenter": [
+                "Minimiser le Centre d\u2019aide"
+            ],
+            "Bluehost": [
+                "H\u00f4te bleu"
+            ],
+            "If you need help with your %1$s account, give us a call at %2$s or %3$s with one of our support agents \u2014 we're here for you!": [
+                "Si vous avez besoin d\u2019aide avec votre compte %1$s, appelez-nous au %2$s ou %3$s avec l\u2019un de nos agents de support \u2014 nous sommes l\u00e0 pour vous !"
+            ],
+            "If you need help with your %1$s account, %2$s with one of our support agents \u2014 we're here for you!": [
+                "Si vous avez besoin d\u2019aide avec votre compte %1$s, %2$s avec l\u2019un de nos agents support \u2014 nous sommes l\u00e0 pour vous !"
+            ],
+            "Call at %1$s or %2$s with one of our support agents \u2014 we will assist you as soon as possible.": [
+                "Appelez au %1$s ou %2$s avec l\u2019un de nos agents de support \u2014 nous vous assisterons d\u00e8s que possible."
+            ],
+            "Or %1$s with one of our support agents \u2014 we will assist you as soon as possible.": [
+                "Ou faites appel \u00e0 l\u2019un de nos agents de support \u2014 nous vous assisterons d\u00e8s que possible."
+            ],
+            "Chat Live": [
+                "Chat en direct"
+            ],
+            "Toggle chat view": [
+                "Basculer la vue du chat"
+            ],
+            "Ask BLU": [
+                "Demandez \u00e0 BLU"
+            ],
+            "BETA": [
+                "BETA"
+            ],
+            "Loading\u2026": [
+                "Chargement..."
+            ],
+            "Close and show AI chat": [
+                "Fermez et affichez le chat IA"
             ]
         }
     }
