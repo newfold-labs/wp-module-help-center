@@ -24,7 +24,7 @@
     },
     "require-dev": {
         "newfold-labs/wp-php-standards": "@stable",
-        "wp-cli/i18n-command": "^2.6.6",
+        "wp-cli/i18n-command": "^2.7.0",
         "johnpbloch/wordpress": "6.9.4",
         "lucatume/wp-browser": "*",
         "phpunit/phpcov": "*"
