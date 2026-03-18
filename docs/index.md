@@ -1,3 +1,10 @@
+---
+name: wp-module-help-center
+title: Documentation index
+description: Table of contents and quick links.
+updated: 2025-03-18
+---
+
 # wp-module-help-center – Documentation index
 
 | Document | Description |
