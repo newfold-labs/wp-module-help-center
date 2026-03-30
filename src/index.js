@@ -255,10 +255,17 @@ window.newfoldEmbeddedHelp.launchNFDEmbeddedHelpQuery = function (
 	}, 500);
 };
 
-/* Detect click event on the calling element and  checking if the clicked element has a specific class name nfd-help-center-tip */
-document.addEventListener('click', async (event) => {
-	try {
-		if (event.target?.classList?.contains('nfd-help-center-tip')) {
+/* Detect click on .nfd-help-center-tip (capture phase so parent handlers — e.g. WP postbox .hndle toggle — do not run on the same click). */
+document.addEventListener(
+	'click',
+	async (event) => {
+		try {
+			const tip = event.target?.closest?.('.nfd-help-center-tip');
+			if (!tip) {
+				return;
+			}
+			event.preventDefault();
+			event.stopPropagation();
 			if (!LocalStorageUtils.getHelpVisible()) {
 				document
 					.getElementById('wp-admin-bar-help-center')
@@ -266,7 +273,7 @@ document.addEventListener('click', async (event) => {
 					.click();
 			}
 			store.dispatch(helpcenterActions.setIsTooltipLoading());
-			const postId = event.target.dataset.postId;
+			const postId = tip.dataset.postId;
 
 			const results =
 				await MultiSearchAPI.fetchTooltipSearchResults(postId);
@@ -293,9 +300,10 @@ document.addEventListener('click', async (event) => {
 			LocalStorageUtils.persistSearchInput(result.searchInput);
 			store.dispatch(helpcenterActions.updateIsTooltipLoading());
 			store.dispatch(helpcenterActions.updateResultContent(result));
+		} catch (error) {
+			// eslint-disable-next-line no-console
+			console.error('Error launching help center via query:', error);
 		}
-	} catch (error) {
-		// eslint-disable-next-line no-console
-		console.error('Error launching help center via query:', error);
-	}
-});
+	},
+	true
+);
