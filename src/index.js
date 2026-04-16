@@ -99,8 +99,6 @@ window.newfoldEmbeddedHelp = {
 			'nfd-hc-floating-icon-wrapper'
 		);
 
-		const { hasLaunchedFromTooltip } = store.getState().helpcenter;
-
 		if (null !== DOM_TARGET) {
 			if ('undefined' !== createRoot) {
 				// WP 6.2+ only
@@ -116,13 +114,11 @@ window.newfoldEmbeddedHelp = {
 					</Provider>
 				);
 
-				if (hasLaunchedFromTooltip) {
-					createRoot(FLOATING_ICON_TARGET).render(
-						<Provider store={store}>
-							<FloatingIcon />
-						</Provider>
-					);
-				}
+				createRoot(FLOATING_ICON_TARGET).render(
+					<Provider store={store}>
+						<FloatingIcon />
+					</Provider>
+				);
 			} else if ('undefined' !== render) {
 				render(
 					<Provider store={store}>
@@ -137,15 +133,12 @@ window.newfoldEmbeddedHelp = {
 					DOM_TARGET
 				);
 
-				// Render FloatingIcon in separate container
-				if (hasLaunchedFromTooltip) {
-					render(
-						<Provider store={store}>
-							<FloatingIcon />
-						</Provider>,
-						FLOATING_ICON_TARGET
-					);
-				}
+				render(
+					<Provider store={store}>
+						<FloatingIcon />
+					</Provider>,
+					FLOATING_ICON_TARGET
+				);
 			}
 		}
 	},
