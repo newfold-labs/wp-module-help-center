@@ -58,6 +58,109 @@ const HELP_CENTER_CAPABILITIES = {
 };
 
 /**
+ * Multi-search response shape must satisfy getResultMatches() in SearchInput (tokens/fields vs query).
+ * Query used in e2e: "How to install a plugin in WordPress" (7 tokens after normalize).
+ */
+const MOCK_MULTI_SEARCH_RESPONSE = {
+  results: [
+    {
+      grouped_hits: [
+        {
+          hits: [
+            {
+              document: {
+                post_content:
+                  '<p>Step-by-step: install a WordPress plugin from Plugins → Add New, upload ZIP, or use search.</p>',
+                post_id: 999001,
+              },
+              text_match_info: {
+                tokens_matched: 8,
+                fields_matched: 2,
+              },
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+/** Tooltip search for data-post-id="111456" (see src/index.js test trigger) */
+const MOCK_TOOLTIP_SEARCH_RESPONSE = {
+  content: {
+    rendered:
+      '<p>Try clearing session cart or removing ghost line items in WooCommerce → Status → Tools.</p>',
+  },
+  title: {
+    rendered:
+      'i have 7 items in the cart that dont really exist how do i get rid of them',
+  },
+};
+
+/**
+ * @param {URL} url
+ */
+function isNewfoldMultiSearchUrl(url) {
+  const h = url.href;
+  return h.includes('newfold-multi-search') && h.includes('multi_search');
+}
+
+/**
+ * @param {URL} url
+ */
+function isNewfoldTooltipSearchUrl(url) {
+  const h = url.href;
+  return h.includes('newfold-multi-search') && h.includes('tooltip_search');
+}
+
+/**
+ * Clear persisted help center state so tests don't inherit prior results (Redux initial state reads localStorage).
+ * @param {import('@playwright/test').Page} page
+ */
+async function clearHelpCenterClientState(page) {
+  await page.evaluate(() => {
+    try {
+      localStorage.removeItem('helpResultContent');
+      localStorage.removeItem('searchInput');
+      localStorage.removeItem('helpVisible');
+    } catch {
+      // ignore
+    }
+  });
+}
+
+/**
+ * Mock Hiive multi-search endpoints so e2e does not depend on live Typesense / network.
+ * Matches wp-json and rest_route-style URLs.
+ * @param {import('@playwright/test').Page} page
+ */
+async function setupHelpCenterApiMocks(page) {
+  await page.route(isNewfoldMultiSearchUrl, async (route) => {
+    if (route.request().method() !== 'POST') {
+      await route.continue();
+      return;
+    }
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify(MOCK_MULTI_SEARCH_RESPONSE),
+    });
+  });
+
+  await page.route(isNewfoldTooltipSearchUrl, async (route) => {
+    if (route.request().method() !== 'POST') {
+      await route.continue();
+      return;
+    }
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify(MOCK_TOOLTIP_SEARCH_RESPONSE),
+    });
+  });
+}
+
+/**
  * Set site capabilities
  * 
  * @param {Object} capabilities - Capabilities object
@@ -116,6 +219,8 @@ export {
   HELP_CENTER_CAPABILITIES,
   // Helper functions
   setSiteCapabilities,
+  clearHelpCenterClientState,
+  setupHelpCenterApiMocks,
   clickHelpCenterIcon,
   verifyHelpCenterModalVisible,
   searchInHelpCenter,
