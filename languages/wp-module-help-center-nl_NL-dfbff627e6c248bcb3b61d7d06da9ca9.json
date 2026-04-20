@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2025-02-19 16:04",
+    "translation-revision-date": "2026-04-20T18:36:11+00:00",
     "generator": "WP-CLI\/2.12.0",
     "source": "build\/index.js",
     "domain": "messages",
@@ -10,65 +10,11 @@
                 "lang": "nl_NL",
                 "plural-forms": "nplurals=2; plural=(n != 1);"
             },
-            "Did this result help you?": [
-                "Heeft dit resultaat u geholpen?"
-            ],
-            "Thanks for the feedback!": [
-                "Bedankt voor de feedback!"
-            ],
-            "You can try searching our <a href=\"{link}\">Resource center.<\/a> though to see if there\u2019s a helpful article or video on that subject.": [
-                "Je kunt proberen in ons <a href=\"{link}\">Kenniscentrum<\/a> te zoeken om te zien of er een nuttig artikel of video over dat onderwerp is."
-            ],
-            "Search Help Center": [
-                "Zoek naar hulpcentrum"
-            ],
-            "submit text": [
-                "dien tekst in"
-            ],
-            "Please enter a specific search term to get results.": [
-                "Voer een specifieke zoekterm in om zoekresultaten te krijgen."
-            ],
-            "Account Support": [
-                "Ondersteuning voor account"
-            ],
-            "Help with WordPress": [
-                "Help met WordPress"
-            ],
-            "Close Help Modal": [
-                "Help Modal sluiten"
-            ],
-            "Back": [
-                "Terug"
-            ],
-            "We're sorry the suggestions didn\u2019t help.": [
-                "Het spijt ons dat de suggesties niet hebben geholpen."
-            ],
-            "Try to:": [
-                "Probeer:"
-            ],
-            "Use different keywords in the search field.": [
-                "Gebruik verschillende trefwoorden in het zoekveld."
-            ],
-            "A clear, short prompt can make the difference.": [
-                "Een duidelijke, korte prompt kan het verschil maken."
-            ],
-            "Reach out to our customer support.": [
-                "Neem contact op met onze klantenservice."
-            ],
-            "Hey there! I\u2019m here to help you find your way around WordPress. <\/br><\/br> If you\u2019re not sure how to do something, just ask \u2014 I\u2019ll walk you through it step by step. I\u2019m still learning, so I might not have every answer, but I\u2019ll do my best to help!": [
-                "Hallo daar! Ik ben hier om je te helpen je weg te vinden in WordPress. <\/br><\/br> Als je niet zeker weet hoe je iets moet doen, vraag het dan gewoon - ik zal je er stap voor stap doorheen leiden. Ik ben nog steeds aan het leren, dus ik heb misschien niet elk antwoord, maar ik zal mijn best doen om te helpen!"
-            ],
-            "Sorry, I don\u2019t have any information on %s yet.": [
-                "Sorry, ik heb nog geen informatie over %s."
-            ],
-            "Ask anything about WordPress": [
-                "Vraag alles over WordPress"
-            ],
-            "Minimize HelpCenter": [
-                "Minimaliseer HelpCenter"
-            ],
             "Bluehost": [
                 "Bluehost"
+            ],
+            "Help": [
+                "Hulp"
             ],
             "If you need help with your %1$s account, give us a call at %2$s or %3$s with one of our support agents \u2014 we're here for you!": [
                 "Als je hulp nodig hebt met je %1$s-account, bel ons dan op $2$s of %3$s met een van onze supportmedewerkers \u2014 wij staan voor je klaar!"
@@ -82,23 +28,71 @@
             "Or %1$s with one of our support agents \u2014 we will assist you as soon as possible.": [
                 "Of 1 % met een van onze supportmedewerkers \u2014 wij helpen u zo snel mogelijk."
             ],
+            "Try to:": [
+                "Probeer:"
+            ],
+            "Use different keywords in the search field.": [
+                "Gebruik verschillende trefwoorden in het zoekveld."
+            ],
+            "A clear, short prompt can make the difference.": [
+                "Een duidelijke, korte prompt kan het verschil maken."
+            ],
+            "Reach out to our customer support.": [
+                "Neem contact op met onze klantenservice."
+            ],
             "Chat Live": [
                 "Chat Live"
             ],
-            "Toggle chat view": [
-                "Wissel chatweergave"
+            "Account Support": [
+                "Ondersteuning voor account"
             ],
-            "Ask BLU": [
-                "Vraag het aan BLU"
+            "Open Help Center": [
+                ""
             ],
-            "BETA": [
-                "BETA"
+            "Back": [
+                "Terug"
+            ],
+            "We're sorry the suggestions didn\u2019t help.": [
+                "Het spijt ons dat de suggesties niet hebben geholpen."
+            ],
+            "Hey there! I\u2019m here to help you find your way around WordPress. <\/br><\/br> If you\u2019re not sure how to do something, just ask \u2014 I\u2019ll walk you through it step by step. I\u2019m still learning, so I might not have every answer, but I\u2019ll do my best to help!": [
+                "Hallo daar! Ik ben hier om je te helpen je weg te vinden in WordPress. <\/br><\/br> Als je niet zeker weet hoe je iets moet doen, vraag het dan gewoon - ik zal je er stap voor stap doorheen leiden. Ik ben nog steeds aan het leren, dus ik heb misschien niet elk antwoord, maar ik zal mijn best doen om te helpen!"
+            ],
+            "Did this result help you?": [
+                "Heeft dit resultaat u geholpen?"
+            ],
+            "Thanks for the feedback!": [
+                "Bedankt voor de feedback!"
+            ],
+            "You can try searching our <a href=\"{link}\">Resource center.<\/a> though to see if there\u2019s a helpful article or video on that subject.": [
+                "Je kunt proberen in ons <a href=\"{link}\">Kenniscentrum<\/a> te zoeken om te zien of er een nuttig artikel of video over dat onderwerp is."
+            ],
+            "Sorry, I don\u2019t have any information on %s yet.": [
+                "Sorry, ik heb nog geen informatie over %s."
+            ],
+            "Please enter a specific search term to get results.": [
+                "Voer een specifieke zoekterm in om zoekresultaten te krijgen."
+            ],
+            "Search Help Center": [
+                "Zoek naar hulpcentrum"
+            ],
+            "Ask anything about WordPress": [
+                "Vraag alles over WordPress"
+            ],
+            "submit text": [
+                "dien tekst in"
             ],
             "Loading\u2026": [
                 "Laden..."
             ],
-            "Close and show AI chat": [
-                "Sluit en toon AI-chat"
+            "Help with WordPress": [
+                "Help met WordPress"
+            ],
+            "Minimize HelpCenter": [
+                "Minimaliseer HelpCenter"
+            ],
+            "Close Help Modal": [
+                "Help Modal sluiten"
             ]
         }
     }

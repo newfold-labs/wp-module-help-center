@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2025-02-13T09:55:55+00:00\n"
-"PO-Revision-Date: 2025-02-19 16:04\n"
+"PO-Revision-Date: 2026-04-20T18:36:11+00:00\n"
 "Language: fr_FR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Crowdin-File: wp-module-help-center.pot\n"
@@ -29,59 +29,11 @@ msgstr "Nous n'avons pas pu trouver la marque"
 msgid "You must be authenticated to make this call"
 msgstr "Vous devez être authentifié pour passer cet appel"
 
-#: includes/HelpCenter.php:147
-msgid "Help"
-msgstr "Aide"
-
+#: includes/Data/Brands.php:24
+#: includes/Data/Brands.php:30
 #: build/index.js:1
-msgid "Did this result help you?"
-msgstr "Ce résultat vous a-t-il aidé?"
-
-#: build/index.js:1
-msgid "Thanks for the feedback!"
-msgstr "Merci pour vos commentaires!"
-
-#: build/index.js:1
-msgid "You can try searching our <a href=\"{link}\">Resource center.</a> though to see if there’s a helpful article or video on that subject."
-msgstr "Vous pouvez essayer de rechercher dans notre <a href=\"{link}\">Centre de ressources.</a> pour voir s'il y a un article ou une vidéo utile sur ce sujet."
-
-#: build/index.js:1
-msgid "Search Help Center"
-msgstr "Centre d'aide à la recherche"
-
-#: build/index.js:1
-msgid "submit text"
-msgstr "envoyer le texte"
-
-#: build/index.js:1
-msgid "Please enter a specific search term to get results."
-msgstr "Veuillez entrer un terme de recherche spécifique pour obtenir des résultats."
-
-#: build/index.js:1
-msgid "Account Support"
-msgstr "Support du compte"
-
-#: build/index.js:1
-msgid "Help with WordPress"
-msgstr "Aide sur WordPress"
-
-#: build/index.js:1
-msgid "Close Help Modal"
-msgstr "Fermer la fenêtre d'aide"
-
-#: includes/MultiSearchController.php:132
-#: includes/MultiSearchController.php:171
-msgid "The request failed"
-msgstr "La demande a échoué"
-
-#: includes/MultiSearchController.php:138
-#: includes/MultiSearchController.php:177
-msgid "No data found"
-msgstr "Aucune donnée trouvée"
-
-#: includes/HelpCenter.php:122
-msgid "NFD helpcenter data"
-msgstr "Données du centre d’aide NFD"
+msgid "Bluehost"
+msgstr "Hôte bleu"
 
 #: includes/Data/Brands.php:35
 msgid "Your dream site is just a click away."
@@ -91,69 +43,27 @@ msgstr "Le site de vos rêves n’est qu’à un clic."
 msgid "Let's build a site you love, together."
 msgstr "Construisons ensemble un site que vous aimez."
 
-#: includes/Data/Brands.php:38
-msgid "Start Now"
-msgstr "Commencer maintenant"
-
-#: build/index.js:1
-msgid "Back"
-msgstr "Précédent"
-
-#: build/index.js:1
-msgid "We're sorry the suggestions didn’t help."
-msgstr "Nous sommes désolés que les suggestions n’aient pas aidé."
-
-#: build/649.js:9
-#: build/index.js:1
-msgid "Try to:"
-msgstr "Essayez de :"
-
-#: build/649.js:9
-#: build/index.js:1
-msgid "Use different keywords in the search field."
-msgstr "Utilisez des mots-clés différents dans le champ de recherche."
-
-#: build/649.js:9
-#: build/index.js:1
-msgid "A clear, short prompt can make the difference."
-msgstr "Une invite claire et courte peut faire la différence."
-
-#: build/649.js:9
-#: build/index.js:1
-msgid "Reach out to our customer support."
-msgstr "Contactez notre service client."
-
-#: build/index.js:1
-msgid "Hey there! I’m here to help you find your way around WordPress. </br></br> If you’re not sure how to do something, just ask — I’ll walk you through it step by step. I’m still learning, so I might not have every answer, but I’ll do my best to help!"
-msgstr "Salut! Je suis là pour vous aider à vous y retrouver dans WordPress. </br></br> Si vous n’êtes pas sûr de savoir comment faire quelque chose, il vous suffit de demander - je vais vous guider étape par étape. J’apprends encore, donc je n’ai peut-être pas toutes les réponses, mais je ferai de mon mieux pour aider !"
-
-#: build/index.js:1
-#, js-format
-msgid "Sorry, I don’t have any information on %s yet."
-msgstr "Désolé, je n’ai pas encore d’informations sur %s."
-
-#: build/index.js:1
-msgid "Ask anything about WordPress"
-msgstr "Demandez n’importe quoi sur WordPress"
-
-#: build/index.js:1
-msgid "Minimize HelpCenter"
-msgstr "Minimiser le Centre d’aide"
-
-#: includes/Data/Brands.php:24
-#: includes/Data/Brands.php:30
-#: build/index.js:1
-msgid "Bluehost"
-msgstr "Hôte bleu"
-
 #: includes/Data/Brands.php:37
 msgid "With Pro Design Live, our expert team bring your vision to life. We help you to create the site you've always dreamed of — tailored to your goals, ready to perform."
 msgstr "Avec Pro Design Live, notre équipe d’experts donne vie à votre vision. Nous vous aidons à créer le site dont vous avez toujours rêvé — adapté à vos objectifs, prêt à être réalisé."
+
+#: includes/Data/Brands.php:38
+msgid "Start Now"
+msgstr "Commencer maintenant"
 
 #: includes/Data/Brands.php:42
 #: includes/Data/Brands.php:48
 msgid "HostGator"
 msgstr "HostGator"
+
+#: includes/HelpCenter.php:122
+msgid "NFD helpcenter data"
+msgstr "Données du centre d’aide NFD"
+
+#: includes/HelpCenter.php:147
+#: build/index.js:1
+msgid "Help"
+msgstr "Aide"
 
 #. translators: 1: account name, 2: phone link, 3: chat link
 #: includes/HelpCenter.php:205
@@ -183,10 +93,15 @@ msgstr "Appelez au %1$s ou %2$s avec l’un de nos agents de support — nous vo
 msgid "Or %1$s with one of our support agents — we will assist you as soon as possible."
 msgstr "Ou faites appel à l’un de nos agents de support — nous vous assisterons dès que possible."
 
-#: build/649.js:9
-#: build/index.js:1
-msgid "Chat Live"
-msgstr "Chat en direct"
+#: includes/MultiSearchController.php:132
+#: includes/MultiSearchController.php:171
+msgid "The request failed"
+msgstr "La demande a échoué"
+
+#: includes/MultiSearchController.php:138
+#: includes/MultiSearchController.php:177
+msgid "No data found"
+msgstr "Aucune donnée trouvée"
 
 #. translators: %1$s: HTTP status, %2$s: status text
 #: build/649.js:8
@@ -208,12 +123,37 @@ msgid "Sorry, I don't have any information on %s yet."
 msgstr "Désolé, je n’ai pas encore d’informations sur les %s."
 
 #: build/649.js:9
+#: build/index.js:1
+msgid "Try to:"
+msgstr "Essayez de :"
+
+#: build/649.js:9
+#: build/index.js:1
+msgid "Use different keywords in the search field."
+msgstr "Utilisez des mots-clés différents dans le champ de recherche."
+
+#: build/649.js:9
+#: build/index.js:1
+msgid "A clear, short prompt can make the difference."
+msgstr "Une invite claire et courte peut faire la différence."
+
+#: build/649.js:9
+#: build/index.js:1
+msgid "Reach out to our customer support."
+msgstr "Contactez notre service client."
+
+#: build/649.js:9
 msgid "Call at"
 msgstr "Appelez à"
 
 #: build/649.js:9
 msgid "or"
 msgstr "ou"
+
+#: build/649.js:9
+#: build/index.js:1
+msgid "Chat Live"
+msgstr "Chat en direct"
 
 #: build/649.js:9
 msgid "with one of our support agents — we will assist you as soon as possible."
@@ -254,21 +194,70 @@ msgid "Ask me anything about WordPress…"
 msgstr "Posez-moi toutes vos questions sur WordPress..."
 
 #: build/index.js:1
-msgid "Toggle chat view"
-msgstr "Basculer la vue du chat"
+msgid "Account Support"
+msgstr "Support du compte"
 
 #: build/index.js:1
-msgid "Ask BLU"
-msgstr "Demandez à BLU"
+msgid "Open Help Center"
+msgstr ""
 
 #: build/index.js:1
-msgid "BETA"
-msgstr "BETA"
+msgid "Back"
+msgstr "Précédent"
+
+#: build/index.js:1
+msgid "We're sorry the suggestions didn’t help."
+msgstr "Nous sommes désolés que les suggestions n’aient pas aidé."
+
+#: build/index.js:1
+msgid "Hey there! I’m here to help you find your way around WordPress. </br></br> If you’re not sure how to do something, just ask — I’ll walk you through it step by step. I’m still learning, so I might not have every answer, but I’ll do my best to help!"
+msgstr "Salut! Je suis là pour vous aider à vous y retrouver dans WordPress. </br></br> Si vous n’êtes pas sûr de savoir comment faire quelque chose, il vous suffit de demander - je vais vous guider étape par étape. J’apprends encore, donc je n’ai peut-être pas toutes les réponses, mais je ferai de mon mieux pour aider !"
+
+#: build/index.js:1
+msgid "Did this result help you?"
+msgstr "Ce résultat vous a-t-il aidé?"
+
+#: build/index.js:1
+msgid "Thanks for the feedback!"
+msgstr "Merci pour vos commentaires!"
+
+#: build/index.js:1
+msgid "You can try searching our <a href=\"{link}\">Resource center.</a> though to see if there’s a helpful article or video on that subject."
+msgstr "Vous pouvez essayer de rechercher dans notre <a href=\"{link}\">Centre de ressources.</a> pour voir s'il y a un article ou une vidéo utile sur ce sujet."
+
+#: build/index.js:1
+#, js-format
+msgid "Sorry, I don’t have any information on %s yet."
+msgstr "Désolé, je n’ai pas encore d’informations sur %s."
+
+#: build/index.js:1
+msgid "Please enter a specific search term to get results."
+msgstr "Veuillez entrer un terme de recherche spécifique pour obtenir des résultats."
+
+#: build/index.js:1
+msgid "Search Help Center"
+msgstr "Centre d'aide à la recherche"
+
+#: build/index.js:1
+msgid "Ask anything about WordPress"
+msgstr "Demandez n’importe quoi sur WordPress"
+
+#: build/index.js:1
+msgid "submit text"
+msgstr "envoyer le texte"
 
 #: build/index.js:1
 msgid "Loading…"
 msgstr "Chargement..."
 
 #: build/index.js:1
-msgid "Close and show AI chat"
-msgstr "Fermez et affichez le chat IA"
+msgid "Help with WordPress"
+msgstr "Aide sur WordPress"
+
+#: build/index.js:1
+msgid "Minimize HelpCenter"
+msgstr "Minimiser le Centre d’aide"
+
+#: build/index.js:1
+msgid "Close Help Modal"
+msgstr "Fermer la fenêtre d'aide"

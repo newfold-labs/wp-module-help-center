@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2025-02-19 16:04",
+    "translation-revision-date": "2026-04-20T18:36:11+00:00",
     "generator": "WP-CLI\/2.12.0",
     "source": "build\/649.js",
     "domain": "messages",
@@ -10,21 +10,6 @@
                 "lang": "nl_NL",
                 "plural-forms": "nplurals=2; plural=(n != 1);"
             },
-            "Try to:": [
-                "Probeer:"
-            ],
-            "Use different keywords in the search field.": [
-                "Gebruik verschillende trefwoorden in het zoekveld."
-            ],
-            "A clear, short prompt can make the difference.": [
-                "Een duidelijke, korte prompt kan het verschil maken."
-            ],
-            "Reach out to our customer support.": [
-                "Neem contact op met onze klantenservice."
-            ],
-            "Chat Live": [
-                "Chat Live"
-            ],
             "Resource center": [
                 "Resourcecentrum"
             ],
@@ -37,11 +22,26 @@
             "Sorry, I don't have any information on %s yet.": [
                 "Sorry, ik heb nog geen informatie over %s."
             ],
+            "Try to:": [
+                "Probeer:"
+            ],
+            "Use different keywords in the search field.": [
+                "Gebruik verschillende trefwoorden in het zoekveld."
+            ],
+            "A clear, short prompt can make the difference.": [
+                "Een duidelijke, korte prompt kan het verschil maken."
+            ],
+            "Reach out to our customer support.": [
+                "Neem contact op met onze klantenservice."
+            ],
             "Call at": [
                 "Bel op"
             ],
             "or": [
                 "of"
+            ],
+            "Chat Live": [
+                "Chat Live"
             ],
             "with one of our support agents \u2014 we will assist you as soon as possible.": [
                 "Met een van onze supportmedewerkers helpen wij u zo snel mogelijk."
