@@ -792,7 +792,6 @@ body:is(.page, .post-php, .post-new-php) {
     border-bottom-left-radius: 12px;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
-    color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -807,7 +806,6 @@ body:is(.page, .post-php, .post-new-php) {
     svg {
         width: 28px;
         height: 28px;
-        fill: currentcolor;
     }
 
     >p {
@@ -823,6 +821,15 @@ body:is(.page, .post-php, .post-new-php) {
 
         p {
             color: #fff;
+        }
+
+        svg path {
+            stroke: #fff;
+        }
+
+        svg circle {
+            fill: #fff;
+            stroke: #1d4ed8;
         }
     }
 
