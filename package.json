@@ -30,7 +30,7 @@
 		"@newfold/wp-module-runtime": "1.2.2",
 		"@reduxjs/toolkit": "2.11.2",
 		"@wordpress/api-fetch": "^7.43.0",
-		"@wordpress/data": "^10.43.0",
+		"@wordpress/data": "^10.44.0",
 		"@wordpress/dom-ready": "4.43.0",
 		"@wordpress/element": "^6.31.0",
 		"@wordpress/i18n": "^6.16.0",
