@@ -54,6 +54,7 @@ msgid "NFD helpcenter data"
 msgstr ""
 
 #: includes/HelpCenter.php:147
+#: build/index.js:1
 msgid "Help"
 msgstr ""
 
@@ -190,15 +191,7 @@ msgid "Account Support"
 msgstr ""
 
 #: build/index.js:1
-msgid "Toggle chat view"
-msgstr ""
-
-#: build/index.js:1
-msgid "Ask BLU"
-msgstr ""
-
-#: build/index.js:1
-msgid "BETA"
+msgid "Open Help Center"
 msgstr ""
 
 #: build/index.js:1
@@ -248,10 +241,6 @@ msgstr ""
 
 #: build/index.js:1
 msgid "Loading…"
-msgstr ""
-
-#: build/index.js:1
-msgid "Close and show AI chat"
 msgstr ""
 
 #: build/index.js:1

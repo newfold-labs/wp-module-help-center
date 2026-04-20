@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2025-02-13T09:55:55+00:00\n"
-"PO-Revision-Date: 2025-02-19 16:04\n"
+"PO-Revision-Date: 2026-04-20T18:36:11+00:00\n"
 "Language: nl_NL\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-File: wp-module-help-center.pot\n"
@@ -29,59 +29,11 @@ msgstr "We konden het merk niet vinden"
 msgid "You must be authenticated to make this call"
 msgstr "U moet geverifieerd zijn om deze oproep te kunnen doen"
 
-#: includes/HelpCenter.php:147
-msgid "Help"
-msgstr "Hulp"
-
+#: includes/Data/Brands.php:24
+#: includes/Data/Brands.php:30
 #: build/index.js:1
-msgid "Did this result help you?"
-msgstr "Heeft dit resultaat u geholpen?"
-
-#: build/index.js:1
-msgid "Thanks for the feedback!"
-msgstr "Bedankt voor de feedback!"
-
-#: build/index.js:1
-msgid "You can try searching our <a href=\"{link}\">Resource center.</a> though to see if there’s a helpful article or video on that subject."
-msgstr "Je kunt proberen in ons <a href=\"{link}\">Kenniscentrum</a> te zoeken om te zien of er een nuttig artikel of video over dat onderwerp is."
-
-#: build/index.js:1
-msgid "Search Help Center"
-msgstr "Zoek naar hulpcentrum"
-
-#: build/index.js:1
-msgid "submit text"
-msgstr "dien tekst in"
-
-#: build/index.js:1
-msgid "Please enter a specific search term to get results."
-msgstr "Voer een specifieke zoekterm in om zoekresultaten te krijgen."
-
-#: build/index.js:1
-msgid "Account Support"
-msgstr "Ondersteuning voor account"
-
-#: build/index.js:1
-msgid "Help with WordPress"
-msgstr "Help met WordPress"
-
-#: build/index.js:1
-msgid "Close Help Modal"
-msgstr "Help Modal sluiten"
-
-#: includes/MultiSearchController.php:132
-#: includes/MultiSearchController.php:171
-msgid "The request failed"
-msgstr "Het verzoek is mislukt"
-
-#: includes/MultiSearchController.php:138
-#: includes/MultiSearchController.php:177
-msgid "No data found"
-msgstr "Geen gegevens gevonden"
-
-#: includes/HelpCenter.php:122
-msgid "NFD helpcenter data"
-msgstr "Gegevens van het NFD-helpcentrum"
+msgid "Bluehost"
+msgstr "Bluehost"
 
 #: includes/Data/Brands.php:35
 msgid "Your dream site is just a click away."
@@ -91,69 +43,27 @@ msgstr "Uw droomsite is slechts een klik verwijderd."
 msgid "Let's build a site you love, together."
 msgstr "Laten we samen een site bouwen waar u van houdt."
 
-#: includes/Data/Brands.php:38
-msgid "Start Now"
-msgstr "Begin nu"
-
-#: build/index.js:1
-msgid "Back"
-msgstr "Terug"
-
-#: build/index.js:1
-msgid "We're sorry the suggestions didn’t help."
-msgstr "Het spijt ons dat de suggesties niet hebben geholpen."
-
-#: build/649.js:9
-#: build/index.js:1
-msgid "Try to:"
-msgstr "Probeer:"
-
-#: build/649.js:9
-#: build/index.js:1
-msgid "Use different keywords in the search field."
-msgstr "Gebruik verschillende trefwoorden in het zoekveld."
-
-#: build/649.js:9
-#: build/index.js:1
-msgid "A clear, short prompt can make the difference."
-msgstr "Een duidelijke, korte prompt kan het verschil maken."
-
-#: build/649.js:9
-#: build/index.js:1
-msgid "Reach out to our customer support."
-msgstr "Neem contact op met onze klantenservice."
-
-#: build/index.js:1
-msgid "Hey there! I’m here to help you find your way around WordPress. </br></br> If you’re not sure how to do something, just ask — I’ll walk you through it step by step. I’m still learning, so I might not have every answer, but I’ll do my best to help!"
-msgstr "Hallo daar! Ik ben hier om je te helpen je weg te vinden in WordPress. </br></br> Als je niet zeker weet hoe je iets moet doen, vraag het dan gewoon - ik zal je er stap voor stap doorheen leiden. Ik ben nog steeds aan het leren, dus ik heb misschien niet elk antwoord, maar ik zal mijn best doen om te helpen!"
-
-#: build/index.js:1
-#, js-format
-msgid "Sorry, I don’t have any information on %s yet."
-msgstr "Sorry, ik heb nog geen informatie over %s."
-
-#: build/index.js:1
-msgid "Ask anything about WordPress"
-msgstr "Vraag alles over WordPress"
-
-#: build/index.js:1
-msgid "Minimize HelpCenter"
-msgstr "Minimaliseer HelpCenter"
-
-#: includes/Data/Brands.php:24
-#: includes/Data/Brands.php:30
-#: build/index.js:1
-msgid "Bluehost"
-msgstr "Bluehost"
-
 #: includes/Data/Brands.php:37
 msgid "With Pro Design Live, our expert team bring your vision to life. We help you to create the site you've always dreamed of — tailored to your goals, ready to perform."
 msgstr "Met Pro Design Live brengt ons deskundige team jouw visie tot leven. Wij helpen je om de site te creëren waar je altijd van hebt gedroomd — afgestemd op jouw doelen, klaar om te presteren."
+
+#: includes/Data/Brands.php:38
+msgid "Start Now"
+msgstr "Begin nu"
 
 #: includes/Data/Brands.php:42
 #: includes/Data/Brands.php:48
 msgid "HostGator"
 msgstr "HostGator"
+
+#: includes/HelpCenter.php:122
+msgid "NFD helpcenter data"
+msgstr "Gegevens van het NFD-helpcentrum"
+
+#: includes/HelpCenter.php:147
+#: build/index.js:1
+msgid "Help"
+msgstr "Hulp"
 
 #. translators: 1: account name, 2: phone link, 3: chat link
 #: includes/HelpCenter.php:205
@@ -183,10 +93,15 @@ msgstr "Bel op 1 dollar of 2 dollar met een van onze supportmedewerkers — wij 
 msgid "Or %1$s with one of our support agents — we will assist you as soon as possible."
 msgstr "Of 1 % met een van onze supportmedewerkers — wij helpen u zo snel mogelijk."
 
-#: build/649.js:9
-#: build/index.js:1
-msgid "Chat Live"
-msgstr "Chat Live"
+#: includes/MultiSearchController.php:132
+#: includes/MultiSearchController.php:171
+msgid "The request failed"
+msgstr "Het verzoek is mislukt"
+
+#: includes/MultiSearchController.php:138
+#: includes/MultiSearchController.php:177
+msgid "No data found"
+msgstr "Geen gegevens gevonden"
 
 #. translators: %1$s: HTTP status, %2$s: status text
 #: build/649.js:8
@@ -208,12 +123,37 @@ msgid "Sorry, I don't have any information on %s yet."
 msgstr "Sorry, ik heb nog geen informatie over %s."
 
 #: build/649.js:9
+#: build/index.js:1
+msgid "Try to:"
+msgstr "Probeer:"
+
+#: build/649.js:9
+#: build/index.js:1
+msgid "Use different keywords in the search field."
+msgstr "Gebruik verschillende trefwoorden in het zoekveld."
+
+#: build/649.js:9
+#: build/index.js:1
+msgid "A clear, short prompt can make the difference."
+msgstr "Een duidelijke, korte prompt kan het verschil maken."
+
+#: build/649.js:9
+#: build/index.js:1
+msgid "Reach out to our customer support."
+msgstr "Neem contact op met onze klantenservice."
+
+#: build/649.js:9
 msgid "Call at"
 msgstr "Bel op"
 
 #: build/649.js:9
 msgid "or"
 msgstr "of"
+
+#: build/649.js:9
+#: build/index.js:1
+msgid "Chat Live"
+msgstr "Chat Live"
 
 #: build/649.js:9
 msgid "with one of our support agents — we will assist you as soon as possible."
@@ -254,21 +194,70 @@ msgid "Ask me anything about WordPress…"
 msgstr "Vraag me iets over WordPress..."
 
 #: build/index.js:1
-msgid "Toggle chat view"
-msgstr "Wissel chatweergave"
+msgid "Account Support"
+msgstr "Ondersteuning voor account"
 
 #: build/index.js:1
-msgid "Ask BLU"
-msgstr "Vraag het aan BLU"
+msgid "Open Help Center"
+msgstr ""
 
 #: build/index.js:1
-msgid "BETA"
-msgstr "BETA"
+msgid "Back"
+msgstr "Terug"
+
+#: build/index.js:1
+msgid "We're sorry the suggestions didn’t help."
+msgstr "Het spijt ons dat de suggesties niet hebben geholpen."
+
+#: build/index.js:1
+msgid "Hey there! I’m here to help you find your way around WordPress. </br></br> If you’re not sure how to do something, just ask — I’ll walk you through it step by step. I’m still learning, so I might not have every answer, but I’ll do my best to help!"
+msgstr "Hallo daar! Ik ben hier om je te helpen je weg te vinden in WordPress. </br></br> Als je niet zeker weet hoe je iets moet doen, vraag het dan gewoon - ik zal je er stap voor stap doorheen leiden. Ik ben nog steeds aan het leren, dus ik heb misschien niet elk antwoord, maar ik zal mijn best doen om te helpen!"
+
+#: build/index.js:1
+msgid "Did this result help you?"
+msgstr "Heeft dit resultaat u geholpen?"
+
+#: build/index.js:1
+msgid "Thanks for the feedback!"
+msgstr "Bedankt voor de feedback!"
+
+#: build/index.js:1
+msgid "You can try searching our <a href=\"{link}\">Resource center.</a> though to see if there’s a helpful article or video on that subject."
+msgstr "Je kunt proberen in ons <a href=\"{link}\">Kenniscentrum</a> te zoeken om te zien of er een nuttig artikel of video over dat onderwerp is."
+
+#: build/index.js:1
+#, js-format
+msgid "Sorry, I don’t have any information on %s yet."
+msgstr "Sorry, ik heb nog geen informatie over %s."
+
+#: build/index.js:1
+msgid "Please enter a specific search term to get results."
+msgstr "Voer een specifieke zoekterm in om zoekresultaten te krijgen."
+
+#: build/index.js:1
+msgid "Search Help Center"
+msgstr "Zoek naar hulpcentrum"
+
+#: build/index.js:1
+msgid "Ask anything about WordPress"
+msgstr "Vraag alles over WordPress"
+
+#: build/index.js:1
+msgid "submit text"
+msgstr "dien tekst in"
 
 #: build/index.js:1
 msgid "Loading…"
 msgstr "Laden..."
 
 #: build/index.js:1
-msgid "Close and show AI chat"
-msgstr "Sluit en toon AI-chat"
+msgid "Help with WordPress"
+msgstr "Help met WordPress"
+
+#: build/index.js:1
+msgid "Minimize HelpCenter"
+msgstr "Minimaliseer HelpCenter"
+
+#: build/index.js:1
+msgid "Close Help Modal"
+msgstr "Help Modal sluiten"

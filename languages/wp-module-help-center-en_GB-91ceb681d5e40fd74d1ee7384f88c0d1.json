@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2025-02-19 21:35+0530",
+    "translation-revision-date": "2026-04-20T18:36:11+00:00",
     "generator": "WP-CLI\/2.12.0",
     "source": "build\/649.js",
     "domain": "messages",
@@ -10,21 +10,6 @@
                 "lang": "en_GB",
                 "plural-forms": "nplurals=2; plural=(n != 1);"
             },
-            "Try to:": [
-                "Try to:"
-            ],
-            "Use different keywords in the search field.": [
-                "Use different keywords in the search field."
-            ],
-            "A clear, short prompt can make the difference.": [
-                "A clear, short prompt can make the difference."
-            ],
-            "Reach out to our customer support.": [
-                "Reach out to our customer support."
-            ],
-            "Chat Live": [
-                "Chat Live"
-            ],
             "Resource center": [
                 "Resource centre"
             ],
@@ -37,11 +22,26 @@
             "Sorry, I don't have any information on %s yet.": [
                 "Sorry, I don't have any information on %s yet."
             ],
+            "Try to:": [
+                "Try to:"
+            ],
+            "Use different keywords in the search field.": [
+                "Use different keywords in the search field."
+            ],
+            "A clear, short prompt can make the difference.": [
+                "A clear, short prompt can make the difference."
+            ],
+            "Reach out to our customer support.": [
+                "Reach out to our customer support."
+            ],
             "Call at": [
                 "Call at"
             ],
             "or": [
                 "or"
+            ],
+            "Chat Live": [
+                "Chat Live"
             ],
             "with one of our support agents \u2014 we will assist you as soon as possible.": [
                 "with one of our support agents \u2014 we will assist you as soon as possible."

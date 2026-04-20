@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2025-02-19 16:04",
+    "translation-revision-date": "2026-04-20T18:36:11+00:00",
     "generator": "WP-CLI\/2.12.0",
     "source": "build\/649.js",
     "domain": "messages",
@@ -10,21 +10,6 @@
                 "lang": "fr_FR",
                 "plural-forms": "nplurals=2; plural=(n > 1);"
             },
-            "Try to:": [
-                "Essayez de :"
-            ],
-            "Use different keywords in the search field.": [
-                "Utilisez des mots-cl\u00e9s diff\u00e9rents dans le champ de recherche."
-            ],
-            "A clear, short prompt can make the difference.": [
-                "Une invite claire et courte peut faire la diff\u00e9rence."
-            ],
-            "Reach out to our customer support.": [
-                "Contactez notre service client."
-            ],
-            "Chat Live": [
-                "Chat en direct"
-            ],
             "Resource center": [
                 "Centre de ressources"
             ],
@@ -37,11 +22,26 @@
             "Sorry, I don't have any information on %s yet.": [
                 "D\u00e9sol\u00e9, je n\u2019ai pas encore d\u2019informations sur les %s."
             ],
+            "Try to:": [
+                "Essayez de :"
+            ],
+            "Use different keywords in the search field.": [
+                "Utilisez des mots-cl\u00e9s diff\u00e9rents dans le champ de recherche."
+            ],
+            "A clear, short prompt can make the difference.": [
+                "Une invite claire et courte peut faire la diff\u00e9rence."
+            ],
+            "Reach out to our customer support.": [
+                "Contactez notre service client."
+            ],
             "Call at": [
                 "Appelez \u00e0"
             ],
             "or": [
                 "ou"
+            ],
+            "Chat Live": [
+                "Chat en direct"
             ],
             "with one of our support agents \u2014 we will assist you as soon as possible.": [
                 "Avec l\u2019un de nos agents de support \u2014 nous vous assisterons d\u00e8s que possible."

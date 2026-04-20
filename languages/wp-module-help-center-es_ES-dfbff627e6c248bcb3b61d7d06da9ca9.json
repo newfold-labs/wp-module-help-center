@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2025-04-25 14:32+0100",
+    "translation-revision-date": "2026-04-20T18:36:11+00:00",
     "generator": "WP-CLI\/2.12.0",
     "source": "build\/index.js",
     "domain": "messages",
@@ -10,65 +10,11 @@
                 "lang": "es_ES",
                 "plural-forms": "nplurals=2; plural=(n != 1);"
             },
-            "Did this result help you?": [
-                "\u00bfTe ha sido \u00fatil este resultado?"
-            ],
-            "Thanks for the feedback!": [
-                "\u00a1Gracias por tus comentarios!"
-            ],
-            "You can try searching our <a href=\"{link}\">Resource center.<\/a> though to see if there\u2019s a helpful article or video on that subject.": [
-                "Puedes intentar buscar en nuestro <a href=\"{link}\">centro de recursos.<\/a> para ver si hay un art\u00edculo o v\u00eddeo \u00fatil sobre este tema."
-            ],
-            "Search Help Center": [
-                "Buscar Centro de Ayuda"
-            ],
-            "submit text": [
-                "enviar texto"
-            ],
-            "Please enter a specific search term to get results.": [
-                "Por favor, introduce un t\u00e9rmino de b\u00fasqueda espec\u00edfico para obtener resultados."
-            ],
-            "Account Support": [
-                "Soporte de cuenta"
-            ],
-            "Help with WordPress": [
-                "Ayuda con WordPress"
-            ],
-            "Close Help Modal": [
-                "Cerrar ventana de ayuda"
-            ],
-            "Back": [
-                "Atr\u00e1s"
-            ],
-            "We're sorry the suggestions didn\u2019t help.": [
-                "Lamentamos que las sugerencias no hayan ayudado."
-            ],
-            "Try to:": [
-                "Intente:"
-            ],
-            "Use different keywords in the search field.": [
-                "Utilice diferentes palabras clave en el campo de b\u00fasqueda."
-            ],
-            "A clear, short prompt can make the difference.": [
-                "Un mensaje claro y breve puede marcar la diferencia."
-            ],
-            "Reach out to our customer support.": [
-                "Comun\u00edquese con nuestro servicio de atenci\u00f3n al cliente."
-            ],
-            "Hey there! I\u2019m here to help you find your way around WordPress. <\/br><\/br> If you\u2019re not sure how to do something, just ask \u2014 I\u2019ll walk you through it step by step. I\u2019m still learning, so I might not have every answer, but I\u2019ll do my best to help!": [
-                "\u00a1Hola! Estoy aqu\u00ed para ayudarte a orientarte en WordPress. <\/br><\/br> Si no est\u00e1 seguro de c\u00f3mo hacer algo, simplemente pregunte, lo guiar\u00e9 paso a paso. Todav\u00eda estoy aprendiendo, as\u00ed que puede que no tenga todas las respuestas, \u00a1pero har\u00e9 todo lo posible para ayudar!"
-            ],
-            "Sorry, I don\u2019t have any information on %s yet.": [
-                "Lo siento, todav\u00eda no tengo ninguna informaci\u00f3n sobre %s."
-            ],
-            "Ask anything about WordPress": [
-                "Pregunta cualquier cosa sobre WordPress"
-            ],
-            "Minimize HelpCenter": [
-                "Minimiza el Centro de Ayuda"
-            ],
             "Bluehost": [
                 "Presentador azul"
+            ],
+            "Help": [
+                "Ayuda"
             ],
             "If you need help with your %1$s account, give us a call at %2$s or %3$s with one of our support agents \u2014 we're here for you!": [
                 "Si necesitas ayuda con tu cuenta %1$s, ll\u00e1manos a %2$s o %3$s con uno de nuestros agentes de soporte \u2014 \u00a1estamos aqu\u00ed para ti!"
@@ -82,23 +28,71 @@
             "Or %1$s with one of our support agents \u2014 we will assist you as soon as possible.": [
                 "O contacta con uno de nuestros agentes de soporte \u2014 te ayudaremos lo antes posible."
             ],
+            "Try to:": [
+                "Intente:"
+            ],
+            "Use different keywords in the search field.": [
+                "Utilice diferentes palabras clave en el campo de b\u00fasqueda."
+            ],
+            "A clear, short prompt can make the difference.": [
+                "Un mensaje claro y breve puede marcar la diferencia."
+            ],
+            "Reach out to our customer support.": [
+                "Comun\u00edquese con nuestro servicio de atenci\u00f3n al cliente."
+            ],
             "Chat Live": [
                 "Chat Live"
             ],
-            "Toggle chat view": [
-                "Vista de chat alternar"
+            "Account Support": [
+                "Soporte de cuenta"
             ],
-            "Ask BLU": [
-                "Pregunta a BLU"
+            "Open Help Center": [
+                ""
             ],
-            "BETA": [
-                "BETA"
+            "Back": [
+                "Atr\u00e1s"
+            ],
+            "We're sorry the suggestions didn\u2019t help.": [
+                "Lamentamos que las sugerencias no hayan ayudado."
+            ],
+            "Hey there! I\u2019m here to help you find your way around WordPress. <\/br><\/br> If you\u2019re not sure how to do something, just ask \u2014 I\u2019ll walk you through it step by step. I\u2019m still learning, so I might not have every answer, but I\u2019ll do my best to help!": [
+                "\u00a1Hola! Estoy aqu\u00ed para ayudarte a orientarte en WordPress. <\/br><\/br> Si no est\u00e1 seguro de c\u00f3mo hacer algo, simplemente pregunte, lo guiar\u00e9 paso a paso. Todav\u00eda estoy aprendiendo, as\u00ed que puede que no tenga todas las respuestas, \u00a1pero har\u00e9 todo lo posible para ayudar!"
+            ],
+            "Did this result help you?": [
+                "\u00bfTe ha sido \u00fatil este resultado?"
+            ],
+            "Thanks for the feedback!": [
+                "\u00a1Gracias por tus comentarios!"
+            ],
+            "You can try searching our <a href=\"{link}\">Resource center.<\/a> though to see if there\u2019s a helpful article or video on that subject.": [
+                "Puedes intentar buscar en nuestro <a href=\"{link}\">centro de recursos.<\/a> para ver si hay un art\u00edculo o v\u00eddeo \u00fatil sobre este tema."
+            ],
+            "Sorry, I don\u2019t have any information on %s yet.": [
+                "Lo siento, todav\u00eda no tengo ninguna informaci\u00f3n sobre %s."
+            ],
+            "Please enter a specific search term to get results.": [
+                "Por favor, introduce un t\u00e9rmino de b\u00fasqueda espec\u00edfico para obtener resultados."
+            ],
+            "Search Help Center": [
+                "Buscar Centro de Ayuda"
+            ],
+            "Ask anything about WordPress": [
+                "Pregunta cualquier cosa sobre WordPress"
+            ],
+            "submit text": [
+                "enviar texto"
             ],
             "Loading\u2026": [
                 "Cargando..."
             ],
-            "Close and show AI chat": [
-                "Cierra y muestra el chat de IA"
+            "Help with WordPress": [
+                "Ayuda con WordPress"
+            ],
+            "Minimize HelpCenter": [
+                "Minimiza el Centro de Ayuda"
+            ],
+            "Close Help Modal": [
+                "Cerrar ventana de ayuda"
             ]
         }
     }
