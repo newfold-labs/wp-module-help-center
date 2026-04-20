@@ -5,6 +5,8 @@ import {
   SELECTORS,
   HELP_CENTER_CAPABILITIES,
   setSiteCapabilities,
+  clearHelpCenterClientState,
+  setupHelpCenterApiMocks,
   clickHelpCenterIcon,
   verifyHelpCenterModalVisible,
   searchInHelpCenter,
@@ -41,6 +43,8 @@ test.describe('Home Page- Help Center', () => {
     await auth.loginToWordPress(page);
     await setSiteCapabilities(HELP_CENTER_CAPABILITIES);
     await page.goto('/wp-admin/index.php');
+    await clearHelpCenterClientState(page);
+    await setupHelpCenterApiMocks(page);
   });
 
   test('Verify HelpCenter icon visible', async ({ page }) => {
@@ -84,7 +88,11 @@ test.describe('Home Page- Help Center', () => {
     await expect(page.locator(SELECTORS.helpCenterContainer)).toBeVisible();
 
     await searchInHelpCenter(page, 'How to install a plugin in WordPress');
-    await page.waitForTimeout(300);
+
+    // Feedback renders after result + reveal; wait for the no button (mocked multi-search response)
+    await expect(page.locator(SELECTORS.feedbackButtonNo)).toBeVisible({
+      timeout: 30000,
+    });
 
     // Click dislike feedback button
     await page.locator(SELECTORS.feedbackButtonNo).click();
@@ -168,9 +176,10 @@ test.describe('Home Page- Help Center', () => {
     // Click the hidden tooltip (force click)
     await tooltip.evaluate(el => el.click());
 
-    // Verify question block contains expected content
+    // Verify question block contains expected content (tooltip_search mock)
     await expect(page.locator(SELECTORS.questionBlock)).toContainText(
-      'i have 7 items in the cart that dont really exist how do i get rid of them'
+      'i have 7 items in the cart that dont really exist how do i get rid of them',
+      { timeout: 15000 }
     );
   });
 });
