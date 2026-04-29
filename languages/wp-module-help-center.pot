@@ -12,172 +12,78 @@ msgstr ""
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wp-module-help-center\n"
 
-#: build/649.js:9 build/index.js:1
-msgid "A clear, short prompt can make the difference."
+#: includes/CapabilityController.php:76
+msgid "We could not find the brand"
 msgstr ""
 
+#: includes/CapabilityController.php:93
+#: includes/MultiSearchController.php:192
+#: includes/UserInteractionController.php:81
+msgid "You must be authenticated to make this call"
+msgstr ""
+
+#: includes/Data/Brands.php:24
+#: includes/Data/Brands.php:30
 #: build/index.js:1
-msgid "Account Support"
-msgstr ""
-
-#. translators: %s: the name of the action or tool that was cancelled
-#: build/649.js:10
-msgid "Action \"%s\" was cancelled."
-msgstr ""
-
-#: build/649.js:9
-msgid "Action approved and executed."
-msgstr ""
-
-#: build/index.js:1
-msgid "Ask anything about WordPress"
-msgstr ""
-
-#: build/649.js:10
-msgid "Ask me anything about WordPress…"
-msgstr ""
-
-#: build/index.js:1
-msgid "Back"
-msgstr ""
-
-#: build/649.js:10
-msgid "Blu Chat"
-msgstr ""
-
-#: includes/Data/Brands.php:24 includes/Data/Brands.php:30 build/index.js:1
 msgid "Bluehost"
 msgstr ""
 
-#: build/649.js:9
-msgid "Call at"
-msgstr ""
-
-#. translators: 1: phone link, 2: chat link
-#: includes/HelpCenter.php:209 build/index.js:1
-#, php-format
-msgid "Call at %1$s or %2$s with one of our support agents — we will assist you as soon as possible."
-msgstr ""
-
-#: build/649.js:9 build/index.js:1
-msgid "Chat Live"
-msgstr ""
-
-#: build/649.js:10
-msgid "Clear Chat"
-msgstr ""
-
-#: build/649.js:10
-msgid "Clear chat"
-msgstr ""
-
-#: build/index.js:1
-msgid "Close Help Modal"
-msgstr ""
-
-#: build/index.js:1
-msgid "Did this result help you?"
-msgstr ""
-
-#: includes/HelpCenter.php:147 build/index.js:1
-msgid "Help"
-msgstr ""
-
-#: build/index.js:1
-msgid "Help with WordPress"
-msgstr ""
-
-#: build/index.js:1
-msgid "Hey there! I’m here to help you find your way around WordPress. </br></br> If you’re not sure how to do something, just ask — I’ll walk you through it step by step. I’m still learning, so I might not have every answer, but I’ll do my best to help!"
-msgstr ""
-
-#: build/649.js:10
-msgid "Hi, I'm BLU, your AI assistant."
-msgstr ""
-
-#: includes/Data/Brands.php:42 includes/Data/Brands.php:48
-msgid "HostGator"
-msgstr ""
-
-#: build/649.js:10
-msgid "I can help you create and edit posts and pages, update content, and manage your WordPress site."
-msgstr ""
-
-#. translators: 1: account name, 2: chat link
-#: includes/HelpCenter.php:207 build/index.js:1
-#, php-format
-msgid "If you need help with your %1$s account, %2$s with one of our support agents — we're here for you!"
-msgstr ""
-
-#. translators: 1: account name, 2: phone link, 3: chat link
-#: includes/HelpCenter.php:205 build/index.js:1
-#, php-format
-msgid "If you need help with your %1$s account, give us a call at %2$s or %3$s with one of our support agents — we're here for you!"
+#: includes/Data/Brands.php:35
+msgid "Your dream site is just a click away."
 msgstr ""
 
 #: includes/Data/Brands.php:36
 msgid "Let's build a site you love, together."
 msgstr ""
 
-#: build/index.js:1
-msgid "Loading…"
-msgstr ""
-
-#: build/index.js:1
-msgid "Minimize HelpCenter"
-msgstr ""
-
-#: includes/HelpCenter.php:122
-msgid "NFD helpcenter data"
-msgstr ""
-
-#: includes/MultiSearchController.php:138
-#: includes/MultiSearchController.php:177
-msgid "No data found"
-msgstr ""
-
-#: build/index.js:1
-msgid "Open Help Center"
-msgstr ""
-
-#. translators: 1: chat link
-#: includes/HelpCenter.php:211 build/index.js:1
-#, php-format
-msgid "Or %1$s with one of our support agents — we will assist you as soon as possible."
-msgstr ""
-
-#: build/index.js:1
-msgid "Please enter a specific search term to get results."
-msgstr ""
-
-#: build/649.js:9 build/index.js:1
-msgid "Reach out to our customer support."
-msgstr ""
-
-#. translators: %1$s: HTTP status, %2$s: status text
-#: build/649.js:8
-msgid "Resource center"
-msgstr ""
-
-#: build/index.js:1
-msgid "Search Help Center"
-msgstr ""
-
-#. translators: %s: the user's search query (or the word "this" if empty)
-#: build/649.js:9
-msgid "Sorry, I don't have any information on %s yet."
-msgstr ""
-
-#: build/index.js:1
-msgid "Sorry, I don’t have any information on %s yet."
+#: includes/Data/Brands.php:37
+msgid "With Pro Design Live, our expert team bring your vision to life. We help you to create the site you've always dreamed of — tailored to your goals, ready to perform."
 msgstr ""
 
 #: includes/Data/Brands.php:38
 msgid "Start Now"
 msgstr ""
 
+#: includes/Data/Brands.php:42
+#: includes/Data/Brands.php:48
+msgid "HostGator"
+msgstr ""
+
+#: includes/HelpCenter.php:122
+msgid "NFD helpcenter data"
+msgstr ""
+
+#: includes/HelpCenter.php:147
 #: build/index.js:1
-msgid "Thanks for the feedback!"
+msgid "Help"
+msgstr ""
+
+#. translators: 1: account name, 2: phone link, 3: chat link
+#: includes/HelpCenter.php:205
+#: build/index.js:1
+#, php-format,js-format
+msgid "If you need help with your %1$s account, give us a call at %2$s or %3$s with one of our support agents — we're here for you!"
+msgstr ""
+
+#. translators: 1: account name, 2: chat link
+#: includes/HelpCenter.php:207
+#: build/index.js:1
+#, php-format,js-format
+msgid "If you need help with your %1$s account, %2$s with one of our support agents — we're here for you!"
+msgstr ""
+
+#. translators: 1: phone link, 2: chat link
+#: includes/HelpCenter.php:209
+#: build/index.js:1
+#, php-format,js-format
+msgid "Call at %1$s or %2$s with one of our support agents — we will assist you as soon as possible."
+msgstr ""
+
+#. translators: 1: chat link
+#: includes/HelpCenter.php:211
+#: build/index.js:1
+#, php-format,js-format
+msgid "Or %1$s with one of our support agents — we will assist you as soon as possible."
 msgstr ""
 
 #: includes/MultiSearchController.php:132
@@ -185,55 +91,166 @@ msgstr ""
 msgid "The request failed"
 msgstr ""
 
-#: build/649.js:9 build/index.js:1
-msgid "Try to:"
+#: includes/MultiSearchController.php:138
+#: includes/MultiSearchController.php:177
+msgid "No data found"
 msgstr ""
 
-#: build/649.js:9 build/index.js:1
-msgid "Use different keywords in the search field."
-msgstr ""
-
-#: includes/CapabilityController.php:76
-msgid "We could not find the brand"
-msgstr ""
-
-#: build/index.js:1
-msgid "We're sorry the suggestions didn’t help."
-msgstr ""
-
-#: includes/Data/Brands.php:37
-msgid "With Pro Design Live, our expert team bring your vision to life. We help you to create the site you've always dreamed of — tailored to your goals, ready to perform."
+#. translators: %1$s: HTTP status, %2$s: status text
+#: build/649.js:8
+msgid "Resource center"
 msgstr ""
 
 #: build/649.js:8
 msgid "You can try searching our"
 msgstr ""
 
+#: build/649.js:8
+msgid "though to see if there's a helpful article or video on that subject."
+msgstr ""
+
+#. translators: %s: the user's search query (or the word "this" if empty)
+#: build/649.js:9
+#, js-format
+msgid "Sorry, I don't have any information on %s yet."
+msgstr ""
+
+#: build/649.js:9
 #: build/index.js:1
-msgid "You can try searching our <a href=\"{link}\">Resource center.</a> though to see if there’s a helpful article or video on that subject."
+msgid "Try to:"
 msgstr ""
 
-#: includes/CapabilityController.php:93 includes/MultiSearchController.php:192
-#: includes/UserInteractionController.php:81
-msgid "You must be authenticated to make this call"
+#: build/649.js:9
+#: build/index.js:1
+msgid "Use different keywords in the search field."
 msgstr ""
 
-#: includes/Data/Brands.php:35
-msgid "Your dream site is just a click away."
+#: build/649.js:9
+#: build/index.js:1
+msgid "A clear, short prompt can make the difference."
+msgstr ""
+
+#: build/649.js:9
+#: build/index.js:1
+msgid "Reach out to our customer support."
+msgstr ""
+
+#: build/649.js:9
+msgid "Call at"
 msgstr ""
 
 #: build/649.js:9
 msgid "or"
 msgstr ""
 
+#: build/649.js:9
 #: build/index.js:1
-msgid "submit text"
-msgstr ""
-
-#: build/649.js:8
-msgid "though to see if there's a helpful article or video on that subject."
+msgid "Chat Live"
 msgstr ""
 
 #: build/649.js:9
 msgid "with one of our support agents — we will assist you as soon as possible."
+msgstr ""
+
+#: build/649.js:9
+msgid "Action approved and executed."
+msgstr ""
+
+#. translators: %s: the name of the action or tool that was cancelled
+#: build/649.js:10
+#, js-format
+msgid "Action \"%s\" was cancelled."
+msgstr ""
+
+#: build/649.js:10
+msgid "Hi, I'm BLU, your AI assistant."
+msgstr ""
+
+#: build/649.js:10
+msgid "I can help you create and edit posts and pages, update content, and manage your WordPress site."
+msgstr ""
+
+#: build/649.js:10
+msgid "Clear chat"
+msgstr ""
+
+#: build/649.js:10
+msgid "Clear Chat"
+msgstr ""
+
+#: build/649.js:10
+msgid "Blu Chat"
+msgstr ""
+
+#: build/649.js:10
+msgid "Ask me anything about WordPress…"
+msgstr ""
+
+#: build/index.js:1
+msgid "Account Support"
+msgstr ""
+
+#: build/index.js:1
+msgid "Open Help Center"
+msgstr ""
+
+#: build/index.js:1
+msgid "Back"
+msgstr ""
+
+#: build/index.js:1
+msgid "We're sorry the suggestions didn’t help."
+msgstr ""
+
+#: build/index.js:1
+msgid "Hey there! I’m here to help you find your way around WordPress. </br></br> If you’re not sure how to do something, just ask — I’ll walk you through it step by step. I’m still learning, so I might not have every answer, but I’ll do my best to help!"
+msgstr ""
+
+#: build/index.js:1
+msgid "Did this result help you?"
+msgstr ""
+
+#: build/index.js:1
+msgid "Thanks for the feedback!"
+msgstr ""
+
+#: build/index.js:1
+msgid "You can try searching our <a href=\"{link}\">Resource center.</a> though to see if there’s a helpful article or video on that subject."
+msgstr ""
+
+#: build/index.js:1
+#, js-format
+msgid "Sorry, I don’t have any information on %s yet."
+msgstr ""
+
+#: build/index.js:1
+msgid "Please enter a specific search term to get results."
+msgstr ""
+
+#: build/index.js:1
+msgid "Search Help Center"
+msgstr ""
+
+#: build/index.js:1
+msgid "Ask anything about WordPress"
+msgstr ""
+
+#: build/index.js:1
+msgid "submit text"
+msgstr ""
+
+#: build/index.js:1
+msgid "Loading…"
+msgstr ""
+
+#: build/index.js:1
+msgid "Help with WordPress"
+msgstr ""
+
+#: build/index.js:1
+msgid "Minimize HelpCenter"
+msgstr ""
+
+#: build/index.js:1
+msgid "Close Help Modal"
 msgstr ""
