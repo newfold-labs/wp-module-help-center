@@ -5,7 +5,7 @@ return [
 	'language' => 'es_MX',
 	'project-id-version' => '',
 	'pot-creation-date' => '2025-02-13T09:55:55+00:00',
-	'po-revision-date' => '2026-04-20T18:56:59+00:00',
+	'po-revision-date' => '2026-04-29T15:29:36+00:00',
 	'x-generator' => 'WP-CLI 2.11.0',
 	'messages' => [
 		'We could not find the brand' => 'No pudimos encontrar la marca',
