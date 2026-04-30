@@ -172,6 +172,7 @@ $nfd-help-center-chat-border: #eef1f4;
 	position: relative;
 	width: 100%;
 	z-index: 15;
+	background: #fff;
 
 	// Header: Blu Chat title, +, history, close (ChatHeader + non-blocking bars)
 	&__header-wrapper {
@@ -179,6 +180,14 @@ $nfd-help-center-chat-border: #eef1f4;
 		flex-direction: column;
 		flex-shrink: 0;
 		border-bottom: 1px solid $nfd-help-center-chat-border;
+		transition: border-bottom-color 0.18s ease, box-shadow 0.18s ease;
+	}
+
+	// Elevate the header (subtle shadow, transparent border) when the messages area has scrolled
+	// past the top. Uses :has() to read the data-attribute exposed by ChatMessages without prop drilling.
+	&:has(.nfd-ai-chat-messages-shell[data-scrolled="true"]) &__header-wrapper {
+		border-bottom-color: transparent;
+		box-shadow: 0 1px 0 0 rgba(17, 24, 39, 0.04), 0 6px 14px -8px rgba(17, 24, 39, 0.12);
 	}
 
 	// Welcome screen wrapper
@@ -203,7 +212,7 @@ $nfd-help-center-chat-border: #eef1f4;
 		flex-direction: column;
 		overflow: hidden;
 		position: relative; // Establish positioning context
-		background: #fafbfc;
+		background: #fff;
 
 		.nfd-ai-chat-messages {
 			// Override base styles to ensure proper scrolling
@@ -240,33 +249,44 @@ $nfd-help-center-chat-border: #eef1f4;
 	&__messages-header {
 		display: flex;
 		justify-content: flex-end;
-		padding: 6px 14px;
+		padding: 8px 16px 0;
 		background: #fff;
 		flex-shrink: 0;
 	}
 
 	// Clear chat button
 	&__clear-chat-button {
-		background: none;
-		border: none;
-		padding: 0;
+		background: transparent;
+		border: 1px solid transparent;
+		padding: 4px 10px;
 		font-size: 11px;
-		color: #9ca3af;
+		font-weight: 500;
+		color: #6b7280;
 		cursor: pointer;
 		text-decoration: none;
 		font-family: inherit;
 		letter-spacing: 0.01em;
-		transition: color 0.15s ease;
+		border-radius: 999px;
+		transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
 
 		&:hover {
-			text-decoration: underline;
-			color: #6b7280;
+			text-decoration: none;
+			color: #374151;
+			background-color: #f3f4f6;
+			border-color: #e5e7eb;
+		}
+
+		&:focus-visible {
+			outline: none;
+			color: #374151;
+			background-color: #f3f4f6;
+			border-color: #d1d5db;
 		}
 	}
 
-	// Input area - always show top border to delineate from messages
+	// Input area - top border anchors the pill against the messages area.
 	&__input-area {
-		padding: 12px 16px;
+		padding: 16px 16px 14px;
 		border-top: 1px solid $nfd-help-center-chat-border;
 		background: #fff;
 		flex-shrink: 0;
@@ -275,27 +295,54 @@ $nfd-help-center-chat-border: #eef1f4;
 		overflow: visible;
 	}
 
-	// Input wrapper - hide disclaimer and make input smaller
+	// Input wrapper - hide disclaimer; pill design + smaller text for the help-center context.
 	&__input-wrapper {
 
 		.nfd-ai-chat-input {
-			padding: 8px 12px;
+			padding: 0;
+			border-top: none;
 
 			&__disclaimer {
 				display: none; // Hide AI disclaimer
 			}
 
 			&__container {
-				padding: 8px 12px;
-				border-radius: 10px;
+				padding: 4px 4px 4px 14px;
+				border-radius: 20px;
 				border-color: #e5e7eb;
-				box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+				box-shadow: none;
+
+				&:focus-within {
+					border-color: var(--nfd-ai-chat-color-primary);
+					box-shadow: 0 0 0 3px var(--nfd-ai-chat-color-primary-light-12);
+				}
+			}
+
+			// Disabled-state pill — borderless so its outline doesn't read as a
+			// second horizontal line under the input-area border-top above.
+			// Written long-form (not via `&--disabled &__container`) because nested
+			// `&` here would interpolate the full parent chain and produce a broken
+			// `.input-wrapper .input--disabled .input-wrapper .input__container`
+			// selector that never matches.
+			&.nfd-ai-chat-input--disabled .nfd-ai-chat-input__container {
+				border-color: transparent;
 			}
 
 			&__textarea {
 				font-size: 13px;
-				min-height: 20px;
+				line-height: 1.45;
+				min-height: 22px;
 				max-height: 120px;
+				padding: 5px 0;
+			}
+
+			&__hint {
+				font-size: 10.5px;
+			}
+
+			&__hint-key {
+				font-size: 9.5px;
+				padding: 0 3px;
 			}
 		}
 	}
