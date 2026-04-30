@@ -21,11 +21,12 @@ import '@newfold/wp-module-ai-chat/style.css';
 import Footer from './Footer'; // Support banner component
 import { useHelpCenterChatContext } from '../context/HelpCenterChatContext';
 import { getConnectionFailedFallbackMessage } from '../utils/connectionFailedFallbackMessage';
-import { useEffect, useRef, useCallback, useState } from '@wordpress/element';
+import { useEffect, useMemo, useRef, useCallback, useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 import { useHelpVisibility } from '../hooks/useHelpVisibility';
 import { useHelpCenterState } from '../hooks/useHelpCenterState';
 import { shouldShowFooterInChat } from '../utils/footerUtils';
+import { getWelcomeSuggestions } from '../constants/welcomeSuggestions';
 
 const HelpCenterChatAI = () => {
 	const [isVisible] = useHelpVisibility();
@@ -34,6 +35,9 @@ const HelpCenterChatAI = () => {
 	const hasShownWelcomeRef = useRef(false);
 	const [historyDropdownOpen, setHistoryDropdownOpen] = useState(false);
 	const [historyRefreshTrigger, setHistoryRefreshTrigger] = useState(0);
+	// One-shot text to seed the chat input — set when the user clicks "Edit" on their last
+	// message; cleared by ChatInput via onPrefillConsumed once the value has been applied.
+	const [inputPrefill, setInputPrefill] = useState(null);
 
 	// "Latest conversation wins": seed active conversation from archive once on mount when history is empty.
 	// When STORAGE_KEY is empty (e.g. after clearChatHistory) but archive has a recent conversation,
@@ -91,10 +95,10 @@ const HelpCenterChatAI = () => {
 	const {
 		messages,
 		sendMessage,
+		retryFailedMessage,
 		sendSystemMessage,
 		isTyping,
 		status,
-		currentResponse,
 		conversationId,
 		clearApprovalRequest,
 		clearTyping,
@@ -241,17 +245,22 @@ const HelpCenterChatAI = () => {
 		setHistoryRefreshTrigger((t) => t + 1);
 	}, [conversationId, getSessionId, clearChatHistory]);
 
-	// Combine messages with current streaming response
+	// Build the welcome suggestions once. Stable reference so WelcomeScreen doesn't re-key on every render.
+	const welcomeSuggestions = useMemo(() => getWelcomeSuggestions(), []);
+
+	// Most recent user-sent text — fed into ChatInput so pressing ↑ in an empty input
+	// re-loads it (terminal/Slack convention). Recomputed only when `messages` changes.
+	const lastUserMessageText = useMemo(() => {
+		for (let i = messages.length - 1; i >= 0; i -= 1) {
+			const m = messages[i];
+			if ((m.type === 'user' || m.role === 'user') && m.content) {
+				return String(m.content);
+			}
+		}
+		return '';
+	}, [messages]);
+
 	const displayMessages = [...messages];
-	if (currentResponse && isTyping) {
-		displayMessages.push({
-			id: 'streaming',
-			role: 'assistant',
-			type: 'assistant',
-			content: currentResponse,
-			timestamp: new Date(),
-		});
-	}
 
 	// Show welcome screen when no messages and we haven't yet switched to chat view.
 	// Omit !isConnecting so we don't flash to empty ChatMessages while the WebSocket is connecting.
@@ -286,7 +295,8 @@ const HelpCenterChatAI = () => {
 						'I can help you create and edit posts and pages, update content, and manage your WordPress site.',
 						'wp-module-help-center'
 					)}
-					showSuggestions={false}
+					showSuggestions={true}
+					suggestions={welcomeSuggestions}
 				/>
 			</div>
 		);
@@ -322,6 +332,7 @@ const HelpCenterChatAI = () => {
 						hasUserEngaged &&
 						(connectionState === 'connecting' || connectionState === 'reconnecting')
 					}
+					connectionState={connectionState}
 					onApprove={handleApproval}
 					onReject={handleRejection}
 					onSendMessage={sendMessage}
@@ -329,13 +340,18 @@ const HelpCenterChatAI = () => {
 					conversationId={conversationId}
 					onClearTyping={clearTyping}
 					brandId={null}
+					onEditUserMessage={setInputPrefill}
+					onRetryUserMessage={retryFailedMessage}
 				/>
 			</div>
 		);
 	}
 
 	return (
-		<div className={containerClasses}>
+		// data-brand activates the Bluehost token block in wp-module-ai-chat's _vars.scss
+		// (`[data-brand="bluehost"]`), so primary/text/border/background variables resolve
+		// to the actual Bluehost palette instead of the chat module's wp-admin defaults.
+		<div className={containerClasses} data-brand="bluehost">
 			{/* Header: white container, two-tone pill, New chat (+) and Close (×) */}
 			<div className="nfd-help-center-chat__header-wrapper">
 				<ChatHeader
@@ -392,6 +408,9 @@ const HelpCenterChatAI = () => {
 							'wp-module-help-center'
 						)}
 						showTopBorder={false}
+						prefill={inputPrefill}
+						onPrefillConsumed={() => setInputPrefill(null)}
+						lastUserMessage={lastUserMessageText}
 					/>
 				</div>
 			</div>
