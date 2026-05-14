@@ -111,6 +111,8 @@ const HelpCenterChatAI = () => {
 		connectionState,
 		isConnecting,
 		manualRetry,
+		isOffline,
+		nextRetryAt,
 	} = useNfdAgentsWebSocket({
 		// Use full URL when Help Center has restUrl (subpath installs); otherwise relative path.
 		configEndpoint:
@@ -333,6 +335,8 @@ const HelpCenterChatAI = () => {
 						(connectionState === 'connecting' || connectionState === 'reconnecting')
 					}
 					connectionState={connectionState}
+					nextRetryAt={nextRetryAt}
+					isOffline={isOffline}
 					onApprove={handleApproval}
 					onReject={handleRejection}
 					onSendMessage={sendMessage}
@@ -398,6 +402,7 @@ const HelpCenterChatAI = () => {
 						showStopButton={isTyping}
 						disabled={
 							isTyping ||
+							isOffline ||
 							(hasUserEngaged &&
 								(connectionState === 'failed' ||
 									connectionState === 'connecting' ||
