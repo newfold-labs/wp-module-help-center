@@ -27,6 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read # Required to clone the private repository for PHPCS.
+    timeout-minutes: 30
     steps:
 
       - name: Checkout

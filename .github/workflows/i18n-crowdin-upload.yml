@@ -12,6 +12,7 @@ jobs:
     permissions:
       contents: write      # Required for Crowdin GitHub Action branch/commit operations using GITHUB_TOKEN.
       pull-requests: write # Required when Crowdin opens or updates pull requests for translation changes.
+    timeout-minutes: 60
     uses: newfold-labs/workflows/.github/workflows/i18n-crowdin-upload.yml@main
     with:
       CROWDIN_PROJECT_ID: ${{ vars.CROWDIN_PROJECT_ID }}

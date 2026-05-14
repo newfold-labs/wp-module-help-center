@@ -21,6 +21,7 @@ jobs:
   get-repo-name:
     runs-on: ubuntu-latest
     permissions: {} # Job only derives a name from github.repository; no checkout or GitHub API access.
+    timeout-minutes: 30
     outputs:
       repository-name: ${{ steps.repo-name.outputs.name }}
     steps:
@@ -33,6 +34,7 @@ jobs:
     permissions:
       contents: write      # Required for the reusable workflow to push coverage reports to gh-pages.
       pull-requests: write # Required for the reusable workflow to post PR comments and coverage comparisons.
+    timeout-minutes: 120
     uses: newfold-labs/workflows/.github/workflows/reusable-codecoverage.yml@main
     with:
       php-versions: '["7.4", "8.0", "8.1", "8.2", "8.3", "8.4"]'

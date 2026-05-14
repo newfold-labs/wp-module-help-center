@@ -17,6 +17,7 @@ jobs:
     permissions:
       contents: write      # Required for Crowdin to commit downloaded translations (also sufficient for checkout read).
       pull-requests: write # Required for Crowdin to create or update the translation pull request when using GITHUB_TOKEN.
+    timeout-minutes: 60
     uses: newfold-labs/workflows/.github/workflows/i18n-crowdin-download.yml@main
     with:
       base_branch: ${{ inputs.base_branch }}
