@@ -8,12 +8,15 @@ on:
         required: false
         default: 'main'
 
-permissions:
-  contents: write
-  pull-requests: write
+# Disable permissions for all available scopes by default.
+# Any needed permissions should be configured at the job level.
+permissions: {}
 
 jobs:
   call-crowdin-workflow:
+    permissions:
+      contents: write      # Required for Crowdin to commit downloaded translations (also sufficient for checkout read).
+      pull-requests: write # Required for Crowdin to create or update the translation pull request when using GITHUB_TOKEN.
     uses: newfold-labs/workflows/.github/workflows/i18n-crowdin-download.yml@main
     with:
       base_branch: ${{ inputs.base_branch }}
