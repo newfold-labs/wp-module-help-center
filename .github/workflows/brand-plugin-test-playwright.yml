@@ -19,6 +19,7 @@ jobs:
     name: Setup
     runs-on: ubuntu-latest
     permissions: {} # Derives branch name only; no checkout or GITHUB_TOKEN GitHub API usage.
+    timeout-minutes: 10
     outputs:
       branch: ${{ steps.extract_branch.outputs.branch }}
     steps:
@@ -33,6 +34,7 @@ jobs:
     needs: setup
     permissions:
       contents: read # Required for the reusable Playwright workflow to check out the module and plugin.
+    timeout-minutes: 120
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
     with:
       module-repo: ${{ github.repository }}
@@ -45,6 +47,7 @@ jobs:
     needs: setup
     permissions:
       contents: read # Required for the reusable Playwright workflow to check out the module and plugin.
+    timeout-minutes: 120
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
     with:
       module-repo: ${{ github.repository }}
@@ -59,6 +62,7 @@ jobs:
     needs: setup
     permissions:
       contents: read # Required for the reusable Playwright workflow to check out the module and plugin.
+    timeout-minutes: 120
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
     with:
       module-repo: ${{ github.repository }}
@@ -71,6 +75,7 @@ jobs:
     needs: setup
     permissions:
       contents: read # Required for the reusable Playwright workflow to check out the module and plugin.
+    timeout-minutes: 120
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
     with:
       module-repo: ${{ github.repository }}

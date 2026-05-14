@@ -22,6 +22,7 @@ jobs:
     permissions:
       contents: write      # Required for the reusable translations workflow to push translation branch updates.
       pull-requests: write # Required for gh-based PR operations inside the reusable translations workflow.
+    timeout-minutes: 60
     uses: newfold-labs/workflows/.github/workflows/reusable-translations.yml@main
     with:
       text_domain: 'wp-module-help-center'
