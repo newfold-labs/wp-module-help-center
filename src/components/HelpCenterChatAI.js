@@ -247,6 +247,31 @@ const HelpCenterChatAI = () => {
 		setHistoryRefreshTrigger((t) => t + 1);
 	}, [conversationId, getSessionId, clearChatHistory]);
 
+	/**
+	 * When the user deletes a conversation from the history dropdown, reset the
+	 * active chat view if the deleted entry is the one currently open. Without
+	 * this, the messages stay rendered because the active state in the hook
+	 * lives separately from the archive in localStorage.
+	 */
+	const handleConversationDeleted = useCallback(
+		(deleted) => {
+			if (!deleted) {
+				return;
+			}
+			const isActive =
+				(deleted.conversationId &&
+					deleted.conversationId === conversationId) ||
+				(deleted.sessionId && deleted.sessionId === getSessionId());
+			if (!isActive) {
+				return;
+			}
+			hasShownWelcomeRef.current = false;
+			clearChatHistory();
+			setHistoryRefreshTrigger((t) => t + 1);
+		},
+		[conversationId, getSessionId, clearChatHistory]
+	);
+
 	// Build the welcome suggestions once. Stable reference so WelcomeScreen doesn't re-key on every render.
 	const welcomeSuggestions = useMemo(() => getWelcomeSuggestions(), []);
 
@@ -383,6 +408,7 @@ const HelpCenterChatAI = () => {
 								handleSelectConversation(conv);
 								setHistoryDropdownOpen(false);
 							}}
+							onConversationDeleted={handleConversationDeleted}
 							refreshTrigger={historyRefreshTrigger}
 							disabled={false}
 						/>
