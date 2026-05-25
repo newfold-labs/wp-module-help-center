@@ -188,6 +188,26 @@ class HelpCenter {
 	}
 
 	/**
+	 * Build the environment flags shipped to the JS bundle via the inline `nfdHelpCenter` global.
+	 *
+	 * Drives client-side gating (e.g. welcome-screen suggestions). The JS reads this object via
+	 * `getHelpCenterEnv()` and suggestions opt in with a `requires` predicate. Add new booleans
+	 * here for future integrations; mirror the default in `helpCenterEnv.js`. All values are
+	 * booleans — the JS-side env reader spreads this object over typed defaults.
+	 *
+	 * Extracted from `assets()` so it can be unit-tested without standing up the full enqueue flow.
+	 *
+	 * @internal Stable signature for tests and the JS bundle; not intended as a public extension point.
+	 *
+	 * @return array Map of flag name to boolean value.
+	 */
+	public static function get_js_environment() {
+		return array(
+			'hasWooCommerce' => class_exists( 'WooCommerce' ),
+		);
+	}
+
+	/**
 	 * Load WP dependencies into the page.
 	 */
 	public function assets() {
@@ -234,6 +254,7 @@ class HelpCenter {
 							'resourceLink'             => Brands::get_resource_link_for_brand( NFD_HELPCENTER_PLUGIN_BRAND ),
 							'brand'                    => NFD_HELPCENTER_PLUGIN_BRAND,
 							'brandConfig'              => $brand_data,
+							'environment'              => self::get_js_environment(),
 							/* translators: 1: account name, 2: phone link, 3: chat link */
 							'supportMessageTemplate'   => __( 'If you need help with your %1$s account, give us a call at %2$s or %3$s with one of our support agents — we\'re here for you!', 'wp-module-help-center' ),
 							/* translators: 1: account name, 2: chat link */
