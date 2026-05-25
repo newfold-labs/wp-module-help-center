@@ -46,8 +46,8 @@ class HelpCenterEnvironmentWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTes
 	}
 
 	/**
-	 * hasWooCommerce mirrors class_exists( 'WooCommerce' ). This is the load-bearing
-	 * contract; the JS welcome-screen gating assumes exactly this relationship.
+	 * Verifies hasWooCommerce mirrors class_exists( 'WooCommerce' ). This is the
+	 * load-bearing contract; the JS welcome-screen gating assumes exactly this relationship.
 	 *
 	 * @return void
 	 */
