@@ -19,7 +19,8 @@ class HelpCenterExcludedScreenWPUnitTest extends \lucatume\WPBrowser\TestCase\WP
 	 * @return void
 	 */
 	public function tearDown(): void {
-		$GLOBALS['current_screen'] = null;
+		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- Reset admin screen fixture between tests.
+		unset( $GLOBALS['current_screen'] );
 		parent::tearDown();
 	}
 
@@ -55,7 +56,8 @@ class HelpCenterExcludedScreenWPUnitTest extends \lucatume\WPBrowser\TestCase\WP
 	 * @return void
 	 */
 	public function test_is_excluded_screen_returns_false_when_no_screen() {
-		$GLOBALS['current_screen'] = null;
+		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- Simulate no admin screen for this test.
+		unset( $GLOBALS['current_screen'] );
 		$this->assertFalse( $this->invoke_is_excluded_screen( $this->make_help_center() ) );
 	}
 
@@ -76,7 +78,13 @@ class HelpCenterExcludedScreenWPUnitTest extends \lucatume\WPBrowser\TestCase\WP
 	 */
 	public function test_is_excluded_screen_returns_true_for_block_editor() {
 		set_current_screen( 'edit-post' );
-		get_current_screen()->set_is_block_editor( true );
+		$screen = get_current_screen();
+		// Older WP_Screen builds lack the setter; the public property is the stable surface.
+		if ( method_exists( $screen, 'set_is_block_editor' ) ) {
+			$screen->set_is_block_editor( true );
+		} else {
+			$screen->is_block_editor = true;
+		}
 		$this->assertTrue( $this->invoke_is_excluded_screen( $this->make_help_center() ) );
 	}
 
@@ -98,12 +106,15 @@ class HelpCenterExcludedScreenWPUnitTest extends \lucatume\WPBrowser\TestCase\WP
 	}
 
 	/**
-	 * newfold_help_center early-returns and does not add the admin-bar node
-	 * when the current screen is excluded.
+	 * Verifies that newfold_help_center early-returns and does not add the
+	 * admin-bar node when the current screen is excluded.
 	 *
 	 * @return void
 	 */
 	public function test_newfold_help_center_skips_when_screen_is_excluded() {
+		// WP_Admin_Bar is only loaded on admin requests; pull it in for the test.
+		require_once ABSPATH . WPINC . '/class-wp-admin-bar.php';
+
 		set_current_screen( 'site-editor' );
 		$screen       = get_current_screen();
 		$screen->base = 'site-editor';
@@ -116,7 +127,7 @@ class HelpCenterExcludedScreenWPUnitTest extends \lucatume\WPBrowser\TestCase\WP
 	}
 
 	/**
-	 * assets() early-returns when the current screen is excluded.
+	 * Verifies that assets() early-returns when the current screen is excluded.
 	 *
 	 * The instance is built without a constructor so the container is
 	 * uninitialized; reaching the body of assets() would fatal. A clean
