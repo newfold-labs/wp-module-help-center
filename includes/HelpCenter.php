@@ -128,11 +128,41 @@ class HelpCenter {
 	}
 
 	/**
+	 * Whether the current admin screen is one we deliberately skip the help center on.
+	 *
+	 * The block editor (Gutenberg post/page edit) and the site editor (FSE) host their
+	 * own AI chat surface that shares the wp-module-ai-chat framework with us; mounting
+	 * the help center there too would put two AI panels on the same screen.
+	 *
+	 * @return bool True when the current screen is the block editor or site editor.
+	 */
+	private function is_excluded_screen() {
+		if ( ! function_exists( 'get_current_screen' ) ) {
+			return false;
+		}
+		$screen = \get_current_screen();
+		if ( ! $screen ) {
+			return false;
+		}
+		if ( method_exists( $screen, 'is_block_editor' ) && $screen->is_block_editor() ) {
+			return true;
+		}
+		// `site-editor.php` reports base/id as `site-editor` in WP 6.x.
+		if ( 'site-editor' === $screen->base || 'site-editor' === $screen->id ) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Adds the Help Center icon to the WordPress admin bar.
 	 *
 	 * @param \WP_Admin_Bar $admin_bar The WordPress Admin Bar instance.
 	 */
 	public function newfold_help_center( \WP_Admin_Bar $admin_bar ) {
+		if ( $this->is_excluded_screen() ) {
+			return;
+		}
 		if ( current_user_can( 'manage_options' ) && is_admin() ) {
 			$help_icon        =
 			'<svg width="24" height="24" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg" style="margin-top: 5px;">
@@ -161,6 +191,9 @@ class HelpCenter {
 	 * Load WP dependencies into the page.
 	 */
 	public function assets() {
+		if ( $this->is_excluded_screen() ) {
+			return;
+		}
 		$dir          = container()->plugin()->url . 'vendor/newfold-labs/wp-module-help-center/';
 		$asset_file   = NFD_HELPCENTER_BUILD_DIR . 'index.asset.php';
 		$help_enabled = $this->container->get( 'capabilities' )->get( 'canAccessHelpCenter' );
