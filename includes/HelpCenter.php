@@ -128,11 +128,41 @@ class HelpCenter {
 	}
 
 	/**
+	 * Whether the current admin screen is one we deliberately skip the help center on.
+	 *
+	 * The block editor (Gutenberg post/page edit) and the site editor (FSE) host their
+	 * own AI chat surface that shares the wp-module-ai-chat framework with us; mounting
+	 * the help center there too would put two AI panels on the same screen.
+	 *
+	 * @return bool True when the current screen is the block editor or site editor.
+	 */
+	private function is_excluded_screen() {
+		if ( ! function_exists( 'get_current_screen' ) ) {
+			return false;
+		}
+		$screen = \get_current_screen();
+		if ( ! $screen ) {
+			return false;
+		}
+		if ( method_exists( $screen, 'is_block_editor' ) && $screen->is_block_editor() ) {
+			return true;
+		}
+		// `site-editor.php` reports base/id as `site-editor` in WP 6.x.
+		if ( 'site-editor' === $screen->base || 'site-editor' === $screen->id ) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Adds the Help Center icon to the WordPress admin bar.
 	 *
 	 * @param \WP_Admin_Bar $admin_bar The WordPress Admin Bar instance.
 	 */
 	public function newfold_help_center( \WP_Admin_Bar $admin_bar ) {
+		if ( $this->is_excluded_screen() ) {
+			return;
+		}
 		if ( current_user_can( 'manage_options' ) && is_admin() ) {
 			$help_icon        =
 			'<svg width="24" height="24" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg" style="margin-top: 5px;">
@@ -158,9 +188,32 @@ class HelpCenter {
 	}
 
 	/**
+	 * Build the environment flags shipped to the JS bundle via the inline `nfdHelpCenter` global.
+	 *
+	 * Drives client-side gating (e.g. welcome-screen suggestions). The JS reads this object via
+	 * `getHelpCenterEnv()` and suggestions opt in with a `requires` predicate. Add new booleans
+	 * here for future integrations; mirror the default in `helpCenterEnv.js`. All values are
+	 * booleans — the JS-side env reader spreads this object over typed defaults.
+	 *
+	 * Extracted from `assets()` so it can be unit-tested without standing up the full enqueue flow.
+	 *
+	 * @internal Stable signature for tests and the JS bundle; not intended as a public extension point.
+	 *
+	 * @return array Map of flag name to boolean value.
+	 */
+	public static function get_js_environment() {
+		return array(
+			'hasWooCommerce' => class_exists( 'WooCommerce' ),
+		);
+	}
+
+	/**
 	 * Load WP dependencies into the page.
 	 */
 	public function assets() {
+		if ( $this->is_excluded_screen() ) {
+			return;
+		}
 		$dir          = container()->plugin()->url . 'vendor/newfold-labs/wp-module-help-center/';
 		$asset_file   = NFD_HELPCENTER_BUILD_DIR . 'index.asset.php';
 		$help_enabled = $this->container->get( 'capabilities' )->get( 'canAccessHelpCenter' );
@@ -201,6 +254,7 @@ class HelpCenter {
 							'resourceLink'             => Brands::get_resource_link_for_brand( NFD_HELPCENTER_PLUGIN_BRAND ),
 							'brand'                    => NFD_HELPCENTER_PLUGIN_BRAND,
 							'brandConfig'              => $brand_data,
+							'environment'              => self::get_js_environment(),
 							/* translators: 1: account name, 2: phone link, 3: chat link */
 							'supportMessageTemplate'   => __( 'If you need help with your %1$s account, give us a call at %2$s or %3$s with one of our support agents — we\'re here for you!', 'wp-module-help-center' ),
 							/* translators: 1: account name, 2: chat link */

@@ -34,15 +34,6 @@ export function getConnectionFailedFallbackMessage(userMessage) {
 	const resourceUrl = getSafeResourceLink(
 		window?.nfdHelpCenter?.resourceLink || '#'
 	);
-	const resourceCenterLabel = __('Resource center', 'wp-module-help-center');
-	const resourceLineBefore = __(
-		'You can try searching our',
-		'wp-module-help-center'
-	);
-	const resourceLineAfter = __(
-		"though to see if there's a helpful article or video on that subject.",
-		'wp-module-help-center'
-	);
 
 	const primary = sprintf(
 		/* translators: %s: the user's search query (or the word "this" if empty) */
@@ -52,51 +43,49 @@ export function getConnectionFailedFallbackMessage(userMessage) {
 		),
 		messageText
 	);
-	const tryTo = __('Try to:', 'wp-module-help-center');
-	const useDifferent = __(
-		'Use different keywords in the search field.',
-		'wp-module-help-center'
-	);
-	const clearShort = __(
-		'A clear, short prompt can make the difference.',
-		'wp-module-help-center'
-	);
-	const reachOut = __(
-		'Reach out to our customer support.',
-		'wp-module-help-center'
-	);
-	const callAt = __('Call at', 'wp-module-help-center');
-	const orLabel = __('or', 'wp-module-help-center');
-	const chatLive = __('Chat Live', 'wp-module-help-center');
-	const withSupport = __(
-		'with one of our support agents — we will assist you as soon as possible.',
-		'wp-module-help-center'
-	);
+	const tryHeader = __('Here are a few things to try:', 'wp-module-help-center');
 
-	// Build HTML for proper formatting (links, bullets). ChatMessage sanitizes via containsHtml.
-	return [
-		'<p>' + escapeHtml(primary) + '</p>',
-		'<p><strong>' + tryTo + '</strong></p>',
-		'<ul>',
-		'<li>' +
-			escapeHtml(resourceLineBefore) +
-			' <a href="' +
+	// Each bullet uses sprintf with a single %s for the link / phone number so the
+	// surrounding sentence stays one translatable string and the link text reads
+	// naturally inline. Keeps the copy tight, parallel, and grammatically clean.
+	const resourceCenterLabel = __('Resource center', 'wp-module-help-center');
+	const bullet1 = sprintf(
+		/* translators: %s: link to the Resource center */
+		__(
+			'Search our %s for a related article or video.',
+			'wp-module-help-center'
+		),
+		'<a href="' +
 			escapeHtmlAttr(resourceUrl) +
 			'" target="_blank" rel="noopener noreferrer">' +
 			escapeHtml(resourceCenterLabel) +
-			'</a> ' +
-			escapeHtml(resourceLineAfter) +
-			'</li>',
-		'<li>' + escapeHtml(useDifferent + ' ' + clearShort) + '</li>',
-		'<li>' +
-			escapeHtml(reachOut + ' ' + callAt) +
-			' <a href="tel:8884014678">888-401-4678</a> ' +
-			escapeHtml(orLabel) +
-			' ' +
-			escapeHtml(chatLive) +
-			' ' +
-			escapeHtml(withSupport) +
-			'</li>',
+			'</a>'
+	);
+
+	const bullet2 = __(
+		'Rephrase your question — short, clear prompts work best.',
+		'wp-module-help-center'
+	);
+
+	const phoneNumber = '888-401-4678';
+	const bullet3 = sprintf(
+		/* translators: %s: clickable phone number */
+		__(
+			'Talk to a person — call %s or chat live with one of our agents.',
+			'wp-module-help-center'
+		),
+		'<a href="tel:8884014678">' + escapeHtml(phoneNumber) + '</a>'
+	);
+
+	// Build HTML for proper formatting (links, bullets). ChatMessage sanitizes the
+	// resulting HTML via DOMPurify, so the inline anchor markup is safe to inject here.
+	return [
+		'<p>' + escapeHtml(primary) + '</p>',
+		'<p><strong>' + escapeHtml(tryHeader) + '</strong></p>',
+		'<ul>',
+		'<li>' + bullet1 + '</li>',
+		'<li>' + escapeHtml(bullet2) + '</li>',
+		'<li>' + bullet3 + '</li>',
 		'</ul>',
 	].join('');
 }
