@@ -42,7 +42,7 @@
 	},
 	"devDependencies": {
 		"@wordpress/env": "11.6.0",
-		"@wordpress/eslint-plugin": "^25.2.0",
+		"@wordpress/eslint-plugin": "^25.3.0",
 		"@wordpress/scripts": "^32",
 		"playwright": "1.60.0",
 		"stylelint": "17.12.0",
