@@ -1,7 +1,7 @@
 {
-    "translation-revision-date": "2026-04-29T15:29:36+00:00",
+    "translation-revision-date": "2026-05-27T12:37:29+00:00",
     "generator": "WP-CLI\/2.12.0",
-    "source": "build\/649.js",
+    "source": "build\/409.js",
     "domain": "messages",
     "locale_data": {
         "messages": {
@@ -10,41 +10,53 @@
                 "lang": "es_MX",
                 "plural-forms": "nplurals=2; plural=(n != 1);"
             },
-            "Resource center": [
-                "Centro de recursos"
-            ],
-            "You can try searching our": [
-                "Puedes intentar buscar en"
-            ],
-            "though to see if there's a helpful article or video on that subject.": [
-                "Aunque para ver si hay alg\u00fan art\u00edculo o v\u00eddeo \u00fatil sobre ese tema."
-            ],
             "Sorry, I don't have any information on %s yet.": [
                 "Lo siento, a\u00fan no tengo informaci\u00f3n sobre los %s."
             ],
-            "Try to:": [
-                "Intente:"
+            "Here are a few things to try:": [
+                ""
             ],
-            "Use different keywords in the search field.": [
-                "Utilice diferentes palabras clave en el campo de b\u00fasqueda."
+            "Resource center": [
+                "Centro de recursos"
             ],
-            "A clear, short prompt can make the difference.": [
-                "Un mensaje claro y breve puede marcar la diferencia."
+            "Search our %s for a related article or video.": [
+                ""
             ],
-            "Reach out to our customer support.": [
-                "Comun\u00edquese con nuestro servicio de atenci\u00f3n al cliente."
+            "Rephrase your question \u2014 short, clear prompts work best.": [
+                ""
             ],
-            "Call at": [
-                "Llama a"
+            "Talk to a person \u2014 call %s or chat live with one of our agents.": [
+                ""
             ],
-            "or": [
-                "o"
+            "Write a blog post": [
+                ""
             ],
-            "Chat Live": [
-                "Chat Live"
+            "Help me write a new blog post for my site.": [
+                ""
             ],
-            "with one of our support agents \u2014 we will assist you as soon as possible.": [
-                "Con uno de nuestros agentes de soporte \u2014 te asistiremos lo antes posible."
+            "Edit a page": [
+                ""
+            ],
+            "I want to edit one of the pages on my site.": [
+                ""
+            ],
+            "Add a product": [
+                ""
+            ],
+            "Add a new product to my store.": [
+                ""
+            ],
+            "Customize site": [
+                ""
+            ],
+            "Help me customize my site's appearance.": [
+                ""
+            ],
+            "Update site settings": [
+                ""
+            ],
+            "Help me update my site settings.": [
+                ""
             ],
             "Action approved and executed.": [
                 "Acci\u00f3n aprobada y ejecutada."

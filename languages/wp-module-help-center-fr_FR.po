@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2025-02-13T09:55:55+00:00\n"
-"PO-Revision-Date: 2026-04-29T15:29:36+00:00\n"
+"PO-Revision-Date: 2026-05-27T12:37:29+00:00\n"
 "Language: fr_FR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Crowdin-File: wp-module-help-center.pot\n"
@@ -60,34 +60,34 @@ msgstr "HostGator"
 msgid "NFD helpcenter data"
 msgstr "Données du centre d’aide NFD"
 
-#: includes/HelpCenter.php:147
+#: includes/HelpCenter.php:177
 #: build/index.js:1
 msgid "Help"
 msgstr "Aide"
 
 #. translators: 1: account name, 2: phone link, 3: chat link
-#: includes/HelpCenter.php:205
+#: includes/HelpCenter.php:259
 #: build/index.js:1
 #, php-format,js-format
 msgid "If you need help with your %1$s account, give us a call at %2$s or %3$s with one of our support agents — we're here for you!"
 msgstr "Si vous avez besoin d’aide avec votre compte %1$s, appelez-nous au %2$s ou %3$s avec l’un de nos agents de support — nous sommes là pour vous !"
 
 #. translators: 1: account name, 2: chat link
-#: includes/HelpCenter.php:207
+#: includes/HelpCenter.php:261
 #: build/index.js:1
 #, php-format,js-format
 msgid "If you need help with your %1$s account, %2$s with one of our support agents — we're here for you!"
 msgstr "Si vous avez besoin d’aide avec votre compte %1$s, %2$s avec l’un de nos agents support — nous sommes là pour vous !"
 
 #. translators: 1: phone link, 2: chat link
-#: includes/HelpCenter.php:209
+#: includes/HelpCenter.php:263
 #: build/index.js:1
 #, php-format,js-format
 msgid "Call at %1$s or %2$s with one of our support agents — we will assist you as soon as possible."
 msgstr "Appelez au %1$s ou %2$s avec l’un de nos agents de support — nous vous assisterons dès que possible."
 
 #. translators: 1: chat link
-#: includes/HelpCenter.php:211
+#: includes/HelpCenter.php:265
 #: build/index.js:1
 #, php-format,js-format
 msgid "Or %1$s with one of our support agents — we will assist you as soon as possible."
@@ -103,95 +103,113 @@ msgstr "La demande a échoué"
 msgid "No data found"
 msgstr "Aucune donnée trouvée"
 
-#. translators: %1$s: HTTP status, %2$s: status text
-#: build/649.js:8
-msgid "Resource center"
-msgstr "Centre de ressources"
-
-#: build/649.js:8
-msgid "You can try searching our"
-msgstr "Vous pouvez essayer de chercher dans notre"
-
-#: build/649.js:8
-msgid "though to see if there's a helpful article or video on that subject."
-msgstr "Mais pour voir s’il existe un article ou une vidéo utile sur ce sujet."
-
 #. translators: %s: the user's search query (or the word "this" if empty)
-#: build/649.js:9
+#: build/409.js:2
 #, js-format
 msgid "Sorry, I don't have any information on %s yet."
 msgstr "Désolé, je n’ai pas encore d’informations sur les %s."
 
-#: build/649.js:9
-#: build/index.js:1
-msgid "Try to:"
-msgstr "Essayez de :"
+#: build/409.js:2
+msgid "Here are a few things to try:"
+msgstr ""
 
-#: build/649.js:9
-#: build/index.js:1
-msgid "Use different keywords in the search field."
-msgstr "Utilisez des mots-clés différents dans le champ de recherche."
+#: build/409.js:2
+msgid "Resource center"
+msgstr "Centre de ressources"
 
-#: build/649.js:9
-#: build/index.js:1
-msgid "A clear, short prompt can make the difference."
-msgstr "Une invite claire et courte peut faire la différence."
+#. translators: %s: link to the Resource center
+#: build/409.js:3
+#, js-format
+msgid "Search our %s for a related article or video."
+msgstr ""
 
-#: build/649.js:9
-#: build/index.js:1
-msgid "Reach out to our customer support."
-msgstr "Contactez notre service client."
+#: build/409.js:3
+msgid "Rephrase your question — short, clear prompts work best."
+msgstr ""
 
-#: build/649.js:9
-msgid "Call at"
-msgstr "Appelez à"
+#. translators: %s: clickable phone number
+#: build/409.js:4
+#, js-format
+msgid "Talk to a person — call %s or chat live with one of our agents."
+msgstr ""
 
-#: build/649.js:9
-msgid "or"
-msgstr "ou"
+#: build/409.js:4
+msgid "Write a blog post"
+msgstr ""
 
-#: build/649.js:9
-#: build/index.js:1
-msgid "Chat Live"
-msgstr "Chat en direct"
+#: build/409.js:4
+msgid "Help me write a new blog post for my site."
+msgstr ""
 
-#: build/649.js:9
-msgid "with one of our support agents — we will assist you as soon as possible."
-msgstr "Avec l’un de nos agents de support — nous vous assisterons dès que possible."
+#: build/409.js:4
+msgid "Edit a page"
+msgstr ""
 
-#: build/649.js:9
+#: build/409.js:4
+msgid "I want to edit one of the pages on my site."
+msgstr ""
+
+#: build/409.js:4
+msgid "Add a product"
+msgstr ""
+
+#: build/409.js:4
+msgid "Add a new product to my store."
+msgstr ""
+
+#: build/409.js:4
+msgid "Customize site"
+msgstr ""
+
+#: build/409.js:4
+msgid "Help me customize my site's appearance."
+msgstr ""
+
+#: build/409.js:4
+msgid "Update site settings"
+msgstr ""
+
+#: build/409.js:4
+msgid "Help me update my site settings."
+msgstr ""
+
+#: build/409.js:4
 msgid "Action approved and executed."
 msgstr "Action approuvée et exécutée."
 
 #. translators: %s: the name of the action or tool that was cancelled
-#: build/649.js:10
+#: build/409.js:5
 #, js-format
 msgid "Action \"%s\" was cancelled."
 msgstr "L’action « %s » a été annulée."
 
-#: build/649.js:10
+#: build/409.js:5
 msgid "Hi, I'm BLU, your AI assistant."
 msgstr "Bonjour, je suis BLU, votre assistante IA."
 
-#: build/649.js:10
+#: build/409.js:5
 msgid "I can help you create and edit posts and pages, update content, and manage your WordPress site."
 msgstr "Je peux vous aider à créer et modifier des articles et des pages, à mettre à jour le contenu et à gérer votre site WordPress."
 
-#: build/649.js:10
+#: build/409.js:5
 msgid "Clear chat"
 msgstr "Discussion claire"
 
-#: build/649.js:10
+#: build/409.js:5
 msgid "Clear Chat"
 msgstr "Clear Chat"
 
-#: build/649.js:10
+#: build/409.js:5
 msgid "Blu Chat"
 msgstr "Blu Chat"
 
-#: build/649.js:10
+#: build/409.js:5
 msgid "Ask me anything about WordPress…"
 msgstr "Posez-moi toutes vos questions sur WordPress..."
+
+#: build/index.js:1
+msgid "Chat Live"
+msgstr "Chat en direct"
 
 #: build/index.js:1
 msgid "Account Support"
@@ -208,6 +226,22 @@ msgstr "Précédent"
 #: build/index.js:1
 msgid "We're sorry the suggestions didn’t help."
 msgstr "Nous sommes désolés que les suggestions n’aient pas aidé."
+
+#: build/index.js:1
+msgid "Try to:"
+msgstr "Essayez de :"
+
+#: build/index.js:1
+msgid "Use different keywords in the search field."
+msgstr "Utilisez des mots-clés différents dans le champ de recherche."
+
+#: build/index.js:1
+msgid "A clear, short prompt can make the difference."
+msgstr "Une invite claire et courte peut faire la différence."
+
+#: build/index.js:1
+msgid "Reach out to our customer support."
+msgstr "Contactez notre service client."
 
 #: build/index.js:1
 msgid "Hey there! I’m here to help you find your way around WordPress. </br></br> If you’re not sure how to do something, just ask — I’ll walk you through it step by step. I’m still learning, so I might not have every answer, but I’ll do my best to help!"
