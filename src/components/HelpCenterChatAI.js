@@ -352,9 +352,15 @@ const HelpCenterChatAI = () => {
 					status={status}
 					error={error}
 					onRetry={
-						hasUserEngaged && connectionState === 'failed' ? manualRetry : undefined
+						hasUserEngaged &&
+						(connectionState === 'failed' || connectionState === 'rate_limited')
+							? manualRetry
+							: undefined
 					}
-					connectionFailed={hasUserEngaged && connectionState === 'failed'}
+					connectionFailed={
+						hasUserEngaged &&
+						(connectionState === 'failed' || connectionState === 'rate_limited')
+					}
 					isConnectingOrReconnecting={
 						hasUserEngaged &&
 						(connectionState === 'connecting' || connectionState === 'reconnecting')
