@@ -5,7 +5,7 @@ return [
 	'language' => 'it_IT',
 	'project-id-version' => 'newfold-labswp-module-staging',
 	'pot-creation-date' => '2025-02-13T09:55:55+00:00',
-	'po-revision-date' => '2026-05-27T12:37:29+00:00',
+	'po-revision-date' => '2026-05-28T15:38:05+00:00',
 	'x-generator' => 'WP-CLI 2.11.0',
 	'messages' => [
 		'We could not find the brand' => 'Non siamo riusciti a trovare il marchio',
