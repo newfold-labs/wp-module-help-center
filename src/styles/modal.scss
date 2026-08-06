@@ -355,7 +355,7 @@ $nfd-help-center-chat-border: #eef1f4;
 		max-width: 100%; // Match old help center
 		overflow: hidden;
 		position: relative;
-		z-index: 10;
+		z-index: 30;
 		box-sizing: border-box; // Ensure proper width calculation
 		// Expanded state: cap height for transition and short viewports
 		max-height: 500px; // Fallback for older browsers
