@@ -3,6 +3,9 @@ name: Crowdin Upload Action
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   call-crowdin-upload-workflow:
     uses: newfold-labs/workflows/.github/workflows/i18n-crowdin-upload.yml@main
