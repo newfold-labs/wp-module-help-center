@@ -31,6 +31,16 @@ Guidelines when touching this block:
   in the tree are already healthy — a global key would drag them along too. The
   `markdownlint-cli` entry is scoped for exactly this reason: `minimatch` 9.x/10.x
   elsewhere is fine and must not be forced down to 3.x.
+- **Only scope against a _direct_ dependency of that parent.** npm 10 applies a
+  nested override to the parent's direct dependencies, whereas npm 11 applies it
+  down the whole subtree. Scoping against a grandchild therefore resolves
+  differently per npm version and makes `npm ci` fail the package.json/lockfile
+  sync check on the older one. `minimatch` is a direct dependency of
+  `markdownlint-cli`, so it can be scoped; `markdown-it` belongs to
+  `markdownlint` (a child of `markdownlint-cli`), so it must be global.
+  CI runs Node 22 (npm 10) while local dev is often on Node 24 (npm 11), so
+  **validate lockfile changes with `npx npm@10 ci --dry-run --legacy-peer-deps`**,
+  not just the locally installed npm.
 - **Prefer `~` over `^`** where the parent declares a tilde range. `qs` is pinned
   `~6.15.3` because `express`/`body-parser` declare `~6.15.1` (i.e. `<6.16.0`);
   a caret would silently force a 6.16.x they exclude, and overrides suppress the
