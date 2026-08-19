@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2026-07-28T07:07:30+00:00",
+    "translation-revision-date": "2026-08-19T20:39:37+00:00",
     "generator": "WP-CLI\/2.12.0",
     "source": "build\/409.js",
     "domain": "messages",
@@ -14,49 +14,49 @@
                 "Sorry, I don't have any information on %s yet."
             ],
             "Here are a few things to try:": [
-                ""
+                "Here are a few things to try:"
             ],
             "Resource center": [
                 "Resource centre"
             ],
             "Search our %s for a related article or video.": [
-                ""
+                "Search our %s for a related article or video."
             ],
             "Rephrase your question \u2014 short, clear prompts work best.": [
-                ""
+                "Rephrase your question \u2014 short, clear prompts work best."
             ],
             "Talk to a person \u2014 call %s or chat live with one of our agents.": [
-                ""
+                "Talk to a person \u2014 call %s or chat live with one of our agents."
             ],
             "Write a blog post": [
-                ""
+                "Write a blog post"
             ],
             "Help me write a new blog post for my site.": [
-                ""
+                "Help me write a new blog post for my site."
             ],
             "Edit a page": [
-                ""
+                "Edit a page"
             ],
             "I want to edit one of the pages on my site.": [
-                ""
+                "I want to edit one of the pages on my site."
             ],
             "Add a product": [
-                ""
+                "Add a product"
             ],
             "Add a new product to my store.": [
-                ""
+                "Add a new product to my store."
             ],
             "Customize site": [
-                ""
+                "Customize site"
             ],
             "Help me customize my site's appearance.": [
-                ""
+                "Help me customise my site's appearance."
             ],
             "Update site settings": [
-                ""
+                "Update site settings"
             ],
             "Help me update my site settings.": [
-                ""
+                "Help me update my site settings."
             ],
             "Action approved and executed.": [
                 "Action approved and executed."
@@ -64,8 +64,8 @@
             "Action \"%s\" was cancelled.": [
                 "Action \"%s\" was cancelled."
             ],
-            "Hi, I'm BLU, your AI assistant.": [
-                "Hi, I'm BLU, your AI assistant."
+            "Hi, I'm <blue>blue<\/blue>, your AI assistant.": [
+                ""
             ],
             "I can help you create and edit posts and pages, update content, and manage your WordPress site.": [
                 "I can help you create and edit posts and pages, update content, and manage your WordPress site."
@@ -76,8 +76,8 @@
             "Clear Chat": [
                 "Clear Chat"
             ],
-            "Blu Chat": [
-                "Blu Chat"
+            "Bluehost AI": [
+                ""
             ],
             "Ask me anything about WordPress\u2026": [
                 "Ask me anything about WordPress..."
