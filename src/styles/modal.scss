@@ -203,6 +203,10 @@ $nfd-help-center-chat-border: #eef1f4;
 		background-color: #fff;
 	}
 
+	&__welcome-blue {
+		color: #3078e2;
+	}
+
 	// Messages wrapper - ensures ChatMessages can scroll properly (only visible when chat expanded)
 	&__messages-wrapper {
 		flex: 1 1 0%;

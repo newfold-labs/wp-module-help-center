@@ -21,7 +21,7 @@ import '@newfold/wp-module-ai-chat/style.css';
 import Footer from './Footer'; // Support banner component
 import { useHelpCenterChatContext } from '../context/HelpCenterChatContext';
 import { getConnectionFailedFallbackMessage } from '../utils/connectionFailedFallbackMessage';
-import { useEffect, useMemo, useRef, useCallback, useState } from '@wordpress/element';
+import { useEffect, useMemo, useRef, useCallback, useState, createInterpolateElement } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 import { useHelpVisibility } from '../hooks/useHelpVisibility';
 import { useHelpCenterState } from '../hooks/useHelpCenterState';
@@ -274,6 +274,21 @@ const HelpCenterChatAI = () => {
 
 	// Build the welcome suggestions once. Stable reference so WelcomeScreen doesn't re-key on every render.
 	const welcomeSuggestions = useMemo(() => getWelcomeSuggestions(), []);
+	const welcomeTitle = useMemo(
+		() =>
+			createInterpolateElement(
+				__(
+					"Hi, I'm <blue>blue</blue>, your AI assistant.",
+					'wp-module-help-center'
+				),
+				{
+					blue: (
+						<span className="nfd-help-center-chat__welcome-blue" />
+					),
+				}
+			),
+		[]
+	);
 
 	// Most recent user-sent text — fed into ChatInput so pressing ↑ in an empty input
 	// re-loads it (terminal/Slack convention). Recomputed only when `messages` changes.
@@ -314,10 +329,7 @@ const HelpCenterChatAI = () => {
 			<div className="nfd-help-center-chat__welcome-wrapper">
 				<WelcomeScreen
 					onSendMessage={sendMessage}
-					title={__(
-						"Hi, I'm BLU, your AI assistant.",
-						'wp-module-help-center'
-					)}
+					title={welcomeTitle}
 					subtitle={__(
 						'I can help you create and edit posts and pages, update content, and manage your WordPress site.',
 						'wp-module-help-center'
@@ -390,7 +402,7 @@ const HelpCenterChatAI = () => {
 			{/* Header: white container, two-tone pill, New chat (+) and Close (×) */}
 			<div className="nfd-help-center-chat__header-wrapper">
 				<ChatHeader
-					title={__('Blu Chat', 'wp-module-help-center')}
+					title={__('Bluehost AI', 'wp-module-help-center')}
 					onNewChat={handleNewChat}
 					newChatDisabled={
 						showWelcome ||
