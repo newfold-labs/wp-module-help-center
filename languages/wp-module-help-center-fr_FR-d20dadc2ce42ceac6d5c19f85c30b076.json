@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2026-07-28T07:07:30+00:00",
+    "translation-revision-date": "2026-08-19T20:39:37+00:00",
     "generator": "WP-CLI\/2.12.0",
     "source": "build\/409.js",
     "domain": "messages",
@@ -14,49 +14,49 @@
                 "D\u00e9sol\u00e9, je n\u2019ai pas encore d\u2019informations sur les %s."
             ],
             "Here are a few things to try:": [
-                ""
+                "Voici quelques points \u00e0 essayer :"
             ],
             "Resource center": [
                 "Centre de ressources"
             ],
             "Search our %s for a related article or video.": [
-                ""
+                "Cherchez dans nos pourcentages un article ou une vid\u00e9o connexe."
             ],
             "Rephrase your question \u2014 short, clear prompts work best.": [
-                ""
+                "Reformulez votre question \u2014 des prompts courts et clairs sont les meilleurs pour vous."
             ],
             "Talk to a person \u2014 call %s or chat live with one of our agents.": [
-                ""
+                "Parlez \u00e0 une personne \u2014 appelez les %s ou discutez en direct avec l\u2019un de nos agents."
             ],
             "Write a blog post": [
-                ""
+                "R\u00e9digez un article de blog"
             ],
             "Help me write a new blog post for my site.": [
-                ""
+                "Aidez-moi \u00e0 \u00e9crire un nouvel article de blog pour mon site."
             ],
             "Edit a page": [
-                ""
+                "Modifier une page"
             ],
             "I want to edit one of the pages on my site.": [
-                ""
+                "Je veux modifier une des pages de mon site."
             ],
             "Add a product": [
-                ""
+                "Ajouter un produit"
             ],
             "Add a new product to my store.": [
-                ""
+                "Ajouter un nouveau produit \u00e0 ma boutique."
             ],
             "Customize site": [
-                ""
+                "Personnaliser le site"
             ],
             "Help me customize my site's appearance.": [
-                ""
+                "Aidez-moi \u00e0 personnaliser l\u2019apparence de mon site."
             ],
             "Update site settings": [
-                ""
+                "Mettre \u00e0 jour les param\u00e8tres du site"
             ],
             "Help me update my site settings.": [
-                ""
+                "Aidez-moi \u00e0 mettre \u00e0 jour les param\u00e8tres de mon site."
             ],
             "Action approved and executed.": [
                 "Action approuv\u00e9e et ex\u00e9cut\u00e9e."
@@ -64,8 +64,8 @@
             "Action \"%s\" was cancelled.": [
                 "L\u2019action \u00ab %s \u00bb a \u00e9t\u00e9 annul\u00e9e."
             ],
-            "Hi, I'm BLU, your AI assistant.": [
-                "Bonjour, je suis BLU, votre assistante IA."
+            "Hi, I'm <blue>blue<\/blue>, your AI assistant.": [
+                ""
             ],
             "I can help you create and edit posts and pages, update content, and manage your WordPress site.": [
                 "Je peux vous aider \u00e0 cr\u00e9er et modifier des articles et des pages, \u00e0 mettre \u00e0 jour le contenu et \u00e0 g\u00e9rer votre site WordPress."
@@ -76,8 +76,8 @@
             "Clear Chat": [
                 "Clear Chat"
             ],
-            "Blu Chat": [
-                "Blu Chat"
+            "Bluehost AI": [
+                ""
             ],
             "Ask me anything about WordPress\u2026": [
                 "Posez-moi toutes vos questions sur WordPress..."
