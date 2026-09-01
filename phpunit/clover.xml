@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1788273984">
-  <project timestamp="1788273984">
+<coverage generated="1788274010">
+  <project timestamp="1788274010">
     <file name="/home/runner/work/wp-module-help-center/wp-module-help-center/includes/CapabilityController.php">
       <class name="NewfoldLabs\WP\Module\HelpCenter\CapabilityController" namespace="global">
         <metrics complexity="6" methods="4" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="40" coveredstatements="7" elements="44" coveredelements="8"/>
