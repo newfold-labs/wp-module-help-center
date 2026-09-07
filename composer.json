@@ -23,7 +23,7 @@
         }
     },
     "require-dev": {
-        "newfold-labs/wp-php-standards": "@stable",
+        "newfold-labs/wp-php-standards": "^2.0",
         "wp-cli/i18n-command": "^2.7.0",
         "johnpbloch/wordpress": "6.9.4",
         "lucatume/wp-browser": "*",
