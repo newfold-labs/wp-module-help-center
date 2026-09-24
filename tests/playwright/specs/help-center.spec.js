@@ -11,7 +11,7 @@ import {
   clickHelpCenterIcon,
   verifyHelpCenterModalVisible,
   searchInHelpCenter,
-} from '../helpers/index.mjs';
+} from '../helpers/index.js';
 
 // Brand plugin id
 const pluginId = process.env.PLUGIN_ID || 'bluehost';
