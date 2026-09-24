@@ -1,64 +1,64 @@
 {
-	"name": "@newfold-labs/wp-module-help-center",
-	"version": "2.8.3",
-	"description": "HelpCenter",
-	"license": "MIT",
-	"private": true,
-	"author": {
-		"name": "Faizaan Mohammed",
-		"email": "faizaan.md@newfold.com"
-	},
-	"engines": {
-		"node": ">=22.11.0",
-		"npm": ">=10.9.0"
-	},
-	"scripts": {
-		"prepare": "npm run build",
-		"build": "wp-scripts build ./src/index.js --config ./scripts/webpack.config.js",
-		"lint": "wp-scripts lint-js src",
-		"lint:css": "wp-scripts lint-style src/styles/*.scss",
-		"lint:css:fix": "wp-scripts lint-style src/styles/*.scss --fix",
-		"format": "wp-scripts format src",
-		"start": "wp-scripts start ./src/index.js --config ./scripts/webpack.config.js",
-		"test:unit": "echo \"No tests implemented\"",
-		"test:e2e": "npx cypress run"
-	},
-	"dependencies": {
-		"@newfold-labs/wp-module-ai": "github:newfold-labs/js-utility-ai#1.0.1",
-		"@newfold/js-utility-ui-analytics": "1.4.0",
-		"@newfold/wp-module-ai-chat": "1.1.10",
-		"@newfold/wp-module-runtime": "1.2.3",
-		"@reduxjs/toolkit": "2.12.0",
-		"@wordpress/api-fetch": "^7.55.0",
-		"@wordpress/data": "^10.55.0",
-		"@wordpress/dom-ready": "4.55.0",
-		"@wordpress/element": "^8.7.0",
-		"@wordpress/i18n": "^6.19.0",
-		"@wordpress/icons": "^16.0.0",
-		"lodash": "4.18.1",
-		"react": "18.3.1",
-		"react-redux": "9.3.0",
-		"regenerator-runtime": "0.14.1"
-	},
-	"devDependencies": {
-		"@wordpress/env": "11.15.0",
-		"@wordpress/eslint-plugin": "^26.0.0",
-		"@wordpress/scripts": "^35",
-		"playwright": "1.63.0",
-		"stylelint": "17.15.0",
-		"stylelint-scss": "7.3.0"
-	},
-	"overrides": {
-		"tar-fs": "3.1.1",
-		"qs": "~6.15.3",
-		"adm-zip": "^0.6.0",
-		"serialize-javascript": "^7.0.5",
-		"uuid": "^11.1.1",
-		"@hono/node-server": "^2.0.5",
-		"markdown-it": "^14.2.0",
-		"linkify-it": "^5.0.2",
-		"markdownlint-cli": {
-			"minimatch": "^3.1.5"
-		}
-	}
+  "name": "@newfold-labs/wp-module-help-center",
+  "version": "2.8.3",
+  "description": "HelpCenter",
+  "license": "MIT",
+  "private": true,
+  "author": {
+    "name": "Faizaan Mohammed",
+    "email": "faizaan.md@newfold.com"
+  },
+  "engines": {
+    "node": ">=22.11.0",
+    "npm": ">=10.9.0"
+  },
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "wp-scripts build ./src/index.js --config ./scripts/webpack.config.js",
+    "lint": "wp-scripts lint-js src",
+    "lint:css": "wp-scripts lint-style src/styles/*.scss",
+    "lint:css:fix": "wp-scripts lint-style src/styles/*.scss --fix",
+    "format": "wp-scripts format src",
+    "start": "wp-scripts start ./src/index.js --config ./scripts/webpack.config.js",
+    "test:unit": "echo \"No tests implemented\"",
+    "test:e2e": "npx cypress run"
+  },
+  "dependencies": {
+    "@newfold-labs/wp-module-ai": "github:newfold-labs/js-utility-ai#1.0.1",
+    "@newfold/js-utility-ui-analytics": "1.4.0",
+    "@newfold/wp-module-ai-chat": "1.1.10",
+    "@newfold/wp-module-runtime": "1.2.3",
+    "@reduxjs/toolkit": "2.12.0",
+    "@wordpress/api-fetch": "^7.55.0",
+    "@wordpress/data": "^10.55.0",
+    "@wordpress/dom-ready": "4.55.0",
+    "@wordpress/element": "^8.7.0",
+    "@wordpress/i18n": "^6.19.0",
+    "@wordpress/icons": "^16.0.0",
+    "lodash": "4.18.1",
+    "react": "18.3.1",
+    "react-redux": "9.3.0",
+    "regenerator-runtime": "0.14.1"
+  },
+  "devDependencies": {
+    "@wordpress/env": "11.15.0",
+    "@wordpress/eslint-plugin": "^26.0.0",
+    "@wordpress/scripts": "^35",
+    "playwright": "^1.63.0",
+    "stylelint": "17.15.0",
+    "stylelint-scss": "7.3.0"
+  },
+  "overrides": {
+    "tar-fs": "3.1.1",
+    "qs": "~6.15.3",
+    "adm-zip": "^0.6.0",
+    "serialize-javascript": "^7.0.5",
+    "uuid": "^11.1.1",
+    "@hono/node-server": "^2.0.5",
+    "markdown-it": "^14.2.0",
+    "linkify-it": "^5.0.2",
+    "markdownlint-cli": {
+      "minimatch": "^3.1.5"
+    }
+  }
 }

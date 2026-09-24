@@ -34,7 +34,7 @@ import {
   HELP_CENTER_CAPABILITIES,
   setSiteCapabilities,
   waitForHelpCenterIcon,
-} from '../helpers/index.mjs';
+} from '../helpers/index.js';
 
 const SELECTORS = {
   wpAdminBar: '#wpadminbar',
