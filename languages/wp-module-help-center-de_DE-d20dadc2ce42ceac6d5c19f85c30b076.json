@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2026-08-19T20:39:37+00:00",
+    "translation-revision-date": "2026-09-28T18:49:38+00:00",
     "generator": "WP-CLI\/2.12.0",
     "source": "build\/409.js",
     "domain": "messages",
@@ -65,7 +65,7 @@
                 "Die Aktions-\"%s\" wurden gestrichen."
             ],
             "Hi, I'm <blue>blue<\/blue>, your AI assistant.": [
-                ""
+                "Hallo, ich bin <blue>Blue<\/blue>, dein KI-Assistent."
             ],
             "I can help you create and edit posts and pages, update content, and manage your WordPress site.": [
                 "Ich kann Ihnen helfen, Beitr\u00e4ge und Seiten zu erstellen und zu bearbeiten, Inhalte zu aktualisieren und Ihre WordPress-Seite zu verwalten."
@@ -77,7 +77,7 @@
                 "Clear Chat"
             ],
             "Bluehost AI": [
-                ""
+                "Bluehost-KI"
             ],
             "Ask me anything about WordPress\u2026": [
                 "Frag mich irgendetwas \u00fcber WordPress..."

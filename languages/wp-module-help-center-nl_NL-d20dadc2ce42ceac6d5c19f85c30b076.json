@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2026-08-19T20:39:37+00:00",
+    "translation-revision-date": "2026-09-28T18:49:38+00:00",
     "generator": "WP-CLI\/2.12.0",
     "source": "build\/409.js",
     "domain": "messages",
@@ -65,7 +65,7 @@
                 "Actie \"%s\" werd geannuleerd."
             ],
             "Hi, I'm <blue>blue<\/blue>, your AI assistant.": [
-                ""
+                "Hoi, ik ben <blue>Blue<\/blue>, jouw AI-assistent."
             ],
             "I can help you create and edit posts and pages, update content, and manage your WordPress site.": [
                 "Ik kan je helpen met het maken en bewerken van berichten en pagina's, het bijwerken van content en het beheren van je WordPress-site."
@@ -77,7 +77,7 @@
                 "Clear Chat"
             ],
             "Bluehost AI": [
-                ""
+                "Bluehost AI"
             ],
             "Ask me anything about WordPress\u2026": [
                 "Vraag me iets over WordPress..."

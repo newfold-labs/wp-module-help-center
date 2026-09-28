@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2026-08-19T20:39:37+00:00",
+    "translation-revision-date": "2026-09-28T18:49:38+00:00",
     "generator": "WP-CLI\/2.12.0",
     "source": "build\/409.js",
     "domain": "messages",
@@ -65,7 +65,7 @@
                 "A a\u00e7\u00e3o \"%s\" foi cancelada."
             ],
             "Hi, I'm <blue>blue<\/blue>, your AI assistant.": [
-                ""
+                "Oi, eu sou <blue>o Blue<\/blue>, seu assistente de IA."
             ],
             "I can help you create and edit posts and pages, update content, and manage your WordPress site.": [
                 "Posso ajudar voc\u00ea a criar e editar posts e p\u00e1ginas, atualizar conte\u00fado e gerenciar seu site WordPress."
@@ -77,7 +77,7 @@
                 "Chat Claro"
             ],
             "Bluehost AI": [
-                ""
+                "Bluehost AI"
             ],
             "Ask me anything about WordPress\u2026": [
                 "Me pergunte qualquer coisa sobre WordPress..."
