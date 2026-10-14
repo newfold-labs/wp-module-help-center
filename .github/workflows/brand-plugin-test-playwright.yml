@@ -34,7 +34,6 @@ jobs:
     needs: setup
     permissions:
       contents: read # Required for the reusable Playwright workflow to check out the module and plugin.
-    timeout-minutes: 120
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
     with:
       module-repo: ${{ github.repository }}
@@ -47,7 +46,6 @@ jobs:
     needs: setup
     permissions:
       contents: read # Required for the reusable Playwright workflow to check out the module and plugin.
-    timeout-minutes: 120
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
     with:
       module-repo: ${{ github.repository }}
@@ -62,7 +60,6 @@ jobs:
     needs: setup
     permissions:
       contents: read # Required for the reusable Playwright workflow to check out the module and plugin.
-    timeout-minutes: 120
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
     with:
       module-repo: ${{ github.repository }}
@@ -75,7 +72,6 @@ jobs:
     needs: setup
     permissions:
       contents: read # Required for the reusable Playwright workflow to check out the module and plugin.
-    timeout-minutes: 120
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
     with:
       module-repo: ${{ github.repository }}

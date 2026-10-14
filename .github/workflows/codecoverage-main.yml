@@ -34,7 +34,6 @@ jobs:
     permissions:
       contents: write      # Required for the reusable workflow to push coverage reports to gh-pages.
       pull-requests: write # Required for the reusable workflow to post PR comments and coverage comparisons.
-    timeout-minutes: 120
     uses: newfold-labs/workflows/.github/workflows/reusable-codecoverage.yml@main
     with:
       php-versions: '["7.4", "8.0", "8.1", "8.2", "8.3", "8.4"]'
