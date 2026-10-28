@@ -1,8 +1,5 @@
 name: Trigger Satis Build
 
-permissions:
-  contents: read
-
 on:
   release:
     types:
