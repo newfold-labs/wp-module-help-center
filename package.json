@@ -28,7 +28,7 @@
     "@newfold/js-utility-ui-analytics": "1.4.0",
     "@newfold/wp-module-ai-chat": "1.1.11",
     "@newfold/wp-module-runtime": "1.2.3",
-    "@reduxjs/toolkit": "2.13.0",
+    "@reduxjs/toolkit": "2.14.0",
     "@wordpress/api-fetch": "^8.0.0",
     "@wordpress/data": "^11.0.0",
     "@wordpress/dom-ready": "5.0.0",
