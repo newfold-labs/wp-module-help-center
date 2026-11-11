@@ -45,7 +45,7 @@
     "@wordpress/eslint-plugin": "^28.1.0",
     "@wordpress/scripts": "^37",
     "playwright": "^1.65.0",
-    "stylelint": "17.16.0",
+    "stylelint": "18.0.0",
     "stylelint-scss": "7.4.0"
   },
   "overrides": {
